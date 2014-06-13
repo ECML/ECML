@@ -1,69 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
-<LinearLayout
-    android:theme="@android:style/Theme.Holo.Light"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:layout_marginLeft="10dip" 
-    >
-    
-  <LinearLayout 
-      android:id="@+id/preview_button_layout"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal" 
-      
-      >
-      
-        <Button
-            android:id="@+id/start_preview"
-            android:layout_width="138dp"
-            android:layout_height="33dp"
-            android:layout_weight="1"
-            android:background="#fff3f3f3"
-            android:text="Start preview"
-            android:textColor="#000000"
-            android:textSize="12sp" />
-        
-          <Button
-              android:id="@+id/stop_preview"
-              android:layout_width="138dp"
-              android:layout_height="33dp"
-              android:layout_weight="1"
-              android:background="#fff3f3f3"
-              android:shadowColor="#B4D9E4"
-              android:shadowDx="1"
-              android:shadowDy="1"
-              android:text="Stop preview"
-              android:textColor="#000000"
-              android:textSize="12sp" />
-
-          <!-- Delete it later, for now on make the app crash -->
-          <ImageButton
-              android:id="@+id/full_preview"
-              android:layout_width="0dp"
-              android:layout_height="0dp"
-              android:background="@null"
-              android:src="@drawable/fullscreen"
-              android:layout_weight="0"
-               />
-      
-  </LinearLayout>
-      
-        
-    
-
- <FrameLayout
- android:layout_width="fill_parent"
- android:layout_height="fill_parent">
-
-    <SurfaceView
-        android:id="@+id/surface_camera"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-    </FrameLayout>
-    
-</LinearLayout>
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dip"
+        android:orientation="vertical"
+        android:theme="@android:style/Theme.Holo.Light" >
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <SurfaceView
+                android:id="@+id/surface_camera"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </FrameLayout>
+    </LinearLayout>
+
 </merge>
