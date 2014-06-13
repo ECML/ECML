@@ -230,9 +230,10 @@ public class MidiPlayer extends LinearLayout {
 
         speedBar = new SeekBar(activity);
         speedBar.setMax(150);
-        speedBar.setProgress(100);
+        speedBar.setProgress(100-30); //added later
         speedBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             public void onProgressChanged(SeekBar bar, int progress, boolean fromUser) {
+            	// we add 30 to avoid reaching values under 30
                 speedText.setText("   Speed: " + String.format(Locale.US, "%03d", progress + 30) + "%   ");
             }
             public void onStartTrackingTouch(SeekBar bar) {
@@ -373,6 +374,7 @@ public class MidiPlayer extends LinearLayout {
      */ 
     private void CreateMidiFile() {
         double inverse_tempo = 1.0 / midifile.getTime().getTempo();
+        // we add 30 to avoid reaching values under 30
         double inverse_tempo_scaled = inverse_tempo * (speedBar.getProgress() + 30.0) / 100.0;
         // double inverse_tempo_scaled = inverse_tempo * 100.0 / 100.0;
         options.tempo = (int)(1.0 / inverse_tempo_scaled);
