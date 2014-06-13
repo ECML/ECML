@@ -160,29 +160,50 @@
             android:id="@+id/other2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <ImageButton
-                android:id="@+id/calendar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/calendar" />
-
-            <ImageButton
-                android:id="@+id/youtubeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/youtube_button" />
-
-            <ImageButton
-                android:id="@+id/game"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/game" />
-        </LinearLayout>
+	            <ImageButton
+	                android:id="@+id/calendar"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:background="@null"
+	                android:src="@drawable/calendar" />
+	
+	            <ImageButton
+	                android:id="@+id/youtubeBtn"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:background="@null"
+	                android:src="@drawable/youtube_button" />
+	
+	            <ImageButton
+	                android:id="@+id/game"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:background="@null"
+	                android:src="@drawable/game" />
+        	</LinearLayout>
+        
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+	            
+                <ImageButton
+	                android:id="@+id/tuning"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:background="@null"
+	                android:src="@drawable/tuning" />
+             
+            </LinearLayout>
+        
+       </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>

@@ -419,6 +419,7 @@ public class SheetMusicActivity extends Activity implements  SurfaceHolder.Callb
         ImageButton stopPlayBack = (ImageButton) findViewById(R.id.stopPlayBackBtn);
         ImageButton youtube_btn = (ImageButton) findViewById(R.id.youtubeBtn);
         ImageButton calendar = (ImageButton) findViewById(R.id.calendar);
+        ImageButton tuning = (ImageButton) findViewById(R.id.tuning);
         final LinearLayout preview_button_layout = (LinearLayout) findViewById(R.id.preview_button_layout);
         game = (ImageButton) findViewById(R.id.game);
         start_preview = (Button) findViewById(R.id.start_preview);
@@ -442,6 +443,25 @@ public class SheetMusicActivity extends Activity implements  SurfaceHolder.Callb
 				
 			}
 		});
+        
+        tuning.setOnClickListener (new View.OnClickListener() {
+        	public void onClick(View arg0) {
+        		Toast.makeText(SheetMusicActivity.this, "Tuning fork", Toast.LENGTH_SHORT).show();
+        		MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.tuning);
+        		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        		try {
+					mPlayer.prepare();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		mPlayer.start();
+			}
+        	
+        });
         
         
         
