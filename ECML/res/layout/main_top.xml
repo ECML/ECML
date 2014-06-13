@@ -201,6 +201,12 @@
 	                android:background="@null"
 	                android:src="@drawable/tuning" />
              
+                <ImageButton
+	                android:id="@+id/upload"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:background="@null"
+	                android:src="@drawable/upload" />
             </LinearLayout>
         
        </LinearLayout>

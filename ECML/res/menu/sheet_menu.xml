@@ -15,9 +15,9 @@
     <item android:id="@+id/youtube"
           android:icon="@android:drawable/ic_media_play"
           android:title="@string/youtube_str"></item>
-    <item android:id="@+id/record"
+    <item android:id="@+id/upload_youtube"
           android:icon="@android:drawable/ic_btn_speak_now"
-          android:title="@string/record_str"></item>
+          android:title="@string/upload_youtube"></item>
     <item android:id="@+id/calendar"
           android:icon="@android:drawable/ic_menu_month"
           android:title="@string/calendar_str"></item>

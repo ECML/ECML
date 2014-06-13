@@ -36,7 +36,7 @@
     <string name="scan_files_str">Scan for MIDI Files</string>
     <string name="browse_files_str">Browse for MIDI Files</string>
     <string name="youtube_str">Search song on youtube</string>
-    <string name="record_str">Record yourself</string>
+    <string name="upload_youtube">Upload on Youtube</string>
     <string name="calendar_str">Calendar</string>
     <string name="game_str">Play game</string>
     <string name="stop_recording_str">Stop recording</string>

@@ -420,6 +420,7 @@ public class SheetMusicActivity extends Activity implements  SurfaceHolder.Callb
         ImageButton youtube_btn = (ImageButton) findViewById(R.id.youtubeBtn);
         ImageButton calendar = (ImageButton) findViewById(R.id.calendar);
         ImageButton tuning = (ImageButton) findViewById(R.id.tuning);
+        ImageButton upload = (ImageButton) findViewById(R.id.upload);
         final LinearLayout preview_button_layout = (LinearLayout) findViewById(R.id.preview_button_layout);
         game = (ImageButton) findViewById(R.id.game);
         start_preview = (Button) findViewById(R.id.start_preview);
@@ -463,7 +464,13 @@ public class SheetMusicActivity extends Activity implements  SurfaceHolder.Callb
         	
         });
         
-        
+        upload.setOnClickListener (new View.OnClickListener() {
+        	public void onClick(View v) {
+        		Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+                myWebLink.setData(Uri.parse("http://www.youtube.com/upload"));
+                    startActivity(myWebLink);
+             }
+        });
         
         
 full_preview.setOnClickListener(new View.OnClickListener() {
@@ -825,8 +832,8 @@ stop_preview.setOnClickListener(new View.OnClickListener() {
           case R.id.youtube:
           	showYoutube();
           	return true;
-          case R.id.record:
-          	showRecorder();
+          case R.id.upload_youtube:
+          	uploadYoutube();
           	return true;
           case R.id.calendar:
         	showCalendar();
@@ -972,6 +979,13 @@ stop_preview.setOnClickListener(new View.OnClickListener() {
     private void showYoutube() {
         String title = this.getIntent().getStringExtra(MidiTitleID);
     	Uri uri = Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(title));
+  		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+  		startActivity(intent);
+    }
+    
+    /** Upload a video on Youtube */
+    private void uploadYoutube() {
+        Uri uri = Uri.parse("http://www.youtube.com/upload");
   		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
   		startActivity(intent);
     }
