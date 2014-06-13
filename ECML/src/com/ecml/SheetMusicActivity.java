@@ -881,8 +881,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	};
 
-
 	/*** End of Audio Recording Functions ***/
+	
+	
+	/*** Video Recording Functions ***/
 	
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
@@ -902,10 +904,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		// TODO Auto-generated method stub
 		
 	}
-	
-	/*** Video Recording Functions ***/
-	
-	
 	
 	/*** End of Video Recording Functions ***/
 	
