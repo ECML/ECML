@@ -276,10 +276,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		ImageButton calendar = (ImageButton) findViewById(R.id.calendar);
 		ImageButton tuning = (ImageButton) findViewById(R.id.tuning);
         ImageButton upload = (ImageButton) findViewById(R.id.upload);
-		final LinearLayout preview_button_layout = (LinearLayout) findViewById(R.id.preview_button_layout);
-		game = (ImageButton) findViewById(R.id.game);
-		preview_button_layout.setVisibility(View.VISIBLE);
-		full_preview = (ImageButton) findViewById(R.id.full_preview);
+        game = (ImageButton) findViewById(R.id.game);
 
 		calendar.setOnClickListener(new View.OnClickListener() {
 
@@ -321,31 +318,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
              }
         });
 
-		full_preview.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				if (!full) {
-					((LinearLayout) findViewById(R.id.other1)).setVisibility(View.GONE);
-					((LinearLayout) findViewById(R.id.other2)).setVisibility(View.GONE);
-					player.setVisibility(View.GONE);
-					full_sheet_button.setVisibility(View.GONE);
-					preview_button_layout.setVisibility(View.GONE);
-					((LinearLayout) findViewById(R.id.camera_layout)).setLayoutParams(new LinearLayout.LayoutParams(1024, 600));
-					full = true;
-				} else {
-					((LinearLayout) findViewById(R.id.camera_layout)).setLayoutParams(new LinearLayout.LayoutParams(356, 250));
-					((LinearLayout) findViewById(R.id.other1)).setVisibility(View.VISIBLE);
-					((LinearLayout) findViewById(R.id.other2)).setVisibility(View.VISIBLE);
-					player.setVisibility(View.VISIBLE);
-					full_sheet_button.setVisibility(View.VISIBLE);
-					preview_button_layout.setVisibility(View.GONE);
-					full = false;
-				}
-			}
-		});
-
 		game.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				try {
@@ -371,21 +343,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		surfaceHolder = myVideoView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
-		myVideoView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (preview_button_layout_visible) {
-					preview_button_layout.setVisibility(View.GONE);
-					preview_button_layout_visible = false;
-				} else {
-					preview_button_layout.setVisibility(View.VISIBLE);
-					preview_button_layout_visible = true;
-				}
-			}
-		});
-
-
 
 		startAudioRecording.setOnClickListener(new View.OnClickListener() {
 
