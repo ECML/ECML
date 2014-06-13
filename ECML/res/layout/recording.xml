@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@android:style/Theme.Holo.Light"
+    android:orientation="vertical"
+    android:layout_width="600dp"
+    android:layout_height="600dp"
+    android:padding="20dip">
+  
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        
+        />
+
+    <Button
+        android:id="@+id/btnFormat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00ffff"
+        android:text="Format (mp4)" />
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00ffff"
+        android:text="@string/stop_recording_str" />
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00ffff"
+        android:text="@string/start_recording_str" />
+
+    <TextView
+        android:layout_width="137dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dip" />
+      
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00ffff"
+            android:text="@string/play_last_str" />
+    </LinearLayout>
+
+</LinearLayout>
