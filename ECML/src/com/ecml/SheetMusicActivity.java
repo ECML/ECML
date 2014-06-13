@@ -165,7 +165,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		
 		
 	/*** Tuning Fork Variables ***/
+		
 		final Context context = this;
+		
 	/*** End of Tuning Fork Variables ***/
 	
 /**********************************************************************************************************
@@ -635,8 +637,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/** Launch Youtube on Navigator and search for the current song */
 	private void showYoutube() {
-		String title = this.getIntent().getStringExtra(MidiTitleID);
-		Uri uri = Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(title));
+		String songTitle = this.getIntent().getStringExtra(MidiTitleID);
+		Uri uri = Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle));
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 		startActivity(intent);
 	}
@@ -647,12 +649,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
   		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
   		startActivity(intent);
     }
-
-	/** Launch the sound recorder */
-	private void showRecorder() {
-		Intent goToRecorder = new Intent(this, RecordingActivity.class);
-		startActivity(goToRecorder);
-	}
 
 	/** Launch a Calendar */
 	private void showCalendar() {
@@ -850,8 +846,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	}
 	
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 		// TODO Auto-generated method stub
 		
 	}
