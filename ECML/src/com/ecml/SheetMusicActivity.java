@@ -51,6 +51,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
 import android.media.CamcorderProfile;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -146,6 +147,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		SurfaceHolder surfaceHolder;
 		
 		SurfaceView myVideoView;
+		public MediaRecorder mrec;
+		private Camera mCamera;
 
 	/*** End of Video Recording Variables ***/
 	
@@ -270,6 +273,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		}
 
+		ImageButton startVideoRecording = (ImageButton) findViewById(R.id.startcamera);
+		ImageButton stopVideoRecording = (ImageButton) findViewById(R.id.stopcamera);
 		ImageButton startAudioRecording = (ImageButton) findViewById(R.id.startBtn);
 		ImageButton stopAudioRecording = (ImageButton) findViewById(R.id.stopBtn);
 		ImageButton startPlayBack = (ImageButton) findViewById(R.id.play_button);
@@ -345,6 +350,34 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		surfaceHolder = myVideoView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		mCamera = Camera.open();
+		
+		startVideoRecording.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(SheetMusicActivity.this, "Start Video Recording", Toast.LENGTH_SHORT).show();
+				// enableButtons(true);
+				try {
+					startVideoRecording();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
+		
+		stopVideoRecording.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(SheetMusicActivity.this, "Stop Video Recording", Toast.LENGTH_SHORT).show();
+				// enableButtons(true);
+				stopVideoRecording();
+
+			}
+		});
 
 		startAudioRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -839,23 +872,72 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	
 	/*** Video Recording Functions ***/
 	
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		
-	}
+	protected void startVideoRecording() throws IOException 
+    {
+        mrec = new MediaRecorder();  // Works well
+              
+        mCamera.unlock();
+        mrec.setCamera(mCamera);
+
+        mrec.setPreviewDisplay(surfaceHolder.getSurface());
+        mrec.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+        mrec.setAudioSource(MediaRecorder.AudioSource.MIC); 
+
+        mrec.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+        mrec.setPreviewDisplay(surfaceHolder.getSurface());
+        mrec.setOutputFile("/sdcard/zzzz.3gp"); 
+
+        mrec.prepare();
+        mrec.start();
+    }
+
+    protected void stopVideoRecording() {
+        mrec.stop();
+        releaseMediaRecorder();
+        releaseCamera();
+    }
+
+    private void releaseMediaRecorder(){
+        if (mrec != null) {
+            mrec.reset();   // clear recorder configuration
+            mrec.release(); // release the recorder object
+            mrec = null;
+            mCamera.lock();           // lock camera for later use
+        }
+    }
+
+    private void releaseCamera(){
+        if (mCamera != null){
+            mCamera.release();        // release the camera for other applications
+            mCamera = Camera.open();
+        }
+    }
 	
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
 	
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width,
+            int height) {
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        if (mCamera != null){
+            Parameters params = mCamera.getParameters();
+            mCamera.setParameters(params);
+            
+            
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Camera not available!", Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        mCamera.stopPreview();
+        mCamera.release();
+    }
 	
 	/*** End of Video Recording Functions ***/
 	

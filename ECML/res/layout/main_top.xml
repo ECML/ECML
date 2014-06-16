@@ -52,14 +52,14 @@
                     android:src="@drawable/camera" />
 
                 <ImageButton
-                    android:id="@+id/startcamerapreview"
+                    android:id="@+id/startcamera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:src="@drawable/record_start" />
 
                 <ImageButton
-                    android:id="@+id/stopcamerapreview"
+                    android:id="@+id/stopcamera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
