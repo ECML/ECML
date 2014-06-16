@@ -922,7 +922,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     private void releaseCamera() {
         if (mCamera != null){
             mCamera.release();        // release the camera for other applications
-            mCamera = Camera.open(1);
+            mCamera = Camera.open(1); //Piou piou
         }
     }
     
