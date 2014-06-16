@@ -778,6 +778,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			sheet.invalidate();
 		}
 		layout.requestLayout();
+		
 	}
 
 	/** When this activity pauses, stop the music */
@@ -787,6 +788,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
             player.Pause();
         }
         super.onPause();
+        mCamera.release();
     } 
 
 /**********************************************************************************************************
@@ -911,7 +913,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	protected void startVideoRecording() throws IOException 
     {
         mrec = new MediaRecorder();  // Works well
-              
+        mCamera.stopPreview();      
         mCamera.unlock();
         mrec.setCamera(mCamera);
 
@@ -931,6 +933,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         mrec.stop();
         releaseMediaRecorder();
         releaseCamera();
+        
     }
 
     private void releaseMediaRecorder() {
@@ -943,9 +946,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     }
 
     private void releaseCamera() {
-        if (mCamera != null){
-            mCamera.release();        // release the camera for other applications
+        if (mCamera != null){           
+        	mCamera.release();        // release the camera for other applications
             mCamera = Camera.open();
+                                  
         }
     }
     
@@ -977,22 +981,12 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        if (mCamera != null){
-            Parameters params = mCamera.getParameters();
-            mCamera.setParameters(params);
-            
-            
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Camera not available!", Toast.LENGTH_LONG).show();
-            finish();
-        }
+        
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        mCamera.stopPreview();
-        mCamera.release();
+       
     }
 	
 	/*** End of Video Recording Functions ***/
