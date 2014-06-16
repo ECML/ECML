@@ -18,6 +18,7 @@ import java.io.*;
 import android.app.*;
 import android.content.*;
 import android.content.res.*;
+import android.database.ContentObserver;
 import android.util.*;
 import android.graphics.*;
 import android.view.*;
@@ -76,6 +77,8 @@ public class MidiPlayer extends LinearLayout {
     private SeekBar speedBar;    /** The seekbar for controlling the playback speed */
     
     boolean mute; 				 /** tell whether or not the volume is mute */
+    int volume;			 		 /** Used to set the volume to zero */
+    AudioManager audioManager;   /** AudioManager used to mute and unmute music sound */
 
     int playstate;               /** The playing state of the Midi Player */
     final int stopped   = 1;     /** Currently stopped */
@@ -142,6 +145,9 @@ public class MidiPlayer extends LinearLayout {
         resizeButtons(newsize.x, newsize.y);
         player = new MediaPlayer();
         setBackgroundColor(Color.BLACK);
+        
+        audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
     }
 
     /** Get the preferred width/height given the screen width/height */
@@ -280,7 +286,7 @@ public class MidiPlayer extends LinearLayout {
             }
         });
         this.addView(muteButton);
-
+        
         /* Initialize the timer used for playback, but don't start
          * the timer yet (enabled = false).
          */
@@ -502,7 +508,7 @@ public class MidiPlayer extends LinearLayout {
 
         // Hide the midi player, wait a little for the view
         // to refresh, and then start playing
-        this.setVisibility(View.GONE);
+        //this.setVisibility(View.GONE);
         timer.removeCallbacks(TimerCallback);
         timer.postDelayed(DoPlay, 1000);
     }
@@ -771,13 +777,17 @@ public class MidiPlayer extends LinearLayout {
     private void mute() {
     	mute = !(mute);
     	if (mute) {
+    		volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         	muteButton.setImageBitmap(muteOnImage);
+        	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_PLAY_SOUND);
         } else {
         	muteButton.setImageBitmap(muteOffImage);
+        	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_PLAY_SOUND);
+
         }
-    	AudioManager audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-    	audioManager.setStreamMute(AudioManager.STREAM_MUSIC, mute);
     }
+    
+    
 }
 
 
