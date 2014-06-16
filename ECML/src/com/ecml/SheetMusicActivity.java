@@ -934,8 +934,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	
 	
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width,
-            int height) {
+    public void surfaceChanged(SurfaceHolder holder, int format, int width,  int height) {
     }
 
     @Override
