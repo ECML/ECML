@@ -351,7 +351,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		surfaceHolder = myVideoView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		mCamera = Camera.open(1);
+		mCamera = openFrontFacingCamera(); 
 		
 		startVideoRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -958,6 +958,26 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     public void surfaceDestroyed(SurfaceHolder holder) {
         mCamera.stopPreview();
         mCamera.release();
+    }
+    
+    private Camera openFrontFacingCamera() 
+    {
+        int cameraCount = 0;
+        Camera cam = null;
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        cameraCount = Camera.getNumberOfCameras();
+        for ( int camIdx = 0; camIdx < cameraCount; camIdx++ ) {
+            Camera.getCameraInfo( camIdx, cameraInfo );
+            if ( cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT  ) {
+                try {
+                    cam = Camera.open( camIdx );
+                } catch (RuntimeException e) {
+                    
+                }
+            }
+        }
+
+        return cam;
     }
 	
 	/*** End of Video Recording Functions ***/
