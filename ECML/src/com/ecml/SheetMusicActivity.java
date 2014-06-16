@@ -145,8 +145,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 		SurfaceView surfaceView;
 		SurfaceHolder surfaceHolder;
-		
-		SurfaceView myVideoView;
 		public MediaRecorder mrec;
 		private Camera mCamera;
 
@@ -273,85 +271,69 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		}
 
-		ImageButton replayVideoRecording = (ImageButton) findViewById(R.id.replayVideoRecording);
-		ImageButton startVideoRecording = (ImageButton) findViewById(R.id.startVideoRecording);
-		ImageButton stopVideoRecording = (ImageButton) findViewById(R.id.stopVideoRecording);
 		ImageButton startAudioRecording = (ImageButton) findViewById(R.id.startAudioRecording);
 		ImageButton stopAudioRecording = (ImageButton) findViewById(R.id.stopAudioRecording);
 		ImageButton startPlayBack = (ImageButton) findViewById(R.id.replayAudioRecording);
-		ImageButton stopPlayBack = (ImageButton) findViewById(R.id.stopPlayBackBtn);
-		ImageButton youtube_btn = (ImageButton) findViewById(R.id.youtubeBtn);
-		ImageButton calendar = (ImageButton) findViewById(R.id.calendar);
-		ImageButton tuning = (ImageButton) findViewById(R.id.tuning);
-        ImageButton upload = (ImageButton) findViewById(R.id.upload);
-        game = (ImageButton) findViewById(R.id.game);
-
-		calendar.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				try {
-					Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
-					startActivity(goToCalendar);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		ImageButton stopPlayBack = (ImageButton) findViewById(R.id.stopReplayAudioRecording);
 		
-		tuning.setOnClickListener (new View.OnClickListener() {
-        	public void onClick(View arg0) {
-        		Toast.makeText(SheetMusicActivity.this, "Tuning fork", Toast.LENGTH_SHORT).show();
-        		MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.tuning);
-        		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        		try {
-					mPlayer.prepare();
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        		mPlayer.start();
-			}
-        	
-        });
-        
-        upload.setOnClickListener (new View.OnClickListener() {
-        	public void onClick(View v) {
-        		Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
-                myWebLink.setData(Uri.parse("http://www.youtube.com/upload"));
-                    startActivity(myWebLink);
-             }
-        });
-
-		game.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				try {
-					Intent goToGameActivity = new Intent(getApplicationContext(), GameActivity.class);
-					startActivity(goToGameActivity);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-		final String songTitle = this.getIntent().getStringExtra(MidiTitleID); // current song title
-
-		youtube_btn.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
-				myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle)));
-				startActivity(myWebLink);
-			}
-		});
-
-		myVideoView = (SurfaceView) findViewById(R.id.surface_camera);
-		surfaceHolder = myVideoView.getHolder();
+		ImageButton startVideoRecording = (ImageButton) findViewById(R.id.startVideoRecording);
+		ImageButton stopVideoRecording = (ImageButton) findViewById(R.id.stopVideoRecording);
+		ImageButton replayVideoRecording = (ImageButton) findViewById(R.id.replayVideoRecording);
+		surfaceView = (SurfaceView) findViewById(R.id.surface_camera);
+		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		mCamera = Camera.open();
+		
+		ImageButton youtube_btn = (ImageButton) findViewById(R.id.youtubeBtn);
+		ImageButton upload = (ImageButton) findViewById(R.id.upload);
+		ImageButton calendar = (ImageButton) findViewById(R.id.calendar);
+		ImageButton tuning = (ImageButton) findViewById(R.id.tuning);
+        game = (ImageButton) findViewById(R.id.game);
+        
+
+		/*** Audio Buttons ***/
+
+        startAudioRecording.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(SheetMusicActivity.this, "Start Recording", Toast.LENGTH_SHORT).show();
+				// enableButtons(true);
+				startAudioRecording();
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		stopAudioRecording.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(SheetMusicActivity.this, "Stop Recording", Toast.LENGTH_SHORT).show();
+				// enableButtons(false);
+				stopAudioRecording();
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		startPlayBack.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(SheetMusicActivity.this, "Play Last Record", Toast.LENGTH_SHORT).show();
+				String filename = fileName + ext;
+				playAudio(pathAudio, filename);
+				// TODO Auto-generated method stub
+
+			}
+		});
+		
+		/*** End of Audio Buttons ***/
+		
+		
+		/*** Video Buttons ***/
 		
 		startVideoRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -389,42 +371,83 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				replayVideoRecording();
 			}
 		});
-
-		startAudioRecording.setOnClickListener(new View.OnClickListener() {
+		
+		/*** End of Video Buttons ***/
+		
+		
+		/*** Side activities ***/
+        
+		calendar.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Start Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(true);
-				startAudioRecording();
-				// TODO Auto-generated method stub
+			public void onClick(View arg0) {
+				try {
+					Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
+					startActivity(goToCalendar);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		tuning.setOnClickListener (new View.OnClickListener() {
+			
+			@Override
+        	public void onClick(View arg0) {
+        		Toast.makeText(SheetMusicActivity.this, "Tuning fork", Toast.LENGTH_SHORT).show();
+        		MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.tuning);
+        		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        		try {
+					mPlayer.prepare();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		mPlayer.start();
+			}
+        	
+        });
+        
 
+		final String songTitle = this.getIntent().getStringExtra(MidiTitleID); // current song title
+
+		youtube_btn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+				myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle)));
+				startActivity(myWebLink);
 			}
 		});
 
-		stopAudioRecording.setOnClickListener(new View.OnClickListener() {
-
+		upload.setOnClickListener (new View.OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Stop Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(false);
-				stopAudioRecording();
-				// TODO Auto-generated method stub
-
+				Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+				myWebLink.setData(Uri.parse("http://www.youtube.com/upload"));
+				startActivity(myWebLink);
 			}
 		});
 
-		startPlayBack.setOnClickListener(new View.OnClickListener() {
-
+		game.setOnClickListener(new View.OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Play Last Record", Toast.LENGTH_SHORT).show();
-				String filename = fileName + ext;
-				playAudio(pathAudio, filename);
-				// TODO Auto-generated method stub
-
+				try {
+					Intent goToGameActivity = new Intent(getApplicationContext(), GameActivity.class);
+					startActivity(goToGameActivity);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
+		
+		/*** End of side activities ***/
 
 /**********************************************************************************************************
  **********************************************************************************************************
@@ -452,14 +475,14 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				if (!full_sheet) {
-					myVideoView.setVisibility(View.VISIBLE);
+					surfaceView.setVisibility(View.VISIBLE);
 					((LinearLayout) findViewById(R.id.main_top)).setVisibility(View.VISIBLE);
 					full_sheet_button.setBackgroundDrawable(triangleUp);
 					full_sheet_button.invalidate();
 					full_sheet = true;
 				} else {
 					((LinearLayout) findViewById(R.id.main_top)).setVisibility(View.GONE);
-					myVideoView.setVisibility(View.GONE);
+					surfaceView.setVisibility(View.GONE);
 					full_sheet_button.setBackgroundDrawable(triangleDown);
 					full_sheet_button.invalidate();
 					full_sheet = false;
