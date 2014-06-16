@@ -147,6 +147,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		SurfaceHolder surfaceHolder;
 		public MediaRecorder mrec;
 		private Camera mCamera;
+		private static final String VIDEO_RECORDER_FOLDER = "VideoRecorder";
+		private String pathVideo;
 
 	/*** End of Video Recording Variables ***/
 	
@@ -919,7 +921,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
         mrec.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
         mrec.setPreviewDisplay(surfaceHolder.getSurface());
-        mrec.setOutputFile("/sdcard/zzzz.3gp"); 
+        mrec.setOutputFile(getFilenameVideo());
 
         mrec.prepare();
         mrec.start();
@@ -948,12 +950,25 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     }
     
     private void replayVideoRecording() {
-    	String lastvideo = Environment.getExternalStorageDirectory() + "/zzzz.3gp";
+    	String filename = fileName + ext;
+    	String lastvideo = pathVideo + "/" + filename;
     	Intent intentToPlayVideo = new Intent(Intent.ACTION_VIEW);
     	intentToPlayVideo.setDataAndType(Uri.parse(lastvideo), "video/*");
     	startActivity(intentToPlayVideo);
     	this.finish();
    }
+    
+    private String getFilenameVideo() {
+		String filepath = Environment.getExternalStorageDirectory().getPath();
+		File file = new File(filepath, VIDEO_RECORDER_FOLDER);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		fileName = System.currentTimeMillis();
+		pathVideo = file.getAbsolutePath();
+		ext = file_exts[currentFormat];
+		return (pathVideo + "/" + fileName + ext);
+	}
 	
 	
     @Override
