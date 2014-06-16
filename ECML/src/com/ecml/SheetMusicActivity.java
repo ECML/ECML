@@ -351,7 +351,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		surfaceHolder = myVideoView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		mCamera = Camera.open();
+		mCamera = Camera.open(1);
 		
 		startVideoRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -910,7 +910,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         releaseCamera();
     }
 
-    private void releaseMediaRecorder(){
+    private void releaseMediaRecorder() {
         if (mrec != null) {
             mrec.reset();   // clear recorder configuration
             mrec.release(); // release the recorder object
@@ -919,14 +919,14 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         }
     }
 
-    private void releaseCamera(){
+    private void releaseCamera() {
         if (mCamera != null){
             mCamera.release();        // release the camera for other applications
-            mCamera = Camera.open();
+            mCamera = Camera.open(1);
         }
     }
     
-    private void replayVideoRecording(){
+    private void replayVideoRecording() {
     	String lastvideo = Environment.getExternalStorageDirectory() + "/zzzz.3gp";
     	Intent intentToPlayVideo = new Intent(Intent.ACTION_VIEW);
     	intentToPlayVideo.setDataAndType(Uri.parse(lastvideo), "video/*");
