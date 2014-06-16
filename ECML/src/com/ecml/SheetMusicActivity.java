@@ -351,7 +351,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		surfaceHolder = myVideoView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		mCamera = Camera.open();
+		mCamera = openFrontFacingCamera(); 
 		
 		startVideoRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -391,6 +391,16 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				
 			}
 		});
+		
+		replayVideoRecording.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(SheetMusicActivity.this, "Play last video record", Toast.LENGTH_SHORT).show();
+				replayVideoRecording();
+
+			}
+		});
 
 		startAudioRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -403,6 +413,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 			}
 		});
+		
+		
 
 		stopAudioRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -911,7 +923,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         
     }
 
-    private void releaseMediaRecorder(){
+    private void releaseMediaRecorder() {
         if (mrec != null) {
             mrec.reset();   // clear recorder configuration
             mrec.release(); // release the recorder object
@@ -920,14 +932,12 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         }
     }
 
-    private void releaseCamera(){
+    private void releaseCamera() {
         if (mCamera != null){
             mCamera.release();        // release the camera for other applications
-            
         }
     }
-    
-    private void replayVideoRecording(){
+    private void replayVideoRecording() {
     	String lastvideo = Environment.getExternalStorageDirectory() + "/zzzz.3gp";
     	Intent intentToPlayVideo = new Intent(Intent.ACTION_VIEW);
     	intentToPlayVideo.setDataAndType(Uri.parse(lastvideo), "video/*");
@@ -949,6 +959,26 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         
+    }
+    
+    private Camera openFrontFacingCamera() 
+    {
+        int cameraCount = 0;
+        Camera cam = null;
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        cameraCount = Camera.getNumberOfCameras();
+        for ( int camIdx = 0; camIdx < cameraCount; camIdx++ ) {
+            Camera.getCameraInfo( camIdx, cameraInfo );
+            if ( cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT  ) {
+                try {
+                    cam = Camera.open( camIdx );
+                } catch (RuntimeException e) {
+                    
+                }
+            }
+        }
+
+        return cam;
     }
 	
 	/*** End of Video Recording Functions ***/
