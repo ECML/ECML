@@ -45,21 +45,21 @@
                 android:orientation="horizontal" >
 
                 <ImageButton
-                    android:id="@+id/startcamerapreview"
+                    android:id="@+id/replayVideoRecording"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:src="@drawable/camera" />
 
                 <ImageButton
-                    android:id="@+id/startcamera"
+                    android:id="@+id/startVideoRecording"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:src="@drawable/record_start" />
 
                 <ImageButton
-                    android:id="@+id/stopcamera"
+                    android:id="@+id/stopVideoRecording"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -78,14 +78,14 @@
                     android:src="@drawable/recorder_button" />
 
                 <ImageButton
-                    android:id="@+id/startBtn"
+                    android:id="@+id/startAudioRecording"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:src="@drawable/record_start" />
 
                 <ImageButton
-                    android:id="@+id/stopBtn"
+                    android:id="@+id/stopAudioRecording"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -104,7 +104,7 @@
                     android:src="@drawable/music_button2" />
 
                 <ImageButton
-                    android:id="@+id/play_button"
+                    android:id="@+id/replayAudioRecording"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
