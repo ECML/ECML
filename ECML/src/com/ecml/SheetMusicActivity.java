@@ -131,6 +131,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		private int currentFormat = 0;
 		private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP };
 		private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP };
+		MediaPlayer mp = new MediaPlayer();
 
 	/*** End of Audio Recording Variables ***/
 
@@ -806,6 +807,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         }
         super.onPause();
         mCamera.release();
+        mp.stop();
+        
     } 
 
 /**********************************************************************************************************
@@ -881,9 +884,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}).show();
 	}
 
+		
 	private void playAudio(String path, String fileName) {
 		// set up MediaPlayer
-		MediaPlayer mp = new MediaPlayer();
+		
 		try {
 			mp.setDataSource(path + "/" + fileName);
 		} catch (IllegalArgumentException e) {
