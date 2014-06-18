@@ -107,6 +107,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		private MidiFile midifile; /* The midi file to play */
 		private MidiOptions options; /* The options for sheet music and sound */
 		private long midiCRC; /* CRC of the midi bytes */
+		
 
 	/*** End of MidiSheet variables ***/
 
@@ -184,7 +185,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		MetronomeController metronomeController;
 		
 	/*** End of Metronome Variables ***/
-	
+		
+		
 /**********************************************************************************************************
  **********************************************************************************************************
  **********************************************************************************************************/
@@ -225,7 +227,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 		// Initialize the settings (MidiOptions).
 		// If previous settings have been saved, used those
+		
 		options = new MidiOptions(midifile);
+		
 		CRC32 crc = new CRC32();
 		crc.update(data);
 		midiCRC = crc.getValue();
@@ -463,6 +467,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				}
 			}
 		});
+		
 		
 		/*** End of side activities ***/
 
