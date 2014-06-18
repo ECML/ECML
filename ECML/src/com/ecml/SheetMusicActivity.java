@@ -43,6 +43,7 @@ import java.io.UnsupportedEncodingException;
 import com.ecml.CalendarActivity;
 import com.ecml.R;
 import com.ecml.RecordingActivity;
+import com.metronome.MetronomeController;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -69,8 +70,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+
+import com.metronome.MetronomeController;
 
 /***************************************************************************************************************
  ***************************************************************************************************************
@@ -172,6 +177,12 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		final Context context = this;
 		
 	/*** End of Tuning Fork Variables ***/
+		
+	/*** Metronome Variables ***/
+		
+		MetronomeController metronomeController;
+		
+	/*** End of Metronome Variables ***/
 	
 /**********************************************************************************************************
  **********************************************************************************************************
@@ -229,6 +240,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 		createView();
 		createSheetMusic(options);
+		
+		metronomeController = new MetronomeController(this);   
+        updateTempoView();
+        setSliderListener();    
 
 /**********************************************************************************************************
  **********************************************************************************************************
@@ -729,6 +744,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private void showGame() {
 
 	}
+	
+	
 
 	/**
 	 * This is the callback when the SettingsActivity is finished. Get the
@@ -990,7 +1007,57 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     }
 	
 	/*** End of Video Recording Functions ***/
-	
+    
+    /*** Metronome Functions ***/
+    
+    private void updateTempoView(){
+        TextView tempoView = ((TextView) findViewById(R.id.tempo));
+        tempoView.setText(metronomeController.getTempo()+"");
+    }
+    
+    public void start(View view){
+    	metronomeController.startMetronome();
+    }
+    
+    public void stop(View view){
+    	metronomeController.stopMetronome();
+    }
+    
+    public void updateTempo(View view){
+    	SeekBar slider = (SeekBar) findViewById(R.id.slider);
+    	int newTempo = slider.getProgress();
+    	metronomeController.setTempo(newTempo);
+    	updateTempoView();
+    }
+    
+    private void setSliderListener(){
+    	SeekBar slider = (SeekBar) findViewById(R.id.slider);
+    	slider.setMax(200);
+    	slider.setProgress(metronomeController.getTempo());
+    	slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+		    	metronomeController.startMetronome();
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				metronomeController.stopMetronome();
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				
+		    	metronomeController.setTempo(progress);
+		    	updateTempoView();
+			}
+		});
+    }
+    
+    /*** End of Metronome Functions ***/
+    	
 /**********************************************************************************************************
  **********************************************************************************************************
  **********************************************************************************************************/
