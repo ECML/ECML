@@ -36,8 +36,8 @@ public class MidiOptions implements Serializable {
 
     public boolean showPiano;        /** Display the piano */
     public boolean[] tracks;         /** Which tracks to display (true = display) */
-    public int[] instruments;        /** Which instruments to use per track */
-    public boolean useDefaultInstruments; /** If true, don't change instruments */
+    public static int[] instruments;        /** Which instruments to use per track */
+    public static boolean useDefaultInstruments; /** If true, don't change instruments */
     public boolean scrollVert;       /** Whether to scroll vertically or horizontally */
     public boolean largeNoteSize;    /** Display large or small note sizes */
     public boolean twoStaffs;        /** Combine tracks into two staffs ? */

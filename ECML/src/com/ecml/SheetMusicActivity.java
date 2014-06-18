@@ -433,14 +433,17 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         });
         
 
-		final String songTitle = this.getIntent().getStringExtra(MidiTitleID); // current song title
+		final String songTitle = this.getIntent().getStringExtra(MidiTitleID);// current song title
+		 
+		
 
 		youtube_btn.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
-				myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle)));
+				String instrument = instrumentYoutube();
+				myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle + " " + instrument) ));
 				startActivity(myWebLink);
 			}
 		});
@@ -722,6 +725,18 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		}
 		return new_title;
+	}
+	
+	/** Get the current instrument for track 0 */
+	public String instrumentYoutube() {
+		String instrument = "";
+//		if (MidiOptions.useDefaultInstruments = true) {
+//			instrument = "piano";
+//		}
+//		else {
+			instrument = MidiFile.Instruments[MidiOptions.instruments[0]];
+//		}
+		return instrument;
 	}
 
 	/** Launch Youtube on Navigator and search for the current song */
