@@ -340,7 +340,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Play Last Record", Toast.LENGTH_SHORT).show();
 				String filename = fileName + ext;
 				playAudio(pathAudio, filename);
 				// TODO Auto-generated method stub
@@ -910,7 +909,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mp.start();
+		if (!mp.isPlaying()) {
+			Toast.makeText(SheetMusicActivity.this, "Play Last Record", Toast.LENGTH_SHORT).show();
+			mp.start();			
+		}
 	}
 
 	private MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
