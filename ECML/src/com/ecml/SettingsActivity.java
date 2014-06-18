@@ -83,10 +83,7 @@ public class SettingsActivity extends PreferenceActivity
         super.onCreate(savedInstanceState);
         setTheme(android.R.style.Theme_Holo_Light);
         getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-        
-      
-        // getListView().setBackgroundColor(Color.TRANSPARENT);
-        // getListView().setCacheColorHint(Color.TRANSPARENT);
+
         setTitle("ECML: Settings");
         options = (MidiOptions) this.getIntent().getSerializableExtra(settingsID);
         defaultOptions = (MidiOptions) this.getIntent().getSerializableExtra(defaultSettingsID);

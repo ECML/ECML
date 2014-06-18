@@ -18,9 +18,9 @@ import java.io.*;
 import android.app.*;
 import android.content.*;
 import android.content.res.*;
-import android.database.ContentObserver;
-import android.util.*;
 import android.graphics.*;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.view.*;
 import android.widget.*;
 import android.os.*;
@@ -56,7 +56,7 @@ import com.ecml.R;
  * SheetMusic.ShadeNotes() is used.  It takes the current 'pulse time',
  * and determines which notes to shade.
  */
-public class MidiPlayer extends LinearLayout {
+public class MidiPlayer extends LinearLayout implements KeyListener {
     static Bitmap rewindImage;           /** The rewind image */
     static Bitmap playImage;             /** The play image */
     static Bitmap pauseImage;            /** The pause image */
@@ -131,23 +131,25 @@ public class MidiPlayer extends LinearLayout {
         this.options = null;
         this.sheet = null;
         playstate = stopped;
-        mute = false;
         startTime = SystemClock.uptimeMillis();
         startPulseTime = 0;
         currentPulseTime = 0;
         prevPulseTime = -10;
         this.setPadding(0, 0, 0, 0);
+        
+        audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        mute = (volume == 0);
+        
         CreateButtons();
 
+        
         int screenwidth = activity.getWindowManager().getDefaultDisplay().getWidth();
         int screenheight = activity.getWindowManager().getDefaultDisplay().getHeight();
         Point newsize = MidiPlayer.getPreferredSize(screenwidth, screenheight);
         resizeButtons(newsize.x, newsize.y);
         player = new MediaPlayer();
         setBackgroundColor(Color.BLACK);
-        
-        audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-        volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
     }
 
     /** Get the preferred width/height given the screen width/height */
@@ -282,7 +284,11 @@ public class MidiPlayer extends LinearLayout {
         muteButton.setScaleType(ImageView.ScaleType.FIT_XY);
         muteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mute();
+            	if (mute) {
+            		muteOff();
+            	} else {
+            		muteOn();
+            	}
             }
         });
         this.addView(muteButton);
@@ -550,7 +556,7 @@ public class MidiPlayer extends LinearLayout {
 
         timer.removeCallbacks(TimerCallback);
         timer.removeCallbacks(ReShade);
-        timer.postDelayed(TimerCallback, 100);
+        timer.postDelayed(TimerCallback, 1000);
 
         sheet.ShadeNotes((int)currentPulseTime, (int)prevPulseTime, SheetMusic.GradualScroll);
         piano.ShadeNotes((int)currentPulseTime, (int)prevPulseTime);
@@ -774,19 +780,104 @@ public class MidiPlayer extends LinearLayout {
     }
 
     
-    private void mute() {
-    	mute = !(mute);
-    	if (mute) {
-    		volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        	muteButton.setImageBitmap(muteOnImage);
-        	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_PLAY_SOUND);
-        } else {
-        	muteButton.setImageBitmap(muteOffImage);
-        	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_PLAY_SOUND);
-
-        }
+    public void muteOn() {
+    	mute = true;
+    	muteButton.setImageBitmap(muteOnImage);
+    	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+    	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
     
+    public void muteOff() {
+    	mute = false ;
+    	muteButton.setImageBitmap(muteOffImage);
+    	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+    }
+    
+    
+    
+//    // Over-ride this function to define what should happen when keys are pressed (e.g. Home button, Back button, etc.)
+//    @Override
+//    public boolean dispatchKeyEvent(KeyEvent event) 
+//    {
+//        if (event.getAction() == KeyEvent.ACTION_UP)
+//        {
+//            switch (event.getKeyCode()) 
+//            {
+//                case KeyEvent.KEYCODE_VOLUME_UP:
+//                    // Volume up key detected
+//                	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+//                    if (mute && volume != 0) {
+//                    	muteOff();
+//                    }
+//                    return true;
+//                case KeyEvent.KEYCODE_VOLUME_DOWN:
+//                	// Volume down key detected
+//                	if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+//	                	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+//                	}
+//                    if (!mute && volume == 0) {
+//                    	muteOn();
+//                    }
+//                    return true;
+//            }
+//        }
+//
+//        return super.dispatchKeyEvent(event);
+//    }
+
+
+	@Override
+	public int getInputType() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public boolean onKeyDown(View view, Editable text, int keyCode,
+			KeyEvent event) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+        switch (event.getKeyCode()) 
+        {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                // Volume up key detected
+            	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                if (mute && volume != 0) {
+                	muteOff();
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+            	// Volume down key detected
+            	if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+                	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            	}
+                if (!mute && volume == 0) {
+                	muteOn();
+                }
+                return true;
+            }
+		return false;
+	}
+
+
+	@Override
+	public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void clearMetaKeyState(View view, Editable content, int states) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }
 

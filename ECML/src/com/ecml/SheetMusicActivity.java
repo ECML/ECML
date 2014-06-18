@@ -52,6 +52,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.media.AudioManager;
 import android.media.CamcorderProfile;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -60,7 +61,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore.MediaColumns;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -88,7 +92,7 @@ import android.widget.Toast;
  * 		- SheetMusic : For highlighting the sheet music notes during playback.
  * 
  */
-public class SheetMusicActivity extends Activity implements SurfaceHolder.Callback {
+public class SheetMusicActivity extends Activity implements SurfaceHolder.Callback, KeyListener {
 
 	/*** MidiSheet variables ***/
 
@@ -962,25 +966,65 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        if (mCamera != null){
-            Parameters params = mCamera.getParameters();
-            mCamera.setParameters(params);
-            
-            
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Camera not available!", Toast.LENGTH_LONG).show();
-            finish();
-        }
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        mCamera.stopPreview();
-        mCamera.release();
     }
 	
 	/*** End of Video Recording Functions ***/
+    
+    
+    /*** Mute Button ***/
+    
+    @Override
+	public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+        switch (event.getKeyCode()) 
+        {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                // Volume up key detected
+            	player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                if (player.mute && player.volume != 0) {
+                	player.muteOff();
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+            	// Volume down key detected
+            	if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+            		player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            	}
+                if (!player.mute && player.volume == 0) {
+                	player.muteOn();
+                }
+                return true;
+            }
+		return false;
+	}
+
+	@Override
+	public int getInputType() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean onKeyDown(View view, Editable text, int keyCode,
+			KeyEvent event) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void clearMetaKeyState(View view, Editable content, int states) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 /**********************************************************************************************************
  **********************************************************************************************************
