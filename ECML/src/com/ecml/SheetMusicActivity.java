@@ -808,6 +808,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         super.onPause();
         mCamera.release();
         mp.stop();
+        metronomeController.stopMetronome();
         
     } 
 
