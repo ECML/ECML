@@ -53,6 +53,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.media.AudioManager;
 import android.media.CamcorderProfile;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -61,11 +62,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore.MediaColumns;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -93,7 +98,7 @@ import com.metronome.MetronomeController;
  * 		- SheetMusic : For highlighting the sheet music notes during playback.
  * 
  */
-public class SheetMusicActivity extends Activity implements SurfaceHolder.Callback {
+public class SheetMusicActivity extends Activity implements SurfaceHolder.Callback, KeyListener {
 
 	/*** MidiSheet variables ***/
 
@@ -180,6 +185,14 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		
 	/*** End of Tuning Fork Variables ***/
 		
+		
+	/*** Piano Variables ***/
+		
+		boolean click; /* used to avoid changing fullsheet mode */
+		
+	/*** End of Piano Variables ***/
+	
+
 	/*** Metronome Variables ***/
 		
 		MetronomeController metronomeController;
@@ -434,8 +447,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         
 
 		final String songTitle = this.getIntent().getStringExtra(MidiTitleID);// current song title
-		 
-		
 
 		youtube_btn.setOnClickListener(new View.OnClickListener() {
 			
@@ -472,6 +483,34 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		});
 		
 		
+		OnKeyListener keyListener = new OnKeyListener() {
+
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				switch (event.getKeyCode()) 
+		        {
+		            case KeyEvent.KEYCODE_VOLUME_UP:
+		                // Volume up key detected
+		            	player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		                if (player.mute && player.volume != 0) {
+		                	player.muteOff();
+		                }
+		                return true;
+		            case KeyEvent.KEYCODE_VOLUME_DOWN:
+		            	// Volume down key detected
+		            	if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+		            		player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		            	}
+		                if (!player.mute && player.volume == 0) {
+		                	player.muteOn();
+		                }
+		                return true;
+		            }
+				return false;
+			}
+			
+	    };
+	    
 		/*** End of side activities ***/
 
 /**********************************************************************************************************
@@ -495,7 +534,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		final Drawable triangleUp = getResources().getDrawable(R.drawable.triangle_up);
 		final Drawable triangleDown = getResources().getDrawable(R.drawable.triangle_down);
 		full_sheet_button.setBackgroundDrawable(triangleUp);
-		full_sheet_button.invalidate();
 		full_sheet_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -514,6 +552,29 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				}
 			}
 		});
+		
+		player.pianoButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				click = true ;
+            	options.showPiano = !options.showPiano;
+            	createView();
+            	/** could be improved but works for now */
+            	if (full_sheet) {
+					surfaceView.setVisibility(View.VISIBLE);
+					((LinearLayout) findViewById(R.id.main_top)).setVisibility(View.VISIBLE);
+					full_sheet_button.setBackgroundDrawable(triangleUp);
+					full_sheet_button.invalidate();
+					full_sheet = true;
+				} else {
+					((LinearLayout) findViewById(R.id.main_top)).setVisibility(View.GONE);
+					surfaceView.setVisibility(View.GONE);
+					full_sheet_button.setBackgroundDrawable(triangleDown);
+					full_sheet_button.invalidate();
+					full_sheet = false;
+				}
+            	createSheetMusic(options);
+            }
+		});
 
 		View l = getLayoutInflater().inflate(R.layout.main_top, layout, false);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(100, 20);
@@ -526,7 +587,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		layout.addView(player);
 		layout.addView(piano);
 		setContentView(layout);
-		player.SetPiano(piano);
+		player.SetPiano(piano, options);
 		layout.requestLayout();
 	}
 
@@ -785,8 +846,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private void showGame() {
 
 	}
-	
-	
 
 	/**
 	 * This is the callback when the SettingsActivity is finished. Get the
@@ -796,8 +855,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	 * with the new options.
 	 */
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (requestCode != settingsRequestCode) {
 			return;
 		}
@@ -925,10 +983,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}).show();
 	}
 
-		
+
 	private void playAudio(String path, String fileName) {
 		// set up MediaPlayer
-		
+		MediaPlayer mp = new MediaPlayer();
 		try {
 			mp.setDataSource(path + "/" + fileName);
 		} catch (IllegalArgumentException e) {
@@ -999,7 +1057,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         mrec.stop();
         releaseMediaRecorder();
         releaseCamera();
-        
     }
 
     private void releaseMediaRecorder() {
@@ -1012,10 +1069,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     }
 
     private void releaseCamera() {
-        if (mCamera != null){           
+        if (mCamera != null) {           
         	mCamera.release();        // release the camera for other applications
-            mCamera = Camera.open();
-                                  
+            mCamera = Camera.open();                
         }
     }
     
@@ -1047,12 +1103,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        
-    }
+   }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-       
     }
     
     private Camera openFrontFacingCameraGingerbread() {
@@ -1076,6 +1130,61 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	
 	/*** End of Video Recording Functions ***/
     
+    
+    /*** Mute Button ***/
+    
+    @Override
+	public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+        switch (event.getKeyCode()) 
+        {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                // Volume up key detected
+            	player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                if (player.mute && player.volume != 0) {
+                	player.muteOff();
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+            	// Volume down key detected
+            	if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+            		player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            	}
+                if (!player.mute && player.volume == 0) {
+                	player.muteOn();
+                }
+                return true;
+            }
+		return false;
+	}
+
+	@Override
+	public int getInputType() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean onKeyDown(View view, Editable text, int keyCode,
+			KeyEvent event) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void clearMetaKeyState(View view, Editable content, int states) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/*** End of Mute Button Functions ***/
+	
+
     /*** Metronome Functions ***/
     
     private void updateTempoView(){
