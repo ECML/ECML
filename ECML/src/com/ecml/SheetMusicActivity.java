@@ -305,7 +305,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		mCamera = Camera.open();
+		mCamera = openFrontFacingCameraGingerbread();
 		
 		ImageButton youtube_btn = (ImageButton) findViewById(R.id.youtubeBtn);
 		ImageButton upload = (ImageButton) findViewById(R.id.upload);
@@ -986,9 +986,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         mrec.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         mrec.setAudioSource(MediaRecorder.AudioSource.MIC); 
 
-        mrec.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-        mrec.setPreviewDisplay(surfaceHolder.getSurface());
+        mrec.setProfile(CamcorderProfile.get(1, CamcorderProfile.QUALITY_HIGH));
+        
         mrec.setOutputFile(getFilenameVideo());
+        mrec.setVideoFrameRate(10);
 
         mrec.prepare();
         mrec.start();
@@ -1052,6 +1053,25 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
        
+    }
+    
+    private Camera openFrontFacingCameraGingerbread() {
+        int cameraCount = 0;
+        Camera cam = null;
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        cameraCount = Camera.getNumberOfCameras();
+        for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
+            Camera.getCameraInfo(camIdx, cameraInfo);
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                try {
+                    cam = Camera.open(camIdx);
+                } catch (RuntimeException e) {
+                    
+                }
+            }
+        }
+
+        return cam;
     }
 	
 	/*** End of Video Recording Functions ***/
