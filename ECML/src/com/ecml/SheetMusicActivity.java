@@ -69,6 +69,7 @@ import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -174,6 +175,13 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		final Context context = this;
 		
 	/*** End of Tuning Fork Variables ***/
+		
+		
+	/*** Piano Variables ***/
+		
+		boolean click; /* used to avoid changing fullsheet mode */
+		
+	/*** End of Piano Variables ***/
 	
 /**********************************************************************************************************
  **********************************************************************************************************
@@ -451,6 +459,34 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		});
 		
+		OnKeyListener keyListener = new OnKeyListener() {
+
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				switch (event.getKeyCode()) 
+		        {
+		            case KeyEvent.KEYCODE_VOLUME_UP:
+		                // Volume up key detected
+		            	player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		                if (player.mute && player.volume != 0) {
+		                	player.muteOff();
+		                }
+		                return true;
+		            case KeyEvent.KEYCODE_VOLUME_DOWN:
+		            	// Volume down key detected
+		            	if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+		            		player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		            	}
+		                if (!player.mute && player.volume == 0) {
+		                	player.muteOn();
+		                }
+		                return true;
+		            }
+				return false;
+			}
+			
+	    };
+	    
 		/*** End of side activities ***/
 
 /**********************************************************************************************************
@@ -474,7 +510,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		final Drawable triangleUp = getResources().getDrawable(R.drawable.triangle_up);
 		final Drawable triangleDown = getResources().getDrawable(R.drawable.triangle_down);
 		full_sheet_button.setBackgroundDrawable(triangleUp);
-		full_sheet_button.invalidate();
+//		if (!click) {
+//			full_sheet_button.invalidate();
+//		}
+//		click = false;
 		full_sheet_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -493,6 +532,29 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				}
 			}
 		});
+		
+		player.pianoButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				click = true ;
+            	options.showPiano = !options.showPiano;
+            	createView();
+            	/** could be improved but works for now */
+            	if (full_sheet) {
+					surfaceView.setVisibility(View.VISIBLE);
+					((LinearLayout) findViewById(R.id.main_top)).setVisibility(View.VISIBLE);
+					full_sheet_button.setBackgroundDrawable(triangleUp);
+					full_sheet_button.invalidate();
+					full_sheet = true;
+				} else {
+					((LinearLayout) findViewById(R.id.main_top)).setVisibility(View.GONE);
+					surfaceView.setVisibility(View.GONE);
+					full_sheet_button.setBackgroundDrawable(triangleDown);
+					full_sheet_button.invalidate();
+					full_sheet = false;
+				}
+            	createSheetMusic(options);
+            }
+		});
 
 		View l = getLayoutInflater().inflate(R.layout.main_top, layout, false);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(100, 20);
@@ -505,7 +567,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		layout.addView(player);
 		layout.addView(piano);
 		setContentView(layout);
-		player.SetPiano(piano);
+		player.SetPiano(piano, options);
 		layout.requestLayout();
 	}
 
@@ -740,8 +802,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	 * with the new options.
 	 */
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (requestCode != settingsRequestCode) {
 			return;
 		}
@@ -1025,6 +1086,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 	
 /**********************************************************************************************************
  **********************************************************************************************************

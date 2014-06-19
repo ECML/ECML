@@ -56,7 +56,7 @@ import com.ecml.R;
  * SheetMusic.ShadeNotes() is used.  It takes the current 'pulse time',
  * and determines which notes to shade.
  */
-public class MidiPlayer extends LinearLayout implements KeyListener {
+public class MidiPlayer extends LinearLayout {
     static Bitmap rewindImage;           /** The rewind image */
     static Bitmap playImage;             /** The play image */
     static Bitmap pauseImage;            /** The pause image */
@@ -65,7 +65,8 @@ public class MidiPlayer extends LinearLayout implements KeyListener {
     static Bitmap volumeImage;           /** The volume image */
     static Bitmap settingsImage;         /** The settings image */
     static Bitmap muteOnImage;			 /** The mute image */
-    static Bitmap muteOffImage;			 /** The mute image */
+    static Bitmap muteOffImage;			 /** The unmute image */
+    static Bitmap pianoImage;				 /** The piano image */
 
     private ImageButton rewindButton;    /** The rewind button */
     private ImageButton playButton;      /** The play/pause button */
@@ -73,13 +74,14 @@ public class MidiPlayer extends LinearLayout implements KeyListener {
     private ImageButton fastFwdButton;   /** The fast forward button */
     private ImageButton settingsButton;  /** The settings button */
     private ImageButton muteButton;      /** The mute button */
+    ImageButton pianoButton;	 /** The piano button */
     private TextView speedText;          /** The "Speed %" label */
     private SeekBar speedBar;    /** The seekbar for controlling the playback speed */
     
-    boolean mute; 				 /** tell whether or not the volume is mute */
+    boolean mute; 				 /** Tell whether or not the volume is mute */
     int volume;			 		 /** Used to set the volume to zero */
     AudioManager audioManager;   /** AudioManager used to mute and unmute music sound */
-
+    
     int playstate;               /** The playing state of the Midi Player */
     final int stopped   = 1;     /** Currently stopped */
     final int playing   = 2;     /** Currently playing music */
@@ -117,6 +119,7 @@ public class MidiPlayer extends LinearLayout implements KeyListener {
         settingsImage = BitmapFactory.decodeResource(res, R.drawable.settings);
         muteOnImage = BitmapFactory.decodeResource(res, R.drawable.mute_on);
         muteOffImage = BitmapFactory.decodeResource(res, R.drawable.mute_off);
+        pianoImage = BitmapFactory.decodeResource(res, R.drawable.piano_icon);
     }
 
 
@@ -293,6 +296,13 @@ public class MidiPlayer extends LinearLayout implements KeyListener {
         });
         this.addView(muteButton);
         
+        /* Create the piano button */        
+        pianoButton = new ImageButton(activity);
+        pianoButton.setBackgroundColor(Color.BLACK);
+        pianoButton.setImageBitmap(pianoImage);
+        pianoButton.setScaleType(ImageView.ScaleType.FIT_XY);
+        this.addView(pianoButton);
+        
         /* Initialize the timer used for playback, but don't start
          * the timer yet (enabled = false).
          */
@@ -335,8 +345,8 @@ public class MidiPlayer extends LinearLayout implements KeyListener {
         params.height = buttonheight;
         speedText.setLayoutParams(params);
         
-        params = new LinearLayout.LayoutParams(buttonheight * 4, buttonheight);
-        params.width = buttonheight * 4;
+        params = new LinearLayout.LayoutParams(buttonheight * 3, buttonheight);
+        params.width = buttonheight * 3;
         params.bottomMargin = 0;
         params.leftMargin = 0;
         params.topMargin = 0;
@@ -357,10 +367,16 @@ public class MidiPlayer extends LinearLayout implements KeyListener {
         params.rightMargin = 0;
         params.leftMargin = 0;
         muteButton.setLayoutParams(params);
+        pianoButton.setLayoutParams(params);
     }
     
-    public void SetPiano(Piano p) {
+    public void SetPiano(Piano p, MidiOptions options) {
         piano = p;
+        if (!options.showPiano) {
+			piano.setVisibility(View.GONE);
+		} else {
+			piano.setVisibility(View.VISIBLE);
+		}
     }
 
     /** The MidiFile and/or SheetMusic has changed. Stop any playback sound,
@@ -793,91 +809,36 @@ public class MidiPlayer extends LinearLayout implements KeyListener {
     	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
     
-    
-    
-//    // Over-ride this function to define what should happen when keys are pressed (e.g. Home button, Back button, etc.)
-//    @Override
-//    public boolean dispatchKeyEvent(KeyEvent event) 
-//    {
-//        if (event.getAction() == KeyEvent.ACTION_UP)
-//        {
-//            switch (event.getKeyCode()) 
-//            {
-//                case KeyEvent.KEYCODE_VOLUME_UP:
-//                    // Volume up key detected
-//                	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-//                    if (mute && volume != 0) {
-//                    	muteOff();
-//                    }
-//                    return true;
-//                case KeyEvent.KEYCODE_VOLUME_DOWN:
-//                	// Volume down key detected
-//                	if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-//	                	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-//                	}
-//                    if (!mute && volume == 0) {
-//                    	muteOn();
-//                    }
-//                    return true;
-//            }
-//        }
-//
-//        return super.dispatchKeyEvent(event);
-//    }
 
+    OnKeyListener keyListener = new OnKeyListener() {
 
-	@Override
-	public int getInputType() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	@Override
-	public boolean onKeyDown(View view, Editable text, int keyCode,
-			KeyEvent event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
-        switch (event.getKeyCode()) 
-        {
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                // Volume up key detected
-            	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                if (mute && volume != 0) {
-                	muteOff();
-                }
-                return true;
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-            	// Volume down key detected
-            	if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-                	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-            	}
-                if (!mute && volume == 0) {
-                	muteOn();
-                }
-                return true;
-            }
-		return false;
-	}
-
-
-	@Override
-	public boolean onKeyOther(View view, Editable text, KeyEvent event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public void clearMetaKeyState(View view, Editable content, int states) {
-		// TODO Auto-generated method stub
+		@Override
+		public boolean onKey(View v, int keyCode, KeyEvent event) {
+	        if (event.getAction() == KeyEvent.ACTION_UP) {
+			   switch (event.getKeyCode()) 
+		        {
+		            case KeyEvent.KEYCODE_VOLUME_UP:
+		                // Volume up key detected
+		            	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		                if (mute && volume != 0) {
+		                	muteOff();
+		                }
+		                return true;
+		            case KeyEvent.KEYCODE_VOLUME_DOWN:
+		            	// Volume down key detected
+		            	if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+		                	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		            	}
+		                if (!mute && volume == 0) {
+		                	muteOn();
+		                }
+		                return true;
+		            }
+		    }
+	        return false;
+		}
 		
-	}
+    };
     
 }
 
