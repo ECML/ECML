@@ -61,7 +61,12 @@ public class MidiPlayer extends LinearLayout {
     static Bitmap fastFwdImage;          /** The fast forward image */
     static Bitmap volumeImage;           /** The volume image */
     static Bitmap settingsImage;         /** The settings image */
-
+    static Bitmap plusImage;			 /** The + image for the speed bar */
+    static Bitmap minusImage;			 /** The - image for the speed bar */
+    
+    
+    private ImageButton plusButton;			 /** The + button for the speed bar */
+    private ImageButton minusButton;			 /** The - button for the speed bar */
     private ImageButton rewindButton;    /** The rewind button */
     private ImageButton playButton;      /** The play/pause button */
     private ImageButton stopButton;      /** The stop button */
@@ -105,6 +110,8 @@ public class MidiPlayer extends LinearLayout {
         stopImage = BitmapFactory.decodeResource(res, R.drawable.stop);
         fastFwdImage = BitmapFactory.decodeResource(res, R.drawable.fastforward);
         settingsImage = BitmapFactory.decodeResource(res, R.drawable.settings);
+        plusImage = BitmapFactory.decodeResource(res, R.drawable.plus);
+        minusImage = BitmapFactory.decodeResource(res, R.drawable.minus);
     }
 
 
@@ -219,15 +226,30 @@ public class MidiPlayer extends LinearLayout {
             }
         });
         this.addView(fastFwdButton);
-
-
-        /* Create the Speed bar */
+        
+        /* Create the text before the speed bar */
         speedText = new TextView(activity);
         speedText.setText("   Speed: 100%   ");
         speedText.setTextColor(Color.parseColor("#FFFFFF"));
         speedText.setGravity(Gravity.CENTER);
         this.addView(speedText);
+        
+        
+        /* Create the - button for the speed bar */        
+        minusButton = new ImageButton(activity);
+        minusButton.setBackgroundColor(Color.BLACK);
+        minusButton.setImageBitmap(minusImage);
+        minusButton.setScaleType(ImageView.ScaleType.FIT_XY);
+        minusButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Minus();
+            }
+        });
+        this.addView(minusButton);
 
+
+        /* Create the Speed bar */
+        
         speedBar = new SeekBar(activity);
         speedBar.setMax(150);
         speedBar.setProgress(100-30); //added later
@@ -242,6 +264,18 @@ public class MidiPlayer extends LinearLayout {
             }
         });
         this.addView(speedBar);
+                
+        /* Create the + button for the speed bar */        
+        plusButton = new ImageButton(activity);
+        plusButton.setBackgroundColor(Color.BLACK);
+        plusButton.setImageBitmap(plusImage);
+        plusButton.setScaleType(ImageView.ScaleType.FIT_XY);
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Plus();
+            }
+        });
+        this.addView(plusButton);
 
         /* Create the settings button */        
         settingsButton = new ImageButton(activity);
@@ -269,6 +303,8 @@ public class MidiPlayer extends LinearLayout {
         playButton.setPadding(pad, pad, pad, pad);
         fastFwdButton.setPadding(pad, pad, pad, pad);
         settingsButton.setPadding(pad, pad, pad, pad);
+        plusButton.setPadding(pad, pad, pad, pad);
+        minusButton.setPadding(pad, pad, pad, pad);
 
         LinearLayout.LayoutParams params;
         
@@ -629,6 +665,17 @@ public class MidiPlayer extends LinearLayout {
         }
         sheet.ShadeNotes((int)currentPulseTime, (int)prevPulseTime, SheetMusic.ImmediateScroll);
         piano.ShadeNotes((int)currentPulseTime, (int)prevPulseTime);
+    }
+    
+    
+    /** Plus 1 in the speed bar */
+    void Plus() {
+    	speedBar.setProgress(speedBar.getProgress() + 1);    	
+     }
+    
+    /** Minus 1 in the speed bar */
+    void Minus() {
+    	speedBar.setProgress(speedBar.getProgress() - 1);  
     }
 
 
