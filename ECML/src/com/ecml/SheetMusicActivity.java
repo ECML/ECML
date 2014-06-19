@@ -1071,7 +1071,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     private void releaseCamera() {
         if (mCamera != null) {           
         	mCamera.release();        // release the camera for other applications
-            mCamera = Camera.open();                
+        	mCamera = openFrontFacingCameraGingerbread();                
         }
     }
     

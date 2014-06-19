@@ -14,7 +14,7 @@ public class Metronome {
 		tempo = 60;
 		measure = 1;
         beep = new ToneGenerator(AudioManager.FLAG_PLAY_SOUND, 100);
-        firstBeep = new ToneGenerator(AudioManager.VIBRATE_TYPE_NOTIFICATION, 100);
+        firstBeep = new ToneGenerator(AudioManager.FLAG_PLAY_SOUND, 100);
 	}
 
 	public int getTempo() {
