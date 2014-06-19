@@ -730,21 +730,42 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/** Get the current instrument for track 0 */
 	public String instrumentYoutube() {
 		String instrument = "";
-//		if (MidiOptions.useDefaultInstruments = true) {
-//			instrument = "piano";
-//		}
-//		else {
+		if (MidiOptions.instruments[0] == 0 || MidiOptions.instruments[0] == 1
+				|| MidiOptions.instruments[0] == 2
+				|| MidiOptions.instruments[0] == 3
+				|| MidiOptions.instruments[0] == 4
+				|| MidiOptions.instruments[0] == 5
+				|| MidiOptions.instruments[0] == 6) {
+			instrument = "piano";
+		} else if (MidiOptions.instruments[0] == 25
+				|| MidiOptions.instruments[0] == 26
+				|| MidiOptions.instruments[0] == 27
+				|| MidiOptions.instruments[0] == 28
+				|| MidiOptions.instruments[0] == 29
+				|| MidiOptions.instruments[0] == 30
+				|| MidiOptions.instruments[0] == 31
+				|| MidiOptions.instruments[0] == 32) {
+			instrument = "guitar";
+		}
+
+		else if (MidiOptions.instruments[0] == 33
+				|| MidiOptions.instruments[0] == 34
+				|| MidiOptions.instruments[0] == 35
+				|| MidiOptions.instruments[0] == 36) {
+			instrument = "bass";
+		} else {
 			instrument = MidiFile.Instruments[MidiOptions.instruments[0]];
-//		}
+		}
 		return instrument;
 	}
 
 	/** Launch Youtube on Navigator and search for the current song */
 	private void showYoutube() {
 		String songTitle = this.getIntent().getStringExtra(MidiTitleID);
-		Uri uri = Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle));
-		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-		startActivity(intent);
+		Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+		String instrument = instrumentYoutube();
+		myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle + " " + instrument) ));
+		startActivity(myWebLink);
 	}
 	
 	/** Upload a video on Youtube */
