@@ -24,5 +24,6 @@
     <item android:id="@+id/game"
           android:title="@string/game_str"
           android:icon="@android:drawable/ic_menu_sort_by_size"></item>
+    
 </menu>
 

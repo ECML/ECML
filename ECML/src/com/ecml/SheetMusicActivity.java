@@ -43,6 +43,7 @@ import java.io.UnsupportedEncodingException;
 import com.ecml.CalendarActivity;
 import com.ecml.R;
 import com.ecml.RecordingActivity;
+import com.metronome.MetronomeController;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -74,8 +75,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+
+import com.metronome.MetronomeController;
 
 /***************************************************************************************************************
  ***************************************************************************************************************
@@ -107,6 +112,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		private MidiFile midifile; /* The midi file to play */
 		private MidiOptions options; /* The options for sheet music and sound */
 		private long midiCRC; /* CRC of the midi bytes */
+		
 
 	/*** End of MidiSheet variables ***/
 
@@ -131,6 +137,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		private int currentFormat = 0;
 		private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP };
 		private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP };
+		MediaPlayer mp = new MediaPlayer();
 
 	/*** End of Audio Recording Variables ***/
 
@@ -152,6 +159,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		SurfaceHolder surfaceHolder;
 		public MediaRecorder mrec;
 		private Camera mCamera;
+		private static final String VIDEO_RECORDER_FOLDER = "VideoRecorder";
+		private String pathVideo;
 
 	/*** End of Video Recording Variables ***/
 	
@@ -183,6 +192,14 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		
 	/*** End of Piano Variables ***/
 	
+
+	/*** Metronome Variables ***/
+		
+		MetronomeController metronomeController;
+		
+	/*** End of Metronome Variables ***/
+		
+		
 /**********************************************************************************************************
  **********************************************************************************************************
  **********************************************************************************************************/
@@ -223,7 +240,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 		// Initialize the settings (MidiOptions).
 		// If previous settings have been saved, used those
+		
 		options = new MidiOptions(midifile);
+		
 		CRC32 crc = new CRC32();
 		crc.update(data);
 		midiCRC = crc.getValue();
@@ -239,6 +258,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 		createView();
 		createSheetMusic(options);
+		
+		metronomeController = new MetronomeController(this);   
+        updateTempoView();
+        setSliderListener();    
 
 /**********************************************************************************************************
  **********************************************************************************************************
@@ -334,7 +357,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Play Last Record", Toast.LENGTH_SHORT).show();
 				String filename = fileName + ext;
 				playAudio(pathAudio, filename);
 				// TODO Auto-generated method stub
@@ -424,14 +446,15 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         });
         
 
-		final String songTitle = this.getIntent().getStringExtra(MidiTitleID); // current song title
+		final String songTitle = this.getIntent().getStringExtra(MidiTitleID);// current song title
 
 		youtube_btn.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
-				myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle)));
+				String instrument = instrumentYoutube();
+				myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle + " " + instrument) ));
 				startActivity(myWebLink);
 			}
 		});
@@ -458,6 +481,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				}
 			}
 		});
+		
 		
 		OnKeyListener keyListener = new OnKeyListener() {
 
@@ -510,10 +534,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		final Drawable triangleUp = getResources().getDrawable(R.drawable.triangle_up);
 		final Drawable triangleDown = getResources().getDrawable(R.drawable.triangle_down);
 		full_sheet_button.setBackgroundDrawable(triangleUp);
-//		if (!click) {
-//			full_sheet_button.invalidate();
-//		}
-//		click = false;
 		full_sheet_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -767,13 +787,46 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 		return new_title;
 	}
+	
+	/** Get the current instrument for track 0 */
+	public String instrumentYoutube() {
+		String instrument = "";
+		if (MidiOptions.instruments[0] == 0 || MidiOptions.instruments[0] == 1
+				|| MidiOptions.instruments[0] == 2
+				|| MidiOptions.instruments[0] == 3
+				|| MidiOptions.instruments[0] == 4
+				|| MidiOptions.instruments[0] == 5
+				|| MidiOptions.instruments[0] == 6) {
+			instrument = "piano";
+		} else if (MidiOptions.instruments[0] == 25
+				|| MidiOptions.instruments[0] == 26
+				|| MidiOptions.instruments[0] == 27
+				|| MidiOptions.instruments[0] == 28
+				|| MidiOptions.instruments[0] == 29
+				|| MidiOptions.instruments[0] == 30
+				|| MidiOptions.instruments[0] == 31
+				|| MidiOptions.instruments[0] == 32) {
+			instrument = "guitar";
+		}
+
+		else if (MidiOptions.instruments[0] == 33
+				|| MidiOptions.instruments[0] == 34
+				|| MidiOptions.instruments[0] == 35
+				|| MidiOptions.instruments[0] == 36) {
+			instrument = "bass";
+		} else {
+			instrument = MidiFile.Instruments[MidiOptions.instruments[0]];
+		}
+		return instrument;
+	}
 
 	/** Launch Youtube on Navigator and search for the current song */
 	private void showYoutube() {
 		String songTitle = this.getIntent().getStringExtra(MidiTitleID);
-		Uri uri = Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle));
-		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-		startActivity(intent);
+		Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+		String instrument = instrumentYoutube();
+		myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle + " " + instrument) ));
+		startActivity(myWebLink);
 	}
 	
 	/** Upload a video on Youtube */
@@ -841,6 +894,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			sheet.invalidate();
 		}
 		layout.requestLayout();
+		
 	}
 
 	/** When this activity pauses, stop the music */
@@ -850,6 +904,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
             player.Pause();
         }
         super.onPause();
+        mCamera.release();
+        mp.stop();
+        metronomeController.stopMetronome();
+        
     } 
 
 /**********************************************************************************************************
@@ -925,6 +983,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}).show();
 	}
 
+
 	private void playAudio(String path, String fileName) {
 		// set up MediaPlayer
 		MediaPlayer mp = new MediaPlayer();
@@ -949,7 +1008,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mp.start();
+		if (!mp.isPlaying()) {
+			Toast.makeText(SheetMusicActivity.this, "Play Last Record", Toast.LENGTH_SHORT).show();
+			mp.start();			
+		}
 	}
 
 	private MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
@@ -974,7 +1036,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	protected void startVideoRecording() throws IOException 
     {
         mrec = new MediaRecorder();  // Works well
-              
+        mCamera.stopPreview();      
         mCamera.unlock();
         mrec.setCamera(mCamera);
 
@@ -984,7 +1046,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
         mrec.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
         mrec.setPreviewDisplay(surfaceHolder.getSurface());
-        mrec.setOutputFile("/sdcard/zzzz.3gp"); 
+        mrec.setOutputFile(getFilenameVideo());
 
         mrec.prepare();
         mrec.start();
@@ -1006,19 +1068,32 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     }
 
     private void releaseCamera() {
-        if (mCamera != null){
-            mCamera.release();        // release the camera for other applications
-            mCamera = Camera.open();
+        if (mCamera != null) {           
+        	mCamera.release();        // release the camera for other applications
+            mCamera = Camera.open();                
         }
     }
     
     private void replayVideoRecording() {
-    	String lastvideo = Environment.getExternalStorageDirectory() + "/zzzz.3gp";
+    	String filename = fileName + ext;
+    	String lastvideo = pathVideo + "/" + filename;
     	Intent intentToPlayVideo = new Intent(Intent.ACTION_VIEW);
     	intentToPlayVideo.setDataAndType(Uri.parse(lastvideo), "video/*");
     	startActivity(intentToPlayVideo);
     	this.finish();
    }
+    
+    private String getFilenameVideo() {
+		String filepath = Environment.getExternalStorageDirectory().getPath();
+		File file = new File(filepath, VIDEO_RECORDER_FOLDER);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		fileName = System.currentTimeMillis();
+		pathVideo = file.getAbsolutePath();
+		ext = file_exts[currentFormat];
+		return (pathVideo + "/" + fileName + ext);
+	}
 	
 	
     @Override
@@ -1027,7 +1102,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-    }
+   }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
@@ -1087,8 +1162,59 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		
 	}
 	
+	/*** End of Mute Button Functions ***/
 	
-	
+
+    /*** Metronome Functions ***/
+    
+    private void updateTempoView(){
+        TextView tempoView = ((TextView) findViewById(R.id.tempo));
+        tempoView.setText(metronomeController.getTempo()+"");
+    }
+    
+    public void start(View view){
+    	metronomeController.startMetronome();
+    }
+    
+    public void stop(View view){
+    	metronomeController.stopMetronome();
+    }
+    
+    public void updateTempo(View view){
+    	SeekBar slider = (SeekBar) findViewById(R.id.slider);
+    	int newTempo = slider.getProgress();
+    	metronomeController.setTempo(newTempo);
+    	updateTempoView();
+    }
+    
+    private void setSliderListener(){
+    	SeekBar slider = (SeekBar) findViewById(R.id.slider);
+    	slider.setMax(200);
+    	slider.setProgress(metronomeController.getTempo());
+    	slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+		    	metronomeController.startMetronome();
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				metronomeController.stopMetronome();
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				
+		    	metronomeController.setTempo(progress);
+		    	updateTempoView();
+			}
+		});
+    }
+    
+    /*** End of Metronome Functions ***/
+    	
 /**********************************************************************************************************
  **********************************************************************************************************
  **********************************************************************************************************/
