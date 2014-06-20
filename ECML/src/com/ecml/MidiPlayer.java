@@ -77,11 +77,11 @@ public class MidiPlayer extends LinearLayout {
     private ImageButton fastFwdButton;   /** The fast forward button */
     private ImageButton settingsButton;  /** The settings button */
     private ImageButton muteButton;      /** The mute button */
-    ImageButton pianoButton;	 /** The piano button */
-    private ImageButton plusButton;			 /** The + button for the speed bar */
-    private ImageButton minusButton;			 /** The - button for the speed bar */
+    ImageButton pianoButton;	 		 /** The piano button */
+    private ImageButton plusButton;		 /** The + button for the speed bar */
+    private ImageButton minusButton;	 /** The - button for the speed bar */
     private TextView speedText;          /** The "Speed %" label */
-    private SeekBar speedBar;    /** The seekbar for controlling the playback speed */
+    private SeekBar speedBar;    		 /** The seekbar for controlling the playback speed */
     
     boolean mute; 				 /** Tell whether or not the volume is mute */
     int volume;			 		 /** Used to set the volume to zero */
@@ -93,6 +93,7 @@ public class MidiPlayer extends LinearLayout {
     final int paused    = 3;     /** Currently paused */
     final int initStop  = 4;     /** Transitioning from playing to stop */
     final int initPause = 5;     /** Transitioning from playing to pause */
+    int delay = 1000;			 /** Delay before playing the music */
 
     final String tempSoundFile = "playing.mid"; /** The filename to play sound from */
 
@@ -250,7 +251,7 @@ public class MidiPlayer extends LinearLayout {
         
         /* Create the text before the speed bar */
         speedText = new TextView(activity);
-        speedText.setText("   Speed: 100%   ");
+        speedText.setText("  Speed: 100% ");
         speedText.setTextColor(Color.parseColor("#FFFFFF"));
         speedText.setGravity(Gravity.CENTER);
         this.addView(speedText);
@@ -270,14 +271,13 @@ public class MidiPlayer extends LinearLayout {
 
 
         /* Create the Speed bar */
-        
         speedBar = new SeekBar(activity);
         speedBar.setMax(180-30); //added later
         speedBar.setProgress(100-30); //added later
         speedBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             public void onProgressChanged(SeekBar bar, int progress, boolean fromUser) {
             	// we add 30 to avoid reaching values under 30
-                speedText.setText("   Speed: " + String.format(Locale.US, "%03d", progress + 30 /* removed earlier */) + "%   ");
+                speedText.setText("  Speed: " + String.format(Locale.US, "%03d", progress + 30 /* removed earlier */) + "% ");
             }
             public void onStartTrackingTouch(SeekBar bar) {
             }
@@ -322,9 +322,9 @@ public class MidiPlayer extends LinearLayout {
         muteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	if (mute) {
-            		muteOff();
+            		unmute();
             	} else {
-            		muteOn();
+            		mute();
             	}
             }
         });
@@ -381,8 +381,16 @@ public class MidiPlayer extends LinearLayout {
         params.height = buttonheight;
         speedText.setLayoutParams(params);
         
-        params = new LinearLayout.LayoutParams(buttonheight * 3, buttonheight);
-        params.width = buttonheight * 3;
+        params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
+        params.bottomMargin = 0;
+        params.topMargin = 0;
+        params.rightMargin = 0;
+        params.leftMargin = 0;
+        
+        minusButton.setLayoutParams(params);
+        
+        params = new LinearLayout.LayoutParams(buttonheight * 2, buttonheight);
+        params.width = buttonheight * 2;
         params.bottomMargin = 0;
         params.leftMargin = 0;
         params.topMargin = 0;
@@ -394,7 +402,8 @@ public class MidiPlayer extends LinearLayout {
         params.bottomMargin = 0;
         params.topMargin = 0;
         params.rightMargin = 0;
-        params.leftMargin = buttonheight/8;
+        params.leftMargin = 0;
+        plusButton.setLayoutParams(params);
         settingsButton.setLayoutParams(params);
         
         params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
@@ -567,7 +576,7 @@ public class MidiPlayer extends LinearLayout {
         // Hide the midi player, wait a little for the view
         // to refresh, and then start playing
         timer.removeCallbacks(TimerCallback);
-        timer.postDelayed(DoPlay, 1000);
+        timer.postDelayed(DoPlay, 100);
     }
 
     Runnable DoPlay = new Runnable() {
@@ -607,7 +616,7 @@ public class MidiPlayer extends LinearLayout {
 
         timer.removeCallbacks(TimerCallback);
         timer.removeCallbacks(ReShade);
-        timer.postDelayed(TimerCallback, 100);
+        timer.postDelayed(TimerCallback, delay);
 
         sheet.ShadeNotes((int)currentPulseTime, (int)prevPulseTime, SheetMusic.GradualScroll);
         piano.ShadeNotes((int)currentPulseTime, (int)prevPulseTime);
@@ -842,14 +851,14 @@ public class MidiPlayer extends LinearLayout {
     }
 
     
-    public void muteOn() {
+    public void mute() {
     	mute = true;
     	muteButton.setImageBitmap(muteOnImage);
     	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
     	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
     
-    public void muteOff() {
+    public void unmute() {
     	mute = false ;
     	muteButton.setImageBitmap(muteOffImage);
     	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
@@ -867,7 +876,7 @@ public class MidiPlayer extends LinearLayout {
 		                // Volume up key detected
 		            	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		                if (mute && volume != 0) {
-		                	muteOff();
+		                	unmute();
 		                }
 		                return true;
 		            case KeyEvent.KEYCODE_VOLUME_DOWN:
@@ -876,7 +885,7 @@ public class MidiPlayer extends LinearLayout {
 		                	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		            	}
 		                if (!mute && volume == 0) {
-		                	muteOn();
+		                	mute();
 		                }
 		                return true;
 		            }

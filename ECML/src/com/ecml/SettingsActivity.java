@@ -51,6 +51,7 @@ public class SettingsActivity extends PreferenceActivity
     private MidiOptions options;         /** The option values */
 
     private Preference restoreDefaults;           /** Restore default settings */
+    private Preference setAllTracks;			  /** Unmute and display all tracks */
     private CheckBoxPreference[] selectTracks;    /** Which tracks to display */
     private CheckBoxPreference[] muteTracks;      /** Which tracks to mute */
     private ListPreference[] selectInstruments;   /** Instruments to use per track */
@@ -94,6 +95,7 @@ public class SettingsActivity extends PreferenceActivity
     private void createView() {
         PreferenceScreen root = getPreferenceManager().createPreferenceScreen(this);
         createRestoreDefaultPrefs(root);
+        createRestoreAllTracks(root);
         createTrackPrefs(root);
         createMutePrefs(root);
         createInstrumentPrefs(root);
@@ -143,8 +145,17 @@ public class SettingsActivity extends PreferenceActivity
             }
             createView();
         }
+        else if (preference == setAllTracks ) {
+        	for (int i = 0 ; i < options.tracks.length ; i++) {
+        		options.tracks[i] = true;
+        		options.mute[i] = false;
+        	}
+        	createView();
+        }
         return true;
     }
+    
+    
 
 
     /** Create the "Select Tracks to Display" checkboxes. */
@@ -194,10 +205,6 @@ public class SettingsActivity extends PreferenceActivity
             selectInstruments[i].setSummary( selectInstruments[i].getEntry() );
             root.addPreference(selectInstruments[i]);
         }
-        setAllToPiano = new Preference(this);
-        setAllToPiano.setTitle(R.string.set_all_to_piano);
-        setAllToPiano.setOnPreferenceClickListener(this);
-        root.addPreference(setAllToPiano);
     }
 
     /** Create the "Scroll Vertically" preference */
@@ -380,6 +387,14 @@ public class SettingsActivity extends PreferenceActivity
         restoreDefaults.setTitle(R.string.restore_defaults);
         restoreDefaults.setOnPreferenceClickListener(this);
         root.addPreference(restoreDefaults);
+    } 
+    
+    /* Create the "Unmute and Display all Tracks" preference */
+    private void createRestoreAllTracks(PreferenceScreen root) {
+    	setAllTracks = new Preference(this);
+    	setAllTracks.setTitle(R.string.set_all_tracks);
+    	setAllTracks.setOnPreferenceClickListener(this);
+    	root.addPreference(setAllTracks);
     } 
 
     /** Update the MidiOptions based on the preferences selected. */

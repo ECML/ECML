@@ -12,19 +12,6 @@
 
 package com.ecml;
 
-import java.net.*;
-
-import android.net.Uri;
-import android.widget.*;
-import android.view.*;
-import android.graphics.*;
-import android.graphics.drawable.Drawable;
-import android.content.*;
-import android.content.res.*;
-import android.media.*;
-
-import java.util.zip.CRC32;
-
 /***************************************************************************************************************
  ***************************************************************************************************************
  *****************************************Imports for add-ups***************************************************/
@@ -32,53 +19,48 @@ import java.util.zip.CRC32;
  ***************************************************************************************************************
  ***************************************************************************************************************/
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-
-import com.ecml.CalendarActivity;
-import com.ecml.R;
-import com.ecml.RecordingActivity;
-import com.metronome.MetronomeController;
+import java.net.URLEncoder;
+import java.util.zip.CRC32;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
-import android.hardware.Camera.Parameters;
 import android.media.AudioManager;
 import android.media.CamcorderProfile;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.provider.MediaStore.MediaColumns;
-import android.text.Editable;
-import android.text.method.KeyListener;
 import android.util.Log;
-import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.View.OnKeyListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.metronome.MetronomeController;
 
@@ -98,7 +80,7 @@ import com.metronome.MetronomeController;
  * 		- SheetMusic : For highlighting the sheet music notes during playback.
  * 
  */
-public class SheetMusicActivity extends Activity implements SurfaceHolder.Callback, KeyListener {
+public class SheetMusicActivity extends Activity implements SurfaceHolder.Callback {
 
 	/*** MidiSheet variables ***/
 
@@ -144,14 +126,11 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		
 	/*** Fullscreen Variables ***/
 		
-		ImageButton full_preview;
 		ImageButton full_sheet_button;
-		boolean full;
 		boolean full_sheet;
 	
-	/*** End of Fullscreen Variables ***/	
-
-		boolean preview_button_layout_visible;
+	/*** End of Fullscreen Variables ***/
+		
 		
 	/*** Video Recording Variables ***/
 
@@ -184,13 +163,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		final Context context = this;
 		
 	/*** End of Tuning Fork Variables ***/
-		
-		
-	/*** Piano Variables ***/
-		
-		boolean click; /* used to avoid changing fullsheet mode */
-		
-	/*** End of Piano Variables ***/
 	
 
 	/*** Metronome Variables ***/
@@ -270,9 +242,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
  **********************************************************************************************************
  **********************************************************************************************************/
 
-		full = false;
 		full_sheet = true;
-		preview_button_layout_visible = true;
 
 		// Create the library folder if it doesn't exist
 		File file_library = new File(libraryPath);
@@ -318,7 +288,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		mCamera = openFrontFacingCameraGingerbread();
+		mCamera = openFrontFacingCamera();
 		
 		ImageButton youtube_btn = (ImageButton) findViewById(R.id.youtubeBtn);
 		ImageButton upload = (ImageButton) findViewById(R.id.upload);
@@ -358,7 +328,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			@Override
 			public void onClick(View v) {
 				String filename = fileName + ext;
-				playAudio(pathAudio, filename);
+				playAudio(pathAudio, filename, mp);
 				// TODO Auto-generated method stub
 
 			}
@@ -481,35 +451,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				}
 			}
 		});
-		
-		
-		OnKeyListener keyListener = new OnKeyListener() {
-
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				switch (event.getKeyCode()) 
-		        {
-		            case KeyEvent.KEYCODE_VOLUME_UP:
-		                // Volume up key detected
-		            	player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-		                if (player.mute && player.volume != 0) {
-		                	player.muteOff();
-		                }
-		                return true;
-		            case KeyEvent.KEYCODE_VOLUME_DOWN:
-		            	// Volume down key detected
-		            	if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-		            		player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-		            	}
-		                if (!player.mute && player.volume == 0) {
-		                	player.muteOn();
-		                }
-		                return true;
-		            }
-				return false;
-			}
-			
-	    };
 	    
 		/*** End of side activities ***/
 
@@ -555,24 +496,15 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		
 		player.pianoButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				click = true ;
             	options.showPiano = !options.showPiano;
-            	createView();
-            	/** could be improved but works for now */
-            	if (full_sheet) {
-					surfaceView.setVisibility(View.VISIBLE);
-					((LinearLayout) findViewById(R.id.main_top)).setVisibility(View.VISIBLE);
-					full_sheet_button.setBackgroundDrawable(triangleUp);
-					full_sheet_button.invalidate();
-					full_sheet = true;
-				} else {
-					((LinearLayout) findViewById(R.id.main_top)).setVisibility(View.GONE);
-					surfaceView.setVisibility(View.GONE);
-					full_sheet_button.setBackgroundDrawable(triangleDown);
-					full_sheet_button.invalidate();
-					full_sheet = false;
-				}
-            	createSheetMusic(options);
+            	player.SetPiano(piano, options);
+            	SharedPreferences.Editor editor = getPreferences(0).edit();
+            	editor.putBoolean("showPiano", options.showPiano);
+        		String json = options.toJson();
+        		if (json != null) {
+        			editor.putString("" + midiCRC, json);
+        		}
+        		editor.commit();
             }
 		});
 
@@ -984,9 +916,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	}
 
 
-	private void playAudio(String path, String fileName) {
-		// set up MediaPlayer
-		MediaPlayer mp = new MediaPlayer();
+	private void playAudio(String path, String fileName, MediaPlayer mp) {
 		try {
 			mp.setDataSource(path + "/" + fileName);
 		} catch (IllegalArgumentException e) {
@@ -1071,7 +1001,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     private void releaseCamera() {
         if (mCamera != null) {           
         	mCamera.release();        // release the camera for other applications
-        	mCamera = openFrontFacingCameraGingerbread();                
+        	mCamera = openFrontFacingCamera();                
         }
     }
     
@@ -1109,7 +1039,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     public void surfaceDestroyed(SurfaceHolder holder) {
     }
     
-    private Camera openFrontFacingCameraGingerbread() {
+    private Camera openFrontFacingCamera() {
         int cameraCount = 0;
         Camera cam = null;
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
@@ -1132,55 +1062,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     
     
     /*** Mute Button ***/
-    
-    @Override
-	public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
-        switch (event.getKeyCode()) 
-        {
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                // Volume up key detected
-            	player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                if (player.mute && player.volume != 0) {
-                	player.muteOff();
-                }
-                return true;
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-            	// Volume down key detected
-            	if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-            		player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-            	}
-                if (!player.mute && player.volume == 0) {
-                	player.muteOn();
-                }
-                return true;
-            }
-		return false;
-	}
-
-	@Override
-	public int getInputType() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean onKeyDown(View view, Editable text, int keyCode,
-			KeyEvent event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onKeyOther(View view, Editable text, KeyEvent event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void clearMetaKeyState(View view, Editable content, int states) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	/*** End of Mute Button Functions ***/
 	
