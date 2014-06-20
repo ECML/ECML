@@ -863,7 +863,9 @@ public class MidiPlayer extends LinearLayout {
     public void mute() {
     	mute = true;
     	muteButton.setImageBitmap(muteOnImage);
-    	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+    	if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+    		volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+    	}
     	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
     

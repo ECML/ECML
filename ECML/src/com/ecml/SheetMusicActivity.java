@@ -977,7 +977,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         mrec.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         mrec.setAudioSource(MediaRecorder.AudioSource.MIC); 
 
-        mrec.setProfile(CamcorderProfile.get(1, CamcorderProfile.QUALITY_HIGH));
+        mrec.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
         
         mrec.setOutputFile(getFilenameVideo());
         mrec.setVideoFrameRate(10);
@@ -1036,7 +1036,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-   }
+    }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
@@ -1078,8 +1078,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
             switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_UP:
                 if (action == KeyEvent.ACTION_UP) {
-                	player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                	if (player.mute && player.volume != 0) {
+                	if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+                		player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                	}
+                	if (player.mute && player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
                 		player.unmute();
                 	}
                 }
@@ -1096,9 +1098,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
                     return true;                
                 }
                 return true;
-            default:
-                return super.onKeyDown(keyCode, event);
             }
+            return false;
     }
     
     @Override
@@ -1111,6 +1112,18 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     public void clearMetaKeyState(View view, Editable content, int states) {
     	// TODO Auto-generated method stub
     	
+    }
+    
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	int action = event.getAction();	
+		if (keyCode == KeyEvent.KEYCODE_BACK ) {
+			if (action == KeyEvent.ACTION_DOWN) {
+	    		this.finish();
+	            return true;
+	        }
+        }
+		return false;
     }
     
     @Override
@@ -1177,7 +1190,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     }
     
     /*** End of Metronome Functions ***/
-    	
+        	
 /**********************************************************************************************************
  **********************************************************************************************************
  **********************************************************************************************************/
