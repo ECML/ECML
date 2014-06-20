@@ -45,7 +45,10 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -80,7 +83,7 @@ import com.metronome.MetronomeController;
  * 		- SheetMusic : For highlighting the sheet music notes during playback.
  * 
  */
-public class SheetMusicActivity extends Activity implements SurfaceHolder.Callback {
+public class SheetMusicActivity extends Activity implements SurfaceHolder.Callback, KeyListener {
 
 	/*** MidiSheet variables ***/
 
@@ -1062,6 +1065,65 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     
     
     /*** Mute Button ***/
+    
+    @Override
+    public int getInputType() {
+    	// TODO Auto-generated method stub
+    	return 0;
+    }
+    
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        int action = event.getAction();
+            switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (action == KeyEvent.ACTION_UP) {
+                	player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                	if (player.mute && player.volume != 0) {
+                		player.unmute();
+                	}
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (action == KeyEvent.ACTION_UP) {
+                	// Volume down key detected
+                	if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+                		player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                	}
+                    if (!player.mute && player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
+                    	player.mute();
+                    }
+                    return true;                
+                }
+                return true;
+            default:
+                return super.onKeyDown(keyCode, event);
+            }
+    }
+    
+    @Override
+    public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+    	// TODO Auto-generated method stub
+    	return false;
+    }
+    
+    @Override
+    public void clearMetaKeyState(View view, Editable content, int states) {
+    	// TODO Auto-generated method stub
+    	
+    }
+    
+    @Override
+    public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
+    	// TODO Auto-generated method stub
+    	return false;
+    }
+    
+    @Override
+    public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+    	// TODO Auto-generated method stub
+    	return false;
+    }
 	
 	/*** End of Mute Button Functions ***/
 	

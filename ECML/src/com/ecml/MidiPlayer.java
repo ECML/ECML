@@ -12,22 +12,31 @@
 
 package com.ecml;
 
-import java.util.*;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Locale;
 
-import android.app.*;
-import android.content.*;
-import android.content.res.*;
-import android.util.*;
-import android.graphics.*;
-import android.text.Editable;
-import android.text.method.KeyListener;
-import android.view.*;
-import android.widget.*;
-import android.os.*;
-import android.media.*;
-
-import com.ecml.R;
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.view.Gravity;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 /** @class MidiPlayer
@@ -863,37 +872,6 @@ public class MidiPlayer extends LinearLayout {
     	muteButton.setImageBitmap(muteOffImage);
     	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
-    
-
-    OnKeyListener keyListener = new OnKeyListener() {
-
-		@Override
-		public boolean onKey(View v, int keyCode, KeyEvent event) {
-	        if (event.getAction() == KeyEvent.ACTION_UP) {
-			   switch (event.getKeyCode()) 
-		        {
-		            case KeyEvent.KEYCODE_VOLUME_UP:
-		                // Volume up key detected
-		            	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-		                if (mute && volume != 0) {
-		                	unmute();
-		                }
-		                return true;
-		            case KeyEvent.KEYCODE_VOLUME_DOWN:
-		            	// Volume down key detected
-		            	if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-		                	volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-		            	}
-		                if (!mute && volume == 0) {
-		                	mute();
-		                }
-		                return true;
-		            }
-		    }
-	        return false;
-		}
-		
-    };
     
 }
 
