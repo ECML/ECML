@@ -401,7 +401,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			
 			@Override
         	public void onClick(View arg0) {
-        		Toast.makeText(SheetMusicActivity.this, "Tuning fork", Toast.LENGTH_SHORT).show();
+      		Toast.makeText(SheetMusicActivity.this, "Tuning fork", Toast.LENGTH_SHORT).show();
         		MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.tuning);
         		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         		try {
@@ -556,11 +556,17 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/** When the menu button is pressed, initialize the menus. */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		
+		    // Inflate the menu items for use in the action bar
+		    MenuInflater inflater = getMenuInflater();
+		    inflater.inflate(R.menu.actionbar, menu);
+		    
+		
 		if (player != null) {
 			player.Pause();
 		}
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.sheet_menu, menu);
+		MenuInflater inflater2 = getMenuInflater();
+		inflater2.inflate(R.menu.sheet_menu, menu);
 		return true;
 	}
 
@@ -596,6 +602,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			return true;
 		case R.id.game:
 			showGame();
+			return true;
+		case R.id.tuning:
+			tuning();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -775,6 +784,22 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private void showCalendar() {
 		Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
 		startActivity(goToCalendar);
+	}
+	
+	private void tuning(){
+		Toast.makeText(SheetMusicActivity.this, "Tuning fork", Toast.LENGTH_SHORT).show();
+		MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.tuning);
+		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		try {
+			mPlayer.prepare();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mPlayer.start();
 	}
 
 	/** Launch the game */
