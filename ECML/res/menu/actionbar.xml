@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/video"
+          android:icon="@drawable/camera"
+          android:title="@string/video"
+          android:showAsAction="always"
+           />
+    <item android:id="@+id/audio"
+          android:icon="@drawable/recorder_button"
+          android:title="@string/audio"
+          android:showAsAction="always"
+           />    
+    <item android:id="@+id/calendar"
+          android:icon="@android:drawable/ic_menu_month"
+          android:title="@string/calendar_str"
+          android:showAsAction="always"
+          ></item>
+    <item android:id="@+id/youtube"
+          android:icon="@drawable/youtube"
+          android:title="@string/youtube_str"
+          android:showAsAction="always"
+          ></item>
+    <item android:id="@+id/upload"
+          android:icon="@drawable/upload"
+          android:title="@string/upload_youtube"
+          android:showAsAction="always"
+          ></item>
+   
+    <item android:id="@+id/choose_song"
+          android:icon="@android:drawable/ic_menu_search"
+          android:title="@string/choose_song"
+          android:showAsAction="always"
+           />
+    <item android:id="@+id/tuning"
+          android:icon="@drawable/tuning"
+          android:title="Tuning fork"
+          android:showAsAction="always"
+           />
+    
+</menu>

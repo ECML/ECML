@@ -46,7 +46,8 @@
     <string name="choose_title_str">Choose the title</string>
     <string name="audio_format_str">Audio Format</string>
     <string name="play_last_str">Play last record</string>
-    
+    <string name="audio">Audio Recording</string>
+    <string name="video">Video Recording</string>
     
     <string name="action_settings">Settings</string>
     <string name="start">Start</string>
