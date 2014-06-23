@@ -1142,8 +1142,13 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     	int action = event.getAction();	
 		if (keyCode == KeyEvent.KEYCODE_BACK ) {
 			if (action == KeyEvent.ACTION_DOWN) {
-	    		this.finish();
-	            return true;
+				if (!isAudioRecording && !isVideoRecording) {
+					this.finish();
+					return true;
+				}
+				else {
+					Toast.makeText(SheetMusicActivity.this, "Stop recording before exiting", Toast.LENGTH_SHORT).show();
+				}
 	        }
         }
 		return false;
