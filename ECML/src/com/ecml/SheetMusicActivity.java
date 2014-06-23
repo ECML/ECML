@@ -925,21 +925,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	}
 
-	private void displayFormatDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		String formats[] = { "MPEG 4", "3GPP" };
-		builder.setTitle(getString(R.string.choose_title_str)).setSingleChoiceItems(formats, currentFormat, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog,
-					int which) {
-				currentFormat = which;
-				// setFormatButtonCaption();
-				dialog.dismiss();
-			}
-		}).show();
-	}
-
-
 	private void playAudio(String path, String fileName, MediaPlayer mp) {
 		try {
 			mp.setDataSource(path + "/" + fileName);
