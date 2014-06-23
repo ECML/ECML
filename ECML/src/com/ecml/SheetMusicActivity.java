@@ -123,6 +123,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP };
 		private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP };
 		MediaPlayer mp = new MediaPlayer();
+		private boolean isAudioRecording;
 
 	/*** End of Audio Recording Variables ***/
 		
@@ -135,6 +136,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		private Camera mCamera;
 		private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";
 		private String pathVideo;
+		private boolean isVideoRecording;
 
 	/*** End of Video Recording Variables ***/
 		
@@ -281,14 +283,20 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		}
 
+		
+		isAudioRecording = false;
 		ImageButton startAudioRecording = (ImageButton) findViewById(R.id.startAudioRecording);
 		ImageButton stopAudioRecording = (ImageButton) findViewById(R.id.stopAudioRecording);
 		ImageButton startAudioPlayBack = (ImageButton) findViewById(R.id.replayAudioRecording);
 		ImageButton stopAudioPlayBack = (ImageButton) findViewById(R.id.stopReplayAudioRecording);
 		
+		isVideoRecording = false;
 		ImageButton startVideoRecording = (ImageButton) findViewById(R.id.startVideoRecording);
 		ImageButton stopVideoRecording = (ImageButton) findViewById(R.id.stopVideoRecording);
 		ImageButton replayVideoRecording = (ImageButton) findViewById(R.id.replayVideoRecording);
+		
+		enableButtons(isAudioRecording, isVideoRecording);
+		
 		surfaceView = (SurfaceView) findViewById(R.id.surface_camera);
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
@@ -309,8 +317,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(SheetMusicActivity.this, "Start Audio Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(true);
 				startAudioRecording();
+				enableButtons(isAudioRecording, isVideoRecording);
 				// TODO Auto-generated method stub
 
 			}
@@ -321,8 +329,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(SheetMusicActivity.this, "Stop Audio Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(false);
 				stopAudioRecording();
+				enableButtons(isAudioRecording, isVideoRecording);
 				// TODO Auto-generated method stub
 
 			}
@@ -332,6 +340,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 			@Override
 			public void onClick(View v) {
+				enableButtons(isAudioRecording, isVideoRecording);
 				String filename = fileName + ext;
 				playAudio(pathAudio, filename, mp);
 				// TODO Auto-generated method stub
@@ -349,9 +358,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(SheetMusicActivity.this, "Start Video Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(true);
 				try {
 					startVideoRecording();
+					enableButtons(isAudioRecording, isVideoRecording);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -365,9 +374,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(SheetMusicActivity.this, "Stop Video Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(true);
 				stopVideoRecording();
-
+				enableButtons(isAudioRecording, isVideoRecording);
 			}
 		});
 		
@@ -376,7 +384,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(SheetMusicActivity.this, "Replay Video Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(true);
+				enableButtons(isAudioRecording, isVideoRecording);
 				replayVideoRecording();
 			}
 		});
@@ -862,13 +870,17 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/*** Audio Recording functions ***/
 
 	private void enableButton(int id, boolean isEnable) {
-		((Button) findViewById(id)).setEnabled(isEnable);
+		((ImageButton) findViewById(id)).setEnabled(isEnable);
 	}
 
-	private void enableButtons(boolean isRecording) {
-		enableButton(R.id.btnStart, !isRecording);
-		enableButton(R.id.btnStop, isRecording);
-		enableButton(R.id.btnPlay, (!isRecording && existLastRecord));
+	private void enableButtons(boolean isAudioRecording, boolean isVideoRecording) {
+		enableButton(R.id.startAudioRecording, !isAudioRecording && !isVideoRecording);
+		enableButton(R.id.stopAudioRecording, isAudioRecording && !isVideoRecording);
+		enableButton(R.id.replayAudioRecording, (!isAudioRecording && existLastRecord) && !isVideoRecording);
+		enableButton(R.id.startVideoRecording, !isVideoRecording && !isAudioRecording);
+		enableButton(R.id.stopVideoRecording, isVideoRecording && !isAudioRecording);
+		enableButton(R.id.replayVideoRecording, !isVideoRecording && !isAudioRecording);
+		
 	}
 
 	private String getFilenameAudio() {
@@ -894,15 +906,17 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		try {
 			recorder.prepare();
 			recorder.start();
+			isAudioRecording = true;
+			existLastRecord = true;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		existLastRecord = true;
 	}
 
 	private void stopAudioRecording() {
+		isAudioRecording = false;
 		if (null != recorder) {
 			recorder.stop();
 			recorder.reset();
@@ -991,12 +1005,14 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
         mrec.prepare();
         mrec.start();
+        isVideoRecording = true;
     }
 
     protected void stopVideoRecording() {
         mrec.stop();
         releaseMediaRecorder();
         releaseCamera();
+        isVideoRecording = false;
     }
 
     private void releaseMediaRecorder() {
