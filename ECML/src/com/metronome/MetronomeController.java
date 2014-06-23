@@ -11,7 +11,7 @@ public class MetronomeController {
 	private Metronome metronome;
 	private Horloge horloge;
 
-	public MetronomeController(SheetMusicActivity metronomeActivity){
+	public MetronomeController(SheetMusicActivity metronomeActivity) {
 		this.metronomeActivity = metronomeActivity;
 		metronome = new Metronome();
 	}
@@ -20,25 +20,21 @@ public class MetronomeController {
 		return metronome.getTempo();
 	}
 	
-	public void setTempo(int tempo){
+	public void setTempo(int tempo) {
 		metronome.setTempo(tempo);
 	}
 	
-	public void startMetronome(){
-		if(horloge != null){
+	public void startMetronome() {
+		if(horloge != null) {
 			horloge.stop();
 		}
 		horloge = new Horloge(metronome.getTempo(), metronome.getMeasure(), metronome.getBeep(), metronome.getFirstBeep());
 	}
 	
-	public void stopMetronome(){
-		if(horloge != null){
+	public void stopMetronome() {
+		if(horloge != null) {
 			horloge.stop();
 		}
-		
 	}
-	
-	
-
 	
 }

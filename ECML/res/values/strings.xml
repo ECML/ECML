@@ -4,7 +4,7 @@
     <string name="choose_song">Choose Song</string>
     <string name="song_settings_str">Settings</string>
     <string name="save_images_str">Save As Images</string>
-    <string name="save_images_descr_str">Save the sheet music as images, in the directory /Pictures/ECML, with the following filename</string>
+    <string name="save_images_descr_str">Save the sheet music as images, in the directory /ECML/MusicSheets, with the following filename</string>
     <string name="help_str">Help</string>
     <string name="sheet_prefs_title">Sheet Music Preferences</string>
     <string name="restore_defaults">Restore Default Settings</string>

@@ -10,7 +10,7 @@ public class Metronome {
 	private ToneGenerator beep;
 	private ToneGenerator firstBeep;
 	
-	public Metronome(){
+	public Metronome() {
 		tempo = 60;
 		measure = 1;
         beep = new ToneGenerator(AudioManager.FLAG_PLAY_SOUND, 100);
@@ -44,7 +44,5 @@ public class Metronome {
 	public void setFirstBeep(ToneGenerator firstBeep) {
 		this.firstBeep = firstBeep;
 	}
-	
-	
-	
+
 }

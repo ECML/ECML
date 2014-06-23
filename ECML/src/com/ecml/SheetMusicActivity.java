@@ -117,7 +117,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	
 		private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
 		private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
-		private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
+		private static final String AUDIO_RECORDER_FOLDER = "AudioRecords";
 		private MediaRecorder recorder = null;
 		private int currentFormat = 0;
 		private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP };
@@ -141,7 +141,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		SurfaceHolder surfaceHolder;
 		public MediaRecorder mrec;
 		private Camera mCamera;
-		private static final String VIDEO_RECORDER_FOLDER = "VideoRecorder";
+		private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";
 		private String pathVideo;
 
 	/*** End of Video Recording Variables ***/
@@ -149,7 +149,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	
 	/*** File Variables ***/
 
-		private static String libraryPath = "sdcard/Library/";
+		private static String ECMLPath = "sdcard/ECML/";
+		private static final String MUSIC_SHEET_FOLDER = "MusicSheets";
 		
 	/*** End of File Variables ***/
 	
@@ -248,7 +249,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		full_sheet = true;
 
 		// Create the library folder if it doesn't exist
-		File file_library = new File(libraryPath);
+		File file_library = new File(ECMLPath);
 		if (!file_library.exists()) {
 			if (!file_library.mkdirs()) {
 				Log.e("TravellerLog :: ", "Problem creating the Library");
@@ -256,7 +257,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 
 		// Create the folder containing the music sheets ( in the library)
-		File musicSheets = new File(libraryPath.concat("MusicSheets"));
+		File musicSheets = new File(ECMLPath.concat(MUSIC_SHEET_FOLDER));
 		if (!musicSheets.exists()) {
 			if (!musicSheets.mkdirs()) {
 				Log.e("TravellerLog :: ", "Problem creating the Music sheets folder");
@@ -264,25 +265,25 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 
 		// Create the folder containing the records ( in the library)
-		File records = new File(libraryPath.concat("AudioRecords"));
+		File records = new File(ECMLPath.concat(AUDIO_RECORDER_FOLDER));
 		if (!records.exists()) {
 			if (!records.mkdirs()) {
-				Log.e("TravellerLog :: ", "Problem creating the records folder");
+				Log.e("TravellerLog :: ", "Problem creating the Audio records folder");
 			}
 		}
 
 		// create the folder containing the video records
-		File videorecords = new File(libraryPath.concat("VideoRecords"));
+		File videorecords = new File(ECMLPath.concat(VIDEO_RECORDER_FOLDER));
 		if (!videorecords.exists()) {
 			if (!videorecords.mkdirs()) {
-				Log.e("TravellerLog :: ", "Problem creating the video records folder");
+				Log.e("TravellerLog :: ", "Problem creating the Video records folder");
 			}
 		}
 
 		ImageButton startAudioRecording = (ImageButton) findViewById(R.id.startAudioRecording);
 		ImageButton stopAudioRecording = (ImageButton) findViewById(R.id.stopAudioRecording);
-		ImageButton startPlayBack = (ImageButton) findViewById(R.id.replayAudioRecording);
-		ImageButton stopPlayBack = (ImageButton) findViewById(R.id.stopReplayAudioRecording);
+		ImageButton startAudioPlayBack = (ImageButton) findViewById(R.id.replayAudioRecording);
+		ImageButton stopAudioPlayBack = (ImageButton) findViewById(R.id.stopReplayAudioRecording);
 		
 		ImageButton startVideoRecording = (ImageButton) findViewById(R.id.startVideoRecording);
 		ImageButton stopVideoRecording = (ImageButton) findViewById(R.id.stopVideoRecording);
@@ -306,7 +307,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Start Recording", Toast.LENGTH_SHORT).show();
+				Toast.makeText(SheetMusicActivity.this, "Start Audio Recording", Toast.LENGTH_SHORT).show();
 				// enableButtons(true);
 				startAudioRecording();
 				// TODO Auto-generated method stub
@@ -318,7 +319,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Stop Recording", Toast.LENGTH_SHORT).show();
+				Toast.makeText(SheetMusicActivity.this, "Stop Audio Recording", Toast.LENGTH_SHORT).show();
 				// enableButtons(false);
 				stopAudioRecording();
 				// TODO Auto-generated method stub
@@ -326,7 +327,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		});
 
-		startPlayBack.setOnClickListener(new View.OnClickListener() {
+		startAudioPlayBack.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -655,6 +656,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			filename = URLEncoder.encode(name, "utf-8");
 		} catch (UnsupportedEncodingException e) {
 		}
+		boolean scrollVert = options.scrollVert;
 		if (!options.scrollVert) {
 			options.scrollVert = true;
 			createSheetMusic(options);
@@ -665,8 +667,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				Bitmap image = Bitmap.createBitmap(SheetMusic.PageWidth + 40, SheetMusic.PageHeight + 40, Bitmap.Config.ARGB_8888);
 				Canvas imageCanvas = new Canvas(image);
 				sheet.DrawPage(imageCanvas, page);
-				File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/ECML");
-				File file = new File(path, "" + filename + page + ".png");
+				File path = Environment.getExternalStoragePublicDirectory("ECML/MusicSheets");
+				File file = new File(path, "" + filename + "-" + page + ".png");
 				path.mkdirs();
 				OutputStream stream = new FileOutputStream(file);
 				image.compress(Bitmap.CompressFormat.PNG, 0, stream);
@@ -678,7 +680,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		} catch (IOException e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Error saving image to file " + Environment.DIRECTORY_PICTURES + "/ECML/" + filename + ".png");
+			builder.setMessage("Error saving image to file " + "ECML/MusicSheets" + filename + ".png");
 			builder.setCancelable(false);
 			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
@@ -688,7 +690,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			alert.show();
 		} catch (NullPointerException e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Ran out of memory while saving image to file " + Environment.DIRECTORY_PICTURES + "/ECML/" + filename + ".png");
+			builder.setMessage("Ran out of memory while saving image to file " + "ECML/MusicSheets" + filename + ".png");
 			builder.setCancelable(false);
 			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
@@ -697,6 +699,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			AlertDialog alert = builder.create();
 			alert.show();
 		}
+		options.scrollVert = scrollVert;
+		createSheetMusic(options);
 	}
 
 	/** Show the HTML help screen. */
@@ -864,9 +868,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		enableButton(R.id.btnPlay, (!isRecording && existLastRecord));
 	}
 
-	private String getFilename() {
+	private String getFilenameAudio() {
 		String filepath = Environment.getExternalStorageDirectory().getPath();
-		File file = new File(filepath, AUDIO_RECORDER_FOLDER);
+		File file = new File(filepath, "ECML/" + AUDIO_RECORDER_FOLDER);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
@@ -881,7 +885,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		recorder.setOutputFormat(output_formats[currentFormat]);
 		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-		recorder.setOutputFile(getFilename());
+		recorder.setOutputFile(getFilenameAudio());
 		recorder.setOnErrorListener(errorListener);
 		recorder.setOnInfoListener(infoListener);
 		try {
@@ -942,7 +946,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			e.printStackTrace();
 		}
 		if (!mp.isPlaying()) {
-			Toast.makeText(SheetMusicActivity.this, "Play Last Record", Toast.LENGTH_SHORT).show();
+			Toast.makeText(SheetMusicActivity.this, "Play Last Audio Record", Toast.LENGTH_SHORT).show();
 			mp.start();			
 		}
 	}
@@ -1019,7 +1023,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     
     private String getFilenameVideo() {
 		String filepath = Environment.getExternalStorageDirectory().getPath();
-		File file = new File(filepath, VIDEO_RECORDER_FOLDER);
+		File file = new File(filepath, "ECML/" + VIDEO_RECORDER_FOLDER);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
