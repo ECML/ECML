@@ -585,7 +585,7 @@ public class MidiPlayer extends LinearLayout {
         // Hide the midi player, wait a little for the view
         // to refresh, and then start playing
         timer.removeCallbacks(TimerCallback);
-        timer.postDelayed(DoPlay, 100);
+        timer.postDelayed(DoPlay, options.delay);
     }
 
     Runnable DoPlay = new Runnable() {
@@ -625,7 +625,7 @@ public class MidiPlayer extends LinearLayout {
 
         timer.removeCallbacks(TimerCallback);
         timer.removeCallbacks(ReShade);
-        timer.postDelayed(TimerCallback, delay);
+        timer.postDelayed(TimerCallback, 100);
 
         sheet.ShadeNotes((int)currentPulseTime, (int)prevPulseTime, SheetMusic.GradualScroll);
         piano.ShadeNotes((int)currentPulseTime, (int)prevPulseTime);

@@ -52,6 +52,7 @@ public class MidiOptions implements Serializable {
     public int combineInterval;      /** Combine notes within given time interval (msec) */
     public int shade1Color;   /** The color to use for shading */
     public int shade2Color;   /** The color to use for shading the left hand piano */
+    public int delay;		  /** The delay in milliseconds after which the music starts */
 
     public boolean[] mute;    /** Which tracks to mute (true = mute) */
     public int  tempo;        /** The tempo, in microseconds per quarter note */
@@ -112,6 +113,7 @@ public class MidiOptions implements Serializable {
         playMeasuresInLoop = false;
         playMeasuresInLoopStart = 0;
         playMeasuresInLoopEnd = lastMeasure;
+        delay = 1000;
     }
 
     /* Convert this MidiOptions object into a JSON string. */
@@ -158,6 +160,7 @@ public class MidiOptions implements Serializable {
             json.put("playMeasuresInLoop", playMeasuresInLoop);
             json.put("playMeasuresInLoopStart", playMeasuresInLoopStart);
             json.put("playMeasuresInLoopEnd", playMeasuresInLoopEnd);
+            json.put("delay", delay);
             
             return json.toString();
         }
@@ -219,6 +222,7 @@ public class MidiOptions implements Serializable {
             options.playMeasuresInLoop = json.getBoolean("playMeasuresInLoop");
             options.playMeasuresInLoopStart = json.getInt("playMeasuresInLoopStart");
             options.playMeasuresInLoopEnd = json.getInt("playMeasuresInLoopEnd");
+            options.delay = json.getInt("delay");
         }
         catch (Exception e) {
             return null;
@@ -264,6 +268,7 @@ public class MidiOptions implements Serializable {
         playMeasuresInLoop = saved.playMeasuresInLoop;
         playMeasuresInLoopStart = saved.playMeasuresInLoopStart;
         playMeasuresInLoopEnd = saved.playMeasuresInLoopEnd;
+        delay = saved.delay;
     }
  
 
@@ -287,6 +292,7 @@ public class MidiOptions implements Serializable {
         if (time != null) {
             result += " time " + time.toString();
         }
+        result += " delay" + delay;
         return result;
     }
 
@@ -327,6 +333,7 @@ public class MidiOptions implements Serializable {
         
         options.shifttime = shifttime;
         options.largeNoteSize = largeNoteSize;
+        options.delay = delay;
         return options; 
     }
 }

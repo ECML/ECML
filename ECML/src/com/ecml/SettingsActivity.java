@@ -37,6 +37,7 @@ import com.ecml.R;
  *  - Change the colors for shading the left/right hands.
  *  - Whether to display measure numbers
  *  - Play selected measures in a loop
+ *  - How long to wait before starting to play the music
  * 
  * When created, pass an Intent parameter containing MidiOptions.
  * When destroyed, this activity passes the result MidiOptions to the Intent.
@@ -69,6 +70,8 @@ public class SettingsActivity extends PreferenceActivity
     
     private ColorPreference shade1Color;          /** Right-hand color */
     private ColorPreference shade2Color;          /** Left-hand color */
+    
+    private ListPreference delay;				  /** How long to wait before playing the song */
 
     /** Play the measures from start to end in a loop */
     private CheckBoxPreference playMeasuresInLoop;
@@ -107,6 +110,7 @@ public class SettingsActivity extends PreferenceActivity
         createScrollPrefs(root);
         createShowPianoPrefs(root);
         createShowLyricsPrefs(root);
+        createDelayPrefs(root);
         if (options.tracks.length != 2) {
             createTwoStaffsPrefs(root);
         }
@@ -229,6 +233,19 @@ public class SettingsActivity extends PreferenceActivity
         showLyrics.setTitle(R.string.show_lyrics);
         showLyrics.setChecked(options.showLyrics);
         root.addPreference(showLyrics);
+    }
+    
+    /** Create the "Delay" preference */
+    private void createDelayPrefs(PreferenceScreen root) {
+    	int selected = options.delay/1000 - 1;
+    	delay = new ListPreference(this);
+    	delay.setOnPreferenceChangeListener(this);
+    	delay.setTitle(R.string.choose_delay);
+    	delay.setEntries(R.array.delay_entries);
+    	delay.setEntryValues(R.array.delay_values);
+    	delay.setValueIndex(selected);
+    	delay.setSummary(delay.getEntry());
+    	root.addPreference(delay);
     }
 
     /** Create the "Show Note Letters" preference */
@@ -438,6 +455,7 @@ public class SettingsActivity extends PreferenceActivity
         options.playMeasuresInLoop = playMeasuresInLoop.isChecked();
         options.playMeasuresInLoopStart = Integer.parseInt(loopStart.getValue()) - 1;
         options.playMeasuresInLoopEnd = Integer.parseInt(loopEnd.getValue()) - 1;
+        options.delay = Integer.parseInt(delay.getValue());
     }
 
     /** When the back button is pressed, update the MidiOptions.

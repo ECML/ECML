@@ -121,5 +121,22 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    
+    <string-array name="delay_entries">
+        <item>1 Second</item>
+        <item>2 Seconds</item>
+        <item>3 Seconds</item>
+        <item>4 Seconds</item>
+        <item >5 Seconds</item>
+    </string-array>
+    
+    
+    <string-array name="delay_values">
+        <item>1000</item>
+        <item>2000</item>
+        <item>3000</item>
+        <item>4000</item>
+        <item >5000</item>
+    </string-array>
 
 </resources>
