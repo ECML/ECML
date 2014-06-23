@@ -125,14 +125,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		MediaPlayer mp = new MediaPlayer();
 
 	/*** End of Audio Recording Variables ***/
-
-		
-	/*** Fullscreen Variables ***/
-		
-		ImageButton full_sheet_button;
-		boolean full_sheet;
-	
-	/*** End of Fullscreen Variables ***/
 		
 		
 	/*** Video Recording Variables ***/
@@ -145,11 +137,20 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		private String pathVideo;
 
 	/*** End of Video Recording Variables ***/
+		
+		
+	/*** Fullscreen Variables ***/
+		
+		ImageButton full_sheet_button;
+		boolean full_sheet;
+		
+	/*** End of Fullscreen Variables ***/
 	
 	
 	/*** File Variables ***/
 
-		private static String ECMLPath = "sdcard/ECML/";
+		private static String sdcardPath = "sdcard/";
+		private static String ECMLPath = "ECML/";
 		private static final String MUSIC_SHEET_FOLDER = "MusicSheets";
 		
 	/*** End of File Variables ***/
@@ -249,7 +250,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		full_sheet = true;
 
 		// Create the library folder if it doesn't exist
-		File file_library = new File(ECMLPath);
+		File file_library = new File(sdcardPath + ECMLPath);
 		if (!file_library.exists()) {
 			if (!file_library.mkdirs()) {
 				Log.e("TravellerLog :: ", "Problem creating the Library");
@@ -257,7 +258,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 
 		// Create the folder containing the music sheets ( in the library)
-		File musicSheets = new File(ECMLPath.concat(MUSIC_SHEET_FOLDER));
+		File musicSheets = new File(sdcardPath + ECMLPath.concat(MUSIC_SHEET_FOLDER));
 		if (!musicSheets.exists()) {
 			if (!musicSheets.mkdirs()) {
 				Log.e("TravellerLog :: ", "Problem creating the Music sheets folder");
@@ -265,7 +266,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 
 		// Create the folder containing the records ( in the library)
-		File records = new File(ECMLPath.concat(AUDIO_RECORDER_FOLDER));
+		File records = new File(sdcardPath + ECMLPath.concat(AUDIO_RECORDER_FOLDER));
 		if (!records.exists()) {
 			if (!records.mkdirs()) {
 				Log.e("TravellerLog :: ", "Problem creating the Audio records folder");
@@ -273,7 +274,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 
 		// create the folder containing the video records
-		File videorecords = new File(ECMLPath.concat(VIDEO_RECORDER_FOLDER));
+		File videorecords = new File(sdcardPath + ECMLPath.concat(VIDEO_RECORDER_FOLDER));
 		if (!videorecords.exists()) {
 			if (!videorecords.mkdirs()) {
 				Log.e("TravellerLog :: ", "Problem creating the Video records folder");
@@ -652,10 +653,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/* Save the current sheet music as PNG images. */
 	private void saveAsImages(String name) {
 		String filename = name;
-		try {
-			filename = URLEncoder.encode(name, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-		}
 		boolean scrollVert = options.scrollVert;
 		if (!options.scrollVert) {
 			options.scrollVert = true;
@@ -667,8 +664,14 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				Bitmap image = Bitmap.createBitmap(SheetMusic.PageWidth + 40, SheetMusic.PageHeight + 40, Bitmap.Config.ARGB_8888);
 				Canvas imageCanvas = new Canvas(image);
 				sheet.DrawPage(imageCanvas, page);
-				File path = Environment.getExternalStoragePublicDirectory("ECML/MusicSheets");
-				File file = new File(path, "" + filename + "-" + page + ".png");
+				File path = Environment.getExternalStoragePublicDirectory(ECMLPath + MUSIC_SHEET_FOLDER);
+				File file;
+				if (numpages > 1) {
+					file = new File(path, "" + filename + " -  page " + page + ".png");
+				}
+				else {
+					file = new File(path, "" + filename + ".png");
+				}
 				path.mkdirs();
 				OutputStream stream = new FileOutputStream(file);
 				image.compress(Bitmap.CompressFormat.PNG, 0, stream);
@@ -680,7 +683,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		} catch (IOException e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Error saving image to file " + "ECML/MusicSheets" + filename + ".png");
+			builder.setMessage("Error saving image to file " + ECMLPath + MUSIC_SHEET_FOLDER + filename + ".png");
 			builder.setCancelable(false);
 			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
@@ -690,7 +693,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			alert.show();
 		} catch (NullPointerException e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Ran out of memory while saving image to file " + "ECML/MusicSheets" + filename + ".png");
+			builder.setMessage("Ran out of memory while saving image to file " + ECMLPath + MUSIC_SHEET_FOLDER + filename + ".png");
 			builder.setCancelable(false);
 			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
@@ -702,7 +705,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		options.scrollVert = scrollVert;
 		createSheetMusic(options);
 	}
-
+	
 	/** Show the HTML help screen. */
 	private void showHelp() {
 		Intent intent = new Intent(this, HelpActivity.class);
@@ -711,20 +714,20 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/** Change blanks and ":" to "+" in a String */
 	private String spaceToPlus(String title) {
-		String new_title = "";
+		String newTitle = "";
 		boolean last = false; // tell whether last char is a '+' or not
 		for (int i = 0; i < title.length(); i++) {
 			if ((title.charAt(i) == ' ' || title.charAt(i) == ':') && !last) {
-				new_title = new_title + "+";
+				newTitle = newTitle + "+";
 				last = true;
 			} else if (title.charAt(i) == ' ' || title.charAt(i) == ':') {
 
 			} else {
-				new_title = new_title + title.charAt(i);
+				newTitle = newTitle + title.charAt(i);
 				last = false;
 			}
 		}
-		return new_title;
+		return newTitle;
 	}
 	
 	/** Get the current instrument for track 0 */
@@ -870,7 +873,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	private String getFilenameAudio() {
 		String filepath = Environment.getExternalStorageDirectory().getPath();
-		File file = new File(filepath, "ECML/" + AUDIO_RECORDER_FOLDER);
+		File file = new File(filepath, ECMLPath + AUDIO_RECORDER_FOLDER);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
@@ -1023,7 +1026,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
     
     private String getFilenameVideo() {
 		String filepath = Environment.getExternalStorageDirectory().getPath();
-		File file = new File(filepath, "ECML/" + VIDEO_RECORDER_FOLDER);
+		File file = new File(filepath, ECMLPath + VIDEO_RECORDER_FOLDER);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
