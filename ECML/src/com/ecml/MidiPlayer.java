@@ -263,6 +263,11 @@ public class MidiPlayer extends LinearLayout {
         speedText.setText("  Speed: 100% ");
         speedText.setTextColor(Color.parseColor("#FFFFFF"));
         speedText.setGravity(Gravity.CENTER);
+        speedText.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				backTo100();
+			}
+        });
         this.addView(speedText);
         
         
@@ -744,6 +749,11 @@ public class MidiPlayer extends LinearLayout {
         }
         sheet.ShadeNotes((int)currentPulseTime, (int)prevPulseTime, SheetMusic.ImmediateScroll);
         piano.ShadeNotes((int)currentPulseTime, (int)prevPulseTime);
+    }
+    
+    /** Set the speed bar back to 100% */
+    void backTo100() {
+    	speedBar.setProgress(100-30 /* added later */);
     }
     
     
