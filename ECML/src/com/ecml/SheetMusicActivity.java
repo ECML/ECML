@@ -26,8 +26,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.zip.CRC32;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ActionBar.OnNavigationListener;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,6 +58,7 @@ import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -175,6 +178,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/*** End of Metronome Variables ***/
 		
 		
+		
 /**********************************************************************************************************
  **********************************************************************************************************
  **********************************************************************************************************/
@@ -237,6 +241,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		metronomeController = new MetronomeController(this);   
         updateTempoView();
         setSliderListener();    
+        
+            
+    
 
 /**********************************************************************************************************
  **********************************************************************************************************
@@ -279,183 +286,13 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		}
 
-		ImageButton startAudioRecording = (ImageButton) findViewById(R.id.startAudioRecording);
-		ImageButton stopAudioRecording = (ImageButton) findViewById(R.id.stopAudioRecording);
-		ImageButton startPlayBack = (ImageButton) findViewById(R.id.replayAudioRecording);
-		ImageButton stopPlayBack = (ImageButton) findViewById(R.id.stopReplayAudioRecording);
-		
-		ImageButton startVideoRecording = (ImageButton) findViewById(R.id.startVideoRecording);
-		ImageButton stopVideoRecording = (ImageButton) findViewById(R.id.stopVideoRecording);
-		ImageButton replayVideoRecording = (ImageButton) findViewById(R.id.replayVideoRecording);
+
 		surfaceView = (SurfaceView) findViewById(R.id.surface_camera);
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		mCamera = openFrontFacingCamera();
-		
-		ImageButton youtube_btn = (ImageButton) findViewById(R.id.youtubeBtn);
-		ImageButton upload = (ImageButton) findViewById(R.id.upload);
-		ImageButton calendar = (ImageButton) findViewById(R.id.calendar);
-		ImageButton tuning = (ImageButton) findViewById(R.id.tuning);
-        game = (ImageButton) findViewById(R.id.game);
-        
 
-		/*** Audio Buttons ***/
-
-        startAudioRecording.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Start Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(true);
-				startAudioRecording();
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		stopAudioRecording.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Stop Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(false);
-				stopAudioRecording();
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		startPlayBack.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				String filename = fileName + ext;
-				playAudio(pathAudio, filename, mp);
-				// TODO Auto-generated method stub
-
-			}
-		});
-		
-		/*** End of Audio Buttons ***/
-		
-		
-		/*** Video Buttons ***/
-		
-		startVideoRecording.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Start Video Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(true);
-				try {
-					startVideoRecording();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-		});
-		
-		stopVideoRecording.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Stop Video Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(true);
-				stopVideoRecording();
-
-			}
-		});
-		
-		replayVideoRecording.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(SheetMusicActivity.this, "Replay Video Recording", Toast.LENGTH_SHORT).show();
-				// enableButtons(true);
-				replayVideoRecording();
-			}
-		});
-		
-		/*** End of Video Buttons ***/
-		
-		
-		/*** Side activities ***/
-        
-		calendar.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				try {
-					Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
-					startActivity(goToCalendar);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		tuning.setOnClickListener (new View.OnClickListener() {
-			
-			@Override
-        	public void onClick(View arg0) {
-      		Toast.makeText(SheetMusicActivity.this, "Tuning fork", Toast.LENGTH_SHORT).show();
-        		MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.tuning);
-        		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        		try {
-					mPlayer.prepare();
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        		mPlayer.start();
-			}
-        	
-        });
-        
-
-		final String songTitle = this.getIntent().getStringExtra(MidiTitleID);// current song title
-
-		youtube_btn.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
-				String instrument = instrumentYoutube();
-				myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle + " " + instrument) ));
-				startActivity(myWebLink);
-			}
-		});
-
-		upload.setOnClickListener (new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
-				myWebLink.setData(Uri.parse("http://www.youtube.com/upload"));
-				startActivity(myWebLink);
-			}
-		});
-
-		game.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				try {
-					Intent goToGameActivity = new Intent(getApplicationContext(), GameActivity.class);
-					startActivity(goToGameActivity);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	    
-		/*** End of side activities ***/
 
 /**********************************************************************************************************
  **********************************************************************************************************
@@ -496,20 +333,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				}
 			}
 		});
-		
-		player.pianoButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-            	options.showPiano = !options.showPiano;
-            	player.SetPiano(piano, options);
-            	SharedPreferences.Editor editor = getPreferences(0).edit();
-            	editor.putBoolean("showPiano", options.showPiano);
-        		String json = options.toJson();
-        		if (json != null) {
-        			editor.putString("" + midiCRC, json);
-        		}
-        		editor.commit();
-            }
-		});
 
 		View l = getLayoutInflater().inflate(R.layout.main_top, layout, false);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(100, 20);
@@ -518,6 +341,20 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		layout.addView(l);
 		layout.addView(full_sheet_button, params);
 		/*** End of Fullsheet options ***/
+		
+		player.pianoButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				options.showPiano = !options.showPiano;
+				player.SetPiano(piano, options);
+				SharedPreferences.Editor editor = getPreferences(0).edit();
+				editor.putBoolean("showPiano", options.showPiano);
+				String json = options.toJson();
+				if (json != null) {
+					editor.putString("" + midiCRC, json);
+				}
+				editor.commit();
+			}
+		});
 		
 		layout.addView(player);
 		layout.addView(piano);
@@ -606,6 +443,38 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		case R.id.tuning:
 			tuning();
 			return true;
+		case R.id.upload:
+			uploadYoutube();
+		case R.id.startmetronome:
+			metronomeController.startMetronome();
+			return true;
+		case R.id.stopmetronome:
+			metronomeController.stopMetronome();
+			return true;
+		case R.id.startvideorecording:
+			try {
+				startVideoRecording();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		case R.id.stopvideorecording:
+			stopVideoRecording();
+			return true;
+		case R.id.lastvideorecording:
+			replayVideoRecording();
+			return true;
+		case R.id.startaudiorecording:
+			startAudioRecording();
+			return true;
+		case R.id.stopaudiorecording:
+			stopAudioRecording();
+			return true;
+		case R.id.lastaudiorecording:
+			String filename = fileName + ext;
+			playAudio(pathAudio, filename, mp);
+			return true;		
 		default:
 			return super.onOptionsItemSelected(item);
 		}
