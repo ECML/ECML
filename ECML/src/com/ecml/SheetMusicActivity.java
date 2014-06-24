@@ -37,6 +37,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.media.AudioManager;
@@ -242,6 +243,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
         updateTempoView();
         setSliderListener();    
         
+        ActionBar ab = getActionBar(); 
+        ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.blue));     
+        ab.setBackgroundDrawable(colorDrawable);
             
     
 
