@@ -77,5 +77,20 @@
 	          ></item>		  
         </menu>
     </item>
-    
+    <item android:id="@+id/settings"
+          android:title="Settings"
+          android:icon="@drawable/settings"
+          android:showAsAction="always">      
+          <menu>
+              <item android:id="@+id/song_settings"
+			          android:icon="@android:drawable/ic_menu_preferences"
+			          android:title="@string/song_settings_str" />
+			    <item android:id="@+id/save_images"
+			          android:icon="@android:drawable/ic_menu_save"
+			          android:title="@string/save_images_str" />
+			    <item android:id="@+id/help"
+			          android:icon="@android:drawable/ic_menu_help"
+			          android:title="@string/help_str" />
+          </menu>  
+    </item>    
 </menu>

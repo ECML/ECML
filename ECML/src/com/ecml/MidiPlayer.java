@@ -73,7 +73,6 @@ public class MidiPlayer extends LinearLayout {
     static Bitmap stopImage;             /** The stop image */
     static Bitmap fastFwdImage;          /** The fast forward image */
     static Bitmap volumeImage;           /** The volume image */
-    static Bitmap settingsImage;         /** The settings image */
     static Bitmap muteOnImage;			 /** The mute image */
     static Bitmap muteOffImage;			 /** The unmute image */
     static Bitmap pianoImage;			 /** The piano image */
@@ -84,7 +83,6 @@ public class MidiPlayer extends LinearLayout {
     private ImageButton playButton;      /** The play/pause button */
     private ImageButton stopButton;      /** The stop button */
     private ImageButton fastFwdButton;   /** The fast forward button */
-    private ImageButton settingsButton;  /** The settings button */
     private ImageButton muteButton;      /** The mute button */
     ImageButton pianoButton;	 		 /** The piano button */
     private ImageButton plusButton;		 /** The + button for the speed bar */
@@ -131,7 +129,6 @@ public class MidiPlayer extends LinearLayout {
         pauseImage = BitmapFactory.decodeResource(res, R.drawable.pause);
         stopImage = BitmapFactory.decodeResource(res, R.drawable.stop);
         fastFwdImage = BitmapFactory.decodeResource(res, R.drawable.fastforward);
-        settingsImage = BitmapFactory.decodeResource(res, R.drawable.settings);
         muteOnImage = BitmapFactory.decodeResource(res, R.drawable.mute_on);
         muteOffImage = BitmapFactory.decodeResource(res, R.drawable.mute_off);
         pianoImage = BitmapFactory.decodeResource(res, R.drawable.piano_icon);
@@ -312,17 +309,6 @@ public class MidiPlayer extends LinearLayout {
         });
         this.addView(plusButton);
 
-        /* Create the settings button */        
-        settingsButton = new ImageButton(activity);
-        settingsButton.setBackgroundColor(getResources().getColor(R.color.blue));
-        settingsButton.setImageBitmap(settingsImage);
-        settingsButton.setScaleType(ImageView.ScaleType.FIT_XY);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                activity.openOptionsMenu();
-            }
-        });
-        this.addView(settingsButton);
         
         /* Create the mute button */        
         muteButton = new ImageButton(activity);
@@ -364,7 +350,6 @@ public class MidiPlayer extends LinearLayout {
         stopButton.setPadding(pad, pad, pad, pad);
         playButton.setPadding(pad, pad, pad, pad);
         fastFwdButton.setPadding(pad, pad, pad, pad);
-        settingsButton.setPadding(pad, pad, pad, pad);
         muteButton.setPadding(pad, pad, pad, pad);
         plusButton.setPadding(pad, pad, pad, pad);
         minusButton.setPadding(pad, pad, pad, pad);
@@ -418,8 +403,7 @@ public class MidiPlayer extends LinearLayout {
         params.rightMargin = 0;
         params.leftMargin = 0;
         plusButton.setLayoutParams(params);
-        settingsButton.setLayoutParams(params);
-        
+                
         params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
         params.bottomMargin = 0;
         params.topMargin = 0;
