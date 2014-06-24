@@ -157,14 +157,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		
 	/*** End of File Variables ***/
 	
-	
-	/*** Side Activities Variables ***/
-	
-		ImageButton game;
-	
-	/*** End of Side Activities Variables ***/
-		
-		
 	/*** Tuning Fork Variables ***/
 		
 		final Context context = this;
@@ -256,7 +248,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
  **********************************************************************************************************
  **********************************************************************************************************/
 
-		full_sheet = true;
 
 		// Create the library folder if it doesn't exist
 		File file_library = new File(libraryPath);
@@ -314,37 +305,12 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		player = new MidiPlayer(this);
 		piano = new Piano(this);
 		
-		/*** Fullsheet options ***/
-		full_sheet_button = new ImageButton(this);
-		final Drawable triangleUp = getResources().getDrawable(R.drawable.triangle_up);
-		final Drawable triangleDown = getResources().getDrawable(R.drawable.triangle_down);
-		full_sheet_button.setBackgroundDrawable(triangleUp);
-		full_sheet_button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if (!full_sheet) {
-					surfaceView.setVisibility(View.VISIBLE);
-					((LinearLayout) findViewById(R.id.main_top)).setVisibility(View.VISIBLE);
-					full_sheet_button.setBackgroundDrawable(triangleUp);
-					full_sheet_button.invalidate();
-					full_sheet = true;
-				} else {
-					((LinearLayout) findViewById(R.id.main_top)).setVisibility(View.GONE);
-					surfaceView.setVisibility(View.GONE);
-					full_sheet_button.setBackgroundDrawable(triangleDown);
-					full_sheet_button.invalidate();
-					full_sheet = false;
-				}
-			}
-		});
-
 		View l = getLayoutInflater().inflate(R.layout.main_top, layout, false);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(100, 20);
 		params.leftMargin = (int) 460;
 
 		layout.addView(l);
-		layout.addView(full_sheet_button, params);
-		/*** End of Fullsheet options ***/
+		
 		
 		player.pianoButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
