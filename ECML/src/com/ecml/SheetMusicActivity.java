@@ -429,6 +429,7 @@ public class SheetMusicActivity extends Activity implements
 			return true;
 		case R.id.upload:
 			uploadYoutube();
+			return true;
 		case R.id.startmetronome:
 			metronomeController.startMetronome();
 			return true;
@@ -652,9 +653,10 @@ public class SheetMusicActivity extends Activity implements
 
 	/** Upload a video on Youtube */
 	private void uploadYoutube() {
-		Uri uri = Uri.parse("http://www.youtube.com/upload");
-		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-		startActivity(intent);
+		Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+		myWebLink.setData(Uri
+				.parse("http://www.youtube.com/upload"));
+		startActivity(myWebLink);
 	}
 
 	/** Launch a Calendar */
