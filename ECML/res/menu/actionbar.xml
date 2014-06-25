@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/video"
+          android:icon="@drawable/camera"
+          android:title="@string/video"
+          android:showAsAction="always"
+           >
+        <menu>
+            <item android:id="@+id/startvideorecording"
+          		  android:title="Start video recording"
+          		  android:showAsAction="always"></item>
+            <item android:id="@+id/stopvideorecording"
+          		  android:title="Stop video recording"
+          		  android:showAsAction="always"></item>
+            <item android:id="@+id/lastvideorecording"
+          		  android:title="Replay last video record"
+          		  android:showAsAction="always"></item>
+        </menu>       
+    </item>
+    <item android:id="@+id/audio"
+          android:icon="@drawable/recorder_button"
+          android:title="@string/audio"
+          android:showAsAction="always"
+           >
+        <menu>
+            <item android:id="@+id/startaudiorecording"
+          		  android:title="Start audio recording"
+          		  android:showAsAction="always"></item>
+            <item android:id="@+id/stopaudiorecording"
+          		  android:title="Stop audio recording"
+          		  android:showAsAction="always"></item>
+            <item android:id="@+id/lastaudiorecording"
+          		  android:title="Replay last audio record"
+          		  android:showAsAction="always"></item>
+        </menu>
+    </item>    
+    <item android:id="@+id/calendar"
+          android:icon="@android:drawable/ic_menu_month"
+          android:title="@string/calendar_str"
+          android:showAsAction="always"
+          ></item>
+    <item android:id="@+id/youtube"
+          android:icon="@drawable/youtube"
+          android:title="@string/youtube_str"
+          android:showAsAction="always"
+          ></item>
+    <item android:id="@+id/upload"
+          android:icon="@drawable/upload"
+          android:title="@string/upload_youtube"
+          android:showAsAction="always"
+          ></item>
+   
+    <item android:id="@+id/choose_song"
+          android:icon="@android:drawable/ic_menu_search"
+          android:title="@string/choose_song"
+          android:showAsAction="always"
+           />
+    <item android:id="@+id/tuning"
+          android:icon="@drawable/tuning"
+          android:title="Tuning fork"
+          android:showAsAction="always"
+           > 
+    </item>
+    <item android:id="@+id/metronome"
+          android:title="Metronome"
+          android:icon="@drawable/metronome"
+          android:showAsAction="always"
+          >
+       <menu>   
+		   <item android:id="@+id/startmetronome"
+	          android:title="Start the metronome"
+	          android:showAsAction="always"
+	          ></item>
+		   <item android:id="@+id/stopmetronome"
+	          android:title="Stop the metronome"
+	          android:showAsAction="always"
+	          ></item>		  
+        </menu>
+    </item>
+    <item android:id="@+id/settings"
+          android:title="Settings"
+          android:icon="@drawable/settings"
+          android:showAsAction="always">      
+          <menu>
+              <item android:id="@+id/song_settings"
+			          android:icon="@android:drawable/ic_menu_preferences"
+			          android:title="@string/song_settings_str" />
+			    <item android:id="@+id/save_images"
+			          android:icon="@android:drawable/ic_menu_save"
+			          android:title="@string/save_images_str" />
+			    <item android:id="@+id/help"
+			          android:icon="@android:drawable/ic_menu_help"
+			          android:title="@string/help_str" />
+          </menu>  
+    </item>    
+</menu>
