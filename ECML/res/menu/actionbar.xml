@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/video"
-          android:icon="@drawable/camera"
+          android:icon="@drawable/video"
           android:title="@string/video"
           android:showAsAction="always"
            >
@@ -18,7 +18,7 @@
         </menu>       
     </item>
     <item android:id="@+id/audio"
-          android:icon="@drawable/recorder_button"
+          android:icon="@drawable/audio"
           android:title="@string/audio"
           android:showAsAction="always"
            >
