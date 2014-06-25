@@ -179,6 +179,7 @@ public class SheetMusicActivity extends Activity implements
 	/*** Metronome Variables ***/
 
 		MetronomeController metronomeController;
+		View m;
 
 	/*** End of Metronome Variables ***/
 
@@ -326,10 +327,14 @@ public class SheetMusicActivity extends Activity implements
 		piano = new Piano(this);
 
 		l = getLayoutInflater().inflate(R.layout.main_top, layout, false);
+		m = getLayoutInflater().inflate(R.layout.metronome, layout, false);
+
 
 		l.setVisibility(View.GONE);
+		m.setVisibility(View.GONE);
 
 		layout.addView(l);
+		layout.addView(m);
 
 		player.pianoButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -430,11 +435,15 @@ public class SheetMusicActivity extends Activity implements
 		case R.id.upload:
 			uploadYoutube();
 			return true;
+		case R.id.metronome:
+			m.setVisibility(View.VISIBLE);
+			return true;
 		case R.id.startmetronome:
 			metronomeController.startMetronome();
 			return true;
 		case R.id.stopmetronome:
 			metronomeController.stopMetronome();
+			m.setVisibility(View.GONE);
 			return true;
 		case R.id.video:
 			l.setVisibility(View.VISIBLE);
@@ -1040,7 +1049,7 @@ public class SheetMusicActivity extends Activity implements
 
 	private void updateTempoView() {
 		TextView tempoView = ((TextView) findViewById(R.id.tempo));
-		tempoView.setText(metronomeController.getTempo() + "");
+		tempoView.setText("Tempo : " + metronomeController.getTempo() + "");
 	}
 
 	public void start(View view) {
