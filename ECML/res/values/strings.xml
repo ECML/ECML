@@ -54,5 +54,8 @@
     <string name="stop">Stop</string>
     
     
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="clickme">Click me</string>
         
 </resources>
