@@ -170,9 +170,9 @@ public class MidiPlayer extends LinearLayout {
 
     /** Get the preferred width/height given the screen width/height */
     public static Point getPreferredSize(int screenwidth, int screenheight) {
-        int height = (int) (5.0 * screenwidth / ( 2 + Piano.KeysPerOctave * Piano.MaxOctave));
-        height = height * 2/3 ;
-        Point result = new Point(screenwidth, height);
+    	int height = (int) (5.0 * screenwidth / ( 2 + Piano.KeysPerOctave * Piano.MaxOctave));
+    	height = height * 2/3 ;
+    	Point result = new Point(screenwidth, height);
         return result;
     }
 
@@ -188,7 +188,7 @@ public class MidiPlayer extends LinearLayout {
         /* Make the button height 2/3 the piano WhiteKeyHeight */
         int width = screenwidth;
         int height = (int) (5.0 * screenwidth / ( 2 + Piano.KeysPerOctave * Piano.MaxOctave));
-        height = height * 2/3;
+        height = height * 2/3 * 2/3;
         setMeasuredDimension(width, height);
     }
 
