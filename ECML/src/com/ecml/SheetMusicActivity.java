@@ -84,8 +84,7 @@ import com.metronome.MetronomeController;
  *        highlighting the sheet music notes during playback.
  * 
  */
-public class SheetMusicActivity extends Activity implements
-		SurfaceHolder.Callback, KeyListener {
+public class SheetMusicActivity extends Activity implements SurfaceHolder.Callback, KeyListener {
 
 	/*** MidiSheet variables ***/
 
@@ -102,13 +101,12 @@ public class SheetMusicActivity extends Activity implements
 
 	/*** End of MidiSheet variables ***/
 
-	/***************************************************************************************************************
-	 *************************************************************************************************************** 
-	 **************************************** Variables for add-ups
-	 **************************************************/
-	/***************************************************************************************************************
- ***************************************************************************************************************
- ***************************************************************************************************************/
+	/*************************************************************************************************************
+	 ************************************************************************************************************* 
+	 **************************************** Variables for add-ups **********************************************/
+	/*************************************************************************************************************
+	 *************************************************************************************************************
+	 *************************************************************************************************************/
 
 	/*** Audio Recording Variables ***/
 
@@ -140,43 +138,42 @@ public class SheetMusicActivity extends Activity implements
 		private boolean isVideoRecording;
 		private boolean existVideoRecord;
 		boolean front = true;
-		View l;
+		View topLayout;
 
 	/*** End of Video Recording Variables ***/
 
 	/*** Fullscreen Variables ***/
 
-	ImageButton full_sheet_button;
-	boolean full_sheet;
+		ImageButton full_sheet_button;
+		boolean full_sheet;
 
 	/*** End of Fullscreen Variables ***/
 
 	/*** File Variables ***/
 
-	private static String sdcardPath = "sdcard/";
-	private static String ECMLPath = "ECML/";
-	private static final String MUSIC_SHEET_FOLDER = "MusicSheets";
+		private static String sdcardPath = "sdcard/";
+		private static String ECMLPath = "ECML/";
+		private static final String MUSIC_SHEET_FOLDER = "MusicSheets";
 
 	/*** End of File Variables ***/
 
 	/*** Tuning Fork Variables ***/
 
-	final Context context = this;
+		final Context context = this;
 
 	/*** End of Tuning Fork Variables ***/
 
 	/*** Metronome Variables ***/
 
-	MetronomeController metronomeController;
-	View m;
+		MetronomeController metronomeController;
+		View metronomeView;
 
 	/*** End of Metronome Variables ***/
 
 	/**********************************************************************************************************
- **********************************************************************************************************
- **********************************************************************************************************/
-	/***********************************
-	 * End of Variables for add-ups*******************************************
+	 **********************************************************************************************************
+	 **********************************************************************************************************/
+	/************************************ End of Variables for add-ups ****************************************
 	 ********************************************************************************************************** 
 	 **********************************************************************************************************/
 
@@ -221,10 +218,8 @@ public class SheetMusicActivity extends Activity implements
 		midiCRC = crc.getValue();
 		SharedPreferences settings = getPreferences(0);
 		options.scrollVert = settings.getBoolean("scrollVert", true);
-		options.shade1Color = settings.getInt("shade1Color",
-				options.shade1Color);
-		options.shade2Color = settings.getInt("shade2Color",
-				options.shade2Color);
+		options.shade1Color = settings.getInt("shade1Color", options.shade1Color);
+		options.shade2Color = settings.getInt("shade2Color", options.shade2Color);
 		options.showPiano = settings.getBoolean("showPiano", true);
 		String json = settings.getString("" + midiCRC, null);
 		MidiOptions savedOptions = MidiOptions.fromJson(json);
@@ -239,17 +234,15 @@ public class SheetMusicActivity extends Activity implements
 		setSliderListener();
 
 		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources()
-				.getColor(R.color.blue));
+		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.blue));
 		ab.setBackgroundDrawable(colorDrawable);
 
 		/**********************************************************************************************************
 		 ********************************************************************************************************** 
-		 ********************************************* Buttons
-		 ******************************************************/
+		 ********************************************* Buttons ****************************************************/
 		/**********************************************************************************************************
- **********************************************************************************************************
- **********************************************************************************************************/
+		 **********************************************************************************************************
+		 **********************************************************************************************************/
 
 		// Create the library folder if it doesn't exist
 		File file_library = new File(sdcardPath + ECMLPath);
@@ -260,32 +253,26 @@ public class SheetMusicActivity extends Activity implements
 		}
 
 		// Create the folder containing the music sheets ( in the library)
-		File musicSheets = new File(sdcardPath
-				+ ECMLPath.concat(MUSIC_SHEET_FOLDER));
+		File musicSheets = new File(sdcardPath + ECMLPath.concat(MUSIC_SHEET_FOLDER));
 		if (!musicSheets.exists()) {
 			if (!musicSheets.mkdirs()) {
-				Log.e("TravellerLog :: ",
-						"Problem creating the Music sheets folder");
+				Log.e("TravellerLog :: ", "Problem creating the Music sheets folder");
 			}
 		}
 
 		// Create the folder containing the records ( in the library)
-		File records = new File(sdcardPath
-				+ ECMLPath.concat(AUDIO_RECORDER_FOLDER));
+		File records = new File(sdcardPath + ECMLPath.concat(AUDIO_RECORDER_FOLDER));
 		if (!records.exists()) {
 			if (!records.mkdirs()) {
-				Log.e("TravellerLog :: ",
-						"Problem creating the Audio records folder");
+				Log.e("TravellerLog :: ", "Problem creating the Audio records folder");
 			}
 		}
 
 		// create the folder containing the video records
-		File videorecords = new File(sdcardPath
-				+ ECMLPath.concat(VIDEO_RECORDER_FOLDER));
+		File videorecords = new File(sdcardPath + ECMLPath.concat(VIDEO_RECORDER_FOLDER));
 		if (!videorecords.exists()) {
 			if (!videorecords.mkdirs()) {
-				Log.e("TravellerLog :: ",
-						"Problem creating the Video records folder");
+				Log.e("TravellerLog :: ", "Problem creating the Video records folder");
 			}
 		}
 
@@ -300,10 +287,9 @@ public class SheetMusicActivity extends Activity implements
 		/*** End of side activities ***/
 
 		/**********************************************************************************************************
- **********************************************************************************************************
- **********************************************************************************************************/
-		/********************************************
-		 * End of Buttons************************************************
+		 **********************************************************************************************************
+		 **********************************************************************************************************/
+		/********************************************* End of Buttons *********************************************
 		 ********************************************************************************************************** 
 		 **********************************************************************************************************/
 
@@ -316,14 +302,14 @@ public class SheetMusicActivity extends Activity implements
 		player = new MidiPlayer(this);
 		piano = new Piano(this);
 
-		l = getLayoutInflater().inflate(R.layout.main_top, layout, false);
-		m = getLayoutInflater().inflate(R.layout.metronome, layout, false);
+		topLayout = getLayoutInflater().inflate(R.layout.main_top, layout, false);
+		metronomeView = getLayoutInflater().inflate(R.layout.metronome, layout, false);
 
-		l.setVisibility(View.GONE);
-		m.setVisibility(View.GONE);
+		topLayout.setVisibility(View.GONE);
+		metronomeView.setVisibility(View.GONE);
 
-		layout.addView(l);
-		layout.addView(m);
+		layout.addView(topLayout);
+		layout.addView(metronomeView);
 
 		player.pianoButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -338,14 +324,14 @@ public class SheetMusicActivity extends Activity implements
 				editor.commit();
 			}
 		});
-		
+
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-		
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
+
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
 		params.gravity = Gravity.CENTER_HORIZONTAL;
 
 		layout.addView(piano, params);
@@ -431,24 +417,23 @@ public class SheetMusicActivity extends Activity implements
 			uploadYoutube();
 			return true;
 		case R.id.metronome:
-			m.setVisibility(View.VISIBLE);
+			metronomeView.setVisibility(View.VISIBLE);
 			return true;
 		case R.id.startMetronome:
 			metronomeController.startMetronome();
 			return true;
 		case R.id.stopMetronome:
 			metronomeController.stopMetronome();
-			m.setVisibility(View.GONE);
+			metronomeView.setVisibility(View.GONE);
 			return true;
 		case R.id.video:
-			l.setVisibility(View.VISIBLE);
+			topLayout.setVisibility(View.VISIBLE);
 			return true;
 		case R.id.startVideoRecording:
 			if (!isVideoRecording && !isAudioRecording) {
 				if (front == true) {
 					mCamera = openFrontFacingCamera();
-				}
-				else {
+				} else {
 					mCamera = Camera.open();
 				}
 				try {
@@ -457,26 +442,23 @@ public class SheetMusicActivity extends Activity implements
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-			else {
+			} else {
 				Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
 			}
 			return true;
 		case R.id.stopVideoRecording:
 			if (isVideoRecording) {
 				stopVideoRecording();
-			}
-			else {
+			} else {
 				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
 			}
 			surfaceView.setVisibility(View.GONE);
-			l.setVisibility(View.GONE);
+			topLayout.setVisibility(View.GONE);
 			return true;
 		case R.id.lastVideoRecording:
 			if (!isVideoRecording && !isAudioRecording && existVideoRecord) {
 				replayVideoRecording();
-			}
-			else {
+			} else {
 				Toast.makeText(context, "No Recent Video Record", Toast.LENGTH_SHORT).show();
 			}
 		case R.id.switchCamera:
@@ -486,16 +468,14 @@ public class SheetMusicActivity extends Activity implements
 		case R.id.startAudioRecording:
 			if (!isVideoRecording && !isAudioRecording) {
 				startAudioRecording();
-			}
-			else {
+			} else {
 				Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
 			}
 			return true;
 		case R.id.stopAudioRecording:
 			if (isAudioRecording) {
 				stopAudioRecording();
-			}
-			else {
+			} else {
 				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
 			}
 			return true;
@@ -503,8 +483,7 @@ public class SheetMusicActivity extends Activity implements
 			if (!isVideoRecording && !isAudioRecording && existAudioRecord) {
 				String filename = fileName + ext;
 				playAudio(pathAudio, filename, mp);
-			}
-			else {
+			} else {
 				Toast.makeText(context, "Not Recent Audio Record", Toast.LENGTH_SHORT).show();
 			}
 			return true;
@@ -540,10 +519,8 @@ public class SheetMusicActivity extends Activity implements
 	/* Show the "Save As Images" dialog */
 	private void showSaveImagesDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
-		final View dialogView = inflator.inflate(R.layout.save_images_dialog,
-				null);
-		final EditText filenameView = (EditText) dialogView
-				.findViewById(R.id.save_images_filename);
+		final View dialogView = inflator.inflate(R.layout.save_images_dialog, null);
+		final EditText filenameView = (EditText) dialogView.findViewById(R.id.save_images_filename);
 		filenameView.setText(midifile.getFileName().replace("_", " "));
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.save_images_str);
@@ -553,11 +530,10 @@ public class SheetMusicActivity extends Activity implements
 				saveAsImages(filenameView.getText().toString());
 			}
 		});
-		builder.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface builder, int whichButton) {
-					}
-				});
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface builder, int whichButton) {
+			}
+		});
 		AlertDialog dialog = builder.create();
 		dialog.show();
 	}
@@ -573,17 +549,13 @@ public class SheetMusicActivity extends Activity implements
 		try {
 			int numpages = sheet.GetTotalPages();
 			for (int page = 1; page <= numpages; page++) {
-				Bitmap image = Bitmap.createBitmap(SheetMusic.PageWidth + 40,
-						SheetMusic.PageHeight + 40, Bitmap.Config.ARGB_8888);
+				Bitmap image = Bitmap.createBitmap(SheetMusic.PageWidth + 40, SheetMusic.PageHeight + 40, Bitmap.Config.ARGB_8888);
 				Canvas imageCanvas = new Canvas(image);
 				sheet.DrawPage(imageCanvas, page);
-				File path = Environment
-						.getExternalStoragePublicDirectory(ECMLPath
-								+ MUSIC_SHEET_FOLDER);
+				File path = Environment.getExternalStoragePublicDirectory(ECMLPath + MUSIC_SHEET_FOLDER);
 				File file;
 				if (numpages > 1) {
-					file = new File(path, "" + filename + " -  page " + page
-							+ ".png");
+					file = new File(path, "" + filename + " -  page " + page + ".png");
 				} else {
 					file = new File(path, "" + filename + ".png");
 				}
@@ -594,31 +566,26 @@ public class SheetMusicActivity extends Activity implements
 				stream.close();
 
 				// Inform the media scanner about the file
-				MediaScannerConnection.scanFile(this,
-						new String[] { file.toString() }, null, null);
+				MediaScannerConnection.scanFile(this, new String[] { file.toString() }, null, null);
 			}
 		} catch (IOException e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Error saving image to file " + ECMLPath
-					+ MUSIC_SHEET_FOLDER + filename + ".png");
+			builder.setMessage("Error saving image to file " + ECMLPath + MUSIC_SHEET_FOLDER + filename + ".png");
 			builder.setCancelable(false);
-			builder.setPositiveButton("OK",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-						}
-					});
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+				}
+			});
 			AlertDialog alert = builder.create();
 			alert.show();
 		} catch (NullPointerException e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Ran out of memory while saving image to file "
-					+ ECMLPath + MUSIC_SHEET_FOLDER + filename + ".png");
+			builder.setMessage("Ran out of memory while saving image to file " + ECMLPath + MUSIC_SHEET_FOLDER + filename + ".png");
 			builder.setCancelable(false);
-			builder.setPositiveButton("OK",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-						}
-					});
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+				}
+			});
 			AlertDialog alert = builder.create();
 			alert.show();
 		}
@@ -653,28 +620,29 @@ public class SheetMusicActivity extends Activity implements
 	/** Get the current instrument for track 0 */
 	public String instrumentYoutube() {
 		String instrument = "";
-		if (MidiOptions.instruments[0] == 0 || MidiOptions.instruments[0] == 1
-				|| MidiOptions.instruments[0] == 2
-				|| MidiOptions.instruments[0] == 3
-				|| MidiOptions.instruments[0] == 4
-				|| MidiOptions.instruments[0] == 5
-				|| MidiOptions.instruments[0] == 6) {
+		if (MidiOptions.instruments[0] == 0
+		 || MidiOptions.instruments[0] == 1
+		 || MidiOptions.instruments[0] == 2
+		 || MidiOptions.instruments[0] == 3
+		 || MidiOptions.instruments[0] == 4
+		 || MidiOptions.instruments[0] == 5
+		 || MidiOptions.instruments[0] == 6) {
 			instrument = "piano";
-		} else if (MidiOptions.instruments[0] == 25
-				|| MidiOptions.instruments[0] == 26
-				|| MidiOptions.instruments[0] == 27
-				|| MidiOptions.instruments[0] == 28
-				|| MidiOptions.instruments[0] == 29
-				|| MidiOptions.instruments[0] == 30
-				|| MidiOptions.instruments[0] == 31
-				|| MidiOptions.instruments[0] == 32) {
+		} else if (MidiOptions.instruments[0] == 25 ||
+				   MidiOptions.instruments[0] == 26 ||
+				   MidiOptions.instruments[0] == 27 ||
+				   MidiOptions.instruments[0] == 28 ||
+				   MidiOptions.instruments[0] == 29 ||
+				   MidiOptions.instruments[0] == 30 ||
+				   MidiOptions.instruments[0] == 31 ||
+				   MidiOptions.instruments[0] == 32) {
 			instrument = "guitar";
 		}
 
-		else if (MidiOptions.instruments[0] == 33
-				|| MidiOptions.instruments[0] == 34
-				|| MidiOptions.instruments[0] == 35
-				|| MidiOptions.instruments[0] == 36) {
+		else if (MidiOptions.instruments[0] == 33 ||
+				 MidiOptions.instruments[0] == 34 ||
+				 MidiOptions.instruments[0] == 35 ||
+				 MidiOptions.instruments[0] == 36) {
 			instrument = "bass";
 		} else {
 			instrument = MidiFile.Instruments[MidiOptions.instruments[0]];
@@ -687,9 +655,7 @@ public class SheetMusicActivity extends Activity implements
 		String songTitle = this.getIntent().getStringExtra(MidiTitleID);
 		Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
 		String instrument = instrumentYoutube();
-		myWebLink.setData(Uri
-				.parse("http://www.youtube.com/results?search_query="
-						+ spaceToPlus(songTitle + " " + instrument)));
+		myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle + " " + instrument)));
 		startActivity(myWebLink);
 	}
 
@@ -702,14 +668,12 @@ public class SheetMusicActivity extends Activity implements
 
 	/** Launch a Calendar */
 	private void showCalendar() {
-		Intent goToCalendar = new Intent(getApplicationContext(),
-				CalendarActivity.class);
+		Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
 		startActivity(goToCalendar);
 	}
 
 	private void tuning() {
-		Toast.makeText(SheetMusicActivity.this, "Tuning fork",
-				Toast.LENGTH_SHORT).show();
+		Toast.makeText(SheetMusicActivity.this, "Tuning fork", Toast.LENGTH_SHORT).show();
 		MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.tuning);
 		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		try {
@@ -724,7 +688,6 @@ public class SheetMusicActivity extends Activity implements
 		mPlayer.start();
 	}
 
-
 	/**
 	 * This is the callback when the SettingsActivity is finished. Get the
 	 * modified MidiOptions (passed as a parameter in the Intent). Save the
@@ -733,18 +696,15 @@ public class SheetMusicActivity extends Activity implements
 	 * with the new options.
 	 */
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (requestCode != settingsRequestCode) {
 			return;
 		}
-		options = (MidiOptions) intent
-				.getSerializableExtra(SettingsActivity.settingsID);
+		options = (MidiOptions) intent.getSerializableExtra(SettingsActivity.settingsID);
 
 		// Check whether the default instruments have changed.
 		for (int i = 0; i < options.instruments.length; i++) {
-			if (options.instruments[i] != midifile.getTracks().get(i)
-					.getInstrument()) {
+			if (options.instruments[i] != midifile.getTracks().get(i).getInstrument()) {
 				options.useDefaultInstruments = false;
 			}
 		}
@@ -792,11 +752,10 @@ public class SheetMusicActivity extends Activity implements
 
 	/**********************************************************************************************************
 	 ********************************************************************************************************** 
-	 ************************************** Functions for add-ups
-	 ***********************************************/
+	 ************************************** Functions for add-ups *********************************************/
 	/**********************************************************************************************************
- **********************************************************************************************************
- **********************************************************************************************************/
+	 **********************************************************************************************************
+	 **********************************************************************************************************/
 
 	/*** Audio Recording functions ***/
 
@@ -865,8 +824,7 @@ public class SheetMusicActivity extends Activity implements
 			e.printStackTrace();
 		}
 		if (!mp.isPlaying()) {
-			Toast.makeText(SheetMusicActivity.this, "Play Last Audio Record",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(SheetMusicActivity.this, "Play Last Audio Record", Toast.LENGTH_SHORT).show();
 			mp.start();
 		}
 	}
@@ -874,23 +832,19 @@ public class SheetMusicActivity extends Activity implements
 	private MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
 		@Override
 		public void onError(MediaRecorder mr, int what, int extra) {
-			Toast.makeText(SheetMusicActivity.this,
-					"Error: " + what + ", " + extra, Toast.LENGTH_SHORT).show();
+			Toast.makeText(SheetMusicActivity.this, "Error: " + what + ", " + extra, Toast.LENGTH_SHORT).show();
 		}
 	};
 
 	private MediaRecorder.OnInfoListener infoListener = new MediaRecorder.OnInfoListener() {
 		@Override
 		public void onInfo(MediaRecorder mr, int what, int extra) {
-			Toast.makeText(SheetMusicActivity.this,
-					"Warning: " + what + ", " + extra, Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(SheetMusicActivity.this, "Warning: " + what + ", " + extra, Toast.LENGTH_SHORT).show();
 		}
 	};
 
 	/*** End of Audio Recording Functions ***/
 
-	
 	/*** Video Recording Functions ***/
 
 	protected void startVideoRecording() throws IOException {
@@ -902,15 +856,12 @@ public class SheetMusicActivity extends Activity implements
 		mrec.setPreviewDisplay(surfaceHolder.getSurface());
 		mrec.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 		mrec.setAudioSource(MediaRecorder.AudioSource.MIC);
-		
+
 		if (front == true) {
-		mrec.setProfile(CamcorderProfile.get(
-				Camera.CameraInfo.CAMERA_FACING_FRONT,
-				CamcorderProfile.QUALITY_HIGH));
+			mrec.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
+		} else {
+			mrec.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_BACK, CamcorderProfile.QUALITY_HIGH));
 		}
-		else {mrec.setProfile(CamcorderProfile.get(
-				Camera.CameraInfo.CAMERA_FACING_BACK,
-				CamcorderProfile.QUALITY_HIGH));}
 
 		mrec.setOutputFile(getFilenameVideo());
 		mrec.setVideoFrameRate(10);
@@ -973,8 +924,7 @@ public class SheetMusicActivity extends Activity implements
 	}
 
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 	}
 
 	@Override
@@ -1008,7 +958,6 @@ public class SheetMusicActivity extends Activity implements
 
 	/*** End of Video Recording Functions ***/
 
-	
 	/*** Mute Button ***/
 
 	@Override
@@ -1023,14 +972,10 @@ public class SheetMusicActivity extends Activity implements
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_VOLUME_UP:
 			if (action == KeyEvent.ACTION_UP) {
-				if (player.audioManager
-						.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-					player.volume = player.audioManager
-							.getStreamVolume(AudioManager.STREAM_MUSIC);
+				if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+					player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 				}
-				if (player.mute
-						&& player.audioManager
-								.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+				if (player.mute && player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
 					player.unmute();
 				}
 			}
@@ -1038,14 +983,10 @@ public class SheetMusicActivity extends Activity implements
 		case KeyEvent.KEYCODE_VOLUME_DOWN:
 			if (action == KeyEvent.ACTION_UP) {
 				// Volume down key detected
-				if (player.audioManager
-						.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-					player.volume = player.audioManager
-							.getStreamVolume(AudioManager.STREAM_MUSIC);
+				if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+					player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 				}
-				if (!player.mute
-						&& player.audioManager
-								.getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
+				if (!player.mute && player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
 					player.mute();
 				}
 				return true;
@@ -1075,9 +1016,7 @@ public class SheetMusicActivity extends Activity implements
 					this.finish();
 					return true;
 				} else {
-					Toast.makeText(SheetMusicActivity.this,
-							"Stop recording before exiting", Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(SheetMusicActivity.this, "Stop recording before exiting", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
@@ -1085,8 +1024,7 @@ public class SheetMusicActivity extends Activity implements
 	}
 
 	@Override
-	public boolean onKeyDown(View view, Editable text, int keyCode,
-			KeyEvent event) {
+	public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -1099,7 +1037,6 @@ public class SheetMusicActivity extends Activity implements
 
 	/*** End of Mute Button Functions ***/
 
-	
 	/*** Metronome Functions ***/
 
 	private void updateTempoView() {
@@ -1139,8 +1076,7 @@ public class SheetMusicActivity extends Activity implements
 			}
 
 			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,
-					boolean fromUser) {
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
 				metronomeController.setTempo(progress);
 				updateTempoView();
@@ -1151,10 +1087,9 @@ public class SheetMusicActivity extends Activity implements
 	/*** End of Metronome Functions ***/
 
 	/**********************************************************************************************************
- **********************************************************************************************************
- **********************************************************************************************************/
-	/**************************************
-	 * End of Functions for add-ups****************************************
+	 **********************************************************************************************************
+	 **********************************************************************************************************/
+	/************************************ End of Functions for add-ups ****************************************
 	 ********************************************************************************************************** 
 	 **********************************************************************************************************/
 
