@@ -427,9 +427,13 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			metronomeView.setVisibility(View.GONE);
 			return true;
 		case R.id.video:
+			if (surfaceView.getVisibility() != View.VISIBLE) {
+				surfaceView.setVisibility(View.VISIBLE);
+			}
 			topLayout.setVisibility(View.VISIBLE);
 			return true;
 		case R.id.startVideoRecording:
+			surfaceView.setVisibility(View.VISIBLE);
 			if (!isVideoRecording && !isAudioRecording) {
 				if (front == true) {
 					mCamera = openFrontFacingCamera();
@@ -449,10 +453,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		case R.id.stopVideoRecording:
 			if (isVideoRecording) {
 				stopVideoRecording();
+				surfaceView.setVisibility(View.GONE);
 			} else {
 				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
 			}
-			surfaceView.setVisibility(View.GONE);
 			topLayout.setVisibility(View.GONE);
 			return true;
 		case R.id.lastVideoRecording:
