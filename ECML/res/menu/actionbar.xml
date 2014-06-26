@@ -15,6 +15,9 @@
             <item android:id="@+id/lastVideoRecording"
           		  android:title="Replay last video record"
           		  android:showAsAction="always"></item>
+            <item android:id="@+id/switchcamera"
+          		  android:title="Switch camera"
+          		  android:showAsAction="always"></item>
         </menu>       
     </item>
     <item android:id="@+id/audio"
