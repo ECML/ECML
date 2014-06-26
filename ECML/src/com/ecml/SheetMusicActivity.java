@@ -444,7 +444,6 @@ public class SheetMusicActivity extends Activity implements
 			l.setVisibility(View.VISIBLE);
 			return true;
 		case R.id.startVideoRecording:
-
 			if (!isVideoRecording && !isAudioRecording) {
 				if (front == true) {
 					mCamera = openFrontFacingCamera();
@@ -464,7 +463,6 @@ public class SheetMusicActivity extends Activity implements
 			}
 			return true;
 		case R.id.stopVideoRecording:
-			stopVideoRecording();
 			if (isVideoRecording) {
 				stopVideoRecording();
 			}
