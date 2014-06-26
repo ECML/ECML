@@ -34,6 +34,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.media.AudioManager;
@@ -47,6 +48,8 @@ import android.os.Environment;
 import android.text.Editable;
 import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -109,37 +112,36 @@ public class SheetMusicActivity extends Activity implements
 
 	/*** Audio Recording Variables ***/
 
-	private long fileName;
-	private String pathAudio;
-	private String ext;
-	private boolean existLastRecord;
-
-	private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
-	private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
-	private static final String AUDIO_RECORDER_FOLDER = "AudioRecords";
-	private MediaRecorder recorder = null;
-	private int currentFormat = 0;
-	private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4,
-			MediaRecorder.OutputFormat.THREE_GPP };
-	private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4,
-			AUDIO_RECORDER_FILE_EXT_3GP };
-	MediaPlayer mp = new MediaPlayer();
-	private boolean isAudioRecording;
+		private long fileName;
+		private String pathAudio;
+		private String ext;
+	
+		private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
+		private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
+		private static final String AUDIO_RECORDER_FOLDER = "AudioRecords";
+		private MediaRecorder recorder = null;
+		private int currentFormat = 0;
+		private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP };
+		private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP };
+		MediaPlayer mp = new MediaPlayer();
+		private boolean isAudioRecording;
+		private boolean existAudioRecord;
 
 	/*** End of Audio Recording Variables ***/
 
 	/*** Video Recording Variables ***/
 
-	SurfaceView surfaceView;
-	SurfaceHolder surfaceHolder;
-	public MediaRecorder mrec;
-	private Camera mCamera;
-	private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";
-	private String pathVideo;
-	private boolean isVideoRecording;
-	View l;
-	boolean front = true;
-	
+		SurfaceView surfaceView;
+		SurfaceHolder surfaceHolder;
+		public MediaRecorder mrec;
+		private Camera mCamera;
+		private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";
+		private String pathVideo;
+		private boolean isVideoRecording;
+		private boolean existVideoRecord;
+		boolean front = true;
+		View l;
+
 	/*** End of Video Recording Variables ***/
 
 	/*** Fullscreen Variables ***/
@@ -294,7 +296,6 @@ public class SheetMusicActivity extends Activity implements
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		// mCamera = openFrontFacingCamera();
 
 		/*** End of side activities ***/
 
@@ -337,9 +338,18 @@ public class SheetMusicActivity extends Activity implements
 				editor.commit();
 			}
 		});
+		
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+		
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
+		params.gravity = Gravity.CENTER_HORIZONTAL;
 
+		layout.addView(piano, params);
 		layout.addView(player);
-		layout.addView(piano);
 		setContentView(layout);
 		player.SetPiano(piano, options);
 		layout.requestLayout();
@@ -423,51 +433,80 @@ public class SheetMusicActivity extends Activity implements
 		case R.id.metronome:
 			m.setVisibility(View.VISIBLE);
 			return true;
-		case R.id.startmetronome:
+		case R.id.startMetronome:
 			metronomeController.startMetronome();
 			return true;
-		case R.id.stopmetronome:
+		case R.id.stopMetronome:
 			metronomeController.stopMetronome();
 			m.setVisibility(View.GONE);
 			return true;
 		case R.id.video:
 			l.setVisibility(View.VISIBLE);
 			return true;
-		case R.id.startvideorecording:
-			try {
-				if (front == true) {mCamera = openFrontFacingCamera();}
-				else {mCamera = Camera.open();}
-				startVideoRecording();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		case R.id.startVideoRecording:
+			if (!isVideoRecording && !isAudioRecording) {
+				if (front == true) {
+					mCamera = openFrontFacingCamera();
+				}
+				else {
+					mCamera = Camera.open();
+				}
+				try {
+					startVideoRecording();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else {
+				Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
 			}
 			return true;
-		case R.id.stopvideorecording:
-			stopVideoRecording();
+		case R.id.stopVideoRecording:
+			if (isVideoRecording) {
+				stopVideoRecording();
+			}
+			else {
+				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
+			}
 			surfaceView.setVisibility(View.GONE);
 			l.setVisibility(View.GONE);
 			return true;
-		case R.id.lastvideorecording:
-			replayVideoRecording();
-			return true;
-		case R.id.switchcamera:
-			if (front == true) {
-				front = false;
-			} else {
-				front = true;
+		case R.id.lastVideoRecording:
+			if (!isVideoRecording && !isAudioRecording && existVideoRecord) {
+				replayVideoRecording();
 			}
+			else {
+				Toast.makeText(context, "No Recent Video Record", Toast.LENGTH_SHORT).show();
+			}
+		case R.id.switchCamera:
+			front = !front;
 			surfaceView.setVisibility(View.VISIBLE);
 			return true;
-		case R.id.startaudiorecording:
-			startAudioRecording();
+		case R.id.startAudioRecording:
+			if (!isVideoRecording && !isAudioRecording) {
+				startAudioRecording();
+			}
+			else {
+				Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
+			}
 			return true;
-		case R.id.stopaudiorecording:
-			stopAudioRecording();
+		case R.id.stopAudioRecording:
+			if (isAudioRecording) {
+				stopAudioRecording();
+			}
+			else {
+				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
+			}
 			return true;
-		case R.id.lastaudiorecording:
-			String filename = fileName + ext;
-			playAudio(pathAudio, filename, mp);
+		case R.id.lastAudioRecording:
+			if (!isVideoRecording && !isAudioRecording && existAudioRecord) {
+				String filename = fileName + ext;
+				playAudio(pathAudio, filename, mp);
+			}
+			else {
+				Toast.makeText(context, "Not Recent Audio Record", Toast.LENGTH_SHORT).show();
+			}
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -786,7 +825,6 @@ public class SheetMusicActivity extends Activity implements
 			recorder.prepare();
 			recorder.start();
 			isAudioRecording = true;
-			existLastRecord = true;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -801,6 +839,7 @@ public class SheetMusicActivity extends Activity implements
 			recorder.reset();
 			recorder.release();
 			recorder = null;
+			existAudioRecord = true;
 		}
 	}
 
@@ -852,6 +891,7 @@ public class SheetMusicActivity extends Activity implements
 
 	/*** End of Audio Recording Functions ***/
 
+	
 	/*** Video Recording Functions ***/
 
 	protected void startVideoRecording() throws IOException {
@@ -883,6 +923,7 @@ public class SheetMusicActivity extends Activity implements
 
 	protected void stopVideoRecording() {
 		isVideoRecording = false;
+		existVideoRecord = true;
 		mrec.stop();
 		releaseMediaRecorder();
 		releaseCamera();
@@ -968,6 +1009,7 @@ public class SheetMusicActivity extends Activity implements
 
 	/*** End of Video Recording Functions ***/
 
+	
 	/*** Mute Button ***/
 
 	@Override
@@ -1058,6 +1100,7 @@ public class SheetMusicActivity extends Activity implements
 
 	/*** End of Mute Button Functions ***/
 
+	
 	/*** Metronome Functions ***/
 
 	private void updateTempoView() {
