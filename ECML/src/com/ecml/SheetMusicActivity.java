@@ -423,17 +423,17 @@ public class SheetMusicActivity extends Activity implements
 		case R.id.metronome:
 			m.setVisibility(View.VISIBLE);
 			return true;
-		case R.id.startmetronome:
+		case R.id.startMetronome:
 			metronomeController.startMetronome();
 			return true;
-		case R.id.stopmetronome:
+		case R.id.stopMetronome:
 			metronomeController.stopMetronome();
 			m.setVisibility(View.GONE);
 			return true;
 		case R.id.video:
 			l.setVisibility(View.VISIBLE);
 			return true;
-		case R.id.startvideorecording:
+		case R.id.startVideoRecording:
 			try {
 				if (front == true) {mCamera = openFrontFacingCamera();}
 				else {mCamera = Camera.open();}
@@ -443,29 +443,25 @@ public class SheetMusicActivity extends Activity implements
 				e.printStackTrace();
 			}
 			return true;
-		case R.id.stopvideorecording:
+		case R.id.stopVideoRecording:
 			stopVideoRecording();
 			surfaceView.setVisibility(View.GONE);
 			l.setVisibility(View.GONE);
 			return true;
-		case R.id.lastvideorecording:
+		case R.id.lastVideoRecording:
 			replayVideoRecording();
 			return true;
-		case R.id.switchcamera:
-			if (front == true) {
-				front = false;
-			} else {
-				front = true;
-			}
+		case R.id.switchCamera:
+			front = !front;
 			surfaceView.setVisibility(View.VISIBLE);
 			return true;
-		case R.id.startaudiorecording:
+		case R.id.startAudioRecording:
 			startAudioRecording();
 			return true;
-		case R.id.stopaudiorecording:
+		case R.id.stopAudioRecording:
 			stopAudioRecording();
 			return true;
-		case R.id.lastaudiorecording:
+		case R.id.lastAudioRecording:
 			String filename = fileName + ext;
 			playAudio(pathAudio, filename, mp);
 			return true;
@@ -746,7 +742,6 @@ public class SheetMusicActivity extends Activity implements
 			player.Pause();
 		}
 		super.onPause();
-		mCamera.release();
 		mp.stop();
 		metronomeController.stopMetronome();
 
