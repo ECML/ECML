@@ -1,28 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.ecml"
-      android:versionCode="9"
-      android:versionName="2.6"      
-      >
-    
+    package="com.ecml"
+    android:versionCode="9"
+    android:versionName="2.6" >
+
     <uses-permission android:name="android.permission.INTRENET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-	<uses-feature android:name="android.hardware.camera.front" android:required="false" />
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
-        
-        <activity android:name=".MidiSheetMusicActivity"
-            	  android:screenOrientation="sensorLandscape"
-                  android:configChanges="orientation"
-                  android:label="@string/app_name">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-sdk
+        android:minSdkVersion="13"
+        android:targetSdkVersion="17" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".MidiSheetMusicActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="sensorLandscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SheetMusicActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.mid"
+                    android:scheme="file" />
             </intent-filter>
         </activity>
         <activity android:name=".ChooseSongActivity" >
@@ -37,22 +64,16 @@
         </activity>
         <activity android:name=".HelpActivity" >
         </activity>
-        <activity android:name=".SheetMusicActivity" 
-                  android:screenOrientation="sensorLandscape"
-                  android:configChanges="orientation">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="file"  android:host="*" android:pathPattern=".*\\.mid" android:mimeType="*/*"  />
-            </intent-filter>
-        </activity>
         <activity android:name=".YoutubeActivity" >
         </activity>
         <activity android:name=".CalendarActivity" >
         </activity>
         <activity android:name=".RecordingActivity" >
         </activity>
-        <activity android:name="GameActivity"></activity>
-        <activity android:name="MetronomeActivity"></activity>
+        <activity android:name=".GameActivity" >
+        </activity>
+        <activity android:name=".MetronomeActivity" >
+        </activity>
     </application>
+
 </manifest>

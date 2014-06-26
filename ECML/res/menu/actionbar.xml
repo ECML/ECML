@@ -6,13 +6,13 @@
           android:showAsAction="always"
            >
         <menu>
-            <item android:id="@+id/startvideorecording"
+            <item android:id="@+id/startVideoRecording"
           		  android:title="Start video recording"
           		  android:showAsAction="always"></item>
-            <item android:id="@+id/stopvideorecording"
+            <item android:id="@+id/stopVideoRecording"
           		  android:title="Stop video recording"
           		  android:showAsAction="always"></item>
-            <item android:id="@+id/lastvideorecording"
+            <item android:id="@+id/lastVideoRecording"
           		  android:title="Replay last video record"
           		  android:showAsAction="always"></item>
         </menu>       
@@ -23,13 +23,13 @@
           android:showAsAction="always"
            >
         <menu>
-            <item android:id="@+id/startaudiorecording"
+            <item android:id="@+id/startAudioRecording"
           		  android:title="Start audio recording"
           		  android:showAsAction="always"></item>
-            <item android:id="@+id/stopaudiorecording"
+            <item android:id="@+id/stopAudioRecording"
           		  android:title="Stop audio recording"
           		  android:showAsAction="always"></item>
-            <item android:id="@+id/lastaudiorecording"
+            <item android:id="@+id/lastAudioRecording"
           		  android:title="Replay last audio record"
           		  android:showAsAction="always"></item>
         </menu>
@@ -67,11 +67,11 @@
           android:showAsAction="always"
           >
        <menu>   
-		   <item android:id="@+id/startmetronome"
+		   <item android:id="@+id/startMetronome"
 	          android:title="Start the metronome"
 	          android:showAsAction="always"
 	          ></item>
-		   <item android:id="@+id/stopmetronome"
+		   <item android:id="@+id/stopMetronome"
 	          android:title="Stop the metronome"
 	          android:showAsAction="always"
 	          ></item>		  
