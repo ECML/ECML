@@ -34,6 +34,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
@@ -247,6 +248,7 @@ public class SheetMusicActivity extends Activity implements
 				.getColor(R.color.blue));
 		ab.setBackgroundDrawable(colorDrawable);
 
+		
 		/**********************************************************************************************************
 		 ********************************************************************************************************** 
 		 ********************************************* Buttons
@@ -358,6 +360,8 @@ public class SheetMusicActivity extends Activity implements
 		layout.addView(piano, params);
 		layout.addView(player);
 		setContentView(layout);
+		getWindow().getDecorView().setBackgroundColor(getResources()
+				.getColor(R.color.blue));
 		player.SetPiano(piano, options);
 		layout.requestLayout();
 	}
