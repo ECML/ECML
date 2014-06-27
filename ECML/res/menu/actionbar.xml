@@ -3,34 +3,17 @@
 
     <item
         android:id="@+id/video"
+        android:actionLayout="@layout/abvideo"
         android:icon="@drawable/video"
         android:showAsAction="always|collapseActionView"
-        android:actionLayout="@layout/abvideo"
         android:title="@string/video">
     </item>
     <item
         android:id="@+id/audio"
+        android:actionLayout="@layout/abaudio"
         android:icon="@drawable/audio"
         android:showAsAction="always|collapseActionView"
-        android:actionLayout="@layout/abaudio"
         android:title="@string/audio">
-        <!-- <menu>
-            <item
-                android:id="@+id/startAudioRecording"
-                android:showAsAction="always"
-                android:title="Start audio recording">
-            </item>
-            <item
-                android:id="@+id/stopAudioRecording"
-                android:showAsAction="always"
-                android:title="Stop audio recording">
-            </item>
-            <item
-                android:id="@+id/lastAudioRecording"
-                android:showAsAction="always"
-                android:title="Replay last audio record">
-            </item>
-        </menu> -->
     </item>
     <item
         android:id="@+id/calendar"
@@ -63,21 +46,10 @@
     </item>
     <item
         android:id="@+id/metronome"
+        android:actionLayout="@layout/abmetronome"
         android:icon="@drawable/metronome"
-        android:showAsAction="always"
+        android:showAsAction="always|collapseActionView"
         android:title="Metronome">
-        <menu>
-            <item
-                android:id="@+id/startMetronome"
-                android:showAsAction="always"
-                android:title="Start the metronome">
-            </item>
-            <item
-                android:id="@+id/stopMetronome"
-                android:showAsAction="always"
-                android:title="Stop the metronome">
-            </item>
-        </menu>
     </item>
     <item
         android:id="@+id/settings"

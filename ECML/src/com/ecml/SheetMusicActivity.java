@@ -172,6 +172,7 @@ public class SheetMusicActivity extends Activity implements
 
 	MetronomeController metronomeController;
 	View metronomeView;
+	View v2;
 
 	/*** End of Metronome Variables ***/
 
@@ -394,28 +395,33 @@ public class SheetMusicActivity extends Activity implements
 
 		/***********************************************************************************************************/
 		/**********************************************************************************************************/
-		 /**********************************************************************************************************/
+		/**********************************************************************************************************/
 		/***********************************************************************************************************/
-		 /* Action bar *********************************************************************************************/
-		 /**********************************************************************************************************/
-		 /**********************************************************************************************************/
+		/*
+		 * Action bar
+		 * ***********************************************************
+		 * *********************************
+		 */
+		/**********************************************************************************************************/
+		/**********************************************************************************************************/
 
-		
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.actionbar, menu);
 
-		/*******************************VIDEO RECORDING ACTION VIEW************************************/
+		/******************************* VIDEO RECORDING ACTION VIEW ************************************/
 		/** Get the action view of the menu item whose id is video */
 		View v = (View) menu.findItem(R.id.video).getActionView();
 
 		/** Get the edit text from the action view */
-		ImageView stopVideoRecording = (ImageView) v.findViewById(R.id.recordstopbtn);
+		ImageView stopVideoRecording = (ImageView) v
+				.findViewById(R.id.recordstopbtn);
 		ImageView startVideoRecording = (ImageView) v
 				.findViewById(R.id.recordbtn);
 		ImageView replayVideoRecording = (ImageView) v
 				.findViewById(R.id.recordplaybtn);
-		ImageView switchCamera = (ImageView) v.findViewById(R.id.switchcamerabtn);
+		ImageView switchCamera = (ImageView) v
+				.findViewById(R.id.switchcamerabtn);
 
 		startVideoRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -481,18 +487,19 @@ public class SheetMusicActivity extends Activity implements
 
 			}
 		});
-		
-		/*******************************END OF VIDEO RECORDING ACTION VIEW**********************************/
-		/*******************************AUDIO RECORDING ACTION VIEW**********************************/
+
+		/******************************* END OF VIDEO RECORDING ACTION VIEW **********************************/
+		/******************************* AUDIO RECORDING ACTION VIEW **********************************/
 		/** Get the action view of the menu item whose id is video */
 		View v3 = (View) menu.findItem(R.id.audio).getActionView();
-		
-		ImageView stopAudioRecording = (ImageView) v3.findViewById(R.id.recordaudiostopbtn);
+
+		ImageView stopAudioRecording = (ImageView) v3
+				.findViewById(R.id.recordaudiostopbtn);
 		ImageView startAudioRecording = (ImageView) v3
 				.findViewById(R.id.recordaudiobtn);
 		ImageView replayAudioRecording = (ImageView) v3
 				.findViewById(R.id.recordaudioplaybtn);
-		
+
 		startAudioRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -501,12 +508,12 @@ public class SheetMusicActivity extends Activity implements
 					startAudioRecording();
 				} else {
 					Toast.makeText(context, "Stop Recording first",
-						Toast.LENGTH_SHORT).show();
-				}	
+							Toast.LENGTH_SHORT).show();
+				}
 
 			}
 		});
-		
+
 		stopAudioRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -520,7 +527,7 @@ public class SheetMusicActivity extends Activity implements
 
 			}
 		});
-		
+
 		replayAudioRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -535,18 +542,71 @@ public class SheetMusicActivity extends Activity implements
 
 			}
 		});
-		/*******************************END OF AUDIO RECORDING ACTION VIEW**********************************/
-		/*******************************METRONOME ACTION VIEW**********************************/
+		/******************************* END OF AUDIO RECORDING ACTION VIEW **********************************/
+		/******************************* METRONOME ACTION VIEW **********************************/
+		/** Get the action view of the menu item whose id is video */
+		View v2 = (View) menu.findItem(R.id.metronome).getActionView();
 
-		
-		/**********************************************************************************************************/
-		 /**********************************************************************************************************/
-		 /**********************************************************************************************************/
-		/**********************************************************************************************************/
-		 /* End of Action Bar **************************************************************************************/
-		 /********************************************************************************************************** /
-		 /**********************************************************************************************************/
+		TextView tempoView = ((TextView) v2.findViewById(R.id.tempo));
+		tempoView.setText("Tempo : " + metronomeController.getTempo() + "");
 
+		SeekBar slider = (SeekBar) v2.findViewById(R.id.slider);
+		slider.setMax(200);
+		slider.setProgress(metronomeController.getTempo());
+		slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				metronomeController.startMetronome();
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				metronomeController.stopMetronome();
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+
+				metronomeController.setTempo(progress);
+				updateTempoView();
+			}
+		});
+
+		TextView startMetronome = (TextView) v2
+				.findViewById(R.id.startmetronome);
+		TextView stopMetronome = (TextView) v2.findViewById(R.id.stopmetronome);
+
+		startMetronome.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				metronomeController.startMetronome();
+			}
+		});
+
+		stopMetronome.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				metronomeController.stopMetronome();
+			}
+		});
+
+		/******************************* END OF METRONOME ACTION VIEW **********************************/
+		/**********************************************************************************************************/
+		/**********************************************************************************************************/
+		/**********************************************************************************************************/
+		/**********************************************************************************************************/
+		/*
+		 * End of Action Bar
+		 * ****************************************************
+		 * *********************************
+		 */
+		/**********************************************************************************************************
+		 * / /
+		 **********************************************************************************************************/
 
 		if (player != null) {
 			player.Pause();
@@ -588,47 +648,12 @@ public class SheetMusicActivity extends Activity implements
 		case R.id.upload:
 			uploadYoutube();
 			return true;
-		case R.id.metronome:
-			metronomeView.setVisibility(View.VISIBLE);
-			return true;
-		case R.id.startMetronome:
-			metronomeController.startMetronome();
-			return true;
-		case R.id.stopMetronome:
-			metronomeController.stopMetronome();
-			metronomeView.setVisibility(View.GONE);
-			return true;
 		case R.id.video:
 			if (surfaceView.getVisibility() != View.VISIBLE) {
 				surfaceView.setVisibility(View.VISIBLE);
 			}
 			topLayout.setVisibility(View.VISIBLE);
-			return true;			
-//		case R.id.startAudioRecording:
-//			if (!isVideoRecording && !isAudioRecording) {
-//				startAudioRecording();
-//			} else {
-//				Toast.makeText(context, "Stop Recording first",
-//						Toast.LENGTH_SHORT).show();
-//			}
-//			return true;
-//		case R.id.stopAudioRecording:
-//			if (isAudioRecording) {
-//				stopAudioRecording();
-//			} else {
-//				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT)
-//						.show();
-//			}
-//			return true;
-//		case R.id.lastAudioRecording:
-//			if (!isVideoRecording && !isAudioRecording && existAudioRecord) {
-//				String filename = fileName + ext;
-//				playAudio(pathAudio, filename, mp);
-//			} else {
-//				Toast.makeText(context, "Not Recent Audio Record",
-//						Toast.LENGTH_SHORT).show();
-//			}
-//			return true;
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
