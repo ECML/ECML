@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/audiobtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:src="@drawable/audio" />
+
+    <ImageView
+        android:id="@+id/recordaudiobtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:src="@drawable/record" />
+
+    <ImageView
+        android:id="@+id/recordaudiostopbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:src="@drawable/recordstop" />
+
+    <ImageView
+        android:id="@+id/recordaudioplaybtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:src="@drawable/recordplay" />
+
+</LinearLayout>

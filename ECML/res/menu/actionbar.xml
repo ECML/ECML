@@ -7,35 +7,14 @@
         android:showAsAction="always|collapseActionView"
         android:actionLayout="@layout/abvideo"
         android:title="@string/video">
-        <!-- <menu>
-            <item
-                android:id="@+id/startVideoRecording"
-                android:showAsAction="always"
-                android:title="Start video recording">
-            </item>
-            <item
-                android:id="@+id/stopVideoRecording"
-                android:showAsAction="always"
-                android:title="Stop video recording">
-            </item>
-            <item
-                android:id="@+id/lastVideoRecording"
-                android:showAsAction="always"
-                android:title="Replay last video record">
-            </item>
-            <item
-                android:id="@+id/switchCamera"
-                android:showAsAction="always"
-                android:title="Switch camera">
-            </item>
-        </menu> -->
     </item>
     <item
         android:id="@+id/audio"
         android:icon="@drawable/audio"
-        android:showAsAction="always"
+        android:showAsAction="always|collapseActionView"
+        android:actionLayout="@layout/abaudio"
         android:title="@string/audio">
-        <menu>
+        <!-- <menu>
             <item
                 android:id="@+id/startAudioRecording"
                 android:showAsAction="always"
@@ -51,7 +30,7 @@
                 android:showAsAction="always"
                 android:title="Replay last audio record">
             </item>
-        </menu>
+        </menu> -->
     </item>
     <item
         android:id="@+id/calendar"

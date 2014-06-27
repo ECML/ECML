@@ -405,7 +405,8 @@ public class SheetMusicActivity extends Activity implements
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.actionbar, menu);
 
-		/** Get the action view of the menu item whose id is search */
+		/*******************************VIDEO RECORDING ACTION VIEW************************************/
+		/** Get the action view of the menu item whose id is video */
 		View v = (View) menu.findItem(R.id.video).getActionView();
 
 		/** Get the edit text from the action view */
@@ -481,6 +482,63 @@ public class SheetMusicActivity extends Activity implements
 			}
 		});
 		
+		/*******************************END OF VIDEO RECORDING ACTION VIEW**********************************/
+		/*******************************AUDIO RECORDING ACTION VIEW**********************************/
+		/** Get the action view of the menu item whose id is video */
+		View v3 = (View) menu.findItem(R.id.audio).getActionView();
+		
+		ImageView stopAudioRecording = (ImageView) v3.findViewById(R.id.recordaudiostopbtn);
+		ImageView startAudioRecording = (ImageView) v3
+				.findViewById(R.id.recordaudiobtn);
+		ImageView replayAudioRecording = (ImageView) v3
+				.findViewById(R.id.recordaudioplaybtn);
+		
+		startAudioRecording.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (!isVideoRecording && !isAudioRecording) {
+					startAudioRecording();
+				} else {
+					Toast.makeText(context, "Stop Recording first",
+						Toast.LENGTH_SHORT).show();
+				}	
+
+			}
+		});
+		
+		stopAudioRecording.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (isAudioRecording) {
+					stopAudioRecording();
+				} else {
+					Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT)
+							.show();
+				}
+
+			}
+		});
+		
+		replayAudioRecording.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (!isVideoRecording && !isAudioRecording && existAudioRecord) {
+					String filename = fileName + ext;
+					playAudio(pathAudio, filename, mp);
+				} else {
+					Toast.makeText(context, "Not Recent Audio Record",
+							Toast.LENGTH_SHORT).show();
+				}
+
+			}
+		});
+		/*******************************END OF AUDIO RECORDING ACTION VIEW**********************************/
+		/*******************************METRONOME ACTION VIEW**********************************/
+
+		
 		/**********************************************************************************************************/
 		 /**********************************************************************************************************/
 		 /**********************************************************************************************************/
@@ -546,31 +604,31 @@ public class SheetMusicActivity extends Activity implements
 			}
 			topLayout.setVisibility(View.VISIBLE);
 			return true;			
-		case R.id.startAudioRecording:
-			if (!isVideoRecording && !isAudioRecording) {
-				startAudioRecording();
-			} else {
-				Toast.makeText(context, "Stop Recording first",
-						Toast.LENGTH_SHORT).show();
-			}
-			return true;
-		case R.id.stopAudioRecording:
-			if (isAudioRecording) {
-				stopAudioRecording();
-			} else {
-				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT)
-						.show();
-			}
-			return true;
-		case R.id.lastAudioRecording:
-			if (!isVideoRecording && !isAudioRecording && existAudioRecord) {
-				String filename = fileName + ext;
-				playAudio(pathAudio, filename, mp);
-			} else {
-				Toast.makeText(context, "Not Recent Audio Record",
-						Toast.LENGTH_SHORT).show();
-			}
-			return true;
+//		case R.id.startAudioRecording:
+//			if (!isVideoRecording && !isAudioRecording) {
+//				startAudioRecording();
+//			} else {
+//				Toast.makeText(context, "Stop Recording first",
+//						Toast.LENGTH_SHORT).show();
+//			}
+//			return true;
+//		case R.id.stopAudioRecording:
+//			if (isAudioRecording) {
+//				stopAudioRecording();
+//			} else {
+//				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT)
+//						.show();
+//			}
+//			return true;
+//		case R.id.lastAudioRecording:
+//			if (!isVideoRecording && !isAudioRecording && existAudioRecord) {
+//				String filename = fileName + ext;
+//				playAudio(pathAudio, filename, mp);
+//			} else {
+//				Toast.makeText(context, "Not Recent Audio Record",
+//						Toast.LENGTH_SHORT).show();
+//			}
+//			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
