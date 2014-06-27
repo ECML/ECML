@@ -4,9 +4,10 @@
     <item
         android:id="@+id/video"
         android:icon="@drawable/video"
-        android:showAsAction="always"
+        android:showAsAction="always|collapseActionView"
+        android:actionLayout="@layout/abvideo"
         android:title="@string/video">
-        <menu>
+        <!-- <menu>
             <item
                 android:id="@+id/startVideoRecording"
                 android:showAsAction="always"
@@ -27,7 +28,7 @@
                 android:showAsAction="always"
                 android:title="Switch camera">
             </item>
-        </menu>
+        </menu> -->
     </item>
     <item
         android:id="@+id/audio"
