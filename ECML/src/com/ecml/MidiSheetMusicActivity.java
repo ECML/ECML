@@ -12,13 +12,20 @@
 
 package com.ecml;
 
+import java.io.IOException;
+
+import android.app.ActionBar;
 import android.app.Activity;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
+import android.graphics.drawable.ColorDrawable;
+
 import com.ecml.R;
 
 /** @class MidiSheetMusicActivity
@@ -26,40 +33,124 @@ import com.ecml.R;
  * It simply displays the splash screen, and a button to choose a song.
  */
 public class MidiSheetMusicActivity extends Activity {
+	
+	final Context context = this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(android.R.style.Theme_Holo_Light);
-        loadImages();
         setContentView(R.layout.main);
-        ImageView button = (ImageView) findViewById(R.id.choose_song);
-        button.setOnClickListener(
+        
+        //Set Actionbar color
+        ActionBar ab = getActionBar();
+		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
+		ab.setBackgroundDrawable(colorDrawable);
+       
+        //Choose song button
+        ImageView chooseSong = (ImageView) findViewById(R.id.choose_song);
+        chooseSong.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        chooseSong();
+                    	Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+                        startActivity(intent);
                     }
                 }
-        );
+        		);
+                
+        //Audio Recording button
+                ImageView audioRecording = (ImageView) findViewById(R.id.audiorecording);
+                audioRecording.setOnClickListener(
+                        new View.OnClickListener() {
+                            public void onClick(View v) {
+                            	Intent goToAudio = new Intent(getApplicationContext(), AudioRecordingActivity.class);
+                        		startActivity(goToAudio);
+                            }
+                        } );       
+        
+        //Video Recording button
+                ImageView videoRecording = (ImageView) findViewById(R.id.videorecording);
+                videoRecording.setOnClickListener(
+                        new View.OnClickListener() {
+                            public void onClick(View v) {
+                            	Intent goToVideo = new Intent(getApplicationContext(), VideoRecordingActivity.class);
+                        		startActivity(goToVideo);
+                            }
+                        } );       
+                
+        //Calendar button
+                ImageView calendar = (ImageView) findViewById(R.id.calendar);
+                calendar.setOnClickListener(
+                        new View.OnClickListener() {
+                            public void onClick(View v) {
+                            	Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
+                        		startActivity(goToCalendar);
+                            }
+                        } );
+                
+       //Game button
+                ImageView game = (ImageView) findViewById(R.id.game);
+                game.setOnClickListener(
+                        new View.OnClickListener() {
+                            public void onClick(View v) {
+                            	Intent goToGame = new Intent(getApplicationContext(), GameActivity.class);
+                        		startActivity(goToGame);
+                            }
+                        } );
+                
+       //Metronome button
+                ImageView metronome = (ImageView) findViewById(R.id.metronome);
+                metronome.setOnClickListener(
+                        new View.OnClickListener() {
+                            public void onClick(View v) {
+                            	Intent goToMetronome = new Intent(getApplicationContext(), MetronomeActivity.class);
+                        		startActivity(goToMetronome);
+                            }
+                        } );
+                
+        //Tuning fork button
+                ImageView tuning = (ImageView) findViewById(R.id.tuning);
+                tuning.setOnClickListener(
+                        new View.OnClickListener() {
+                            public void onClick(View v) {
+                            	Toast.makeText(context, "Tuning fork", Toast.LENGTH_SHORT).show();
+                        		MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.tuning);
+                        		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        		try {
+                        			mPlayer.prepare();
+                        		} catch (IllegalStateException e) {
+                        			// TODO Auto-generated catch block
+                        			e.printStackTrace();
+                        		} catch (IOException e) {
+                        			// TODO Auto-generated catch block
+                        			e.printStackTrace();
+                        		}
+                        		mPlayer.start();
+                            }
+                        } );
+                
+         //Youtube button
+                ImageView youtube = (ImageView) findViewById(R.id.youtube);
+                youtube.setOnClickListener(
+                        new View.OnClickListener() {
+                            public void onClick(View v) {
+                            	Intent goToYoutube = new Intent(getApplicationContext(), YoutubeActivity.class);
+                        		startActivity(goToYoutube);
+                            }
+                        } );
+                
+          //Show scores button
+                ImageView score = (ImageView) findViewById(R.id.score);
+                score.setOnClickListener(
+                        new View.OnClickListener() {
+                            public void onClick(View v) {
+                            	Intent goToScore = new Intent(getApplicationContext(), SheetMusicActivity.class);
+                        		startActivity(goToScore);
+                            }
+                        } );
+
     }
 
-    /** Start the ChooseSongActivity when the "Choose Song" button is clicked */
-    private void chooseSong() {
-        Intent intent = new Intent(this, ChooseSongActivity.class);
-        startActivity(intent);
-    }
 
-    /** Load all the resource images */
-    private void loadImages() {
-        ClefSymbol.LoadImages(this);
-        TimeSigSymbol.LoadImages(this);
-        MidiPlayer.LoadImages(this);
-    }
-
-    /** Always use landscape mode for this activity. */
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
 }
 

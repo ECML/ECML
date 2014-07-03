@@ -7,7 +7,7 @@
     android:layout_height="match_parent" >
 
     <ImageView android:id="@+id/choose_song_icon"
-        
+        android:src="@drawable/icon"        
         android:padding="8dip"
         android:layout_width="48dip" 
         android:layout_height="48dip" />

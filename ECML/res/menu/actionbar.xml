@@ -16,33 +16,10 @@
         android:title="@string/audio">
     </item>
     <item
-        android:id="@+id/calendar"
-        android:icon="@android:drawable/ic_menu_month"
-        android:showAsAction="always"
-        android:title="@string/calendar_str">
-    </item>
-    <item
-        android:id="@+id/youtube"
-        android:icon="@drawable/youtube"
-        android:showAsAction="always"
-        android:title="@string/youtube_str">
-    </item>
-    <item
         android:id="@+id/upload"
         android:icon="@drawable/upload"
         android:showAsAction="always"
         android:title="@string/upload_youtube">
-    </item>
-    <item
-        android:id="@+id/choose_song"
-        android:icon="@android:drawable/ic_menu_search"
-        android:showAsAction="always"
-        android:title="@string/choose_song"/>
-    <item
-        android:id="@+id/tuning"
-        android:icon="@drawable/tuning"
-        android:showAsAction="always"
-        android:title="Tuning fork">
     </item>
     <item
         android:id="@+id/metronome"
