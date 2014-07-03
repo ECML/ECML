@@ -165,7 +165,7 @@ public class MidiPlayer extends LinearLayout {
         Point newsize = MidiPlayer.getPreferredSize(screenwidth, screenheight);
         resizeButtons(newsize.x, newsize.y);
         player = new MediaPlayer();
-        setBackgroundColor(getResources().getColor(R.color.blue));
+        setBackgroundColor(getResources().getColor(R.color.orange));
     }
 
     /** Get the preferred width/height given the screen width/height */
@@ -207,7 +207,7 @@ public class MidiPlayer extends LinearLayout {
 
         /* Create the rewind button */
         rewindButton = new ImageButton(activity);
-        rewindButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        rewindButton.setBackgroundColor(getResources().getColor(R.color.orange));
         rewindButton.setImageBitmap(rewindImage);
         rewindButton.setScaleType(ImageView.ScaleType.FIT_XY);
         rewindButton.setOnClickListener(new View.OnClickListener() {
@@ -219,7 +219,7 @@ public class MidiPlayer extends LinearLayout {
 
         /* Create the stop button */
         stopButton = new ImageButton(activity);
-        stopButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        stopButton.setBackgroundColor(getResources().getColor(R.color.orange));
         stopButton.setImageBitmap(stopImage);
         stopButton.setScaleType(ImageView.ScaleType.FIT_XY);
         stopButton.setOnClickListener(new View.OnClickListener() {
@@ -232,7 +232,7 @@ public class MidiPlayer extends LinearLayout {
         
         /* Create the play button */
         playButton = new ImageButton(activity);
-        playButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        playButton.setBackgroundColor(getResources().getColor(R.color.orange));
         playButton.setImageBitmap(playImage);
         playButton.setScaleType(ImageView.ScaleType.FIT_XY);
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -244,7 +244,7 @@ public class MidiPlayer extends LinearLayout {
         
         /* Create the fastFwd button */        
         fastFwdButton = new ImageButton(activity);
-        fastFwdButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        fastFwdButton.setBackgroundColor(getResources().getColor(R.color.orange));
         fastFwdButton.setImageBitmap(fastFwdImage);
         fastFwdButton.setScaleType(ImageView.ScaleType.FIT_XY);
         fastFwdButton.setOnClickListener(new View.OnClickListener() {
@@ -270,7 +270,7 @@ public class MidiPlayer extends LinearLayout {
         
         /* Create the - button for the speed bar */        
         minusButton = new ImageButton(activity);
-        minusButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        minusButton.setBackgroundColor(getResources().getColor(R.color.orange));
         minusButton.setImageBitmap(minusImage);
         minusButton.setScaleType(ImageView.ScaleType.FIT_XY);
         minusButton.setOnClickListener(new View.OnClickListener() {
@@ -299,7 +299,7 @@ public class MidiPlayer extends LinearLayout {
                 
         /* Create the + button for the speed bar */        
         plusButton = new ImageButton(activity);
-        plusButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        plusButton.setBackgroundColor(getResources().getColor(R.color.orange));
         plusButton.setImageBitmap(plusImage);
         plusButton.setScaleType(ImageView.ScaleType.FIT_XY);
         plusButton.setOnClickListener(new View.OnClickListener() {
@@ -312,7 +312,7 @@ public class MidiPlayer extends LinearLayout {
         
         /* Create the mute button */        
         muteButton = new ImageButton(activity);
-        muteButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        muteButton.setBackgroundColor(getResources().getColor(R.color.orange));
         if (mute) {
         	muteButton.setImageBitmap(muteOnImage);
         } else {
@@ -332,7 +332,7 @@ public class MidiPlayer extends LinearLayout {
         
         /* Create the piano button */        
         pianoButton = new ImageButton(activity);
-        pianoButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        pianoButton.setBackgroundColor(getResources().getColor(R.color.orange));
         pianoButton.setImageBitmap(pianoImage);
         pianoButton.setScaleType(ImageView.ScaleType.FIT_XY);
         this.addView(pianoButton);

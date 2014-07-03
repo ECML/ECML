@@ -17,9 +17,12 @@ import android.os.*;
 import android.widget.*;
 import android.util.Log;
 import android.content.*;
+
 import org.json.*;
+
 import android.graphics.*;
 import android.graphics.drawable.*;
+
 import com.ecml.R;
 
 /** @class ChooseSongActivity
@@ -35,9 +38,16 @@ public class ChooseSongActivity extends TabActivity {
 
     @Override
     public void onCreate(Bundle state) {
+    	
+    	
         globalActivity = this;
         super.onCreate(state);
         setTheme(android.R.style.Theme_Holo_Light);
+        
+      //Set Actionbar color
+        ActionBar ab = getActionBar();
+		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
+		ab.setBackgroundDrawable(colorDrawable);
 
        
         Bitmap allFilesIcon = BitmapFactory.decodeResource(this.getResources(), R.drawable.allfilesicon);

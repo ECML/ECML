@@ -3,287 +3,222 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
-    android:orientation="horizontal"
-    android:theme="@android:style/Theme.Holo.Light" >
+    android:orientation="vertical"
+    android:theme="@android:style/Theme.Holo.Light"
+    android:background="@color/blue"
+     >
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/choose_song"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
-
-        <TextView
-            android:id="@+id/choose_song_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/choose_song" />
-
-        <ImageView
-            android:id="@+id/messenger"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
-
-        <TextView
-            android:id="@+id/messenger_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/messenger" />
-
-        <ImageView
-            android:id="@+id/settings"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
-
-        <TextView
-            android:id="@+id/settings_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/song_settings_str" />
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:background="@color/orange"
+        android:orientation="horizontal" >
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/score"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
-
-        <TextView
-            android:id="@+id/score_txt"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/score" />
+            android:layout_marginTop="70dp"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/calendar"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
+            <ImageView
+                android:id="@+id/choose_song"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/tuningbtn" />
 
-        <TextView
-            android:id="@+id/calendar_txt"
+            <TextView
+                android:id="@+id/choose_song_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/choose_song" />
+
+            <ImageView
+                android:id="@+id/messenger"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/messengerbtn" />
+
+            <TextView
+                android:id="@+id/messenger_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/messenger" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/calendar_str" />
+            android:layout_marginTop="70dp"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/choose_song"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
+            <ImageView
+                android:id="@+id/score"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/scorebtn" />
 
-        <TextView
-            android:id="@+id/choose_song_txt"
+            <TextView
+                android:id="@+id/score_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/score" />
+
+            <ImageView
+                android:id="@+id/calendar"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/tuningbtn" />
+
+            <TextView
+                android:id="@+id/calendar_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/calendar_str" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/choose_song" />
-    </LinearLayout>
+            android:layout_marginTop="70dp"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:gravity="center"
-        android:orientation="vertical" >
+            <ImageView
+                android:id="@+id/audiorecording"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/audiobtn" />
 
-        <ImageView
-            android:id="@+id/audiorecording"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
+            <TextView
+                android:id="@+id/audiorecording_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/audio" />
 
-        <TextView
-            android:id="@+id/audiorecording_txt"
+            <ImageView
+                android:id="@+id/youtube"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/youtube" />
+
+            <TextView
+                android:id="@+id/youtube_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/youtube" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/audio" />
+            android:layout_marginTop="70dp"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/youtube"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
+            <ImageView
+                android:id="@+id/videorecording"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/videobtn" />
 
-        <TextView
-            android:id="@+id/youtube_txt"
+            <TextView
+                android:id="@+id/videorecording_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/video" />
+
+            <ImageView
+                android:id="@+id/tuning"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/tuningbtn" />
+
+            <TextView
+                android:id="@+id/tuning_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/tuning" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/youtube" />
+            android:layout_marginTop="70dp"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/choose_song"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
+            <ImageView
+                android:id="@+id/game"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/gamebtn" />
 
-        <TextView
-            android:id="@+id/choose_song_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/choose_song" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/game_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/game_str" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:gravity="center"
-        android:orientation="vertical" >
+            <ImageView
+                android:id="@+id/metronome"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/metronomebtn" />
 
-        <ImageView
-            android:id="@+id/videorecording"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
-
-        <TextView
-            android:id="@+id/videorecording_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/video" />
-
-        <ImageView
-            android:id="@+id/tuning"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
-
-        <TextView
-            android:id="@+id/tuning_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/tuning" />
-
-        <ImageView
-            android:id="@+id/choose_song"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
-
-        <TextView
-            android:id="@+id/choose_song_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/choose_song" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/game"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
-
-        <TextView
-            android:id="@+id/game_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/game_str" />
-
-        <ImageView
-            android:id="@+id/metronome"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
-
-        <TextView
-            android:id="@+id/metronome_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/metronome" />
-
-        <ImageView
-            android:id="@+id/choose_song"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tuning" />
-
-        <TextView
-            android:id="@+id/choose_song_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:text="@string/choose_song" />
+            <TextView
+                android:id="@+id/metronome_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/metronome" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

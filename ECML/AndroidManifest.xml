@@ -64,16 +64,18 @@
         </activity>
         <activity android:name=".HelpActivity" >
         </activity>
-        <activity android:name=".YoutubeActivity" >
-        </activity>
         <activity android:name=".CalendarActivity" >
         </activity>
         <activity android:name=".RecordingActivity" >
         </activity>
         <activity android:name=".GameActivity" >
         </activity>
-        <activity android:name=".MetronomeActivity" >
+        <activity android:name="AudioRecordingActivity"></activity>
+        <activity android:name="VideoRecordingActivity">
         </activity>
+        <activity android:name="TuningForkActivity"></activity>
+        <activity android:name=".MetronomeActivity"></activity>
+        <activity android:name=".YoutubeActivity"></activity>
     </application>
 
 </manifest>

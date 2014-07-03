@@ -151,12 +151,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private static final String MUSIC_SHEET_FOLDER = "MusicSheets";
 
 	/*** End of File Variables ***/
-
-	/*** Tuning Fork Variables ***/
-
 	final Context context = this;
-
-	/*** End of Tuning Fork Variables ***/
 
 	/*** Metronome Variables ***/
 
@@ -231,7 +226,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		setSliderListener();
 
 		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.blue));
+		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
 
 		/**********************************************************************************************************/
@@ -334,7 +329,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		layout.addView(piano, params);
 		layout.addView(player);
 		setContentView(layout);
-		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.blue));
+		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.orange));
 		player.SetPiano(piano, options);
 		layout.requestLayout();
 	}
@@ -578,10 +573,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.choose_song:
-			chooseSong();
-			return true;
+		switch (item.getItemId()) {		
 		case R.id.song_settings:
 			changeSettings();
 			return true;
@@ -594,15 +586,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		case R.id.youtube:
 			showYoutube();
 			return true;
-		case R.id.calendar:
-			showCalendar();
-			return true;
-		case R.id.tuning:
-			tuning();
-			return true;
-		case R.id.upload:
-			uploadYoutube();
-			return true;
 		case R.id.video:
 			if (surfaceView.getVisibility() != View.VISIBLE) {
 				surfaceView.setVisibility(View.VISIBLE);
@@ -614,15 +597,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	}
 
-	/**
-	 * To choose a new song, simply finish this activity. The previous activity
-	 * is always the ChooseSongActivity.
-	 */
-	private void chooseSong() {
-		this.finish();
-		Intent intent = new Intent(this, ChooseSongActivity.class);
-		startActivity(intent);
-	}
 
 	/**
 	 * To change the sheet music options, start the SettingsActivity. Pass the
@@ -769,34 +743,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		startActivity(myWebLink);
 	}
 
-	/** Upload a video on Youtube */
-	private void uploadYoutube() {
-		Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
-		myWebLink.setData(Uri.parse("http://www.youtube.com/upload"));
-		startActivity(myWebLink);
-	}
-
-	/** Launch a Calendar */
-	private void showCalendar() {
-		Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
-		startActivity(goToCalendar);
-	}
-
-	private void tuning() {
-		Toast.makeText(SheetMusicActivity.this, "Tuning fork", Toast.LENGTH_SHORT).show();
-		MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.tuning);
-		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		try {
-			mPlayer.prepare();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mPlayer.start();
-	}
 
 	/**
 	 * This is the callback when the SettingsActivity is finished. Get the
