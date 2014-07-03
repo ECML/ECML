@@ -33,7 +33,7 @@ public class MidiSheetMusicActivity extends Activity {
         setTheme(android.R.style.Theme_Holo_Light);
         loadImages();
         setContentView(R.layout.main);
-        Button button = (Button) findViewById(R.id.choose_song);
+        ImageView button = (ImageView) findViewById(R.id.choose_song);
         button.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
