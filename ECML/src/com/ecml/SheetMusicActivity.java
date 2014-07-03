@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.EventListener;
 import java.util.zip.CRC32;
 
 import android.app.ActionBar;
@@ -45,6 +46,7 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.method.KeyListener;
 import android.util.Log;
@@ -59,7 +61,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -126,9 +127,13 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	MediaPlayer mp = new MediaPlayer();
 	private boolean isAudioRecording;
 	private boolean existAudioRecord;
+	
+	protected EventListener StateListener;
+	Handler timer;
 
 	/*** End of Audio Recording Variables ***/
 
+	
 	/*** Video Recording Variables ***/
 
 	SurfaceView surfaceView;
@@ -144,6 +149,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/*** End of Video Recording Variables ***/
 
+	
 	/*** File Variables ***/
 
 	private static String sdcardPath = "sdcard/";
@@ -152,17 +158,19 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/*** End of File Variables ***/
 
+	
 	/*** Tuning Fork Variables ***/
 
 	final Context context = this;
 
 	/*** End of Tuning Fork Variables ***/
 
+	
 	/*** Metronome Variables ***/
 
 	MetronomeController metronomeController;
 	View metronomeView;
-	View v2;
+	View abMetronome;
 
 	/*** End of Metronome Variables ***/
 
@@ -225,7 +233,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 		createView();
 		createSheetMusic(options);
-
+		
 		metronomeController = new MetronomeController(this);
 		updateTempoView();
 		setSliderListener();
@@ -321,6 +329,34 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				editor.commit();
 			}
 		});
+		
+		player.playAndRecordButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (!isAudioRecording && !isVideoRecording) {
+					player.stopRecordButton.setVisibility(View.VISIBLE);
+					player.playRecordButton.setVisibility(View.VISIBLE);
+					player.mute();
+					startAudioRecording();
+					timer = new Handler();
+					timer.postDelayed(player.DoPlay, options.delay);
+				}
+			}
+		});
+		
+		player.stopRecordButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				player.stopRecordButton.setVisibility(View.GONE);
+				stopAudioRecording();
+				player.Pause();
+				player.unmute();
+			}
+		});
+		
+		player.playRecordButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				playAudio();
+			}
+		});
 
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
@@ -383,13 +419,13 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 		/******************************* VIDEO RECORDING ACTION VIEW ************************************/
 		/** Get the action view of the menu item whose id is video */
-		View v = (View) menu.findItem(R.id.video).getActionView();
+		View abVideo = (View) menu.findItem(R.id.video).getActionView();
 
 		/** Get the edit text from the action view */
-		ImageView stopVideoRecording = (ImageView) v.findViewById(R.id.recordstopbtn);
-		ImageView startVideoRecording = (ImageView) v.findViewById(R.id.recordbtn);
-		ImageView replayVideoRecording = (ImageView) v.findViewById(R.id.recordplaybtn);
-		ImageView switchCamera = (ImageView) v.findViewById(R.id.switchcamerabtn);
+		ImageView stopVideoRecording = (ImageView) abVideo.findViewById(R.id.recordstopbtn);
+		ImageView startVideoRecording = (ImageView) abVideo.findViewById(R.id.recordbtn);
+		ImageView replayVideoRecording = (ImageView) abVideo.findViewById(R.id.recordplaybtn);
+		ImageView switchCamera = (ImageView) abVideo.findViewById(R.id.switchcamerabtn);
 
 		startVideoRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -456,11 +492,11 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 		/******************************* AUDIO RECORDING ACTION VIEW **********************************/
 		/** Get the action view of the menu item whose id is video */
-		View v3 = (View) menu.findItem(R.id.audio).getActionView();
+		View abAudio = (View) menu.findItem(R.id.audio).getActionView();
 
-		ImageView stopAudioRecording = (ImageView) v3.findViewById(R.id.recordaudiostopbtn);
-		ImageView startAudioRecording = (ImageView) v3.findViewById(R.id.recordaudiobtn);
-		ImageView replayAudioRecording = (ImageView) v3.findViewById(R.id.recordaudioplaybtn);
+		ImageView stopAudioRecording = (ImageView) abAudio.findViewById(R.id.recordaudiostopbtn);
+		ImageView startAudioRecording = (ImageView) abAudio.findViewById(R.id.recordaudiobtn);
+		ImageView replayAudioRecording = (ImageView) abAudio.findViewById(R.id.recordaudioplaybtn);
 
 		startAudioRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -493,8 +529,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			@Override
 			public void onClick(View v) {
 				if (!isVideoRecording && !isAudioRecording && existAudioRecord) {
-					String filename = fileName + ext;
-					playAudio(pathAudio, filename, mp);
+					playAudio();
 				} else {
 					Toast.makeText(context, "Not Recent Audio Record", Toast.LENGTH_SHORT).show();
 				}
@@ -505,12 +540,12 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 		/******************************* METRONOME ACTION VIEW **********************************/
 		/** Get the action view of the menu item whose id is video */
-		View v2 = (View) menu.findItem(R.id.metronome).getActionView();
+		abMetronome = (View) menu.findItem(R.id.metronome).getActionView();
 
-		TextView tempoView = ((TextView) v2.findViewById(R.id.tempo));
+		TextView tempoView = ((TextView) abMetronome.findViewById(R.id.tempo));
 		tempoView.setText("Tempo : " + metronomeController.getTempo() + "");
 
-		SeekBar slider = (SeekBar) v2.findViewById(R.id.slider);
+		SeekBar slider = (SeekBar) abMetronome.findViewById(R.id.slider);
 		slider.setMax(200);
 		slider.setProgress(metronomeController.getTempo());
 		slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -533,8 +568,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		});
 
-		TextView startMetronome = (TextView) v2.findViewById(R.id.startmetronome);
-		TextView stopMetronome = (TextView) v2.findViewById(R.id.stopmetronome);
+		TextView startMetronome = (TextView) abMetronome.findViewById(R.id.startmetronome);
+		TextView stopMetronome = (TextView) abMetronome.findViewById(R.id.stopmetronome);
 
 		startMetronome.setOnClickListener(new View.OnClickListener() {
 
@@ -551,11 +586,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				metronomeController.stopMetronome();
 			}
 		});
-		/*******************************
-		 * END OF METRONOME ACTION VIEW **********************************
-		 * 
-		 * /
-		 ***********************************************************************************************************/
+		/************************************ END OF METRONOME ACTION VIEW *****************************************/
+
+		/***********************************************************************************************************/
 		/***********************************************************************************************************/
 		/***************************************** END OF ACTION BAR ***********************************************/
 		/***********************************************************************************************************/
@@ -911,9 +944,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	}
 
-	private void playAudio(String path, String fileName, MediaPlayer mp) {
+	private void playAudio() {
 		try {
-			mp.setDataSource(path + "/" + fileName);
+			mp.setDataSource(pathAudio + "/" + fileName + ext);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1195,7 +1228,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	}
 
 	/*** End of Metronome Functions ***/
-
+	
 	/**********************************************************************************************************/
 	/**********************************************************************************************************/
 	/************************************* END OF FUNCTIONS FOR ADD-UPS ***************************************/

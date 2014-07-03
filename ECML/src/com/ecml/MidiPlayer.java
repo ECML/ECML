@@ -76,6 +76,9 @@ public class MidiPlayer extends LinearLayout {
     static Bitmap muteOnImage;			 /** The mute image */
     static Bitmap muteOffImage;			 /** The unmute image */
     static Bitmap pianoImage;			 /** The piano image */
+    static Bitmap playAndRecordImage;	 /** The rec and play image */
+    static Bitmap stopRecordImage;		 /** The stop recording image */
+    static Bitmap playRecordImage;		 /** The replay record image */
     static Bitmap plusImage;			 /** The + image for the speed bar */
     static Bitmap minusImage;			 /** The - image for the speed bar */
     
@@ -85,6 +88,9 @@ public class MidiPlayer extends LinearLayout {
     private ImageButton fastFwdButton;   /** The fast forward button */
     private ImageButton muteButton;      /** The mute button */
     ImageButton pianoButton;	 		 /** The piano button */
+    ImageButton playAndRecordButton;	 /** The play and record button (mutes aswell) */
+    ImageButton stopRecordButton;		 /** The stop recording button */
+    ImageButton playRecordButton;		 /** The replay record button */
     private ImageButton plusButton;		 /** The + button for the speed bar */
     private ImageButton minusButton;	 /** The - button for the speed bar */
     private TextView speedText;          /** The "Speed %" label */
@@ -134,6 +140,9 @@ public class MidiPlayer extends LinearLayout {
         pianoImage = BitmapFactory.decodeResource(res, R.drawable.piano_icon);
         plusImage = BitmapFactory.decodeResource(res, R.drawable.plus);
         minusImage = BitmapFactory.decodeResource(res, R.drawable.minus);
+        playAndRecordImage = BitmapFactory.decodeResource(res, R.drawable.record);
+        stopRecordImage = BitmapFactory.decodeResource(res, R.drawable.recordstop);
+        playRecordImage = BitmapFactory.decodeResource(res, R.drawable.recordplay);
     }
 
 
@@ -337,6 +346,27 @@ public class MidiPlayer extends LinearLayout {
         pianoButton.setScaleType(ImageView.ScaleType.FIT_XY);
         this.addView(pianoButton);
         
+        /* Create the Play and Record button */
+        playAndRecordButton = new ImageButton(activity);
+        playAndRecordButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        playAndRecordButton.setImageBitmap(playAndRecordImage);
+        playAndRecordButton.setScaleType(ImageView.ScaleType.FIT_XY);
+        this.addView(playAndRecordButton);
+        
+        /* Create the Stop button for the record button */
+        stopRecordButton = new ImageButton(activity);
+        stopRecordButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        stopRecordButton.setImageBitmap(stopRecordImage);
+        stopRecordButton.setScaleType(ImageView.ScaleType.FIT_XY);
+        this.addView(stopRecordButton);
+        
+        /* Create the Play button for the record button */
+        playRecordButton = new ImageButton(activity);
+        playRecordButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        playRecordButton.setImageBitmap(playRecordImage);
+        playRecordButton.setScaleType(ImageView.ScaleType.FIT_XY);
+        this.addView(playRecordButton);
+        
         /* Initialize the timer used for playback, but don't start
          * the timer yet (enabled = false).
          */
@@ -410,7 +440,34 @@ public class MidiPlayer extends LinearLayout {
         params.rightMargin = 0;
         params.leftMargin = 0;
         muteButton.setLayoutParams(params);
+        
+        params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
+        params.bottomMargin = 0;
+        params.topMargin = 0;
+        params.rightMargin = 0;
+        params.leftMargin = 0;
         pianoButton.setLayoutParams(params);
+        
+        params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
+        params.bottomMargin = 0;
+        params.topMargin = 0;
+        params.rightMargin = 0;
+        params.leftMargin = 0;
+        playAndRecordButton.setLayoutParams(params);
+
+        params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
+        params.bottomMargin = 0;
+        params.topMargin = 0;
+        params.rightMargin = 0;
+        params.leftMargin = 0;
+        stopRecordButton.setLayoutParams(params);
+        
+        params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
+        params.bottomMargin = 0;
+        params.topMargin = 0;
+        params.rightMargin = 0;
+        params.leftMargin = 0;
+        playRecordButton.setLayoutParams(params);
     }
     
     public void SetPiano(Piano p, MidiOptions options) {

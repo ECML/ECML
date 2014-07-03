@@ -91,7 +91,7 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
     private int      scrollX;         /** The (left,top) of the scroll clip */
     private int      scrollY;
     private ScrollAnimation scrollAnimation;
-
+    
     public SheetMusic(Context context) {
         super(context);
         SurfaceHolder holder = getHolder();
