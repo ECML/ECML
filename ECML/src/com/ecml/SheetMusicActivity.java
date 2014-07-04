@@ -551,7 +551,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		TextView tempoView = ((TextView) abMetronome.findViewById(R.id.tempo));
 		tempoView.setText("Tempo : " + metronomeController.getTempo() + "");
 
-		SeekBar slider = (SeekBar) abMetronome.findViewById(R.id.slider);
+		SeekBar slider = (SeekBar) abMetronome.findViewById(R.id.sliderMetronome);
 		slider.setMax(200);
 		slider.setProgress(metronomeController.getTempo());
 		slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -1167,14 +1167,14 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	}
 
 	public void updateTempo(View view) {
-		SeekBar slider = (SeekBar) findViewById(R.id.slider);
+		SeekBar slider = (SeekBar) findViewById(R.id.sliderMetronome);
 		int newTempo = slider.getProgress();
 		metronomeController.setTempo(newTempo);
 		updateTempoView();
 	}
 
 	private void setSliderListener() {
-		SeekBar slider = (SeekBar) findViewById(R.id.slider);
+		SeekBar slider = (SeekBar) findViewById(R.id.sliderMetronome);
 		slider.setMax(200);
 		slider.setProgress(metronomeController.getTempo());
 		slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {

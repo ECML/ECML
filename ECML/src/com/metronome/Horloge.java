@@ -12,14 +12,13 @@ public class Horloge {
 
 	private Timer timer;
 	private int measure;
+	private int currentBeep = 1;
 	private ToneGenerator beep;
-	private ToneGenerator firstBeep;
 
 	
-	public Horloge(int tempo, int measure, ToneGenerator beep, ToneGenerator firstBeep) {
+	public Horloge(int tempo, int measure, ToneGenerator beep) {
 		
 		this.beep = beep;
-		this.firstBeep = firstBeep;
 		this.measure = measure;
 		timer = new Timer();
         
@@ -29,7 +28,13 @@ public class Horloge {
 			public void run() {
 				
 				try {
-					Horloge.this.beep.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 100);
+					if(currentBeep % 4 == 0) {
+						Horloge.this.beep.startTone(ToneGenerator.TONE_SUP_DIAL, 100);
+					}
+					else {
+						Horloge.this.beep.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 100);
+					}
+					currentBeep++;
 				}
 				
 				catch (Exception e) {
