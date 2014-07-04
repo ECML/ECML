@@ -123,9 +123,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private int currentFormat = 0;
 	private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP };
 	private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP };
-	MediaPlayer mp = new MediaPlayer();
+	private MediaPlayer mp = new MediaPlayer();
 	private boolean isAudioRecording;
 	private boolean existAudioRecord;
+	private boolean audioPaused;
 	
 	Handler timer;
 
@@ -442,8 +443,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				} else {
 					Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
 				}
-
 			}
+			
 		});
 
 		stopVideoRecording.setOnClickListener(new View.OnClickListener() {
@@ -459,6 +460,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				}
 				topLayout.setVisibility(View.GONE);
 			}
+			
 		});
 
 		replayVideoRecording.setOnClickListener(new View.OnClickListener() {
@@ -470,8 +472,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				} else {
 					Toast.makeText(context, "No Recent Video Record", Toast.LENGTH_SHORT).show();
 				}
-
 			}
+			
 		});
 
 		switchCamera.setOnClickListener(new View.OnClickListener() {
@@ -480,8 +482,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			public void onClick(View v) {
 				front = !front;
 				surfaceView.setVisibility(View.VISIBLE);
-
 			}
+
 		});
 		/******************************* END OF VIDEO RECORDING ACTION VIEW **********************************/
 
@@ -492,6 +494,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		ImageView stopAudioRecording = (ImageView) abAudio.findViewById(R.id.recordaudiostopbtn);
 		ImageView startAudioRecording = (ImageView) abAudio.findViewById(R.id.recordaudiobtn);
 		ImageView replayAudioRecording = (ImageView) abAudio.findViewById(R.id.recordaudioplaybtn);
+		ImageView pauseReplayAudio = (ImageView) abAudio.findViewById(R.id.recordaudiopausebtn);
 
 		startAudioRecording.setOnClickListener(new View.OnClickListener() {
 
@@ -502,8 +505,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				} else {
 					Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
 				}
-
 			}
+
 		});
 
 		stopAudioRecording.setOnClickListener(new View.OnClickListener() {
@@ -515,8 +518,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				} else {
 					Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
 				}
-
 			}
+
 		});
 
 		replayAudioRecording.setOnClickListener(new View.OnClickListener() {
@@ -526,9 +529,17 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				if (!isVideoRecording && !isAudioRecording && existAudioRecord) {
 					playAudio();
 				} else {
-					Toast.makeText(context, "Not Recent Audio Record", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "No Recent Audio Record", Toast.LENGTH_SHORT).show();
 				}
+			}
 
+		});
+		
+		pauseReplayAudio.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				pauseAudio();
 			}
 		});
 		/******************************* END OF AUDIO RECORDING ACTION VIEW **********************************/
@@ -869,6 +880,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		recorder.setOnErrorListener(errorListener);
 		recorder.setOnInfoListener(infoListener);
 		try {
+			Toast.makeText(context, "Start Audio Recording", Toast.LENGTH_SHORT).show();
 			recorder.prepare();
 			recorder.start();
 			isAudioRecording = true;
@@ -882,6 +894,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private void stopAudioRecording() {
 		isAudioRecording = false;
 		if (null != recorder) {
+			Toast.makeText(context, "Stop Audio Recording", Toast.LENGTH_SHORT).show();
 			recorder.stop();
 			recorder.reset();
 			recorder.release();
@@ -891,30 +904,42 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	}
 
 	private void playAudio() {
-		try {
-			mp.setDataSource(pathAudio + "/" + fileName + ext);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			mp.prepare();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		if (!mp.isPlaying()) {
+			if (audioPaused == false) {
+				mp.reset();
+				try {
+					mp.setDataSource(pathAudio + "/" + fileName + ext);
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					mp.prepare();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			audioPaused = false;
 			Toast.makeText(SheetMusicActivity.this, "Play Last Audio Record", Toast.LENGTH_SHORT).show();
 			mp.start();
+		}
+	}
+	
+	private void pauseAudio() {
+		if (mp.isPlaying()) {
+			mp.pause();
+			audioPaused = true;
+			Toast.makeText(SheetMusicActivity.this, "Last Audio Record Paused", Toast.LENGTH_SHORT).show();
 		}
 	}
 
