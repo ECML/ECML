@@ -1018,7 +1018,7 @@ public class MidiFile {
             MidiTrack track = tracks.get(tracknum);
             int realtrack = track.trackNumber();
             instruments[realtrack] = options.instruments[tracknum];
-            if (options.tracks[tracknum] == false || options.mute[tracknum] == true) {
+            if (options.mute[tracknum] == true) {
                 keeptracks[realtrack] = false;
             }
         }

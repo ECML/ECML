@@ -523,7 +523,7 @@ public class MidiPlayer extends LinearLayout {
     private int numberTracks() {
         int count = 0;
         for (int i = 0; i < options.tracks.length; i++) {
-            if (options.tracks[i] && !options.mute[i]) {
+            if (!options.mute[i]) {
                 count += 1;
             }
         }
