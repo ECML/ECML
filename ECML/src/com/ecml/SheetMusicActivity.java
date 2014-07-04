@@ -413,80 +413,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.actionbar, menu);
 
-		/******************************* VIDEO RECORDING ACTION VIEW ************************************/
-		/** Get the action view of the menu item whose id is video */
-		View abVideo = (View) menu.findItem(R.id.video).getActionView();
-
-		/** Get the edit text from the action view */
-		ImageView stopVideoRecording = (ImageView) abVideo.findViewById(R.id.recordstopbtn);
-		ImageView startVideoRecording = (ImageView) abVideo.findViewById(R.id.recordbtn);
-		ImageView replayVideoRecording = (ImageView) abVideo.findViewById(R.id.recordplaybtn);
-		ImageView switchCamera = (ImageView) abVideo.findViewById(R.id.switchcamerabtn);
-
-		startVideoRecording.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				surfaceView.setVisibility(View.VISIBLE);
-				if (!isVideoRecording && !isAudioRecording) {
-					if (front == true) {
-						mCamera = openFrontFacingCamera();
-					} else {
-						mCamera = Camera.open();
-					}
-					try {
-						startVideoRecording();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} else {
-					Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
-				}
-			}
-			
-		});
-
-		stopVideoRecording.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				if (isVideoRecording) {
-					stopVideoRecording();
-					surfaceView.setVisibility(View.GONE);
-				} else {
-					Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
-				}
-				topLayout.setVisibility(View.GONE);
-			}
-			
-		});
-
-		replayVideoRecording.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (!isVideoRecording && !isAudioRecording && existVideoRecord) {
-					replayVideoRecording();
-				} else {
-					Toast.makeText(context, "No Recent Video Record", Toast.LENGTH_SHORT).show();
-				}
-			}
-			
-		});
-
-		switchCamera.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				front = !front;
-				surfaceView.setVisibility(View.VISIBLE);
-			}
-
-		});
-		/******************************* END OF VIDEO RECORDING ACTION VIEW **********************************/
-
 		/******************************* METRONOME ACTION VIEW **********************************/
 		/** Get the action view of the menu item whose id is video */
 		abMetronome = (View) menu.findItem(R.id.metronome).getActionView();
@@ -578,6 +504,44 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				surfaceView.setVisibility(View.VISIBLE);
 			}
 			topLayout.setVisibility(View.VISIBLE);
+			return true;
+		case R.id.startVideoRecording:
+			surfaceView.setVisibility(View.VISIBLE);
+			if (!isVideoRecording && !isAudioRecording) {
+				if (front == true) {
+					mCamera = openFrontFacingCamera();
+				} else {
+					mCamera = Camera.open();
+				}
+				try {
+					startVideoRecording();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
+			}
+			return true;
+		case R.id.stopVideoRecording:
+			if (isVideoRecording) {
+				stopVideoRecording();
+				surfaceView.setVisibility(View.GONE);
+			} else {
+				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
+			}
+			topLayout.setVisibility(View.GONE);
+			return true;
+		case R.id.replayVideoRecording:
+			if (!isVideoRecording && !isAudioRecording && existVideoRecord) {
+				replayVideoRecording();
+			} else {
+				Toast.makeText(context, "No Recent Video Record", Toast.LENGTH_SHORT).show();
+			}
+			return true;
+		case R.id.switchCamera:
+			front = !front;
+			surfaceView.setVisibility(View.VISIBLE);
 			return true;
 		case R.id.startAudioRecording:
 			if (!isVideoRecording && !isAudioRecording) {

@@ -50,6 +50,7 @@
     <string name="pausereplay">Pause replay</string>
     <string name="audio">Audio Recording</string>
     <string name="video">Video Recording</string>
+    <string name="switchcamera">Switch camera</string>
     <string name="messenger">ECML Messenger</string>
     <string name="score">Show scores</string>
     <string name="youtube">Youtube</string>
