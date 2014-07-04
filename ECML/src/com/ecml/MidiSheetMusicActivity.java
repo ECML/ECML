@@ -139,15 +139,7 @@ public class MidiSheetMusicActivity extends Activity {
                             }
                         } );
                 
-          //Show scores button
-                ImageView score = (ImageView) findViewById(R.id.score);
-                score.setOnClickListener(
-                        new View.OnClickListener() {
-                            public void onClick(View v) {
-                            	Intent goToScore = new Intent(getApplicationContext(), SheetMusicActivity.class);
-                        		startActivity(goToScore);
-                            }
-                        } );
+          
 
     }
 

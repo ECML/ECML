@@ -2,11 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/blue"
     android:gravity="center"
     android:orientation="vertical"
-    android:theme="@android:style/Theme.Holo.Light"
-    android:background="@color/blue"
-     >
+    android:theme="@android:style/Theme.Holo.Light" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -34,7 +33,7 @@
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="70dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/tuningbtn" />
+                android:src="@drawable/scorebtn" />
 
             <TextView
                 android:id="@+id/choose_song_txt"
@@ -68,29 +67,13 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:id="@+id/score"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/scorebtn" />
-
-            <TextView
-                android:id="@+id/score_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/score" />
-
-            <ImageView
                 android:id="@+id/calendar"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="70dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/tuningbtn" />
+                android:src="@drawable/calendarbtn" />
 
             <TextView
                 android:id="@+id/calendar_txt"
@@ -98,6 +81,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="70dp"
                 android:text="@string/calendar_str" />
+
+            <ImageView
+                android:id="@+id/youtube"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/youtubebtn" />
+
+            <TextView
+                android:id="@+id/youtube_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:text="@string/youtube" />
         </LinearLayout>
 
         <LinearLayout
@@ -124,20 +123,20 @@
                 android:text="@string/audio" />
 
             <ImageView
-                android:id="@+id/youtube"
+                android:id="@+id/metronome"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="70dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/youtube" />
+                android:src="@drawable/metronomebtn" />
 
             <TextView
-                android:id="@+id/youtube_txt"
+                android:id="@+id/metronome_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="70dp"
-                android:text="@string/youtube" />
+                android:text="@string/metronome" />
         </LinearLayout>
 
         <LinearLayout
@@ -203,21 +202,15 @@
                 android:layout_marginBottom="70dp"
                 android:text="@string/game_str" />
 
-            <ImageView
+            <View
                 android:id="@+id/metronome"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/metronomebtn" />
+                android:layout_marginTop="10dp" />
 
-            <TextView
-                android:id="@+id/metronome_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/metronome" />
+            
         </LinearLayout>
     </LinearLayout>
 
