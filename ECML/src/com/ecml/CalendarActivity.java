@@ -1,10 +1,13 @@
 package com.ecml;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.Toast;
+
 import com.ecml.R;
 
 public class CalendarActivity extends Activity {
@@ -15,15 +18,20 @@ public class CalendarActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.calendar);
-	      CalendarView calendarView=(CalendarView) findViewById(R.id.calendarView1);
-	        calendarView.setOnDateChangeListener(new OnDateChangeListener() {
+		
+		ActionBar ab = getActionBar();
+		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
+		ab.setBackgroundDrawable(colorDrawable);
+		
+	    CalendarView calendarView=(CalendarView) findViewById(R.id.calendarView1);
+	    
+	    calendarView.setOnDateChangeListener(new OnDateChangeListener() {
 
-	            @Override
-	            public void onSelectedDayChange(CalendarView view, int year, int month,
-	                    int dayOfMonth) {
-	                 Toast.makeText(getApplicationContext(), ""+dayOfMonth, 0).show();// TODO Auto-generated method stub
-
-	            }
-	        });
-	    }
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                 Toast.makeText(getApplicationContext(), ""+dayOfMonth, 0).show();
+            }
+            
+	    });
+	}
 }

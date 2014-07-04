@@ -3,9 +3,11 @@ package com.ecml;
 import java.io.File;
 import java.io.IOException;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -43,6 +45,10 @@ public class AudioRecordingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.audiorecording);
+		
+		ActionBar ab = getActionBar();
+		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
+		ab.setBackgroundDrawable(colorDrawable);
 
 		// Start audio recording button
 		TextView startAudioRecording = (TextView) findViewById(R.id.startAudioRecording);
