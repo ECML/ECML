@@ -3,9 +3,11 @@ package com.ecml;
 import java.io.File;
 import java.io.IOException;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -37,12 +39,19 @@ public class AudioRecordingActivity extends Activity {
 
 	final Context context = this;
 
+	private boolean audioPaused;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.audiorecording);
+
+		ActionBar ab = getActionBar();
+		ColorDrawable colorDrawable = new ColorDrawable(getResources()
+				.getColor(R.color.orange));
+		ab.setBackgroundDrawable(colorDrawable);
 
 		// Start audio recording button
 		TextView startAudioRecording = (TextView) findViewById(R.id.startAudioRecording);
@@ -51,7 +60,8 @@ public class AudioRecordingActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (!isAudioRecording) {
-					Toast.makeText(context, "Start audio recording", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "Start audio recording",
+							Toast.LENGTH_SHORT).show();
 					startAudioRecording();
 				} else {
 					Toast.makeText(context, "Stop Recording first",
@@ -68,7 +78,8 @@ public class AudioRecordingActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (isAudioRecording) {
-					Toast.makeText(context, "Stop audio recording", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "Stop audio recording",
+							Toast.LENGTH_SHORT).show();
 					stopAudioRecording();
 				} else {
 					Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT)
@@ -85,9 +96,10 @@ public class AudioRecordingActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (!isAudioRecording && existAudioRecord) {
-					Toast.makeText(context, "Playing last record", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "Playing last record",
+							Toast.LENGTH_SHORT).show();
 					String filename = fileName + ext;
-					playAudio(pathAudio, filename, mp);
+					playAudio();
 				} else {
 					Toast.makeText(context, "Not Recent Audio Record",
 							Toast.LENGTH_SHORT).show();
@@ -95,18 +107,19 @@ public class AudioRecordingActivity extends Activity {
 
 			}
 		});
-		
-		//Record with scores button
-		TextView recordAudioScore = (TextView) findViewById(R.id.recordAudioScore);
-		recordAudioScore.setOnClickListener(new View.OnClickListener() {
+
+		// Pause replay
+		TextView pauseReplay = (TextView) findViewById(R.id.pauseReplay);
+		pauseReplay.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
+
+				pauseAudio();
 
 			}
 		});
-		
+
 	}
 
 	private String getFilenameAudio() {
@@ -151,32 +164,45 @@ public class AudioRecordingActivity extends Activity {
 		}
 	}
 
-	private void playAudio(String path, String fileName, MediaPlayer mp) {
-		try {
-			mp.setDataSource(path + "/" + fileName);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			mp.prepare();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	private void playAudio() {
 		if (!mp.isPlaying()) {
+			if (audioPaused == false) {
+				mp.reset();
+				try {
+					mp.setDataSource(pathAudio + "/" + fileName + ext);
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					mp.prepare();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			audioPaused = false;
 			Toast.makeText(AudioRecordingActivity.this,
 					"Play Last Audio Record", Toast.LENGTH_SHORT).show();
 			mp.start();
+		}
+	}
+
+	private void pauseAudio() {
+		if (mp.isPlaying()) {
+			mp.pause();
+			audioPaused = true;
+			Toast.makeText(AudioRecordingActivity.this,
+					"Last Audio Record Paused", Toast.LENGTH_SHORT).show();
 		}
 	}
 
