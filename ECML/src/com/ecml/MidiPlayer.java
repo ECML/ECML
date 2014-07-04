@@ -348,21 +348,21 @@ public class MidiPlayer extends LinearLayout {
         
         /* Create the Play and Record button */
         playAndRecordButton = new ImageButton(activity);
-        playAndRecordButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        playAndRecordButton.setBackgroundColor(getResources().getColor(R.color.orange));
         playAndRecordButton.setImageBitmap(playAndRecordImage);
         playAndRecordButton.setScaleType(ImageView.ScaleType.FIT_XY);
         this.addView(playAndRecordButton);
         
         /* Create the Stop button for the record button */
         stopRecordButton = new ImageButton(activity);
-        stopRecordButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        stopRecordButton.setBackgroundColor(getResources().getColor(R.color.orange));
         stopRecordButton.setImageBitmap(stopRecordImage);
         stopRecordButton.setScaleType(ImageView.ScaleType.FIT_XY);
         this.addView(stopRecordButton);
         
         /* Create the Play button for the record button */
         playRecordButton = new ImageButton(activity);
-        playRecordButton.setBackgroundColor(getResources().getColor(R.color.blue));
+        playRecordButton.setBackgroundColor(getResources().getColor(R.color.orange));
         playRecordButton.setImageBitmap(playRecordImage);
         playRecordButton.setScaleType(ImageView.ScaleType.FIT_XY);
         this.addView(playRecordButton);
@@ -523,7 +523,7 @@ public class MidiPlayer extends LinearLayout {
     private int numberTracks() {
         int count = 0;
         for (int i = 0; i < options.tracks.length; i++) {
-            if (options.tracks[i] && !options.mute[i]) {
+            if (!options.mute[i]) {
                 count += 1;
             }
         }
