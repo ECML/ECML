@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Looper;
@@ -11,23 +12,33 @@ import android.os.Looper;
 public class Horloge {
 
 	private Timer timer;
-	private int measure;
 	private int currentBeep = 1;
 	private ToneGenerator beep;
+	private AudioManager audioManager;
+	private int volume;
+	private int volumeMax;
 
 	
-	public Horloge(int tempo, int measure, ToneGenerator beep) {
+	public Horloge(int tempo, Context context) {
 		
-		this.beep = beep;
-		this.measure = measure;
+		audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+		volume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+		volumeMax = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
+        beep = new ToneGenerator(AudioManager.FLAG_PLAY_SOUND, volume*100/volumeMax);
 		timer = new Timer();
         
 		TimerTask timerTask = new TimerTask() {
 			
 			@Override
 			public void run() {
-				
 				try {
+
+					if (volume != audioManager.getStreamVolume(AudioManager.STREAM_RING)) {
+						volume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+						beep.release();
+						beep = new ToneGenerator(AudioManager.FLAG_PLAY_SOUND, volume*100/volumeMax);
+					}
+					
 					if(currentBeep % 4 == 0) {
 						Horloge.this.beep.startTone(ToneGenerator.TONE_SUP_DIAL, 100);
 					}
@@ -48,6 +59,7 @@ public class Horloge {
 	}
 	
 	public void stop() {
+		beep.release();
 		timer.cancel();
 	}
 	

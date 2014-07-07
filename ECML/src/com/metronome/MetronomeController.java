@@ -5,6 +5,7 @@ import com.ecml.SheetMusicActivity;
 import com.ecml.MetronomeActivity;
 import com.metronome.Horloge;
 import com.metronome.Metronome;
+import android.content.Context;
 
 public class MetronomeController {
 	
@@ -35,7 +36,7 @@ public class MetronomeController {
 		if(horloge != null) {
 			horloge.stop();
 		}
-		horloge = new Horloge(metronome.getTempo(), metronome.getMeasure(), metronome.getBeep());
+		horloge = new Horloge(metronome.getTempo(), metronomeActivity.getBaseContext());
 	}
 	
 	public void stopMetronome() {

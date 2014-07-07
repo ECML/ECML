@@ -93,8 +93,7 @@ public class MetronomeActivity extends Activity {
     	metronomeController.stopMetronome();
     }
     
-    public void updateTempo(View view){
-    	SeekBar slider = (SeekBar) findViewById(R.id.sliderMetronome);
+    public void updateTempo(){
     	int newTempo = slider.getProgress();
     	metronomeController.setTempo(newTempo);
     	updateTempoView();
@@ -126,11 +125,17 @@ public class MetronomeActivity extends Activity {
     }
     
     void plus() {
+    	metronomeController.stopMetronome();
     	slider.setProgress(slider.getProgress()+1);
+    	updateTempo();
+    	metronomeController.startMetronome();
     }
     
     void minus() {
+    	metronomeController.stopMetronome();
     	slider.setProgress(slider.getProgress()-1);
+    	updateTempo();
+    	metronomeController.startMetronome();
     }
 
 }
