@@ -52,7 +52,7 @@ public class VideoRecordingActivity extends Activity {
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources()
 				.getColor(R.color.orange));
-
+	}
 
 	protected void startVideoRecording() throws IOException {
 		mrec = new MediaRecorder(); // Works well
