@@ -50,8 +50,8 @@ public class AudioRecordingActivity extends Activity {
 
 
 		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources()
-				.getColor(R.color.orange));
+		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
+		ab.setBackgroundDrawable(colorDrawable);
 
 
 		// Start audio recording button

@@ -38,8 +38,8 @@
     <string name="scan_button_title">Scan SD Card for MIDI files</string>
     <string name="scan_files_str">Scan for MIDI Files</string>
     <string name="browse_files_str">Browse for MIDI Files</string>
-    <string name="youtube_str">Search current song on youtube</string>
-    <string name="upload_youtube">Upload on Youtube</string>
+    <string name="youtube_str">Go on Youtube</string>
+    <string name="upload_youtube">Upload a video on Youtube</string>
     <string name="calendar_str">Calendar</string>
     <string name="game_str">Play game</string>
     <string name="stop_recording_str">Stop recording</string>

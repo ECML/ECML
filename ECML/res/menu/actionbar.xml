@@ -66,10 +66,10 @@
         </menu>
     </item>
     <item
-        android:id="@+id/upload"
-        android:icon="@drawable/upload"
+        android:id="@+id/youtube"
+        android:icon="@drawable/youtube"
         android:showAsAction="always"
-        android:title="@string/upload_youtube">
+        android:title="@string/youtube_str">
     </item>
     <item
         android:id="@+id/metronome"

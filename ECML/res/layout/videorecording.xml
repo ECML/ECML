@@ -3,13 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:weightSum="3"
+         >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:background="@color/blue"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_weight="2"
+         >
 
         <ImageView
             android:layout_width="150dp"
@@ -28,7 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:background="@color/blue"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_weight="1"
+         >
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -25,20 +25,21 @@ public class YoutubeActivity extends Activity {
 				.getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
 		
-		//Search current song on Youtube button
+		//Go on Youtube button
 		TextView youtube = (TextView) findViewById(R.id.youtubesearch);
 		youtube.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-//				//String songTitle = SheetMusicActivity.getIntent().getStringExtra(MidiTitleID);
-//				Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
-//				String instrument = instrumentYoutube();
-//				myWebLink.setData(Uri.parse("http://www.youtube.com/results?search_query=" + spaceToPlus(songTitle + " " + instrument)));
-//				startActivity(myWebLink);
+				Intent myWebLink = new Intent(
+						android.content.Intent.ACTION_VIEW);
+				myWebLink.setData(Uri.parse("http://www.youtube.com"));
+				startActivity(myWebLink);
 
 			}
 		});
+		
+		
 
 		// Upload on Youtube button
 		TextView upload = (TextView) findViewById(R.id.youtubeshare);
