@@ -1,16 +1,21 @@
 package com.ecml;
 
+
 import java.io.File;
 import java.io.IOException;
 
 import android.app.ActionBar;
 import android.app.Activity;
+
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.net.Uri;
+
+import android.graphics.drawable.ColorDrawable;
+
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.SurfaceHolder;
@@ -41,13 +46,13 @@ public class VideoRecordingActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setTheme(android.R.style.Theme_Holo_Light);
+
 		setContentView(R.layout.videorecording);
 
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources()
 				.getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
-	}
+
 
 	protected void startVideoRecording() throws IOException {
 		mrec = new MediaRecorder(); // Works well

@@ -48,10 +48,11 @@ public class AudioRecordingActivity extends Activity {
 		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.audiorecording);
 
+
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources()
 				.getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
+
 
 		// Start audio recording button
 		TextView startAudioRecording = (TextView) findViewById(R.id.startAudioRecording);

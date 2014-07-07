@@ -284,7 +284,7 @@ public class MidiPlayer extends LinearLayout {
         minusButton.setScaleType(ImageView.ScaleType.FIT_XY);
         minusButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Minus();
+                minus();
             }
         });
         this.addView(minusButton);
@@ -313,7 +313,7 @@ public class MidiPlayer extends LinearLayout {
         plusButton.setScaleType(ImageView.ScaleType.FIT_XY);
         plusButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Plus();
+                plus();
             }
         });
         this.addView(plusButton);
@@ -799,13 +799,30 @@ public class MidiPlayer extends LinearLayout {
     
     
     /** Plus 1 in the speed bar */
-    void Plus() {
+    void plus() {
     	speedBar.setProgress(speedBar.getProgress() + 1);    	
      }
     
     /** Minus 1 in the speed bar */
-    void Minus() {
+    void minus() {
     	speedBar.setProgress(speedBar.getProgress() - 1);  
+    }
+    
+    /** Mutes the player and saves the current volume */
+    public void mute() {
+    	mute = true;
+    	muteButton.setImageBitmap(muteOnImage);
+    	if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
+    		volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+    	}
+    	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+    }
+    
+    /** Unmutes the player and set the last volume saved back */
+    public void unmute() {
+    	mute = false ;
+    	muteButton.setImageBitmap(muteOffImage);
+    	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
 
 
@@ -908,22 +925,6 @@ public class MidiPlayer extends LinearLayout {
         prevPulseTime = -1;
         StopSound();
         timer.postDelayed(DoPlay, 300);
-    }
-
-    
-    public void mute() {
-    	mute = true;
-    	muteButton.setImageBitmap(muteOnImage);
-    	if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-    		volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-    	}
-    	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-    }
-    
-    public void unmute() {
-    	mute = false ;
-    	muteButton.setImageBitmap(muteOffImage);
-    	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
     
 }
