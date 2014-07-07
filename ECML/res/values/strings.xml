@@ -47,8 +47,10 @@
     <string name="choose_title_str">Choose the title</string>
     <string name="audio_format_str">Audio Format</string>
     <string name="play_last_str">Play last record</string>
+    <string name="pausereplay">Pause replay</string>
     <string name="audio">Audio Recording</string>
     <string name="video">Video Recording</string>
+    <string name="switchcamera">Switch camera</string>
     <string name="messenger">ECML Messenger</string>
     <string name="score">Show scores</string>
     <string name="youtube">Youtube</string>

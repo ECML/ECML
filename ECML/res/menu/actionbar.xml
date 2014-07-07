@@ -3,17 +3,67 @@
 
     <item
         android:id="@+id/video"
-        android:actionLayout="@layout/abvideo"
         android:icon="@drawable/video"
-        android:showAsAction="always|collapseActionView"
+        android:showAsAction="always"
         android:title="@string/video">
+        <menu>
+            <item
+                android:id="@+id/startVideoRecording"
+                android:icon="@drawable/record"
+                android:showAsAction="always"
+                android:title="@string/start_recording_str">
+            </item>
+            <item
+                android:id="@+id/stopVideoRecording"
+                android:icon="@drawable/stop"
+                android:showAsAction="always"
+                android:title="@string/stop_recording_str">
+             </item>
+             <item
+                android:id="@+id/replayVideoRecording"
+                android:icon="@drawable/play"
+                android:showAsAction="always"
+                android:title="@string/play_last_str">
+            </item>
+            <item
+                android:id="@+id/switchCamera"
+                android:icon="@drawable/switchcamera"
+                android:showAsAction="always"
+                android:title="@string/switchcamera">
+            </item>            
+        </menu>
     </item>
     <item
         android:id="@+id/audio"
-        android:actionLayout="@layout/abaudio"
         android:icon="@drawable/audio"
-        android:showAsAction="always|collapseActionView"
+        android:showAsAction="always"
         android:title="@string/audio">
+        <menu>
+            <item
+                android:id="@+id/startAudioRecording"
+                android:icon="@drawable/record"
+                android:showAsAction="always"
+                android:title="@string/start_recording_str">
+            </item>
+            <item
+                android:id="@+id/stopAudioRecording"
+                android:icon="@drawable/stop"
+                android:showAsAction="always"
+                android:title="@string/stop_recording_str">
+             </item>
+             <item
+                android:id="@+id/replayAudioRecording"
+                android:icon="@drawable/play"
+                android:showAsAction="always"
+                android:title="@string/play_last_str">
+            </item>
+            <item
+                android:id="@+id/pauseReplayAudioRecording"
+                android:icon="@drawable/pause"
+                android:showAsAction="always"
+                android:title="@string/pausereplay">
+            </item>            
+        </menu>
     </item>
     <item
         android:id="@+id/upload"
