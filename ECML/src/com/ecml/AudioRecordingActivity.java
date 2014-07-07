@@ -96,16 +96,7 @@ public class AudioRecordingActivity extends Activity {
 			}
 		});
 		
-		//Record with scores button
-		TextView recordAudioScore = (TextView) findViewById(R.id.recordAudioScore);
-		recordAudioScore.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				
-
-			}
-		});
+	
 		
 	}
 
