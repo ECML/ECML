@@ -5,212 +5,262 @@
     android:background="@color/blue"
     android:gravity="center"
     android:orientation="vertical"
-    android:theme="@android:style/Theme.Holo.Light" >
+    android:theme="@android:style/Theme.Holo.Light"
+    android:weightSum="3" >
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
         android:background="@color/orange"
         android:orientation="horizontal" >
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="5" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="2" >
 
-            <ImageView
-                android:id="@+id/choose_song"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/scorebtn" />
-
-            <TextView
-                android:id="@+id/choose_song_txt"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/choose_song" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/messenger"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/messengerbtn" />
+                <ImageView
+                    android:id="@+id/choose_song"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/scorebtn" />
 
-            <TextView
-                android:id="@+id/messenger_txt"
+                <TextView
+                    android:id="@+id/choose_song_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choose_song" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/messenger" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/messenger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/messengerbtn" />
+
+                <TextView
+                    android:id="@+id/messenger_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/messenger" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="2" >
 
-            <ImageView
-                android:id="@+id/calendar"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/calendarbtn" />
-
-            <TextView
-                android:id="@+id/calendar_txt"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/calendar_str" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/youtube"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/youtubebtn" />
+                <ImageView
+                    android:id="@+id/calendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/calendarbtn" />
 
-            <TextView
-                android:id="@+id/youtube_txt"
+                <TextView
+                    android:id="@+id/calendar_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/calendar_str" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/youtube" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/youtube"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/youtubebtn" />
+
+                <TextView
+                    android:id="@+id/youtube_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/youtube" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="2" >
 
-            <ImageView
-                android:id="@+id/audiorecording"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/audiobtn" />
-
-            <TextView
-                android:id="@+id/audiorecording_txt"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/audio" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/metronome"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/metronomebtn" />
+                <ImageView
+                    android:id="@+id/audiorecording"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/audiobtn" />
 
-            <TextView
-                android:id="@+id/metronome_txt"
+                <TextView
+                    android:id="@+id/audiorecording_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/audio" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/metronome" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/metronome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/metronomebtn" />
+
+                <TextView
+                    android:id="@+id/metronome_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/metronome" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="2" >
 
-            <ImageView
-                android:id="@+id/videorecording"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/videobtn" />
-
-            <TextView
-                android:id="@+id/videorecording_txt"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/video" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/tuning"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/tuningbtn" />
+                <ImageView
+                    android:id="@+id/videorecording"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/videobtn" />
 
-            <TextView
-                android:id="@+id/tuning_txt"
+                <TextView
+                    android:id="@+id/videorecording_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/video" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/tuning" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/tuning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tuningbtn" />
+
+                <TextView
+                    android:id="@+id/tuning_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tuning" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="2" >
 
-            <ImageView
-                android:id="@+id/game"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/gamebtn" />
-
-            <TextView
-                android:id="@+id/game_txt"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="70dp"
-                android:text="@string/game_str" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
 
-            <View
-                android:id="@+id/metronome"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:layout_marginTop="10dp" />
+                <ImageView
+                    android:id="@+id/game"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gamebtn" />
 
-            
+                <TextView
+                    android:id="@+id/game_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/game_str" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <View
+                    android:id="@+id/metronome1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                </View>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
