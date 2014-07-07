@@ -4,37 +4,37 @@
     android:layout_height="match_parent"
     android:background="@color/blue"
     android:orientation="horizontal"
-    android:weightSum="3"
-         >
+    android:weightSum="3" >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:background="@color/blue"
-        android:orientation="vertical"
         android:layout_weight="2"
-         >
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginBottom="40dp"
-            android:src="@drawable/audiobtn" >
-        </ImageView>
+        android:background="@color/blue"
+        android:gravity="center"
+        android:orientation="vertical" >
 
         <SurfaceView
-            android:id="@+id/surface_camera"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:id="@+id/surface_camera2"
+            android:layout_width="450dp"
+            android:layout_height="400dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:background="@color/blue"
-        android:orientation="vertical"
         android:layout_weight="1"
-         >
+        android:background="@color/blue"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="80dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/videobtn" >
+        </ImageView>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -79,10 +79,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            
+            android:text="@string/switchcamera"
             android:textColor="#ffffff"
             android:textSize="40sp" >
         </TextView>
+
     </LinearLayout>
 
 </LinearLayout>
