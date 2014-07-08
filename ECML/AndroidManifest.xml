@@ -64,18 +64,38 @@
         </activity>
         <activity android:name=".HelpActivity" >
         </activity>
-        <activity android:name=".CalendarActivity" >
+        <activity
+            android:name=".CalendarActivity"
+            android:screenOrientation="sensorLandscape" >
         </activity>
-        <activity android:name=".RecordingActivity" >
+        <activity
+            android:name=".RecordingActivity"
+            android:screenOrientation="sensorLandscape" >
         </activity>
-        <activity android:name=".GameActivity" >
+        <activity
+            android:name=".GameActivity"
+            android:screenOrientation="sensorLandscape" >
         </activity>
-        <activity android:name="AudioRecordingActivity"></activity>
-        <activity android:name="VideoRecordingActivity">
+        <activity
+            android:name="AudioRecordingActivity"
+            android:screenOrientation="sensorLandscape" >
         </activity>
-        <activity android:name="TuningForkActivity"></activity>
-        <activity android:name=".MetronomeActivity"></activity>
-        <activity android:name=".YoutubeActivity"></activity>
+        <activity
+            android:name="VideoRecordingActivity"
+            android:screenOrientation="sensorLandscape" >
+        </activity>
+        <activity
+            android:name="TuningForkActivity"
+            android:screenOrientation="sensorLandscape" >
+        </activity>
+        <activity
+            android:name=".MetronomeActivity"
+            android:screenOrientation="sensorLandscape" >
+        </activity>
+        <activity
+            android:name=".YoutubeActivity"
+            android:screenOrientation="sensorLandscape" >
+        </activity>
     </application>
 
 </manifest>

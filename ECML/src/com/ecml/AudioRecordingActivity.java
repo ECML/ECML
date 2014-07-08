@@ -13,6 +13,7 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +56,7 @@ public class AudioRecordingActivity extends Activity {
 
 
 		// Start audio recording button
-		TextView startAudioRecording = (TextView) findViewById(R.id.startAudioRecording);
+		ImageView startAudioRecording = (ImageView) findViewById(R.id.startAudioRecording);
 		startAudioRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -73,7 +74,7 @@ public class AudioRecordingActivity extends Activity {
 		});
 
 		// Stop audio recording button
-		TextView stopAudioRecording = (TextView) findViewById(R.id.stopAudioRecording);
+		ImageView stopAudioRecording = (ImageView) findViewById(R.id.stopAudioRecording);
 		stopAudioRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -91,7 +92,7 @@ public class AudioRecordingActivity extends Activity {
 		});
 
 		// Play last record
-		TextView replayAudioRecording = (TextView) findViewById(R.id.replayAudioRecording);
+		ImageView replayAudioRecording = (ImageView) findViewById(R.id.replayAudioRecording);
 		replayAudioRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -111,7 +112,7 @@ public class AudioRecordingActivity extends Activity {
 
 
 		// Pause replay
-		TextView pauseReplay = (TextView) findViewById(R.id.pauseReplay);
+		ImageView pauseReplay = (ImageView) findViewById(R.id.pauseReplay);
 		pauseReplay.setOnClickListener(new View.OnClickListener() {
 
 			@Override
