@@ -168,6 +168,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	
 	final Context context = this;
+	Menu menu;
 
 	
 	/**********************************************************************************************************/
@@ -412,6 +413,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.actionbar, menu);
+		
+		
+		this.menu = menu;
 
 		/******************************* METRONOME ACTION VIEW **********************************/
 		/** Get the action view of the menu item whose id is video */
@@ -1038,6 +1042,12 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				return true;
 			}
 			return true;
+		case KeyEvent.KEYCODE_MENU:
+			if (action == KeyEvent.ACTION_UP && menu!= null && menu.findItem(R.id.settings) != null) {
+				menu.performIdentifierAction(R.id.settings, 0);
+				return true;
+			}
+			return true;
 		}
 		return false;
 	}
@@ -1062,13 +1072,17 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 					this.finish();
 					return true;
 				} else {
+					Log.i("isAudioRecording", "" + isAudioRecording);
 					Toast.makeText(SheetMusicActivity.this, "Stop recording before exiting", Toast.LENGTH_SHORT).show();
+					return true;
 				}
 			}
 		}
 		return false;
 	}
+	
 
+	
 	@Override
 	public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
