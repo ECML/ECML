@@ -19,6 +19,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,16 +53,18 @@ public class VideoRecordingActivity extends Activity {
 		setContentView(R.layout.videorecording);
 
 		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources()
-				.getColor(R.color.orange));
+		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
+		ab.setBackgroundDrawable(colorDrawable);
 
+		
 		surfaceView = (SurfaceView) findViewById(R.id.surface_camera2);
+	
 		surfaceHolder = surfaceView.getHolder();
 
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
 		// Start recording button
-		TextView startVideoRecording = (TextView) findViewById(R.id.startVideoRecording);
+		ImageView startVideoRecording = (ImageView) findViewById(R.id.startVideoRecording);
 		startVideoRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -86,7 +89,7 @@ public class VideoRecordingActivity extends Activity {
 		});
 
 		// Stop recording button
-		TextView stopVideoRecording = (TextView) findViewById(R.id.stopVideoRecording);
+		ImageView stopVideoRecording = (ImageView) findViewById(R.id.stopVideoRecording);
 		stopVideoRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -101,7 +104,7 @@ public class VideoRecordingActivity extends Activity {
 		});
 
 		// Replay last video
-		TextView replayVideoRecording = (TextView) findViewById(R.id.replayVideoRecording);
+		ImageView replayVideoRecording = (ImageView) findViewById(R.id.replayVideoRecording);
 		replayVideoRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -116,7 +119,7 @@ public class VideoRecordingActivity extends Activity {
 		});
 
 		// Switch camera
-		TextView switchCamera = (TextView) findViewById(R.id.switchCamera);
+		ImageView switchCamera = (ImageView) findViewById(R.id.switchCamera);
 		switchCamera.setOnClickListener(new View.OnClickListener() {
 
 			@Override
