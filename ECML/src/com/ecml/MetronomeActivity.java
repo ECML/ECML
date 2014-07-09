@@ -1,114 +1,141 @@
 package com.ecml;
 
-import com.metronome.MetronomeController;
-
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
+
+import com.metronome.MetronomeController;
 
 public class MetronomeActivity extends Activity {
-	
-	MetronomeController metronomeController;
-	SeekBar slider;
+
+	MetronomeController metronomeController;	/* Metronome Controller */
+	SeekBar slider;								/* Slider that sets the tempo */
+	int accentBeep;								/* Time Signature */
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	    setTheme(android.R.style.Theme_Holo_Light);
-	    
-	    ActionBar ab = getActionBar();
+		super.onCreate(savedInstanceState);
+		setTheme(android.R.style.Theme_Holo_Light);
+		
+		/* Action Bar */
+		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
-	    
+		/* End of Action bar */
+		
 		setContentView(R.layout.metronome);
-	    
-	    TextView startMetronome = (TextView) findViewById(R.id.startMetronome);
-	    TextView stopMetronome = (TextView) findViewById(R.id.stopMetronome);
-	    ImageView minus = (ImageView) findViewById(R.id.minusTempo);
-	    ImageView plus = (ImageView) findViewById(R.id.plusTempo);
-	    
-	    startMetronome.setOnClickListener(new View.OnClickListener() {
-	    	
-	    	@Override
-	    	public void onClick(View v) {
-	    		metronomeController.startMetronome();
-	    	}
-	    });
-	    
-	    stopMetronome.setOnClickListener(new View.OnClickListener() {
-	    	
-	    	@Override
-	    	public void onClick(View v) {
-	    		metronomeController.stopMetronome();
-	    	}
-	    });
-	    
-	    minus.setOnClickListener(new View.OnClickListener() {
-			
+
+		/* Buttons */
+		TextView startMetronome = (TextView) findViewById(R.id.startMetronome);
+		TextView stopMetronome = (TextView) findViewById(R.id.stopMetronome);
+		ImageView minus = (ImageView) findViewById(R.id.minusTempo);
+		ImageView plus = (ImageView) findViewById(R.id.plusTempo);
+		final TextView timeSignature = (TextView) findViewById(R.id.timeSignature);
+		/* End of Buttons */
+		
+		/* Buttons' Listeners */
+		startMetronome.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				metronomeController.startMetronome();
+			}
+		});
+
+		stopMetronome.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				metronomeController.stopMetronome();
+			}
+		});
+
+		minus.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				minus();
 			}
 		});
-	    
-	    plus.setOnClickListener(new View.OnClickListener() {
-			
+
+		plus.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				plus();
 			}
 		});
-	    
-	    metronomeController = new MetronomeController(this);   
-        updateTempoView();
-        setSliderListener();   
+
+		timeSignature.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				metronomeController.stopMetronome();
+				// Creating the instance of PopupMenu
+				PopupMenu popup = new PopupMenu(MetronomeActivity.this, timeSignature);
+				// Inflating the Popup using xml file
+				popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+				
+				// registering popup with OnMenuItemClickListener
+				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+					public boolean onMenuItemClick(MenuItem item) {
+						if (item.getTitle() != "Off") {
+							accentBeep = Character.getNumericValue(item.getTitle().charAt(0));
+						}
+						else {
+							accentBeep = 0;
+						}
+						metronomeController.setAccentBeep(accentBeep);
+						metronomeController.startMetronome();
+						return true;
+					}
+				});
+				
+				popup.show();
+			}
+		});
+		/* End of Buttons' Listeners */
+
+		metronomeController = new MetronomeController(this);
+		updateTempoView();
+		setSliderListener();
 	}
-	
+
 	/** When this activity pasuses, stop the metronome */
 	@Override
 	protected void onPause() {
 		super.onPause();
 		metronomeController.stopMetronome();
 	}
-	
-	private void updateTempoView(){
-        TextView tempoView = ((TextView) findViewById(R.id.tempo));
-        tempoView.setText("Tempo: " + metronomeController.getTempo() + " bpm");
-    }
-    
-    public void start(View view){
-    	metronomeController.startMetronome();
-    }
-    
-    public void stop(View view){
-    	metronomeController.stopMetronome();
-    }
-    
-    public void updateTempo(){
-    	int newTempo = slider.getProgress();
-    	metronomeController.setTempo(newTempo);
-    	updateTempoView();
-    }
-    
-    private void setSliderListener(){
-    	slider = (SeekBar) findViewById(R.id.sliderMetronome);
-    	slider.setMax(200-1);
-    	slider.setProgress(metronomeController.getTempo()-1);
-    	updateTempoView();
-    	slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+	/** Update the View for Tempo */
+	private void updateTempoView() {
+		TextView tempoView = ((TextView) findViewById(R.id.tempo));
+		tempoView.setText("Tempo: " + metronomeController.getTempo() + " bpm");
+	}
+
+	/** SliderListener */
+	private void setSliderListener() {
+		slider = (SeekBar) findViewById(R.id.sliderMetronome);
+		slider.setMax(200 - 1); // -1 to avoid reaching 0
+		slider.setProgress(metronomeController.getTempo() - 1); // -1 to avoid reaching 0
+		updateTempoView();
+		
+		slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-		    	metronomeController.startMetronome();
+				metronomeController.startMetronome();
 			}
 
 			@Override
@@ -118,24 +145,24 @@ public class MetronomeActivity extends Activity {
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		    	metronomeController.setTempo(progress);
-		    	updateTempoView();
+				metronomeController.setTempo(progress); // updates the Variable Tempo of the Metronome
+				updateTempoView(); // updates the View
 			}
 		});
-    }
-    
-    void plus() {
-    	metronomeController.stopMetronome();
-    	slider.setProgress(slider.getProgress()+1);
-    	updateTempo();
-    	metronomeController.startMetronome();
-    }
-    
-    void minus() {
-    	metronomeController.stopMetronome();
-    	slider.setProgress(slider.getProgress()-1);
-    	updateTempo();
-    	metronomeController.startMetronome();
-    }
+	}
+
+	/** Add 1 to the tempo */
+	void plus() {
+		metronomeController.stopMetronome();
+		slider.setProgress(slider.getProgress() + 1); // onProgressChanged updates the Metronome and the View automatically
+		metronomeController.startMetronome();
+	}
+
+	/** Remove 1 from the tempo */
+	void minus() {
+		metronomeController.stopMetronome();
+		slider.setProgress(slider.getProgress() - 1); // onProgressChanged updates the Metronome and the View automatically
+		metronomeController.startMetronome();
+	}
 
 }

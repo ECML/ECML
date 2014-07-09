@@ -64,5 +64,6 @@
     <string name="recordscore">Record with scores</string>
     <string name="startmetronome">Start metronome</string>
     <string name="stopmetronome">Stop metronome</string>
+    <string name="timeSignature">Time Signature</string>
 
 </resources>

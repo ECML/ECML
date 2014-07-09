@@ -1,11 +1,8 @@
 package com.metronome;
 
 
-import com.ecml.SheetMusicActivity;
 import com.ecml.MetronomeActivity;
-import com.metronome.Horloge;
-import com.metronome.Metronome;
-import android.content.Context;
+import com.ecml.SheetMusicActivity;
 
 public class MetronomeController {
 	
@@ -32,11 +29,19 @@ public class MetronomeController {
 		metronome.setTempo(tempo+1);
 	}
 	
+	public int getAccentBeep(){
+		return metronome.getAccentBeep();
+	}
+	
+	public void setAccentBeep(int AccentBeep) {
+		metronome.setAccentBeep(AccentBeep);
+	}
+	
 	public void startMetronome() {
 		if(horloge != null) {
 			horloge.stop();
 		}
-		horloge = new Horloge(metronome.getTempo(), metronomeActivity.getBaseContext());
+		horloge = new Horloge(metronome.getTempo(), metronome.getAccentBeep(), metronomeActivity.getBaseContext());
 	}
 	
 	public void stopMetronome() {

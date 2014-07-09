@@ -1,17 +1,13 @@
 package com.metronome;
 
-
-import android.content.Context;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
-
 public class Metronome {
 
 	private int tempo;
-	
-	
+	private int AccentBeep;
+
 	public Metronome() {
 		tempo = 60;
+		AccentBeep = 0;
 	}
 
 	public int getTempo() {
@@ -22,5 +18,12 @@ public class Metronome {
 		this.tempo = tempo;
 	}
 
+	public int getAccentBeep() {
+		return AccentBeep;
+	}
+
+	public void setAccentBeep(int AccentBeep) {
+		this.AccentBeep = AccentBeep;
+	}
 
 }
