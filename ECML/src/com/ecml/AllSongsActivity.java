@@ -330,6 +330,7 @@ public class AllSongsActivity extends ListActivity implements TextWatcher {
             scanner = null;
         }
         FileUri file = (FileUri) this.getListAdapter().getItem(position);
+        ECML.song= file;
         ChooseSongActivity.openFile(file);
     }
 
