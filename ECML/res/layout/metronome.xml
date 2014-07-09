@@ -14,30 +14,29 @@
         android:src="@drawable/metronomebtn" >
     </ImageView>
 
-	<TextView
-	    android:id="@+id/timeSignature"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="10dp"
-	    android:background="@color/orange"
-	    android:paddingBottom="3dp"
-	    android:paddingLeft="5dp"
-	    android:paddingRight="5dp"
-	    android:paddingTop="3dp"
-	    android:text="@string/timeSignature"
-	    android:textColor="#ffffff"
-	    android:textSize="25sp" >
-
-	</TextView>
-
-	<TextView
-        android:id="@+id/tempo"
-        android:layout_weight="20.0"
+    <TextView
+        android:id="@+id/timeSignature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/orange"
+        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:text="@string/timeSignature"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffffff" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/tempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="20.0"
         android:gravity="center"
-        android:textColor="#ffffff"
-        android:textSize="40sp" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -67,7 +66,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/plus" >
         </ImageView>
-
     </LinearLayout>
 
     <LinearLayout
@@ -82,27 +80,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
-            android:paddingTop="4dp"
+            android:background="@color/orange"
             android:paddingBottom="4dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:paddingTop="4dp"
             android:text="@string/startmetronome"
-            android:background="@color/orange"
-            android:textColor="#ffffff"
-            android:textSize="40sp" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/stopMetronome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
+            android:background="@color/orange"
             android:paddingBottom="4dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:paddingTop="4dp"
             android:text="@string/stopmetronome"
-            android:background="@color/orange"
-            android:textColor="#ffffff"
-            android:textSize="40sp" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ffffff" />
+s    
     </LinearLayout>
 
 </LinearLayout>
