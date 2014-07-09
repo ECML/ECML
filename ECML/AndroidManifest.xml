@@ -96,6 +96,7 @@
             android:name=".YoutubeActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
+        <activity android:name="ReadingGameModeActivity"></activity>
     </application>
 
 </manifest>
