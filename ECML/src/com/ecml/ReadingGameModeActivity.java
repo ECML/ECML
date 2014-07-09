@@ -24,6 +24,17 @@ public class ReadingGameModeActivity extends Activity {
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
 
+		//Back to the score button
+		Button score = (Button) findViewById(R.id.back);
+		score.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				ChooseSongActivity.openFile(ECML.song);
+			}
+		});
+		
+		
 		// Help button
 				Button help = (Button) findViewById(R.id.help);
 				help.setOnClickListener(new View.OnClickListener() {
@@ -58,11 +69,6 @@ public class ReadingGameModeActivity extends Activity {
 
 			}
 		});
-		// builder.setNegativeButton("Cancel", new
-		// DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface builder, int whichButton) {
-		// }
-		// });
 		AlertDialog dialog = builder.create();
 		dialog.show();
 	}
