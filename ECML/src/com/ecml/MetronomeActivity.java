@@ -20,6 +20,7 @@ public class MetronomeActivity extends Activity {
 	MetronomeController metronomeController;	/* Metronome Controller */
 	SeekBar slider;								/* Slider that sets the tempo */
 	int accentBeep;								/* Time Signature */
+	TextView timeSignature;						/* The View for the Time Signature */
 
 	/** Called when the activity is first created. */
 	@Override
@@ -40,7 +41,8 @@ public class MetronomeActivity extends Activity {
 		TextView stopMetronome = (TextView) findViewById(R.id.stopMetronome);
 		ImageView minus = (ImageView) findViewById(R.id.minusTempo);
 		ImageView plus = (ImageView) findViewById(R.id.plusTempo);
-		final TextView timeSignature = (TextView) findViewById(R.id.timeSignature);
+		timeSignature = (TextView) findViewById(R.id.timeSignature);
+		updateTimeSignatureView();
 		/* End of Buttons */
 		
 		/* Buttons' Listeners */
@@ -95,6 +97,7 @@ public class MetronomeActivity extends Activity {
 						else {
 							accentBeep = 0;
 						}
+						timeSignature.setText("Time Signature: " + item.getTitle());
 						metronomeController.setAccentBeep(accentBeep);
 						metronomeController.startMetronome();
 						return true;
@@ -107,7 +110,6 @@ public class MetronomeActivity extends Activity {
 		/* End of Buttons' Listeners */
 
 		metronomeController = new MetronomeController(this);
-		updateTempoView();
 		setSliderListener();
 	}
 
@@ -122,6 +124,16 @@ public class MetronomeActivity extends Activity {
 	private void updateTempoView() {
 		TextView tempoView = ((TextView) findViewById(R.id.tempo));
 		tempoView.setText("Tempo: " + metronomeController.getTempo() + " bpm");
+	}
+	
+	/** Update the View for the Time Signature */
+	private void updateTimeSignatureView() {
+		if (accentBeep == 0) {
+			timeSignature.setText("Time Signature: Off");
+		}
+		else {
+			timeSignature.setText("Time Signature: " + accentBeep);
+		}
 	}
 
 	/** SliderListener */

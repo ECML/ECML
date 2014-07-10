@@ -1,23 +1,16 @@
 package com.metronome;
 
 
-import com.ecml.MetronomeActivity;
-import com.ecml.SheetMusicActivity;
+import android.app.Activity;
 
 public class MetronomeController {
 
-	private SheetMusicActivity metronomeSheetMusicActivity;
-	private MetronomeActivity metronomeActivity;
+	private Activity activity;
 	private Metronome metronome;
 	private Horloge horloge;
 
-	public MetronomeController(SheetMusicActivity metronomeSheetMusicActivity) {
-		this.metronomeSheetMusicActivity = metronomeSheetMusicActivity;
-		metronome = new Metronome();
-	}
-
-	public MetronomeController(MetronomeActivity metronomeActivity) {
-		this.metronomeActivity = metronomeActivity;
+	public MetronomeController(Activity activity) {
+		this.activity = activity;
 		metronome = new Metronome();
 	}
 
@@ -41,7 +34,7 @@ public class MetronomeController {
 		if (horloge != null) {
 			horloge.stop();
 		}
-		horloge = new Horloge(metronome.getTempo(), metronome.getAccentBeep(), metronomeActivity.getBaseContext());
+		horloge = new Horloge(metronome.getTempo(), metronome.getAccentBeep(), activity.getBaseContext());
 	}
 
 	public void stopMetronome() {

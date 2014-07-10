@@ -226,10 +226,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 		createView();
 		createSheetMusic(options);
-
+		
 		metronomeController = new MetronomeController(this);
-		updateTempoView();
-		setSliderListener();
 
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
@@ -280,7 +278,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		surfaceView = (SurfaceView) findViewById(R.id.surface_camera);
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
-		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+//		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
 		/*** End of side activities ***/
 
@@ -301,13 +299,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		piano = new Piano(this);
 
 		topLayout = getLayoutInflater().inflate(R.layout.main_top, layout, false);
-		metronomeView = getLayoutInflater().inflate(R.layout.metronome, layout, false);
 
 		topLayout.setVisibility(View.GONE);
-		metronomeView.setVisibility(View.GONE);
 
 		layout.addView(topLayout);
-		layout.addView(metronomeView);
 
 		player.pianoButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -416,32 +411,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		/** Get the action view of the menu item whose id is video */
 		abMetronome = (View) menu.findItem(R.id.metronome).getActionView();
 
-		TextView tempoView = ((TextView) abMetronome.findViewById(R.id.tempo));
-		tempoView.setText("Tempo : " + metronomeController.getTempo() + "");
-
-		SeekBar slider = (SeekBar) abMetronome.findViewById(R.id.slider);
-		slider.setMax(200);
-		slider.setProgress(metronomeController.getTempo());
-		slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				metronomeController.startMetronome();
-			}
-
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-				metronomeController.stopMetronome();
-			}
-
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-				metronomeController.setTempo(progress);
-				updateTempoView();
-			}
-		});
-
+		setSliderListener();
+		
 		TextView startMetronome = (TextView) abMetronome.findViewById(R.id.startmetronome);
 		TextView stopMetronome = (TextView) abMetronome.findViewById(R.id.stopmetronome);
 
@@ -1094,29 +1065,16 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/*** Metronome Functions ***/
 
 	private void updateTempoView() {
-		TextView tempoView = ((TextView) findViewById(R.id.tempo));
-		tempoView.setText("Tempo : " + metronomeController.getTempo() + "");
-	}
-
-	public void start(View view) {
-		metronomeController.startMetronome();
-	}
-
-	public void stop(View view) {
-		metronomeController.stopMetronome();
-	}
-
-	public void updateTempo(View view) {
-		SeekBar slider = (SeekBar) findViewById(R.id.sliderMetronome);
-		int newTempo = slider.getProgress();
-		metronomeController.setTempo(newTempo);
-		updateTempoView();
+		TextView tempoView = ((TextView) abMetronome.findViewById(R.id.tempo));
+		tempoView.setText("Tempo : " + metronomeController.getTempo() + " bpm");
 	}
 
 	private void setSliderListener() {
-		SeekBar slider = (SeekBar) findViewById(R.id.sliderMetronome);
-		slider.setMax(200);
-		slider.setProgress(metronomeController.getTempo());
+		SeekBar slider = (SeekBar) abMetronome.findViewById(R.id.slider);
+		slider.setMax(200-1);
+		slider.setProgress(metronomeController.getTempo()-1);
+		updateTempoView();
+		
 		slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
@@ -1131,9 +1089,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-				metronomeController.setTempo(progress);
-				updateTempoView();
+				metronomeController.setTempo(progress); // updates the Variable Tempo of the Metronome
+				updateTempoView(); // updates the View
 			}
 		});
 	}
