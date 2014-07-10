@@ -324,9 +324,14 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 					player.stopRecordButton.setVisibility(View.VISIBLE);
 					player.playRecordButton.setVisibility(View.VISIBLE);
 					player.mute();
+					try {
+						Thread.sleep(options.delay);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					startAudioRecording();
 					timer = new Handler();
-					timer.postDelayed(player.DoPlay, options.delay);
+					timer.postDelayed(player.DoPlay, 0); // we should find a nicer way to call DoPlay but works fine
 				}
 			}
 		});

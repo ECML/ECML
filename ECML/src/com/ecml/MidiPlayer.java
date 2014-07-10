@@ -433,41 +433,13 @@ public class MidiPlayer extends LinearLayout {
         params.rightMargin = 0;
         params.leftMargin = 0;
         plusButton.setLayoutParams(params);
-                
-        params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
-        params.bottomMargin = 0;
-        params.topMargin = 0;
-        params.rightMargin = 0;
-        params.leftMargin = 0;
         muteButton.setLayoutParams(params);
-        
-        params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
-        params.bottomMargin = 0;
-        params.topMargin = 0;
-        params.rightMargin = 0;
-        params.leftMargin = 0;
         pianoButton.setLayoutParams(params);
-        
-        params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
-        params.bottomMargin = 0;
-        params.topMargin = 0;
-        params.rightMargin = 0;
-        params.leftMargin = 0;
         playAndRecordButton.setLayoutParams(params);
-
-        params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
-        params.bottomMargin = 0;
-        params.topMargin = 0;
-        params.rightMargin = 0;
-        params.leftMargin = 0;
         stopRecordButton.setLayoutParams(params);
-        
-        params = new LinearLayout.LayoutParams(buttonheight, buttonheight);
-        params.bottomMargin = 0;
-        params.topMargin = 0;
-        params.rightMargin = 0;
-        params.leftMargin = 0;
+        stopRecordButton.setVisibility(View.GONE);
         playRecordButton.setLayoutParams(params);
+        playRecordButton.setVisibility(View.GONE);
     }
     
     public void SetPiano(Piano p, MidiOptions options) {
