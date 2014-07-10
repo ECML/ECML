@@ -120,7 +120,7 @@ public class MetronomeActivity extends Activity {
 		metronomeController.stopMetronome();
 	}
 
-	/** Update the View for Tempo */
+	/** Update the View for the Tempo */
 	private void updateTempoView() {
 		TextView tempoView = ((TextView) findViewById(R.id.tempo));
 		tempoView.setText("Tempo: " + metronomeController.getTempo() + " bpm");
@@ -136,7 +136,7 @@ public class MetronomeActivity extends Activity {
 		}
 	}
 
-	/** SliderListener */
+	/** Set the Slider Listener */
 	private void setSliderListener() {
 		slider = (SeekBar) findViewById(R.id.sliderMetronome);
 		slider.setMax(200 - 1); // -1 to avoid reaching 0

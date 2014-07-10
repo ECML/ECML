@@ -1376,33 +1376,6 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
         }
     }
 
-
-    /** Handle touch/motion events to implement scrolling the sheet music. */
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction() & MotionEvent.ACTION_MASK;
-        boolean result = scrollAnimation.onTouchEvent(event);
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                // If we touch while music is playing, stop the midi player 
-                if (player != null && player.playstate == player.playing) {
-                    player.Pause();
-                    scrollAnimation.stopMotion();
-                }
-                return result;
-
-            case MotionEvent.ACTION_MOVE:
-                return result;
-
-            case MotionEvent.ACTION_UP:
-                return result;
-
-            default:
-                return false;
-        }
-    }
-
-
     /** Update the scroll position. Callback by ScrollAnimation */
     public void scrollUpdate(int deltaX, int deltaY) {
         scrollX += deltaX;

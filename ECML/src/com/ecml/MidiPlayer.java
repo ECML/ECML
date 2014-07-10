@@ -77,7 +77,6 @@ public class MidiPlayer extends LinearLayout {
     static Bitmap muteOffImage;			 /** The unmute image */
     static Bitmap pianoImage;			 /** The piano image */
     static Bitmap playAndRecordImage;	 /** The rec and play image */
-    static Bitmap stopRecordImage;		 /** The stop recording image */
     static Bitmap playRecordImage;		 /** The replay record image */
     static Bitmap plusImage;			 /** The + image for the speed bar */
     static Bitmap minusImage;			 /** The - image for the speed bar */
@@ -89,7 +88,6 @@ public class MidiPlayer extends LinearLayout {
     private ImageButton muteButton;      /** The mute button */
     ImageButton pianoButton;	 		 /** The piano button */
     ImageButton playAndRecordButton;	 /** The play and record button (mutes aswell) */
-    ImageButton stopRecordButton;		 /** The stop recording button */
     ImageButton playRecordButton;		 /** The replay record button */
     private ImageButton plusButton;		 /** The + button for the speed bar */
     private ImageButton minusButton;	 /** The - button for the speed bar */
@@ -141,7 +139,6 @@ public class MidiPlayer extends LinearLayout {
         plusImage = BitmapFactory.decodeResource(res, R.drawable.plus);
         minusImage = BitmapFactory.decodeResource(res, R.drawable.minus);
         playAndRecordImage = BitmapFactory.decodeResource(res, R.drawable.record);
-        stopRecordImage = BitmapFactory.decodeResource(res, R.drawable.recordstop);
         playRecordImage = BitmapFactory.decodeResource(res, R.drawable.recordplay);
     }
 
@@ -353,13 +350,6 @@ public class MidiPlayer extends LinearLayout {
         playAndRecordButton.setScaleType(ImageView.ScaleType.FIT_XY);
         this.addView(playAndRecordButton);
         
-        /* Create the Stop button for the record button */
-        stopRecordButton = new ImageButton(activity);
-        stopRecordButton.setBackgroundColor(getResources().getColor(R.color.orange));
-        stopRecordButton.setImageBitmap(stopRecordImage);
-        stopRecordButton.setScaleType(ImageView.ScaleType.FIT_XY);
-        this.addView(stopRecordButton);
-        
         /* Create the Play button for the record button */
         playRecordButton = new ImageButton(activity);
         playRecordButton.setBackgroundColor(getResources().getColor(R.color.orange));
@@ -436,8 +426,6 @@ public class MidiPlayer extends LinearLayout {
         muteButton.setLayoutParams(params);
         pianoButton.setLayoutParams(params);
         playAndRecordButton.setLayoutParams(params);
-        stopRecordButton.setLayoutParams(params);
-        stopRecordButton.setVisibility(View.GONE);
         playRecordButton.setLayoutParams(params);
         playRecordButton.setVisibility(View.GONE);
     }
