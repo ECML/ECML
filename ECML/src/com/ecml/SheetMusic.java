@@ -90,7 +90,6 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
     private int      bufferY; 
     private int      scrollX;         /** The (left,top) of the scroll clip */
     private int      scrollY;
-    private ScrollAnimation scrollAnimation;
     
     public SheetMusic(Context context) {
         super(context);
@@ -184,8 +183,6 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
             staff.CalculateHeight();
         }
         zoom = 1.0f;
-
-        scrollAnimation = new ScrollAnimation(this, scrollVert);
     }
 
     /** Calculate the size of the sheet music width and height
