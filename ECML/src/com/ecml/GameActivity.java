@@ -32,6 +32,18 @@ public class GameActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		
+		
+		// Start the speed part of the game
+		Button speed = (Button) findViewById(R.id.speed);
+		reading.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), SpeedGameModeActivity.class);
+				startActivity(intent);
+			}
+		});
 
 		// Back to the score button
 		Button score = (Button) findViewById(R.id.backscore);

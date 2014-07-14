@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <string name="app_name">ECML</string>
     <string name="choose_song">Choose Song</string>
@@ -66,6 +66,7 @@
     <string name="stopmetronome">Stop metronome</string>
     <string name="howtoplay">How to play the game</string>
     <string name="help_reading">Hear the notes and then find them. The goal is to find the maximum of right notes.</string>
+    <string android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/help_speed" name="help_speed">Play the notes with the good rythm.</string>
 
 
 </resources>
