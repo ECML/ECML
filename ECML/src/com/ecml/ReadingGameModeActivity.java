@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,27 +25,34 @@ public class ReadingGameModeActivity extends Activity {
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
 
-		//Back to the score button
+		// Back to the score button
 		Button score = (Button) findViewById(R.id.back);
 		score.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				// if (ECML.song == null){
+				// // Uri uri =
+				// Uri.parse("file:///android_asset/Easy_Songs_Brahms_Lullaby.mid");
+				// // String title = "Easy_Songs_Brahms_Lullaby.mid";
+				// // FileUri file = new FileUri(uri, title);
+				// //
+				// ChooseSongActivity.openFile(file);
+				// }
 				ChooseSongActivity.openFile(ECML.song);
 			}
 		});
-		
-		
-		// Help button
-				Button help = (Button) findViewById(R.id.help);
-				help.setOnClickListener(new View.OnClickListener() {
 
-					@Override
-					public void onClick(View v) {
-						showHelpDialog();
-					}
-				});
-		
+		// Help button
+		Button help = (Button) findViewById(R.id.help);
+		help.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				showHelpDialog();
+			}
+		});
+
 		// Change game button
 		Button game = (Button) findViewById(R.id.game);
 		game.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +60,28 @@ public class ReadingGameModeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+				startActivity(intent);
+			}
+		});
+
+		// Beginner button
+		Button beginner = (Button) findViewById(R.id.beginner);
+		beginner.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), ReadingGameBeginner.class);
+				startActivity(intent);
+			}
+		});
+
+		// Normal button
+		Button normal = (Button) findViewById(R.id.normal);
+		normal.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), ReadingGameNormal.class);
 				startActivity(intent);
 			}
 		});
