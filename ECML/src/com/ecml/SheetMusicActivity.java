@@ -238,7 +238,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		metronomeController = new MetronomeController(this);
 		scrollAnimation = new ScrollAnimation(sheet, options.scrollVert); // needed for stopping the music and recording
 																		  // when touching the score
-
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
