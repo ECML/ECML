@@ -98,6 +98,7 @@
             android:name=".YoutubeActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
+ 
         <activity android:name="ReadingGameModeActivity"></activity>
         <activity android:name="ReadingGameBeginner"></activity>
         <activity android:name="ReadingGameNormal"></activity>
