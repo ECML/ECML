@@ -107,19 +107,8 @@ public class ECMLActivity extends Activity {
 		ImageView tuning = (ImageView) findViewById(R.id.tuning);
 		tuning.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Toast.makeText(context, "Tuning fork", Toast.LENGTH_SHORT).show();
-				MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.tuning);
-				mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-				try {
-					mPlayer.prepare();
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				mPlayer.start();
+				Intent tuningFork = new Intent(getApplicationContext(), TuningForkActivity.class);
+				startActivity(tuningFork);
 			}
 		});
 
