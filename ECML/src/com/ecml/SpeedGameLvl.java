@@ -44,12 +44,11 @@ public abstract class SpeedGameLvl extends Activity {
 
 
 		/*****************
-		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
-		 * GAME BUTTON
-		 **********/
+		 * THE HELP, BACK TO SCORE, CHANGE
+		 ***********/
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
-		choice = getLayoutInflater().inflate(R.layout.choice, layout, false);
+		choice = getLayoutInflater().inflate(R.layout.speed_game_lvl, layout, false);
 		layout.addView(choice);
 		setContentView(layout);
 
@@ -85,8 +84,7 @@ public abstract class SpeedGameLvl extends Activity {
 			}
 		});
 		
-		/********************* TOP VIEW WITH RESULTS AND APPRECIATION ***********************/
-		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
+		result = getLayoutInflater().inflate(R.layout.speed_points, layout, false);
 		layout.addView(result);
 		result.setVisibility(View.GONE);
 		setContentView(layout);
@@ -97,7 +95,7 @@ public abstract class SpeedGameLvl extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ReadingGameBeginner.class);
+				Intent intent = new Intent(getApplicationContext(), this.getClass());
 				startActivity(intent);
 			}
 		});

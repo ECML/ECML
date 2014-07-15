@@ -32,14 +32,6 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					// if (ECML.song == null){
-					// // Uri uri =
-					// Uri.parse("file:///android_asset/Easy_Songs_Brahms_Lullaby.mid");
-					// // String title = "Easy_Songs_Brahms_Lullaby.mid";
-					// // FileUri file = new FileUri(uri, title);
-					// //
-					// ChooseSongActivity.openFile(file);
-					// }
 					ChooseSongActivity.openFile(ECML.song);
 				}
 			});
@@ -100,7 +92,7 @@ public class SpeedGameModeActivity extends Activity {
 			
 			// lvl4 button
 			Button lvl4 = (Button) findViewById(R.id.lvl4);
-			lvl1.setOnClickListener(new View.OnClickListener() {
+			lvl4.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
