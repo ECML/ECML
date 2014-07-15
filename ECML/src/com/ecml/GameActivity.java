@@ -36,7 +36,7 @@ public class GameActivity extends Activity {
 		
 		// Start the speed part of the game
 		Button speed = (Button) findViewById(R.id.speed);
-		reading.setOnClickListener(new View.OnClickListener() {
+		speed.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
