@@ -79,6 +79,14 @@
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity
+            android:name=".SpeedGameModeActivity"
+            android:screenOrientation="sensorLandscape" >
+        </activity>   
+        <activity
+            android:name=".SpeedGamelvl1"
+            android:screenOrientation="sensorLandscape" >
+        </activity>
+        <activity
             android:name="AudioRecordingActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
