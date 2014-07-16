@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/letterNote"
             android:layout_alignParentRight="true"
-            android:text="0"
+            android:text="4"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold|italic"
             android:typeface="serif" />
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/numberOctave"
-            android:text="A"
+            android:text="A "
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="48sp"
             android:textStyle="bold|italic"

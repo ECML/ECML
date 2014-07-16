@@ -76,13 +76,7 @@ public class TuningForkActivity extends Activity {
 			public void onClick(View v) {
 				if (mSineFreq > 12) {
 					mSineFreq -= 12;
-					mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
-					mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
-					mNote.setText(notes[mSineFreq - 12 * ((mSineFreq) / 12)]);
-					genTone(convertProgress_Hz(mSineFreq));
-					if (mSineFreq < 37) {
-						Toast.makeText(getApplicationContext(), "You can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG).show();
-					}
+					updateView();
 				}
 			}
 			
@@ -94,13 +88,7 @@ public class TuningForkActivity extends Activity {
 			public void onClick(View v) {
 				if (mSineFreq < 124-12) {
 					mSineFreq += 12;
-					mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
-					mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
-					mNote.setText(notes[mSineFreq - 12 * ((mSineFreq) / 12)]);
-					genTone(convertProgress_Hz(mSineFreq));
-					if (mSineFreq < 37) {
-						Toast.makeText(getApplicationContext(), "You can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG).show();
-					}
+					updateView();
 				}
 			}
 			
@@ -112,13 +100,7 @@ public class TuningForkActivity extends Activity {
 			public void onClick(View v) {
 				if (mSineFreq > 1) {
 					mSineFreq -= 1;
-					mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
-					mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
-					mNote.setText(notes[mSineFreq - 12 * ((mSineFreq) / 12)]);
-					genTone(convertProgress_Hz(mSineFreq));
-					if (mSineFreq < 37) {
-						Toast.makeText(getApplicationContext(), "You can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG).show();
-					}
+					updateView();
 				}
 			}
 			
@@ -130,13 +112,7 @@ public class TuningForkActivity extends Activity {
 			public void onClick(View v) {
 				if (mSineFreq < 124) {
 					mSineFreq += 1;
-					mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
-					mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
-					mNote.setText(notes[mSineFreq - 12 * ((mSineFreq) / 12)]);
-					genTone(convertProgress_Hz(mSineFreq));
-					if (mSineFreq < 37) {
-						Toast.makeText(getApplicationContext(), "You can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG).show();
-					}
+					updateView();
 				}
 			}
 			
@@ -261,7 +237,6 @@ public class TuningForkActivity extends Activity {
 
 	void playSound() {
 
-
 		final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_CONFIGURATION_MONO,
 				AudioFormat.ENCODING_PCM_16BIT, numSamples * 2, AudioTrack.MODE_STREAM);
 		audioTrack.write(generatedSnd, 0, numSamples * 2);
@@ -271,15 +246,12 @@ public class TuningForkActivity extends Activity {
 		}
 		audioTrack.stop();
 		running = false;
-
 	}
 
 
 	// functions to convert progress bar into time and frequency
 	private double convertProgress_Hz(int progress) {
-
 		double Hz = 440;
-
 		// http://www.phy.mtu.edu/~suits/NoteFreqCalcs.html
 		// Java was bad at powers math of non integers, so made a loop to do the
 		// powers
@@ -291,8 +263,17 @@ public class TuningForkActivity extends Activity {
 		for (int m = 1; m < (progress); m++) {
 			Hz = Hz * 1.0594630943593;  // 2^(1/12)
 		}
-
 		return Hz;
+	}
+	
+	private void updateView() {
+		mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
+		mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
+		mNote.setText(notes[mSineFreq - 12 * ((mSineFreq) / 12)]);
+		genTone(convertProgress_Hz(mSineFreq));
+		if (mSineFreq < 37) {
+			Toast.makeText(getApplicationContext(), "You can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG).show();
+		}
 	}
 
 }
