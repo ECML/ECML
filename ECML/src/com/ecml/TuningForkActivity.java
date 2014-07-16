@@ -67,7 +67,7 @@ public class TuningForkActivity extends Activity {
 		mPitchBar = (SeekBar) findViewById(R.id.PitchBar);
 		mOctave = (TextView) findViewById(R.id.numberOctave);
 		mNote = (TextView) findViewById(R.id.letterNote);
-		mFreq = (TextView) findViewById(R.id.textViewFrequence);
+		mFreq = (TextView) findViewById(R.id.numberFrequence);
 
 		// Hook up button presses to the appropriate event handlers.
 		mToggle.setOnClickListener(mToggleListener);
