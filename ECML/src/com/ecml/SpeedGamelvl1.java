@@ -147,7 +147,7 @@ public class SpeedGamelvl1 extends SpeedGameLvl {
 
 			@Override
 			public void onClick(View v) {
-				showHelpDialog();
+//				showHelpDialog();
 			}
 		});
 
