@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -69,7 +71,8 @@ public class TuningForkActivity extends Activity {
 
 		// Hook up button presses to the appropriate event handlers.
 		mToggle.setOnClickListener(mToggleListener);
-		
+		mPitchBar.setOnSeekBarChangeListener(mSineFreqBarListener);
+
 		previousOctave.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -79,21 +82,21 @@ public class TuningForkActivity extends Activity {
 					updateView();
 				}
 			}
-			
+
 		});
-		
+
 		nextOctave.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if (mSineFreq < 124-12) {
+				if (mSineFreq < 124 - 12) {
 					mSineFreq += 12;
 					updateView();
 				}
 			}
-			
+
 		});
-		
+
 		previousNote.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -103,9 +106,9 @@ public class TuningForkActivity extends Activity {
 					updateView();
 				}
 			}
-			
+
 		});
-		
+
 		nextNote.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -115,9 +118,9 @@ public class TuningForkActivity extends Activity {
 					updateView();
 				}
 			}
-			
+
 		});
-		
+
 		// initialize the buttons to desired values
 		mToggle.setChecked(false);
 		mSineFreq = 61;
@@ -148,6 +151,27 @@ public class TuningForkActivity extends Activity {
 				new BeepTask().execute();
 			}
 
+		}
+	};
+	
+	/**
+	 * A call-back for when the user moves the sine seek bars
+	 */
+	OnSeekBarChangeListener mSineFreqBarListener = new OnSeekBarChangeListener() {
+
+		public void onStopTrackingTouch(SeekBar seekBar) {
+			genTone(convertProgress_Hz(mSineFreq));
+		}
+
+		public void onStartTrackingTouch(SeekBar seekBar) {
+
+
+		}
+
+		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+			if (mSineFreq < 1)
+				mSineFreq = 1;
+			updateView();
 		}
 	};
 
@@ -265,7 +289,7 @@ public class TuningForkActivity extends Activity {
 		}
 		return Hz;
 	}
-	
+
 	private void updateView() {
 		mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
 		mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
