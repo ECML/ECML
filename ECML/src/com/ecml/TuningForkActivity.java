@@ -32,15 +32,9 @@ public class TuningForkActivity extends Activity {
 	private ToggleButton mToggle;
 	private SeekBar mSineFreqBar;
 	private SeekBar mPitchBar;
-	private TextView mTextPitch;
 	private TextView mOctave;
 	private TextView mNote;
-	private TextView mN;
 	private boolean running = false;
-
-	// sets up menu items for the pop up menu
-	static final private int BACK_ID = Menu.FIRST;
-	static final private int INFO_ID = Menu.FIRST + 1;
 
 	// variables for tone generation
 	private final int sampleRate = 44000;
@@ -48,27 +42,19 @@ public class TuningForkActivity extends Activity {
 	private int numSamples = 5500;   // calculated with respect to frequency later
 	private int numCycles = 500;    // calculated with respect to frequency later
 
-	// variable for accelorometer
-	private SensorManager mSensorManager;
-	private float mAccel; 		 // acceleration apart from gravity
-	private float mAccelCurrent; // current acceleration including gravity
-	private float mAccelLast; 	 // last acceleration including gravity
-
-
 	// the array is made bigger than needed so they can be adjusted
 	private double sample[] = new double[targetSamples * 2];
 	private byte generatedSnd[] = new byte[2 * 2 * targetSamples];
 
-	private String[] notes = { "G\u266F/ A\u266D", "A", "A\u266F/ B\u266D", "B", "C", "C\u266F/ D\u266D", "D", "D\u266F/ E\u266D", "E", "F", "F\u266F/ G\u266D", "G" };
-
-	private long beeptime = 0;
+	private String[] notes = { "G\u266F/ A\u266D", "A", "A\u266F/ B\u266D", "B", "C", "C\u266F/ D\u266D", "D", "D\u266F/ E\u266D", "E", "F",
+			"F\u266F/ G\u266D", "G" };
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tuning_fork);
-		
+
 		/* Action Bar */
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
@@ -76,19 +62,17 @@ public class TuningForkActivity extends Activity {
 		/* End of Action bar */
 
 		// hook up the buttons etc to their instances
-		mToggle = (ToggleButton) findViewById(R.id.toggleButton1);
+		mToggle = (ToggleButton) findViewById(R.id.toggleButton);
 		mSineFreqBar = (SeekBar) findViewById(R.id.SineFreqBar);
 		mPitchBar = (SeekBar) findViewById(R.id.PitchBar);
-		mTextPitch = (TextView) findViewById(R.id.textViewFreq);
 		mOctave = (TextView) findViewById(R.id.textOctave);
 		mNote = (TextView) findViewById(R.id.textNote);
-		mN = (TextView) findViewById(R.id.textViewN);
-		mFreq = (TextView) findViewById(R.id.textViewHz);
+		mFreq = (TextView) findViewById(R.id.textViewFrequence);
 
 		// Hook up button presses to the appropriate event handlers.
-		((ToggleButton) findViewById(R.id.toggleButton1)).setOnClickListener(mToggleListener);
-		((SeekBar) findViewById(R.id.SineFreqBar)).setOnSeekBarChangeListener(mSineFreqBarListener);
-		((SeekBar) findViewById(R.id.PitchBar)).setOnSeekBarChangeListener(mSineFreqBarListener);
+		mToggle.setOnClickListener(mToggleListener);
+		mSineFreqBar.setOnSeekBarChangeListener(mSineFreqBarListener);
+		mPitchBar.setOnSeekBarChangeListener(mSineFreqBarListener);
 
 		// initialize the buttons to desired values
 		mToggle.setChecked(false);
@@ -96,14 +80,6 @@ public class TuningForkActivity extends Activity {
 		mSineFreqBar.setProgress(61);
 		mPitchBar.setMax(200);
 		mPitchBar.setProgress(100);
-
-		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-		mAccel = 0.00f;
-		mAccelCurrent = SensorManager.GRAVITY_EARTH;
-		mAccelLast = SensorManager.GRAVITY_EARTH;
-
-
 	}
 
 	@Override
@@ -160,64 +136,20 @@ public class TuningForkActivity extends Activity {
 				mSineFreqBar.setProgress(1);
 
 			mFreq.setText(Double.toString(convertProgress_Hz(mSineFreqBar.getProgress())));
-			mTextPitch.setText(Double.toString(427.5 + 0.125 * (float) mPitchBar.getProgress()));
 			// genTone(convertProgress_Hz(mSineFreqBar.getProgress()));
 			mOctave.setText(Integer.toString((mSineFreqBar.getProgress() - 4) / 12));
 			mNote.setText(notes[mSineFreqBar.getProgress() - 12 * ((mSineFreqBar.getProgress()) / 12)]);
-			mN.setText(Integer.toString(mSineFreqBar.getProgress() - 52 - 9));
-
-
 		}
 	};
 
-
-	private final SensorEventListener mSensorListener = new SensorEventListener() {
-
-		public void onSensorChanged(SensorEvent se) {
-			float x = se.values[0];
-			float y = se.values[1];
-			float z = se.values[2];
-			mAccelLast = mAccelCurrent;
-			mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
-			float delta = mAccelCurrent - mAccelLast;
-			mAccel = mAccel * 0.9f + delta; // perform low-cut filter
-
-			if (mAccel > 3) {
-
-				// dont respond to shakes again for 1 sec
-				if (SystemClock.elapsedRealtime() > beeptime + 1000) {
-					if (running == false) {
-						mToggle.setChecked(true);
-						genTone(convertProgress_Hz(mSineFreqBar.getProgress()));
-						new BeepTask().execute();
-					} else {
-						running = false;
-						mToggle.setChecked(false);
-					}
-					beeptime = SystemClock.elapsedRealtime();
-					// makes a little message pop up
-					Toast smsg = Toast.makeText(getApplicationContext(), "shake", Toast.LENGTH_LONG);
-					smsg.setGravity(Gravity.CENTER, smsg.getXOffset() / 2, smsg.getYOffset() / 2);
-					smsg.setDuration(1);
-					smsg.show();
-				}
-			}
-		}
-
-		public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		}
-	};
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-				SensorManager.SENSOR_DELAY_NORMAL);
 	}
 
 	@Override
 	protected void onStop() {
-		mSensorManager.unregisterListener(mSensorListener);
 		super.onStop();
 	}
 
@@ -330,64 +262,5 @@ public class TuningForkActivity extends Activity {
 
 		return Hz;
 	}
-
-	/**
-	 * Called when your activity's options menu needs to be created.
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-
-		// Items for Menu buttons
-		menu.add(0, BACK_ID, 0, "back").setShortcut('0', 'b');
-		menu.add(0, INFO_ID, 0, "info").setShortcut('1', 'i');
-
-		return true;
-	}
-
-	/**
-	 * Called right before your activity's option menu is displayed.
-	 */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);
-
-		return true;
-	}
-
-	/**
-	 * Called when a menu item is selected.
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case BACK_ID:
-			finish();
-			return true;
-		case INFO_ID:
-			// makes a little message pop up
-			Toast imsg = Toast
-					.makeText(
-							this,
-							"Siliconfish Hobby Applications\nwww.workingsi.com\nThis app is totally freeware, no ads\nThis is a hobby project so be nice\nHey - it was free wasn't it?",
-							Toast.LENGTH_LONG);
-			imsg.setGravity(Gravity.CENTER, imsg.getXOffset() / 2, imsg.getYOffset() / 2);
-			imsg.show();
-
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * A call-back for when the user presses the back button.
-	 */
-	OnClickListener mBackListener = new OnClickListener() {
-		public void onClick(View v) {
-			finish();
-		}
-	};
-
 
 }
