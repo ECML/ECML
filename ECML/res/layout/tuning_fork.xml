@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_centerHorizontal="true"
     android:background="@color/blue"
     android:orientation="vertical" >
 
@@ -11,31 +10,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginTop="30dp"
         android:layout_marginRight="50dp"
-         >
+        android:layout_marginTop="30dp" >
+
+        <TextView
+            android:id="@+id/numberOctave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/letterNote"
+            android:layout_alignParentRight="true"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold|italic"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/letterNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/numberOctave"
+            android:text="A"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="48sp"
+            android:textStyle="bold|italic"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/textNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="15dp"
-            android:text="A "
+            android:layout_toLeftOf="@id/letterNote"
+            android:text="Note : "
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="48dp"
-            android:textStyle="bold|italic"
-            android:typeface="serif" />
-
-        <TextView
-            android:id="@+id/textOctave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textNote"
-            android:layout_toRightOf="@+id/textNote"
-            android:text="0"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="48sp"
             android:textStyle="bold|italic"
             android:typeface="serif" />
     </RelativeLayout>
@@ -59,7 +68,7 @@
             android:minWidth="80dp"
             android:text="440.0000000000"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="22dp"
+            android:textSize="22sp"
             android:textStyle="normal|bold" />
 
         <TextView
@@ -71,7 +80,7 @@
             android:layout_toRightOf="@+id/textViewFrequence"
             android:text="Hz"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="22dp"
+            android:textSize="22sp"
             android:textStyle="normal" />
     </RelativeLayout>
 
@@ -89,31 +98,60 @@
             android:layout_marginTop="60dp"
             android:text="Tone Number"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="28dp"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
-        <SeekBar
-            android:id="@+id/SineFreqBar"
-            android:layout_width="fill_parent"
+        <ImageView
+            android:id="@+id/previousOctave"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewToneNumber"
             android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
             android:contentDescription="Frequency"
             android:paddingBottom="10dp"
-            android:progressDrawable="@color/orange"
-            android:thumb="@drawable/btn_code_lock_touched" />
+            android:src="@drawable/minus" />
+
+        <ImageView
+            android:id="@+id/nextOctave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewToneNumber"
+            android:layout_toRightOf="@id/previousOctave"
+            android:contentDescription="Frequency"
+            android:paddingBottom="10dp"
+            android:src="@drawable/plus" />
+
+        <ImageView
+            android:id="@+id/previousNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewToneNumber"
+            android:layout_marginLeft="100dp"
+            android:layout_toRightOf="@id/previousOctave"
+            android:contentDescription="Frequency"
+            android:paddingBottom="10dp"
+            android:src="@drawable/minus" />
+
+        <ImageView
+            android:id="@+id/nextNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewToneNumber"
+            android:layout_toRightOf="@id/previousNote"
+            android:contentDescription="Frequency"
+            android:paddingBottom="10dp"
+            android:src="@drawable/plus" />
 
         <TextView
             android:id="@+id/textViewAdjRefPitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/SineFreqBar"
+            android:layout_below="@id/previousOctave"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:text="Adjust Reference Pitch "
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <SeekBar
@@ -138,8 +176,8 @@
             android:id="@+id/toggleButton"
             android:layout_width="150dip"
             android:layout_height="wrap_content"
-            android:hapticFeedbackEnabled="true"
             android:layout_marginTop="50dp"
+            android:hapticFeedbackEnabled="true"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
             android:textSize="18sp"

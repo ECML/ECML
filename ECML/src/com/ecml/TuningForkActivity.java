@@ -2,25 +2,16 @@ package com.ecml;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -30,7 +21,11 @@ public class TuningForkActivity extends Activity {
 	// sets up the objects that are on the screen
 	private TextView mFreq;
 	private ToggleButton mToggle;
-	private SeekBar mSineFreqBar;
+	private int mSineFreq;
+	private ImageView previousOctave;
+	private ImageView nextOctave;
+	private ImageView previousNote;
+	private ImageView nextNote;
 	private SeekBar mPitchBar;
 	private TextView mOctave;
 	private TextView mNote;
@@ -63,21 +58,93 @@ public class TuningForkActivity extends Activity {
 
 		// hook up the buttons etc to their instances
 		mToggle = (ToggleButton) findViewById(R.id.toggleButton);
-		mSineFreqBar = (SeekBar) findViewById(R.id.SineFreqBar);
+		previousOctave = (ImageView) findViewById(R.id.previousOctave);
+		nextOctave = (ImageView) findViewById(R.id.nextOctave);
+		previousNote = (ImageView) findViewById(R.id.previousNote);
+		nextNote = (ImageView) findViewById(R.id.nextNote);
 		mPitchBar = (SeekBar) findViewById(R.id.PitchBar);
-		mOctave = (TextView) findViewById(R.id.textOctave);
-		mNote = (TextView) findViewById(R.id.textNote);
+		mOctave = (TextView) findViewById(R.id.numberOctave);
+		mNote = (TextView) findViewById(R.id.letterNote);
 		mFreq = (TextView) findViewById(R.id.textViewFrequence);
 
 		// Hook up button presses to the appropriate event handlers.
 		mToggle.setOnClickListener(mToggleListener);
-		mSineFreqBar.setOnSeekBarChangeListener(mSineFreqBarListener);
-		mPitchBar.setOnSeekBarChangeListener(mSineFreqBarListener);
+		
+		previousOctave.setOnClickListener(new View.OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				if (mSineFreq > 12) {
+					mSineFreq -= 12;
+					mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
+					mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
+					mNote.setText(notes[mSineFreq - 12 * ((mSineFreq) / 12)]);
+					genTone(convertProgress_Hz(mSineFreq));
+					if (mSineFreq < 37) {
+						Toast.makeText(getApplicationContext(), "You can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG).show();
+					}
+				}
+			}
+			
+		});
+		
+		nextOctave.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mSineFreq < 124-12) {
+					mSineFreq += 12;
+					mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
+					mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
+					mNote.setText(notes[mSineFreq - 12 * ((mSineFreq) / 12)]);
+					genTone(convertProgress_Hz(mSineFreq));
+					if (mSineFreq < 37) {
+						Toast.makeText(getApplicationContext(), "You can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG).show();
+					}
+				}
+			}
+			
+		});
+		
+		previousNote.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mSineFreq > 1) {
+					mSineFreq -= 1;
+					mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
+					mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
+					mNote.setText(notes[mSineFreq - 12 * ((mSineFreq) / 12)]);
+					genTone(convertProgress_Hz(mSineFreq));
+					if (mSineFreq < 37) {
+						Toast.makeText(getApplicationContext(), "You can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG).show();
+					}
+				}
+			}
+			
+		});
+		
+		nextNote.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mSineFreq < 124) {
+					mSineFreq += 1;
+					mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
+					mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
+					mNote.setText(notes[mSineFreq - 12 * ((mSineFreq) / 12)]);
+					genTone(convertProgress_Hz(mSineFreq));
+					if (mSineFreq < 37) {
+						Toast.makeText(getApplicationContext(), "You can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG).show();
+					}
+				}
+			}
+			
+		});
+		
 		// initialize the buttons to desired values
 		mToggle.setChecked(false);
-		mSineFreqBar.setMax(124);
-		mSineFreqBar.setProgress(61);
+		mSineFreq = 61;
 		mPitchBar.setMax(200);
 		mPitchBar.setProgress(100);
 	}
@@ -101,47 +168,12 @@ public class TuningForkActivity extends Activity {
 
 			// check if light is off, if so, turn it on
 			if (mToggle.isChecked()) { // turn on the sound
-				genTone(convertProgress_Hz(mSineFreqBar.getProgress()));
+				genTone(convertProgress_Hz(mSineFreq));
 				new BeepTask().execute();
 			}
 
 		}
 	};
-
-
-	/**
-	 * A call-back for when the user moves the sine seek bars
-	 */
-	OnSeekBarChangeListener mSineFreqBarListener = new OnSeekBarChangeListener() {
-
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			genTone(convertProgress_Hz(mSineFreqBar.getProgress()));
-			if (mSineFreqBar.getProgress() < 37) {
-				// makes a little message pop up
-				Toast wmsg = Toast.makeText(getApplicationContext(), "you can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG);
-				wmsg.setGravity(Gravity.TOP, wmsg.getXOffset() / 2, wmsg.getYOffset() / 2);
-				wmsg.setDuration(1);
-				wmsg.show();
-			}
-
-		}
-
-		public void onStartTrackingTouch(SeekBar seekBar) {
-
-
-		}
-
-		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-			if (mSineFreqBar.getProgress() < 1)
-				mSineFreqBar.setProgress(1);
-
-			mFreq.setText(Double.toString(convertProgress_Hz(mSineFreqBar.getProgress())));
-			// genTone(convertProgress_Hz(mSineFreqBar.getProgress()));
-			mOctave.setText(Integer.toString((mSineFreqBar.getProgress() - 4) / 12));
-			mNote.setText(notes[mSineFreqBar.getProgress() - 12 * ((mSineFreqBar.getProgress()) / 12)]);
-		}
-	};
-
 
 	@Override
 	protected void onResume() {
