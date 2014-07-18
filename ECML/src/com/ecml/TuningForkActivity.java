@@ -31,6 +31,7 @@ public class TuningForkActivity extends Activity {
 	private SeekBar mPitchBar;
 	private TextView mOctave;
 	private TextView mNote;
+	private TextView mRefNote;
 	private boolean running = false;
 
 	// variables for tone generation
@@ -68,6 +69,7 @@ public class TuningForkActivity extends Activity {
 		mOctave = (TextView) findViewById(R.id.numberOctave);
 		mNote = (TextView) findViewById(R.id.letterNote);
 		mFreq = (TextView) findViewById(R.id.numberFrequence);
+		mRefNote = (TextView) findViewById(R.id.textViewAdjRefPitch);
 
 		// Hook up button presses to the appropriate event handlers.
 		mToggle.setOnClickListener(mToggleListener);
@@ -119,6 +121,14 @@ public class TuningForkActivity extends Activity {
 				}
 			}
 
+		});
+		
+		mRefNote.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mPitchBar.setProgress(100);
+			}
 		});
 
 		// initialize the buttons to desired values
