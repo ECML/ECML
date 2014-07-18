@@ -33,15 +33,16 @@ import com.ecml.R;
  * The ScanMidiFiles class is used to scan for midi files
  * on a background thread.
  */
-class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
+
+class ScanGameMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
     private ArrayList<FileUri> songlist;
     private File rootdir;
-    private AllSongsActivity activity;
+    private AllSongsGameActivity activity;
 
-    public ScanMidiFiles() {
+    public ScanGameMidiFiles() {
     }
 
-    public void setActivity(AllSongsActivity allSongsGameActivity) {
+    public void setActivity(AllSongsGameActivity allSongsGameActivity) {
         this.activity = allSongsGameActivity;
     }
 
@@ -75,7 +76,7 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
 
     @Override
     protected void onPostExecute(ArrayList<FileUri> result) {
-        AllSongsActivity act = activity;
+        AllSongsGameActivity act = activity;
         this.activity = null;
         act.scanDone(songlist);
         Toast message = Toast.makeText(act, "Found " + songlist.size() + " MIDI files", Toast.LENGTH_SHORT);
@@ -90,6 +91,7 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
     /* Given a directory, add MIDI files (ending in .mid) to the songlist.
      * If the directory contains subdirectories, call this method recursively.
      */
+
     private void loadMidiFilesFromDirectory(File dir, int depth) throws IOException {
         if (isCancelled()) {
             return;
@@ -143,7 +145,7 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
  * When a song is chosen, this calls the SheetMusicAcitivty, passing
  * the raw midi byte[] data as a parameter in the Intent.
  */ 
-public class AllSongsActivity extends ListActivity implements TextWatcher {
+public class AllSongsGameActivity extends ListActivity implements TextWatcher {
 
     /** The complete list of midi files */
     ArrayList<FileUri> songlist;
@@ -152,7 +154,7 @@ public class AllSongsActivity extends ListActivity implements TextWatcher {
     EditText filterText;
 
     /** Task to scan for midi files */
-    ScanMidiFiles scanner;
+    ScanGameMidiFiles scanner;
 
     IconArrayAdapter<FileUri> adapter;
 
@@ -229,7 +231,7 @@ public class AllSongsActivity extends ListActivity implements TextWatcher {
         if (scanner != null) {
             return;
         }
-        scanner = new ScanMidiFiles();
+        scanner = new ScanGameMidiFiles();
         scanner.setActivity(this);
         scanner.execute(0);
     }
@@ -331,7 +333,7 @@ public class AllSongsActivity extends ListActivity implements TextWatcher {
         }
         FileUri file = (FileUri) this.getListAdapter().getItem(position);
         ECML.song= file;
-        ChooseSongActivity.openFile(file);
+        ChooseSongGameActivity.openFile(file);
     }
 
 

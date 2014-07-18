@@ -1,6 +1,7 @@
 package com.ecml;
 
 
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,7 +33,7 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					ChooseSongActivity.openFile(ECML.song);
+					ChooseSongGameActivity.openFile(ECML.song);
 				}
 			});
 
@@ -63,7 +64,7 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), SpeedGamelvl1.class);
+					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
 					startActivity(intent);
 				}
 			});
@@ -74,7 +75,7 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), SpeedGamelvl2.class);
+					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
 					startActivity(intent);
 				}
 			});
@@ -85,7 +86,7 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), SpeedGamelvl3.class);
+					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
 					startActivity(intent);
 				}
 			});
@@ -96,7 +97,7 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), SpeedGamelvl4.class);
+					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
 					startActivity(intent);
 				}
 			});

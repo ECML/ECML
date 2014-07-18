@@ -78,6 +78,10 @@
         </activity>
         <activity android:name=".SpeedGamelvl4" >
         </activity> 
+        <activity android:name=".ChooseSongGameActivity" >
+        </activity>
+        <activity android:name=".AllSongsGameActivity" >
+        </activity> 
         <activity
             android:name=".CalendarActivity"
             android:screenOrientation="sensorLandscape" >
@@ -89,15 +93,7 @@
         <activity
             android:name=".GameActivity"
             android:screenOrientation="sensorLandscape" >
-        </activity>
-        <activity
-            android:name=".SpeedGameModeActivity"
-            android:screenOrientation="sensorLandscape" >
-        </activity>   
-        <activity
-            android:name=".SpeedGamelvl1"
-            android:screenOrientation="sensorLandscape" >
-        </activity>
+        </activity>       
         <activity
             android:name="AudioRecordingActivity"
             android:screenOrientation="sensorLandscape" >
