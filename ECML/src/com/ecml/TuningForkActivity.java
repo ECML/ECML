@@ -1,19 +1,25 @@
 package com.ecml;
 
+import java.util.logging.Logger;
+
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -31,7 +37,9 @@ public class TuningForkActivity extends Activity {
 	private SeekBar mPitchBar;
 	private TextView mOctave;
 	private TextView mNote;
+	private TextView mRefOctave;
 	private TextView mRefNote;
+	private TextView mRefPitch;
 	private boolean running = false;
 
 	// variables for tone generation
@@ -51,6 +59,7 @@ public class TuningForkActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.tuning_fork);
 
 		/* Action Bar */
@@ -69,7 +78,11 @@ public class TuningForkActivity extends Activity {
 		mOctave = (TextView) findViewById(R.id.numberOctave);
 		mNote = (TextView) findViewById(R.id.letterNote);
 		mFreq = (TextView) findViewById(R.id.numberFrequence);
-		mRefNote = (TextView) findViewById(R.id.textViewAdjRefPitch);
+		mRefOctave = (TextView) findViewById(R.id.adjustOctave);
+		mRefNote = (TextView) findViewById(R.id.adjustNote);
+		mRefPitch = (TextView) findViewById(R.id.textViewAdjRefPitch);
+		
+		
 
 		// Hook up button presses to the appropriate event handlers.
 		mToggle.setOnClickListener(mToggleListener);
@@ -123,8 +136,26 @@ public class TuningForkActivity extends Activity {
 
 		});
 		
-		mRefNote.setOnClickListener(new View.OnClickListener() {
+		mRefOctave.setOnClickListener(new View.OnClickListener() {
 			
+			@Override
+			public void onClick(View v) {
+				mSineFreq = ((mSineFreq - 4) % 12) + 52;
+				updateView();
+			}
+		});
+		
+		mRefNote.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mSineFreq = ((int) Math.floor((mSineFreq - 4.0) / 12) + 1) * 12 + 1;
+				updateView();
+			}
+		});
+
+		mRefPitch.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				mPitchBar.setProgress(100);
@@ -137,6 +168,16 @@ public class TuningForkActivity extends Activity {
 		mPitchBar.setMax(200);
 		mPitchBar.setProgress(100);
 		updateView();
+
+		// Help button
+		Button help = (Button) findViewById(R.id.help_tuning_fork);
+		help.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				showHelpDialog();
+			}
+		});
 	}
 
 	@Override
@@ -286,29 +327,46 @@ public class TuningForkActivity extends Activity {
 
 	// functions to convert progress bar into time and frequency
 	private double convertProgress_Hz(int progress) {
-		double Hz = 440;
 		// http://www.phy.mtu.edu/~suits/NoteFreqCalcs.html
 		// Java was bad at powers math of non integers, so made a loop to do the
 		// powers
 
 		// A440 base pitch is adjusted down 5 octaves by multiplying by
 		// 2^(-60/12) = 0.03125
-		Hz = (427.5 + 0.125 * (float) mPitchBar.getProgress()) * 0.03125;
+		double Hz = (427.5 + 0.125 * (float) mPitchBar.getProgress()) * 0.03125;
 		// Raise the base pitch to the 2^n/12 power
 		for (int m = 1; m < (progress); m++) {
 			Hz = Hz * 1.0594630943593;  // 2^(1/12)
 		}
+		
+		Log.i("Hertz", "" + Hz);
 		return Hz;
 	}
 
 	private void updateView() {
 		mFreq.setText(Double.toString(convertProgress_Hz(mSineFreq)));
-		mOctave.setText(Integer.toString((mSineFreq - 4) / 12));
+		mOctave.setText(Integer.toString((int) Math.floor((mSineFreq - 4.0) / 12)));
 		mNote.setText(notes[mSineFreq - 12 * ((mSineFreq) / 12)]);
 		genTone(convertProgress_Hz(mSineFreq));
 		if (mSineFreq < 37) {
 			Toast.makeText(getApplicationContext(), "You can't hear < 100Hz on a tablet speaker", Toast.LENGTH_LONG).show();
 		}
+	}
+	
+	private void showHelpDialog() {
+		LayoutInflater inflator = LayoutInflater.from(this);
+		final View dialogView = inflator.inflate(R.layout.help_tuning_fork, null);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("HELP");
+		builder.setView(dialogView);
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface builder, int whichButton) {
+
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 
 }

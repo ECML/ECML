@@ -75,5 +75,9 @@
     <string name="adjust_octave">Adjust Octave</string>
     <string name="adjust_note">Adjust Note</string>
     <string name="adjust_ref_pitch">Adjust Reference Pitch</string>
+    <string name="help_tuning_fork">Select a note and press the toggle button to hear it. The note played is displayed at the top-right hand corner.
+        \nPress Adjust Octave to get back to Octave number 4.
+        \nPress Adjust Note to get back to the note A of the current Octave.</string>
+    <string name="how_to_use_tuning_fork">How to use the Tuning Fork</string>
 
 </resources>
