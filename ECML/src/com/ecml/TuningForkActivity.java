@@ -24,10 +24,10 @@ public class TuningForkActivity extends Activity {
 	private TextView mFreq;
 	private ToggleButton mToggle;
 	private int mSineFreq;
-	private ImageView previousOctave;
-	private ImageView nextOctave;
-	private ImageView previousNote;
-	private ImageView nextNote;
+	private TextView previousOctave;
+	private TextView nextOctave;
+	private TextView previousNote;
+	private TextView nextNote;
 	private SeekBar mPitchBar;
 	private TextView mOctave;
 	private TextView mNote;
@@ -60,10 +60,10 @@ public class TuningForkActivity extends Activity {
 
 		// hook up the buttons etc to their instances
 		mToggle = (ToggleButton) findViewById(R.id.toggleButton);
-		previousOctave = (ImageView) findViewById(R.id.previousOctave);
-		nextOctave = (ImageView) findViewById(R.id.nextOctave);
-		previousNote = (ImageView) findViewById(R.id.previousNote);
-		nextNote = (ImageView) findViewById(R.id.nextNote);
+		previousOctave = (TextView) findViewById(R.id.previousOctave);
+		nextOctave = (TextView) findViewById(R.id.nextOctave);
+		previousNote = (TextView) findViewById(R.id.previousNote);
+		nextNote = (TextView) findViewById(R.id.nextNote);
 		mPitchBar = (SeekBar) findViewById(R.id.PitchBar);
 		mOctave = (TextView) findViewById(R.id.numberOctave);
 		mNote = (TextView) findViewById(R.id.letterNote);
@@ -126,6 +126,7 @@ public class TuningForkActivity extends Activity {
 		mSineFreq = 61;
 		mPitchBar.setMax(200);
 		mPitchBar.setProgress(100);
+		updateView();
 	}
 
 	@Override

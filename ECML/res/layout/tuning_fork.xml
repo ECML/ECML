@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/letterNote"
             android:layout_alignParentRight="true"
-            android:text="4"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold|italic"
             android:typeface="serif" />
@@ -30,7 +29,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/numberOctave"
-            android:text="A "
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="48sp"
             android:textStyle="bold|italic"
@@ -42,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/letterNote"
-            android:text="Note : "
+            android:text="@string/note"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="48sp"
             android:textStyle="italic"
@@ -61,10 +59,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="Frequence : "
+            android:text="@string/frequence"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="22sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/numberFrequence"
@@ -76,123 +75,160 @@
             android:maxLines="1"
             android:maxWidth="80dp"
             android:minWidth="80dp"
-            android:text="440.0000000000"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="22sp"
-            android:textStyle="normal|bold" />
+            android:textStyle="normal|bold"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/textViewHz"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/numberFrequence"
-            android:layout_alignBottom="@+id/numberFrequence"
-            android:layout_toRightOf="@+id/numberFrequence"
-            android:text="Hz"
+            android:layout_alignBaseline="@id/numberFrequence"
+            android:layout_alignBottom="@id/numberFrequence"
+            android:layout_toRightOf="@id/numberFrequence"
+            android:text="@string/hertz"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="22sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:typeface="serif" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/adjustment"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
 
-        <RelativeLayout
-            android:id="@+id/adjustmentText"
+        <LinearLayout
+            android:id="@+id/shiftOctave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" >
+            android:layout_marginRight="100dp"
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/adjustOctave"
+                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="100dp"
-                android:layout_marginTop="60dp"
-                android:text="Adjust Octave"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/adjust_octave"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="28sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:typeface="serif" />
+
+            <LinearLayout
+                android:id="@+id/octaveButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/previousOctave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/orange"
+                    android:padding="5dp"
+                    android:text="@string/shift_down"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="20sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/nextOctave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/orange"
+                    android:padding="5dp"
+                    android:text="@string/shift_up"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="20sp"
+                    android:typeface="serif" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shiftNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/adjustNote"
+                
+                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="60dp"
-                android:layout_toEndOf="@id/adjustOctave"
-                android:text="Adjust Note"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/adjust_note"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="28sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                android:textStyle="bold"
+                android:typeface="serif" />
 
-        <ImageView
-            android:id="@+id/previousOctave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/adjustmentText"
-            android:layout_below="@id/adjustmentText"
-            android:contentDescription="Frequency"
-            android:paddingBottom="10dp"
-            android:src="@drawable/minus" />
+            <LinearLayout
+                android:id="@+id/noteButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/previousNote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/adjustmentText"
-            android:layout_marginRight="60dp"
-            android:layout_toLeftOf="@+id/nextNote"
-            android:contentDescription="Frequency"
-            android:paddingBottom="10dp"
-            android:src="@drawable/minus" />
+                <TextView
+                    android:id="@+id/previousNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/orange"
+                    android:padding="5dp"
+                    android:text="@string/shift_down"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="20sp"
+                    android:typeface="serif" />
 
-        <ImageView
-            android:id="@+id/nextNote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@id/adjustmentText"
-            android:layout_below="@id/adjustmentText"
-            android:paddingBottom="10dp"
-            android:src="@drawable/plus" />
+                <TextView
+                    android:id="@+id/nextNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/orange"
+                    android:padding="5dp"
+                    android:text="@string/shift_up"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="20sp"
+                    android:typeface="serif" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/textViewAdjRefPitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/previousOctave"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="Adjust Reference Pitch "
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textViewAdjRefPitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/adjust_ref_pitch"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
 
-        <SeekBar
-            android:id="@+id/PitchBar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewAdjRefPitch"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
-            android:paddingBottom="10dp"
-            android:progressDrawable="@color/orange"
-            android:thumb="@drawable/btn_code_lock_touched" />
-
-        <ImageView
-            android:id="@+id/nextOctave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/adjustmentText"
-            android:layout_marginLeft="85dp"
-            android:layout_toRightOf="@+id/previousOctave"
-            android:contentDescription="Frequency"
-            android:paddingBottom="10dp"
-            android:src="@drawable/plus" />
-    </RelativeLayout>
+    <SeekBar
+        android:id="@+id/PitchBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="300dp"
+        android:layout_marginRight="300dp"
+        android:paddingBottom="10dp"
+        android:progressDrawable="@color/orange"
+        android:thumb="@drawable/btn_code_lock_touched" />
 
     <RelativeLayout
         android:id="@+id/toggle"
