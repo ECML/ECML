@@ -104,7 +104,6 @@ public class MidiPlayer extends LinearLayout {
     final int paused    = 3;     /** Currently paused */
     final int initStop  = 4;     /** Transitioning from playing to stop */
     final int initPause = 5;     /** Transitioning from playing to pause */
-    int delay = 1000;			 /** Delay before playing the music */
 
     final String tempSoundFile = "playing.mid"; /** The filename to play sound from */
 
@@ -645,7 +644,6 @@ public class MidiPlayer extends LinearLayout {
      *  The actual pause is done when the timer is invoked.
      */
     public void Pause() {
-        this.setVisibility(View.VISIBLE);
         LinearLayout layout = (LinearLayout)this.getParent();
         layout.requestLayout();
         this.requestLayout();

@@ -1140,6 +1140,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private void stopAudioRecordingAndPlayingMusic() {
 		isAudioRecordingAndPlayingMusic = false;
 		player.Pause();
+		player.player.stop();	// these two lines are here to prevent the player from
+        player.player.reset();	// playing outloud the very last note supposedly played
 		stopAudioRecording();
 		player.unmute();
 	}
