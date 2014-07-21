@@ -434,6 +434,7 @@ public class SettingsActivity extends PreferenceActivity
         else
             options.twoStaffs = false;
 
+        options.delay = Integer.parseInt(delay.getValue());
         options.showNoteLetters = Integer.parseInt(showNoteLetters.getValue());
         options.transpose = Integer.parseInt(transpose.getValue());
         options.key = Integer.parseInt(key.getValue());
@@ -455,7 +456,6 @@ public class SettingsActivity extends PreferenceActivity
         options.playMeasuresInLoop = playMeasuresInLoop.isChecked();
         options.playMeasuresInLoopStart = Integer.parseInt(loopStart.getValue()) - 1;
         options.playMeasuresInLoopEnd = Integer.parseInt(loopEnd.getValue()) - 1;
-        options.delay = Integer.parseInt(delay.getValue());
     }
 
     /** When the back button is pressed, update the MidiOptions.
