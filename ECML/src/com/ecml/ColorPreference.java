@@ -39,8 +39,10 @@ public class ColorPreference extends Preference
     private View colorview;    /* The view displaying the selected color */
     private int color;         /* The selected color */
     private Context context;
-
+    
+    private AlertDialog dialog;
 	private ColorChangedListener listener;
+	ColorView colorView;
 
 
     public ColorPreference(Context ctx) {
@@ -70,33 +72,33 @@ public class ColorPreference extends Preference
 
 	/* When clicked, display the color picker dialog */
 	protected void onClick() {
-		LayoutInflater inflator = LayoutInflater.from(context);
-//		ColorDialog dialog = new ColorDialog(context, this, color);
-		ColorChangedListener listen = new ColorChangedListener() {
-			public void colorChanged(int color) {
-				listener.colorChanged(color);
-			}
-		};
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setTitle("Choose a Color");
+		builder.setTitle("Pick a Color");
+		listener = new ColorChangedListener() {
+            public void colorChanged(int color) {
+                dialog.dismiss();
+            }
+        };
 		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface builder, int whichButton) {
-
+			
 			}
 		});
 		builder.setNeutralButton("Off", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface builder, int which) {
-				
+				color = Color.WHITE;
+				colorview.setBackgroundColor(color);
 			}
 		});
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface builder, int whichButton) {
-
+				color = colorView.getSelectedColor();
+				colorview.setBackgroundColor(color);
 			}
 		});
-		builder.setView(new ColorView(getContext(), listen, color));
-		AlertDialog dialog = builder.create();
+		colorView = new ColorView(getContext(), listener, color);
+		builder.setView(colorView);
+		dialog = builder.create();
 		dialog.show();
 	}
 
@@ -118,7 +120,11 @@ class ColorView extends View {
     private Paint[] colorRings;    /* Rings of color to display */
     private Paint colorPreview;    /* Small circle showing preview of color */
     private int selectedColor;     /* Currently selected color */
-    private int center;            /* The center of the circle */
+    
+    public int getSelectedColor() {
+		return selectedColor;
+	}
+	private int center;            /* The center of the circle */
     private int circleRadius;      /* The radius of the circle */
 
     ColorView(Context context, ColorChangedListener listen, int color) {
@@ -264,11 +270,6 @@ class ColorView extends View {
                 selectedColor = calculateColor(radius, angleUnit);
                 colorPreview.setColor(selectedColor);
                 invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                if (radius > circleRadius) {
-                    listener.colorChanged(colorPreview.getColor());
-                }                        
                 break;
         }
         return true;
