@@ -12,21 +12,30 @@
 
 package com.ecml;
 
-import java.io.*;
-import java.util.*;
-import android.net.*;
-import android.app.*;
-import android.os.*;
-import android.widget.*;
-import android.util.Log;
-import android.view.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import android.app.ListActivity;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.content.*;
-import android.content.res.*;
-import android.provider.*;
-import android.database.*;
-import android.text.*;
-import com.ecml.R;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 
 /** @class ScanMidiFiles
@@ -170,7 +179,6 @@ public class AllSongsActivity extends ListActivity implements TextWatcher {
         super.onCreate(state);
         setTheme(android.R.style.Theme_Holo_Light);
         setContentView(R.layout.choose_song);
-        setTitle("MidiSheetMusic: Choose Song");
         
         /* If we're restarting from an orientation change,
          * load the saved song list.
