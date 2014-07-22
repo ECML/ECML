@@ -38,44 +38,44 @@ public abstract class SpeedGamelvl extends Activity {
         { "A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab" },
         { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" },
     };
-	
-	
+
+
 	/*** MidiSheet variables ***/
-	
+
 	public static final String MidiTitleID = "MidiTitleID";
-	
+
 	protected Thread playingthread;
 	protected SheetMusic sheet; /* The sheet music */
 	protected LinearLayout layout; /* THe layout */
 	protected Piano piano; /* The piano at the top */
 	protected long midiCRC; /* CRC of the midi bytes */
-	
+
 	/*** End of MidiSheet variables ***/
-	
+
 /*** Record and Play Variables ***/
-	
+
 	protected ScrollAnimation scrollAnimation;
-	
+
 	/*** End of Record and Play Variables ***/
-	
+
 	protected ArrayList<MidiTrack> Tracks;
 	protected ArrayList<MidiNote> Notes;
 	protected boolean search;
 	View choice;
 	View result;
 	private View topLayout;
-	
-	
+
+
 	protected MidiFile midifile; /* The midi file to play */
 	protected MidiOptions options; /* The options for sheet music and sound */
 	protected MidiPlayer player; /* The play/stop/rewind toolbar */
 	public static int noteplace;
 	protected MidiNote note;
-	
+
 	/*** PitchDetection variables ***/
-	
+
 	protected MicrophonePitchPoster pitchPoster;
-	
+
 	/*** End of PitchDetection variables ***/
 
 	/** Called when the activity is first created. */
@@ -93,13 +93,13 @@ public abstract class SpeedGamelvl extends Activity {
 		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
 		 * GAME BUTTON
 		 **********/
-		
-		
+
+
 
 		ClefSymbol.LoadImages(this);
 		TimeSigSymbol.LoadImages(this);
 		MidiPlayer.LoadImages(this);
-		
+
 		// Parse the MidiFile from the raw bytes
 		Uri uri = this.getIntent().getData();
 		String title = this.getIntent().getStringExtra(MidiTitleID);
@@ -116,7 +116,7 @@ public abstract class SpeedGamelvl extends Activity {
 			this.finish();
 			return;
 		}
-		
+
 		// Initialize the settings (MidiOptions).
 		// If previous settings have been saved, use those
 
@@ -136,9 +136,9 @@ public abstract class SpeedGamelvl extends Activity {
 			options.merge(savedOptions);
 		}
 		createView();
-		
+
 		player.mute();
-		
+
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		choice = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
@@ -152,7 +152,7 @@ public abstract class SpeedGamelvl extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				
+
 			}
 		});
 
@@ -176,7 +176,7 @@ public abstract class SpeedGamelvl extends Activity {
 				startActivity(intent);
 			}
 		});
-		
+
 		// Change stop button
 		Button stop = (Button) findViewById(R.id.stop);
 		stop.setOnClickListener(new View.OnClickListener() {
@@ -194,17 +194,17 @@ public abstract class SpeedGamelvl extends Activity {
 		        pitchPoster = null;
 			}
 		});
-		
+
 		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
 		layout.addView(result);
 		result.setVisibility(View.GONE);
 		setContentView(layout);
-		
+
 		createSheetMusic(options);
-		
+
 		scrollAnimation = new ScrollAnimation(sheet, options.scrollVert); 	// needed for stopping the music and recording
 		  																	// when touching the score
-		
+
 		/*sheet = new SheetMusic(this);
 		sheet.init(midifile, options);
 		sheet.setPlayer(player);*/
@@ -213,7 +213,7 @@ public abstract class SpeedGamelvl extends Activity {
 
 		layout.requestLayout();
 		sheet.callOnDraw();*/
-		
+
 	}
 
 	/* Create the MidiPlayer and Piano views */
@@ -290,7 +290,7 @@ public abstract class SpeedGamelvl extends Activity {
 		layout.requestLayout();
 		sheet.callOnDraw();
 	}
-	
+
 	protected void PauseEcoute ()
 	{
 		player.Pause();
@@ -300,7 +300,7 @@ public abstract class SpeedGamelvl extends Activity {
 		}
 		pitchPoster = null;
 	}
-	
+
 	/** When this activity resumes, redraw all the views */
 	@Override
 	protected void onResume() {
@@ -328,5 +328,5 @@ public abstract class SpeedGamelvl extends Activity {
         pitchPoster = null;
 		super.onPause();
 	}
-	
+
 }
