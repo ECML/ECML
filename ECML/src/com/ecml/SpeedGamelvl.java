@@ -26,7 +26,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 
-public abstract class SpeedGameLvl extends Activity {
+public abstract class SpeedGamelvl extends Activity {
 
 
     protected enum KeyDisplay {
@@ -44,12 +44,19 @@ public abstract class SpeedGameLvl extends Activity {
 	
 	public static final String MidiTitleID = "MidiTitleID";
 	
+	protected Thread playingthread;
 	protected SheetMusic sheet; /* The sheet music */
 	protected LinearLayout layout; /* THe layout */
 	protected Piano piano; /* The piano at the top */
 	protected long midiCRC; /* CRC of the midi bytes */
 	
 	/*** End of MidiSheet variables ***/
+	
+/*** Record and Play Variables ***/
+	
+	protected ScrollAnimation scrollAnimation;
+	
+	/*** End of Record and Play Variables ***/
 	
 	protected ArrayList<MidiTrack> Tracks;
 	protected ArrayList<MidiNote> Notes;
@@ -129,7 +136,6 @@ public abstract class SpeedGameLvl extends Activity {
 			options.merge(savedOptions);
 		}
 		createView();
-
 		
 		player.mute();
 		
@@ -177,7 +183,14 @@ public abstract class SpeedGameLvl extends Activity {
 
 			@Override
 			public void onClick(View v) {
-		        pitchPoster.stopSampling();
+				if ( player != null )
+				{
+					player.Stop();
+				}
+				if ( pitchPoster != null )
+				{
+			        pitchPoster.stopSampling();
+				}
 		        pitchPoster = null;
 			}
 		});
@@ -189,6 +202,9 @@ public abstract class SpeedGameLvl extends Activity {
 		
 		createSheetMusic(options);
 		
+		scrollAnimation = new ScrollAnimation(sheet, options.scrollVert); 	// needed for stopping the music and recording
+		  																	// when touching the score
+		
 		/*sheet = new SheetMusic(this);
 		sheet.init(midifile, options);
 		sheet.setPlayer(player);*/
@@ -198,11 +214,8 @@ public abstract class SpeedGameLvl extends Activity {
 		layout.requestLayout();
 		sheet.callOnDraw();*/
 		
-
 	}
 
-    
-		
 	/* Create the MidiPlayer and Piano views */
 	void createView() {
 		layout = new LinearLayout(this);
@@ -278,5 +291,42 @@ public abstract class SpeedGameLvl extends Activity {
 		sheet.callOnDraw();
 	}
 	
+	protected void PauseEcoute ()
+	{
+		player.Pause();
+		if ( pitchPoster != null)
+		{
+			pitchPoster.stopSampling();
+		}
+		pitchPoster = null;
+	}
+	
+	/** When this activity resumes, redraw all the views */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		layout.requestLayout();
+		player.invalidate();
+		piano.invalidate();
+		if (sheet != null) {
+			sheet.invalidate();
+		}
+		layout.requestLayout();
+
+	}
+
+	/** When this activity pauses, stop the music */
+	@Override
+	protected void onPause() {
+		if (player != null) {
+			player.Pause();
+		}
+		if ( pitchPoster != null)
+		{
+			pitchPoster.stopSampling();
+		}
+        pitchPoster = null;
+		super.onPause();
+	}
 	
 }

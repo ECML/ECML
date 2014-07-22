@@ -28,11 +28,19 @@ import com.ecml.R;
  */
 
 public class ChooseSongGameActivity extends TabActivity {
+	
+	private Intent intent;
+	
+	public static final String  niveau = "niveau";
+	
+	
 
     static ChooseSongGameActivity globalActivity;
 
     @Override
     public void onCreate(Bundle state) {
+    	
+    	
     	
     	
         globalActivity = this;
@@ -75,10 +83,39 @@ public class ChooseSongGameActivity extends TabActivity {
             ChooseSongGameActivity.showErrorDialog("Error: Unable to open song: " + file.toString(), this);
             return;
         }
-        updateRecentFile(file);
-        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
-        intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
-        startActivity(intent);
+          
+        String choice = this.getIntent().getStringExtra(niveau);
+        
+        if ( choice.equals("1"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
+            intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if (choice.equals("2"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl2.class);
+            intent.putExtra(SpeedGamelvl2.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if ( choice.equals("3"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl3.class);
+            intent.putExtra(SpeedGamelvl3.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if ( choice.equals("4"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl4.class);
+            intent.putExtra(SpeedGamelvl4.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        
+        
     }
 
 
@@ -128,5 +165,6 @@ public class ChooseSongGameActivity extends TabActivity {
         catch (Exception e) {
         }
     }
+    
     
 }

@@ -95,6 +95,16 @@ public class MidiNote implements Comparator<MidiNote> {
                              channel, notenumber, scale[(notenumber + 3) % 12], starttime, duration);
 
     }
+    
+    public String Pitch(){
+    	String[] scale = new String[]{ "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
+    	 return String.format(scale[(notenumber + 3) % 12]);
+    }
+    
+    public int Octave(){
+    	int i = notenumber+3;
+    	return i;
+    }
 
 }
 
