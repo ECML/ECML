@@ -123,6 +123,7 @@
                 android:layout_marginTop="40dp"
                 android:text="@string/adjust_octave"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:typeface="serif" />
@@ -142,6 +143,7 @@
                     android:padding="5dp"
                     android:text="@string/shift_down"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
                     android:textSize="20sp"
                     android:typeface="serif" />
 
@@ -154,6 +156,7 @@
                     android:padding="5dp"
                     android:text="@string/shift_up"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
                     android:textSize="20sp"
                     android:typeface="serif" />
             </LinearLayout>
