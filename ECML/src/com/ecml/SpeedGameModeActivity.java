@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class SpeedGameModeActivity extends Activity {
+	
+
 
 	/** Called when the activity is first created. */
 		@Override
@@ -64,7 +66,9 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
+					
 					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
+					intent.putExtra(ChooseSongGameActivity.niveau,"1");
 					startActivity(intent);
 				}
 			});
@@ -76,6 +80,7 @@ public class SpeedGameModeActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
+					intent.putExtra(ChooseSongGameActivity.niveau,"2");
 					startActivity(intent);
 				}
 			});
@@ -87,6 +92,7 @@ public class SpeedGameModeActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
+					intent.putExtra(ChooseSongGameActivity.niveau,"3");
 					startActivity(intent);
 				}
 			});
@@ -98,6 +104,7 @@ public class SpeedGameModeActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
+					intent.putExtra(ChooseSongGameActivity.niveau,"4");
 					startActivity(intent);
 				}
 			});
@@ -119,6 +126,8 @@ public class SpeedGameModeActivity extends Activity {
 			AlertDialog dialog = builder.create();
 			dialog.show();
 		}
+		
+
 
 }
 

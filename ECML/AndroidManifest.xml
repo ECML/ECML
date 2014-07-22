@@ -64,8 +64,10 @@
         </activity>
         <activity android:name=".SettingsActivity" >
         </activity>
-        <activity android:name=".SpeedGameLvl" >
-        </activity> 
+        <activity android:name=".SpeedGamelvl" >
+        </activity>
+		<activity android:name=".SpeedGamelvl1" >
+        </activity>
         <activity android:name=".SpeedGamelvl2" >
         </activity> 
         <activity android:name=".SpeedGamelvl3" >
@@ -73,6 +75,8 @@
         <activity android:name=".HelpActivity" >
         </activity>
         <activity android:name=".SpeedGamelvl4" >
+        </activity>
+        <activity android:name=".SpeedGameModeActivity" >
         </activity> 
         <activity android:name=".ChooseSongGameActivity" >
         </activity>
