@@ -54,6 +54,7 @@ public class ECMLActivity extends Activity {
 		chooseSong.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+				intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
 				startActivity(intent);
 			}
 		});

@@ -39,7 +39,9 @@ import android.widget.TabHost.OnTabChangeListener;
  */
 public class ChooseSongActivity extends TabActivity implements OnTabChangeListener {
 
+	private Intent intent;
     static ChooseSongActivity globalActivity;
+	public static final String  niveau = "niveau";
     private ActionBar ab;
 
     @Override
@@ -102,10 +104,43 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
             ChooseSongActivity.showErrorDialog("Error: Unable to open song: " + file.toString(), this);
             return;
         }
-        updateRecentFile(file);
-        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
-        intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
-        startActivity(intent);
+        
+        String choice = this.getIntent().getStringExtra(niveau);
+        
+        if ( choice.equals("1"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
+            intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if (choice.equals("2"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl2.class);
+            intent.putExtra(SpeedGamelvl2.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if ( choice.equals("3"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl3.class);
+            intent.putExtra(SpeedGamelvl3.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if ( choice.equals("4"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl4.class);
+            intent.putExtra(SpeedGamelvl4.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if ( choice.equals("chooseSong")) {
+	        updateRecentFile(file);
+	        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
+	        intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
+	        startActivity(intent);
+        }
     }
 
 
