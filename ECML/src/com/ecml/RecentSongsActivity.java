@@ -77,7 +77,6 @@ public class RecentSongsActivity extends ListActivity {
     protected void onListItemClick(ListView parent, View view, int position, long id) {
         super.onListItemClick(parent, view, position, id);
         FileUri file = (FileUri) this.getListAdapter().getItem(position);
-        ECML.song= file;
         ChooseSongActivity.openFile(file);
     }  
 }

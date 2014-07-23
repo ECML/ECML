@@ -104,10 +104,10 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
             ChooseSongActivity.showErrorDialog("Error: Unable to open song: " + file.toString(), this);
             return;
         }
+
+        ECML.song = file;
         
         String choice = this.getIntent().getStringExtra(niveau);
-        
-        ECML.song = file;
         
         if ( choice.equals("1"))
         {
