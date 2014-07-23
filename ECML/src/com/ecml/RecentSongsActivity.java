@@ -12,19 +12,16 @@
 
 package com.ecml;
 
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
 
-import android.app.*;
-import android.os.*;
-import android.widget.*;
-import android.util.Log;
-import android.view.*;
-import android.content.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import org.json.*;
-
-import android.graphics.*;
+import android.app.ListActivity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
 
 
 /** @class RecentSongsActivity
@@ -41,7 +38,6 @@ public class RecentSongsActivity extends ListActivity {
     public void onCreate(Bundle state) {
         super.onCreate(state);
         setTheme(android.R.style.Theme_Holo_Light);
-        setTitle("MidiSheetMusic: Recent Songs");
         getListView();
         // Load the list of songs
         loadFileList();

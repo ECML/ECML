@@ -160,7 +160,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/*** Metronome Variables ***/
 
 	private MetronomeController metronomeController;
-	private View metronomeView;
 	private View abMetronome;
 
 	/*** End of Metronome Variables ***/
@@ -168,7 +167,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/*** Record and Play Variables ***/
 	
 	private boolean isAudioRecordingAndPlayingMusic;
-	private ScrollAnimation scrollAnimation;
 	
 	/*** End of Record and Play Variables ***/
 	
@@ -236,8 +234,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		createSheetMusic(options);
 		
 		metronomeController = new MetronomeController(this);
-		scrollAnimation = new ScrollAnimation(sheet, options.scrollVert); // needed for stopping the music and recording
-																		  // when touching the score
+		
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
@@ -373,6 +370,36 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		player.SetMidiFile(midifile, options, sheet);
 		layout.requestLayout();
 		sheet.callOnDraw();
+
+		sheet.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int action = event.getAction() & MotionEvent.ACTION_MASK;
+				boolean result = sheet.getScrollAnimation().onTouchEvent(event);
+				switch (action) {
+				case MotionEvent.ACTION_DOWN:
+					// If we touch while music is playing, stop the midi player
+					if (player != null && player.playstate == player.playing) {
+						player.Pause();
+						if (isAudioRecordingAndPlayingMusic) {
+							stopAudioRecordingAndPlayingMusic();
+						}
+						sheet.getScrollAnimation().stopMotion();
+					}
+					return result;
+
+				case MotionEvent.ACTION_MOVE:
+					return result;
+
+				case MotionEvent.ACTION_UP:
+					return result;
+
+				default:
+					return false;
+				}
+			}
+		});
 	}
 
 	/** Always display this activity in landscape mode. */
@@ -1110,40 +1137,14 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	}
 	/** Stop Audio Recording and Stop the Media Player */
-	private void stopAudioRecoringdAndPlayingMusic() {
+	private void stopAudioRecordingAndPlayingMusic() {
+		isAudioRecordingAndPlayingMusic = false;
 		player.Pause();
+		player.player.stop();	// these two lines are here to prevent the player from
+        player.player.reset();	// playing outloud the very last note supposedly played
 		stopAudioRecording();
 		player.unmute();
 	}
-	
-	/** Handle touch/motion events to implement scrolling the sheet music. */
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction() & MotionEvent.ACTION_MASK;
-        boolean result = scrollAnimation.onTouchEvent(event);
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                // If we touch while music is playing, stop the midi player 
-                if (player != null && player.playstate == player.playing) {
-                	if (isAudioRecordingAndPlayingMusic) {
-                		isAudioRecordingAndPlayingMusic = false;
-                		stopAudioRecoringdAndPlayingMusic();
-                	}
-                    player.Pause();
-                    scrollAnimation.stopMotion();
-                }
-                return result;
-
-            case MotionEvent.ACTION_MOVE:
-                return result;
-
-            case MotionEvent.ACTION_UP:
-                return result;
-
-            default:
-                return false;
-        }
-    }
     
     /*** End of Recording and Playing Functions ***/
     

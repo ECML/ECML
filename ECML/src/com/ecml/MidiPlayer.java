@@ -104,7 +104,6 @@ public class MidiPlayer extends LinearLayout {
     final int paused    = 3;     /** Currently paused */
     final int initStop  = 4;     /** Transitioning from playing to stop */
     final int initPause = 5;     /** Transitioning from playing to pause */
-    int delay = 1000;			 /** Delay before playing the music */
 
     final String tempSoundFile = "playing.mid"; /** The filename to play sound from */
 
@@ -579,7 +578,7 @@ public class MidiPlayer extends LinearLayout {
     /** The callback for the play button.
      *  If we're stopped or pause, then play the midi file.
      */
-    private void Play() {
+    public void Play() {
         if (midifile == null || sheet == null || numberTracks() == 0) {
             return;
         }
@@ -645,7 +644,6 @@ public class MidiPlayer extends LinearLayout {
      *  The actual pause is done when the timer is invoked.
      */
     public void Pause() {
-        this.setVisibility(View.VISIBLE);
         LinearLayout layout = (LinearLayout)this.getParent();
         layout.requestLayout();
         this.requestLayout();
@@ -667,7 +665,7 @@ public class MidiPlayer extends LinearLayout {
      *  If playing, initiate a stop and wait for the timer to finish.
      *  Then do the actual stop.
      */
-    void Stop() {
+    public void Stop() {
         this.setVisibility(View.VISIBLE);
         if (midifile == null || sheet == null || playstate == stopped) {
             return;
@@ -887,6 +885,21 @@ public class MidiPlayer extends LinearLayout {
         timer.postDelayed(DoPlay, 300);
     }
     
+    public Double getcurrentPulseTime()
+    {
+    	return currentPulseTime;
+    }
+    
+    public Double getprevPulseTime()
+    {
+    	return prevPulseTime;
+    }
+    
+    
+    public SeekBar getSpeedBar()
+    {
+    	return speedBar;
+    }
 }
 
 
