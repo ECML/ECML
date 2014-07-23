@@ -21,10 +21,16 @@ import android.os.Message;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+
+/* abstract class wich define the main part of all the speedgame activities */
 
 public abstract class SpeedGamelvl extends Activity {
 
@@ -39,10 +45,15 @@ public abstract class SpeedGamelvl extends Activity {
         { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" },
     };
 	
+	protected boolean point = true;
+	protected int counter = 0;
+	protected int score = 0;
+	
 	
 	/*** MidiSheet variables ***/
 	
 	public static final String MidiTitleID = "MidiTitleID";
+	public static final int settingsRequestCode = 1;
 	
 	protected Thread playingthread;
 	protected SheetMusic sheet; /* The sheet music */
@@ -53,6 +64,10 @@ public abstract class SpeedGamelvl extends Activity {
 	/*** End of MidiSheet variables ***/
 	
 /*** Record and Play Variables ***/
+	
+	private boolean isAudioRecordingAndPlayingMusic = false;
+	private SurfaceView surfaceView;
+	private SurfaceHolder surfaceHolder;
 	
 	protected ScrollAnimation scrollAnimation;
 	
@@ -146,8 +161,8 @@ public abstract class SpeedGamelvl extends Activity {
 		setContentView(layout);
 
 		// Back to the score button
-		Button score = (Button) findViewById(R.id.back);
-		score.setOnClickListener(new View.OnClickListener() {
+		Button scoreB = (Button) findViewById(R.id.back);
+		scoreB.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -162,7 +177,7 @@ public abstract class SpeedGamelvl extends Activity {
 
 			@Override
 			public void onClick(View v) {
-//				showHelpDialog();
+				showHelpDialog();
 			}
 		});
 
@@ -172,6 +187,19 @@ public abstract class SpeedGamelvl extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				
+				score = 0;
+				counter = 0;
+				if ( player != null )
+				{
+					player.Stop();
+				}
+				if ( pitchPoster != null )
+				{
+			        pitchPoster.stopSampling();
+				}
+		        pitchPoster = null;
+				
 				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(intent);
 			}
@@ -183,6 +211,8 @@ public abstract class SpeedGamelvl extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				score = 0;
+				counter = 0;
 				if ( player != null )
 				{
 					player.Stop();
@@ -204,16 +234,7 @@ public abstract class SpeedGamelvl extends Activity {
 		
 		scrollAnimation = new ScrollAnimation(sheet, options.scrollVert); 	// needed for stopping the music and recording
 		  																	// when touching the score
-		
-		/*sheet = new SheetMusic(this);
-		sheet.init(midifile, options);
-		sheet.setPlayer(player);*/
-		/*layout.removeView(sheet);
-		layout.addView(sheet);
 
-		layout.requestLayout();
-		sheet.callOnDraw();*/
-		
 	}
 
 	/* Create the MidiPlayer and Piano views */
@@ -283,16 +304,55 @@ public abstract class SpeedGamelvl extends Activity {
 		sheet = new SheetMusic(this);
 		sheet.init(midifile, options);
 		sheet.setPlayer(player);
+		layout.addView(sheet);
 		piano.SetMidiFile(midifile, options, player);
 		piano.SetShadeColors(options.shade1Color, options.shade2Color);
 		player.SetMidiFile(midifile, options, sheet);
-		layout.addView(sheet);
 		layout.requestLayout();
 		sheet.callOnDraw();
+
+		sheet.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int action = event.getAction() & MotionEvent.ACTION_MASK;
+				boolean result = sheet.getScrollAnimation().onTouchEvent(event);
+				switch (action) {
+				case MotionEvent.ACTION_DOWN:
+					// If we touch while music is playing, stop the midi player
+					if (player != null && player.playstate == player.playing) {
+						player.Pause();
+						if (isAudioRecordingAndPlayingMusic) {
+							stopAudioRecordingAndPlayingMusic();
+						}
+						sheet.getScrollAnimation().stopMotion();
+					}
+					return result;
+
+				case MotionEvent.ACTION_MOVE:
+					return result;
+
+				case MotionEvent.ACTION_UP:
+					return result;
+
+				default:
+					return false;
+				}
+			}
+		});
+	}
+	
+	private void stopAudioRecordingAndPlayingMusic() {
+		isAudioRecordingAndPlayingMusic = false;
+		player.Pause();
+		player.player.stop();	// these two lines are here to prevent the player from
+        player.player.reset();	// playing outloud the very last note supposedly played
+		
 	}
 	
 	protected void PauseEcoute ()
 	{
+		point = false;
 		player.Pause();
 		if ( pitchPoster != null)
 		{
@@ -327,6 +387,22 @@ public abstract class SpeedGamelvl extends Activity {
 		}
         pitchPoster = null;
 		super.onPause();
+	}
+	
+	private void showHelpDialog() {
+		LayoutInflater inflator = LayoutInflater.from(this);
+		final View dialogView = inflator.inflate(R.layout.speed_game_help, null);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("HELP");
+		builder.setView(dialogView);
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface builder, int whichButton) {
+
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 	
 }

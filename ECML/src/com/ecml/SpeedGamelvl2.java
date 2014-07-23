@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import com.game.MicrophonePitchPoster;
 
+/* Second implementation of the SpeeGame
+ * Player reading sheetmusic at slow speed
+ * The user must play the note when they are highlight on the player */
+
 public class SpeedGamelvl2 extends SpeedGamelvl {
 	
-	private int score = 0;
-    private int i = 0;
 	private TextView textView;
-	boolean point = true;
+	private boolean end = false;
 
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,8 +28,12 @@ public class SpeedGamelvl2 extends SpeedGamelvl {
 		
 		player.getSpeedBar().setProgress(30-30);
 		
+		// Extracting the Tracks
 		Tracks = midifile.getTracks();
 		
+		counter = 0;
+		// Extracting the notes from the Track file
+		// We use by default the intrument n°0 wich is the piano
 		Notes = findNotes(Tracks,0);
 	
 	// Launch the game = Play button
@@ -36,13 +42,23 @@ public class SpeedGamelvl2 extends SpeedGamelvl {
 
 		@Override
 		public void onClick(View v) {
+			point = true;
+			
+			// If the game has been finished, set the score to 0
+			if (end)
+			{
+				score = 0;
+			}
 			
       		player.Play();
 			
+      		// Pitch Detetion launching 
 	        pitchPoster = new MicrophonePitchPoster(60);
+	        // Adding the handler
 	        pitchPoster.setHandler(new UIUpdateHandler());
 	        pitchPoster.start();
 	        
+	        // Displaying score
 			textView = (TextView) findViewById(R.id.affiche);
 			textView.setText("Score :"+score+"/"+Notes.size());
 			
@@ -58,28 +74,37 @@ public class SpeedGamelvl2 extends SpeedGamelvl {
             
             if (data != null && data.decibel > -20) {
             	
-                if (i == Notes.size() ) {
-                    player.Stop();
-                    pitchPoster.stopSampling();
-                    pitchPoster = null;
+            	// If we reach the end of the midifile, then we stop the player and the pitch detection
+                if (counter == Notes.size() ) {
+    				end = true;
+    				counter = 0;
+    				if ( player != null )
+    				{
+    					player.Stop();
+    				}
+    				if ( pitchPoster != null )
+    				{
+    			        pitchPoster.stopSampling();
+    				}
+    		        pitchPoster = null;
                     
                 }
             	
+                
             	 Double time = player.getprevPulseTime(); 
-            	 while( Notes.get(i).getStartTime()+Notes.get(i).getDuration() < time )
+            	 while( Notes.get(counter).getStartTime()+Notes.get(counter).getDuration() < time )
             	 {
-            		 i++;
+            		 counter++;
             		 point = true;
             	 }
         	 
-            	 String test = Notes.get(i).Pitch();
+            	 String test = Notes.get(counter).Pitch();
             	 
             	 if ( test.equals(noteNames[keyDisplay.ordinal()][data.note % 12]))
-            	 {
-            		 System.out.println("Dedans : ");            		 
+            	 {         		 
             		 
-            		 int début = Notes.get(i).getStartTime();
-            		 int fin = Notes.get(i).getEndTime();
+            		 int début = Notes.get(counter).getStartTime();
+            		 int fin = Notes.get(counter).getEndTime();
             		 
             		 if ( player.getprevPulseTime() > début && player.getprevPulseTime() < fin)
             		 {
