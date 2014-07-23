@@ -55,6 +55,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -374,33 +375,33 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		layout.requestLayout();
 		sheet.callOnDraw();
 
-//		sheet.setOnTouchListener(new View.OnTouchListener() {
-//
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				int action = event.getAction() & MotionEvent.ACTION_MASK;
-//				boolean result = sheet.getScrollAnimation().onTouchEvent(event);
-//				switch (action) {
-//				case MotionEvent.ACTION_DOWN:
-//					// If we touch while music is playing, stop the midi player
-//					if (player != null && player.playstate == player.playing) {
-//						player.Pause();
-//						stopAudioRecordingAndPlayingMusic();
-//						sheet.getScrollAnimation().stopMotion();
-//					}
-//					return result;
-//
-//				case MotionEvent.ACTION_MOVE:
-//					return result;
-//
-//				case MotionEvent.ACTION_UP:
-//					return result;
-//
-//				default:
-//					return false;
-//				}
-//			}
-//		});
+		sheet.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int action = event.getAction() & MotionEvent.ACTION_MASK;
+				boolean result = sheet.getScrollAnimation().onTouchEvent(event);
+				switch (action) {
+				case MotionEvent.ACTION_DOWN:
+					// If we touch while music is playing, stop the midi player
+					if (player != null && player.playstate == player.playing) {
+						player.Pause();
+						stopAudioRecordingAndPlayingMusic();
+						sheet.getScrollAnimation().stopMotion();
+					}
+					return result;
+
+				case MotionEvent.ACTION_MOVE:
+					return result;
+
+				case MotionEvent.ACTION_UP:
+					return result;
+
+				default:
+					return false;
+				}
+			}
+		});
 	}
 
 	/** Always display this activity in landscape mode. */
@@ -1043,18 +1044,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		int action = event.getAction();
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (action == KeyEvent.ACTION_DOWN) {
-				if (!isAudioRecording && !isVideoRecording) {
-					this.finish();
-					return true;
-				} else {
-
-					Toast.makeText(SheetMusicActivity.this, "Stop recording before exiting", Toast.LENGTH_SHORT).show();
-
-					Log.i("isAudioRecording", "" + isAudioRecording);
-					Toast.makeText(SheetMusicActivity.this, "Stop recording before exiting", Toast.LENGTH_SHORT).show();
-					return true;
-
-				}
+				this.finish();
+				return true;
 			}
 		}
 
