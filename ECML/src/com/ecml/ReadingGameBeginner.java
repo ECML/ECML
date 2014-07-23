@@ -29,6 +29,7 @@ public class ReadingGameBeginner extends Activity {
 	private MidiPlayer player; /* The play/stop/rewind toolbar */
 	public static int noteplace;
 	private MidiNote note;
+	public static final String MidiTitleID = "MidiTitleID";
 	
 
 	/** Called when the activity is first created. */
@@ -59,8 +60,14 @@ public class ReadingGameBeginner extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
-				ChooseSongActivity.openFile(ECML.song);
+				if (ECML.song != null) {
+					ChooseSongActivity.openFile(ECML.song);
+				}
+				else {
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
+					startActivity(intent);
+				}
 			}
 		});
 
@@ -183,12 +190,28 @@ public class ReadingGameBeginner extends Activity {
 		/********************* END OF TOP VIEW WITH RESULTS AND APPRECIATION *****************/
 
 		/*********************** BOTTOM VIEW WITH THE SHEET MUSIC ****************************/
+
+		ClefSymbol.LoadImages(this);
+		TimeSigSymbol.LoadImages(this);
+		MidiPlayer.LoadImages(this);
+		
 		// Parse the MidiFile from the raw bytes
-
-		String title = "blabla";
-
-		midifile = new MidiFile(ECML.song.getData(this), title);
-
+		Uri uri = this.getIntent().getData();
+		String title = this.getIntent().getStringExtra(MidiTitleID);
+		if (title == null) {
+			title = uri.getLastPathSegment();
+		}
+		FileUri file = new FileUri(uri, title);
+		this.setTitle("ECML: " + title);
+		byte[] data;
+		try {
+			data = file.getData(this);
+			midifile = new MidiFile(data, title);
+		} catch (MidiFileException e) {
+			this.finish();
+			return;
+		}
+		
 		options = new MidiOptions(midifile);
 
 		sheet = new SheetMusic(this);

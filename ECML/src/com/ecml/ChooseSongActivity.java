@@ -104,6 +104,8 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
             ChooseSongActivity.showErrorDialog("Error: Unable to open song: " + file.toString(), this);
             return;
         }
+
+        ECML.song = file;
         
         String choice = this.getIntent().getStringExtra(niveau);
         
@@ -139,6 +141,12 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
 	        updateRecentFile(file);
 	        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
 	        intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
+	        startActivity(intent);
+        }
+        else if ( choice.equals("readingBeginner")) {
+	        updateRecentFile(file);
+	        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
+	        intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
 	        startActivity(intent);
         }
     }
