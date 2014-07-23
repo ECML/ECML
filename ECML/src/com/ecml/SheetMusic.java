@@ -14,6 +14,7 @@ package com.ecml;
 
 import java.util.*;
 import java.io.*;
+
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
@@ -90,8 +91,13 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
     private int      bufferY; 
     private int      scrollX;         /** The (left,top) of the scroll clip */
     private int      scrollY;
+    private ScrollAnimation scrollAnimation;
     
-    public SheetMusic(Context context) {
+    public ScrollAnimation getScrollAnimation() {
+		return scrollAnimation;
+	}
+
+	public SheetMusic(Context context) {
         super(context);
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
@@ -183,6 +189,8 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
             staff.CalculateHeight();
         }
         zoom = 1.0f;
+        
+        scrollAnimation = new ScrollAnimation(this, scrollVert);
     }
 
     /** Calculate the size of the sheet music width and height
@@ -1416,6 +1424,6 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
         result += "End SheetMusic\n";
         return result;
     }
-
+    
 }
 

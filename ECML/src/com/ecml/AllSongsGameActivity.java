@@ -12,45 +12,37 @@
 
 package com.ecml;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import android.app.ListActivity;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.AssetManager;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.view.View;
+import java.io.*;
+import java.util.*;
+import android.net.*;
+import android.app.*;
+import android.os.*;
+import android.widget.*;
+import android.util.Log;
+import android.view.*;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.content.*;
+import android.content.res.*;
+import android.provider.*;
+import android.database.*;
+import android.text.*;
+import com.ecml.R;
 
 
 /** @class ScanMidiFiles
  * The ScanMidiFiles class is used to scan for midi files
  * on a background thread.
  */
-class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
+
+class ScanGameMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
     private ArrayList<FileUri> songlist;
     private File rootdir;
-    private AllSongsActivity activity;
+    private AllSongsGameActivity activity;
 
-    public ScanMidiFiles() {
+    public ScanGameMidiFiles() {
     }
 
-    public void setActivity(AllSongsActivity allSongsGameActivity) {
+    public void setActivity(AllSongsGameActivity allSongsGameActivity) {
         this.activity = allSongsGameActivity;
     }
 
@@ -84,7 +76,7 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
 
     @Override
     protected void onPostExecute(ArrayList<FileUri> result) {
-        AllSongsActivity act = activity;
+        AllSongsGameActivity act = activity;
         this.activity = null;
         act.scanDone(songlist);
         Toast message = Toast.makeText(act, "Found " + songlist.size() + " MIDI files", Toast.LENGTH_SHORT);
@@ -99,6 +91,7 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
     /* Given a directory, add MIDI files (ending in .mid) to the songlist.
      * If the directory contains subdirectories, call this method recursively.
      */
+
     private void loadMidiFilesFromDirectory(File dir, int depth) throws IOException {
         if (isCancelled()) {
             return;
@@ -152,7 +145,7 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
  * When a song is chosen, this calls the SheetMusicAcitivty, passing
  * the raw midi byte[] data as a parameter in the Intent.
  */ 
-public class AllSongsActivity extends ListActivity implements TextWatcher {
+public class AllSongsGameActivity extends ListActivity implements TextWatcher {
 
     /** The complete list of midi files */
     ArrayList<FileUri> songlist;
@@ -161,7 +154,7 @@ public class AllSongsActivity extends ListActivity implements TextWatcher {
     EditText filterText;
 
     /** Task to scan for midi files */
-    ScanMidiFiles scanner;
+    ScanGameMidiFiles scanner;
 
     IconArrayAdapter<FileUri> adapter;
 
@@ -179,6 +172,7 @@ public class AllSongsActivity extends ListActivity implements TextWatcher {
         super.onCreate(state);
         setTheme(android.R.style.Theme_Holo_Light);
         setContentView(R.layout.choose_song);
+        setTitle("MidiSheetMusic: Choose Song");
         
         /* If we're restarting from an orientation change,
          * load the saved song list.
@@ -237,7 +231,7 @@ public class AllSongsActivity extends ListActivity implements TextWatcher {
         if (scanner != null) {
             return;
         }
-        scanner = new ScanMidiFiles();
+        scanner = new ScanGameMidiFiles();
         scanner.setActivity(this);
         scanner.execute(0);
     }

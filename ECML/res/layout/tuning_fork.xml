@@ -1,212 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:background="@color/blue"
     android:orientation="vertical" >
 
+    <RelativeLayout
+        android:id="@+id/note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="30dp" >
+
+        <TextView
+            android:id="@+id/numberOctave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/letterNote"
+            android:layout_alignParentRight="true"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ffffff"
+            android:textStyle="bold|italic"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/letterNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/numberOctave"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ffffff"
+            android:textSize="48sp"
+            android:textStyle="bold|italic"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/textNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/letterNote"
+            android:text="@string/note"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ffffff"
+            android:textSize="48sp"
+            android:textStyle="italic"
+            android:typeface="serif" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/frequence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp" >
+
+        <TextView
+            android:id="@+id/textFrequence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/frequence"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textStyle="normal"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/numberFrequence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/textFrequence"
+            android:maxLines="1"
+            android:maxWidth="80dp"
+            android:minWidth="80dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textStyle="normal|bold"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/textViewHz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/numberFrequence"
+            android:layout_alignBottom="@id/numberFrequence"
+            android:layout_toRightOf="@id/numberFrequence"
+            android:text="@string/hertz"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textStyle="normal"
+            android:typeface="serif" />
+    </RelativeLayout>
+
     <LinearLayout
-        android:id="@+id/layout1"
+        android:id="@+id/adjustment"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout1"
-            android:layout_width="fill_parent"
-            android:layout_height="76dp" >
-
-            <TextView
-                android:id="@+id/textNote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="15dp"
-                android:text="A "
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="48dp"
-                android:textStyle="bold|italic"
-                android:typeface="serif" />
-
-            <TextView
-                android:id="@+id/textOctave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textNote"
-                android:layout_toRightOf="@+id/textNote"
-                android:text="0"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold|italic"
-                android:typeface="serif" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="fill_parent"
-            android:layout_height="108dp" >
-
-            <TextView
-                android:id="@+id/textViewHz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:maxLines="1"
-                android:maxWidth="80dp"
-                android:minWidth="80dp"
-                android:text="440.0000000000"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="22dp"
-                android:textStyle="normal|bold" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textViewHz"
-                android:layout_alignBottom="@+id/textViewHz"
-                android:layout_toRightOf="@+id/textViewHz"
-                android:text="Hz = "
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="22dp"
-                android:textStyle="normal" />
-
-            <TextView
-                android:id="@+id/textViewFreq"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textView5"
-                android:layout_alignBottom="@+id/textView5"
-                android:layout_toRightOf="@+id/textView5"
-                android:maxLines="1"
-                android:maxWidth="80dp"
-                android:minWidth="80dp"
-                android:text="440.000000000000"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/blue"
-                android:textSize="22dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textViewForm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/textViewFreq"
-                android:text="·2"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="32dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textViewParen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/textViewFreq"
-                android:layout_toRightOf="@+id/textViewForm"
-                android:text="("
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="32dp" />
-
-            <TextView
-                android:id="@+id/textViewN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/TextView01"
-                android:layout_alignTop="@+id/textViewParen"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/textViewParen"
-                android:text="9"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textViewN"
-                android:layout_alignBottom="@+id/textViewN"
-                android:layout_toRightOf="@+id/textViewParen"
-                android:text="____"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textViewFreq"
-                android:layout_alignLeft="@id/textViewN"
-                android:layout_below="@+id/textViewN"
-                android:text="12"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
-
-            <TextView
-                android:id="@+id/TextView01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/textView6"
-                android:layout_marginLeft="3dp"
-                android:layout_toRightOf="@+id/textView6"
-                android:text=")"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="32dp" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/textView1"
+        <LinearLayout
+            android:id="@+id/shiftOctave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Tone Number"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="28dp"
-            android:textStyle="bold" />
+            android:layout_marginRight="100dp"
+            android:orientation="vertical" >
 
-        <SeekBar
-            android:id="@+id/SineFreqBar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:contentDescription="Frequency"
-            android:paddingBottom="10dp" />
+            <TextView
+                android:id="@+id/adjustOctave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/adjust_octave"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
 
-        <TextView
-            android:id="@+id/textView2"
+            <LinearLayout
+                android:id="@+id/octaveButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/previousOctave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/orange"
+                    android:padding="5dp"
+                    android:text="@string/shift_down"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/nextOctave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/orange"
+                    android:padding="5dp"
+                    android:text="@string/shift_up"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:typeface="serif" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shiftNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="Adjust Reference Pitch "
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/blue"
-            android:textSize="24dp"
-            android:textStyle="bold" />
+            android:layout_marginLeft="100dp"
+            android:orientation="vertical" >
 
-        <SeekBar
-            android:id="@+id/PitchBar"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:paddingBottom="10dp" />
+            <TextView
+                android:id="@+id/adjustNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/adjust_note"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
+
+            <LinearLayout
+                android:id="@+id/noteButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/previousNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/orange"
+                    android:padding="5dp"
+                    android:text="@string/shift_down"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/nextNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/orange"
+                    android:padding="5dp"
+                    android:text="@string/shift_up"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:typeface="serif" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewAdjRefPitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/adjust_ref_pitch"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
+
+    <SeekBar
+        android:id="@+id/PitchBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="300dp"
+        android:layout_marginRight="300dp"
+        android:paddingBottom="10dp"
+        android:progressDrawable="@color/orange"
+        android:thumb="@drawable/btn_code_lock_touched" />
+
+    <RelativeLayout
+        android:id="@+id/toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" >
 
         <ToggleButton
-            android:id="@+id/toggleButton1"
+            android:id="@+id/toggleButton"
             android:layout_width="150dip"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="50dp"
             android:hapticFeedbackEnabled="true"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
             android:textSize="18sp"
             android:typeface="sans" />
-    </LinearLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/help_tuning_fork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:background="@color/orange"
+        android:padding="5dp"
+        android:text="Help"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        android:typeface="serif" />
 
 </LinearLayout>

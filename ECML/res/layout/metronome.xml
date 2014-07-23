@@ -100,7 +100,6 @@
             android:text="@string/stopmetronome"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffff" />
-s    
     </LinearLayout>
 
 </LinearLayout>

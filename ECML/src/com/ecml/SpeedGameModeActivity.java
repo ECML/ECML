@@ -1,6 +1,7 @@
 package com.ecml;
 
 
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class SpeedGameModeActivity extends Activity {
+	
+
 
 	/** Called when the activity is first created. */
 		@Override
@@ -63,7 +66,9 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), SpeedGamelvl1.class);
+					
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"1");
 					startActivity(intent);
 				}
 			});
@@ -74,7 +79,8 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), SpeedGamelvl2.class);
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"2");
 					startActivity(intent);
 				}
 			});
@@ -85,7 +91,8 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), SpeedGamelvl3.class);
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"3");
 					startActivity(intent);
 				}
 			});
@@ -96,7 +103,8 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), SpeedGamelvl4.class);
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"4");
 					startActivity(intent);
 				}
 			});
@@ -118,6 +126,8 @@ public class SpeedGameModeActivity extends Activity {
 			AlertDialog dialog = builder.create();
 			dialog.show();
 		}
+		
+
 
 }
 
