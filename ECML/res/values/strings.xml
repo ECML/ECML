@@ -79,5 +79,8 @@
         \nPress Adjust Octave to get back to Octave number 4.
         \nPress Adjust Note to get back to the note A of the current Octave.</string>
     <string name="how_to_use_tuning_fork">How to use the Tuning Fork</string>
-
+    <string name="speed_game_help">How to play the SpeedGame</string>
+	<string name="speed_game_reading">\nAt level 1, the game is waiting for you to play the right note. You need to scroll down or up the sheetmusic yourself. You can highlight the note yourself too.\n\nAt level 2, you have to play the note when it is highlight. If you play the good note at the right time you get one point.\nAt the end of the song, you can see how many notes you play right.\n\nLevels 3 and 4 work the same way are level 2 but are harder. </string>
+	
+	
 </resources>
