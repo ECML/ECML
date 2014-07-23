@@ -504,7 +504,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				try {
 					startVideoRecording();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
@@ -831,22 +830,17 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 					try {
 						mp.setDataSource(pathAudio + "/" + fileName + ext);
 					} catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IllegalStateException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					try {
 						mp.prepare();
 					} catch (IllegalStateException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -861,10 +855,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	private void pauseAudio() {
 		if (mp.isPlaying()) {
-			Toast.makeText(context, "Pausing Replay", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Pausing Audio Replay", Toast.LENGTH_SHORT).show();
 			mp.pause();
 			audioPaused = true;
-			Toast.makeText(SheetMusicActivity.this, "Last Audio Record Paused", Toast.LENGTH_SHORT).show();
 		}
 		else {
 			Toast.makeText(context, "Not Playing", Toast.LENGTH_SHORT).show();
@@ -983,7 +976,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
 	}
 
 	private Camera openFrontFacingCamera() {
@@ -1008,11 +1000,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/*** End of Video Recording Functions ***/
 
-	/*** Mute Button ***/
+	/*** Menu Button and Back Button Listener ***/
 
 	@Override
 	public int getInputType() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -1043,7 +1034,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		int action = event.getAction();
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (action == KeyEvent.ACTION_DOWN) {
+			if (action == KeyEvent.ACTION_DOWN) { // That case needs to be added because there's now a keyListener
 				this.finish();
 				return true;
 			}
@@ -1062,7 +1053,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		return false;
 	}
 
-	/*** End of Mute Button Functions ***/
+	/*** End of Menu Button and Back Button Listener Functions ***/
 
 	/*** Metronome Functions ***/
 
