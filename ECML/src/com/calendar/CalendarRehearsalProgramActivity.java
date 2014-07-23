@@ -1,8 +1,6 @@
 package com.calendar;
 
 import com.ecml.R;
-import com.ecml.R.id;
-import com.ecml.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,14 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class CalendarRehearsalProgramActivity extends Activity {
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.calendar_listview);
+		/**Create the list view*/
 		populateListView();
+		/**Allowed to add an action when on item from the list view is selected */
 		registerClickCallback();
-
 	}
 
 	private void registerClickCallback() {
@@ -34,11 +33,8 @@ public class CalendarRehearsalProgramActivity extends Activity {
 				if (arg2 == 1) {
 
 				}
-
 			}
-
 		});
-
 	}
 
 	private void populateListView() {
@@ -48,15 +44,15 @@ public class CalendarRehearsalProgramActivity extends Activity {
 				"Normal rehearsal program for advanced student", "Intensive rehearsal program for advanced student" };
 
 		// Build Adapter
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, // Context
-																		// for
-																		// the
-																		// activity
-				R.layout.calendar_items, // Layout to use
-				myItems); // Items to be displayed
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, 							// Context for the activity
+																R.layout.calendar_items, 		// Layout to use
+																myItems); 						// Items to be displayed
 
 		// Configure the list view.
 		ListView list = (ListView) findViewById(R.id.listView1);
 		list.setAdapter(adapter);
 	}
+
+	
+	
 }

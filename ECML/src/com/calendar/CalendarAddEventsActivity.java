@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
+import android.text.format.Time;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,15 +24,15 @@ public class CalendarAddEventsActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		     
 		setContentView(R.layout.calendar_listview);
+		//Create the list view
 		populateListView();
+		//Add an action when one item of the list view is chosen
 		registerClickCallback();
-
 	}
 
 	private void registerClickCallback() {
 		ListView list = (ListView) findViewById(R.id.listView1);
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				if (arg2 == 0) {
