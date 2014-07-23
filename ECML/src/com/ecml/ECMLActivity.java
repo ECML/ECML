@@ -26,6 +26,7 @@ import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.ColorDrawable;
 
+import com.calendar.CalendarActivity;
 import com.ecml.R;
 
 /**
@@ -54,6 +55,7 @@ public class ECMLActivity extends Activity {
 		chooseSong.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+				intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
 				startActivity(intent);
 			}
 		});

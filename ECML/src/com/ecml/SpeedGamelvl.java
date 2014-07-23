@@ -50,9 +50,11 @@ public abstract class SpeedGamelvl extends Activity {
 	protected int score = 0;
 	
 	
+
 	/*** MidiSheet variables ***/
-	
+
 	public static final String MidiTitleID = "MidiTitleID";
+
 	public static final int settingsRequestCode = 1;
 	
 	protected Thread playingthread;
@@ -60,9 +62,9 @@ public abstract class SpeedGamelvl extends Activity {
 	protected LinearLayout layout; /* THe layout */
 	protected Piano piano; /* The piano at the top */
 	protected long midiCRC; /* CRC of the midi bytes */
-	
+
 	/*** End of MidiSheet variables ***/
-	
+
 /*** Record and Play Variables ***/
 	
 	private boolean isAudioRecordingAndPlayingMusic = false;
@@ -70,27 +72,27 @@ public abstract class SpeedGamelvl extends Activity {
 	private SurfaceHolder surfaceHolder;
 	
 	protected ScrollAnimation scrollAnimation;
-	
+
 	/*** End of Record and Play Variables ***/
-	
+
 	protected ArrayList<MidiTrack> Tracks;
 	protected ArrayList<MidiNote> Notes;
 	protected boolean search;
 	View choice;
 	View result;
 	private View topLayout;
-	
-	
+
+
 	protected MidiFile midifile; /* The midi file to play */
 	protected MidiOptions options; /* The options for sheet music and sound */
 	protected MidiPlayer player; /* The play/stop/rewind toolbar */
 	public static int noteplace;
 	protected MidiNote note;
-	
+
 	/*** PitchDetection variables ***/
-	
+
 	protected MicrophonePitchPoster pitchPoster;
-	
+
 	/*** End of PitchDetection variables ***/
 
 	/** Called when the activity is first created. */
@@ -108,13 +110,13 @@ public abstract class SpeedGamelvl extends Activity {
 		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
 		 * GAME BUTTON
 		 **********/
-		
-		
+
+
 
 		ClefSymbol.LoadImages(this);
 		TimeSigSymbol.LoadImages(this);
 		MidiPlayer.LoadImages(this);
-		
+
 		// Parse the MidiFile from the raw bytes
 		Uri uri = this.getIntent().getData();
 		String title = this.getIntent().getStringExtra(MidiTitleID);
@@ -131,7 +133,7 @@ public abstract class SpeedGamelvl extends Activity {
 			this.finish();
 			return;
 		}
-		
+
 		// Initialize the settings (MidiOptions).
 		// If previous settings have been saved, use those
 
@@ -151,9 +153,9 @@ public abstract class SpeedGamelvl extends Activity {
 			options.merge(savedOptions);
 		}
 		createView();
-		
+
 		player.mute();
-		
+
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		choice = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
@@ -166,8 +168,14 @@ public abstract class SpeedGamelvl extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
-				
+				if (ECML.song != null) {
+					ChooseSongActivity.openFile(ECML.song);
+				}
+				else {
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
+					startActivity(intent);
+				}
 			}
 		});
 
@@ -204,7 +212,7 @@ public abstract class SpeedGamelvl extends Activity {
 				startActivity(intent);
 			}
 		});
-		
+
 		// Change stop button
 		Button stop = (Button) findViewById(R.id.stop);
 		stop.setOnClickListener(new View.OnClickListener() {
@@ -224,14 +232,14 @@ public abstract class SpeedGamelvl extends Activity {
 		        pitchPoster = null;
 			}
 		});
-		
+
 		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
 		layout.addView(result);
 		result.setVisibility(View.GONE);
 		setContentView(layout);
-		
+
 		createSheetMusic(options);
-		
+
 		scrollAnimation = new ScrollAnimation(sheet, options.scrollVert); 	// needed for stopping the music and recording
 		  																	// when touching the score
 
@@ -349,7 +357,7 @@ public abstract class SpeedGamelvl extends Activity {
         player.player.reset();	// playing outloud the very last note supposedly played
 		
 	}
-	
+
 	protected void PauseEcoute ()
 	{
 		point = false;
@@ -360,7 +368,7 @@ public abstract class SpeedGamelvl extends Activity {
 		}
 		pitchPoster = null;
 	}
-	
+
 	/** When this activity resumes, redraw all the views */
 	@Override
 	protected void onResume() {
@@ -388,6 +396,7 @@ public abstract class SpeedGamelvl extends Activity {
         pitchPoster = null;
 		super.onPause();
 	}
+
 	
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
@@ -406,3 +415,6 @@ public abstract class SpeedGamelvl extends Activity {
 	}
 	
 }
+
+
+

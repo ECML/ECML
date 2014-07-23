@@ -37,7 +37,6 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
-import android.media.AudioManager;
 import android.media.CamcorderProfile;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -56,12 +55,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -138,13 +135,15 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	private SurfaceView surfaceView;
 	private SurfaceHolder surfaceHolder;
-	public MediaRecorder mrec;
+	private MediaRecorder mrec;
 	private Camera mCamera;
 	private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";
 	private String pathVideo;
 	private boolean isVideoRecording;
 	private boolean existVideoRecord;
-	boolean front = true;
+	private boolean front = true;
+	private String cameraSide;
+
 	private View topLayout;
 
 	/*** End of Video Recording Variables ***/
@@ -170,8 +169,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	
 	/*** End of Record and Play Variables ***/
 	
-	final Context context = this;
+	private final Context context = this;
 	private Menu menu;
+	private VolumeListener volumeListener;
 
 	/**********************************************************************************************************/
 	/**********************************************************************************************************/
@@ -234,6 +234,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		createSheetMusic(options);
 		
 		metronomeController = new MetronomeController(this);
+		
 		
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
@@ -302,6 +303,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		player = new MidiPlayer(this);
+		volumeListener = new VolumeListener(this,new Handler(), player);
+		getApplicationContext().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, volumeListener );
 		piano = new Piano(this);
 
 		topLayout = getLayoutInflater().inflate(R.layout.main_top, layout, false);
@@ -371,35 +374,33 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		layout.requestLayout();
 		sheet.callOnDraw();
 
-		sheet.setOnTouchListener(new View.OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				int action = event.getAction() & MotionEvent.ACTION_MASK;
-				boolean result = sheet.getScrollAnimation().onTouchEvent(event);
-				switch (action) {
-				case MotionEvent.ACTION_DOWN:
-					// If we touch while music is playing, stop the midi player
-					if (player != null && player.playstate == player.playing) {
-						player.Pause();
-						if (isAudioRecordingAndPlayingMusic) {
-							stopAudioRecordingAndPlayingMusic();
-						}
-						sheet.getScrollAnimation().stopMotion();
-					}
-					return result;
-
-				case MotionEvent.ACTION_MOVE:
-					return result;
-
-				case MotionEvent.ACTION_UP:
-					return result;
-
-				default:
-					return false;
-				}
-			}
-		});
+//		sheet.setOnTouchListener(new View.OnTouchListener() {
+//
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				int action = event.getAction() & MotionEvent.ACTION_MASK;
+//				boolean result = sheet.getScrollAnimation().onTouchEvent(event);
+//				switch (action) {
+//				case MotionEvent.ACTION_DOWN:
+//					// If we touch while music is playing, stop the midi player
+//					if (player != null && player.playstate == player.playing) {
+//						player.Pause();
+//						stopAudioRecordingAndPlayingMusic();
+//						sheet.getScrollAnimation().stopMotion();
+//					}
+//					return result;
+//
+//				case MotionEvent.ACTION_MOVE:
+//					return result;
+//
+//				case MotionEvent.ACTION_UP:
+//					return result;
+//
+//				default:
+//					return false;
+//				}
+//			}
+//		});
 	}
 
 	/** Always display this activity in landscape mode. */
@@ -422,7 +423,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.actionbar, menu);
-
+		
 		this.menu = menu;
 
 		/******************************* METRONOME ACTION VIEW **********************************/
@@ -488,9 +489,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			showYoutube();
 			return true;
 		case R.id.video:
-			if (surfaceView.getVisibility() != View.VISIBLE) {
-				surfaceView.setVisibility(View.VISIBLE);
-			}
+			surfaceView.setVisibility(View.VISIBLE);
 			topLayout.setVisibility(View.VISIBLE);
 			return true;
 		case R.id.startVideoRecording:
@@ -512,48 +511,33 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 			return true;
 		case R.id.stopVideoRecording:
-			if (isVideoRecording) {
 				stopVideoRecording();
 				surfaceView.setVisibility(View.GONE);
-			} else {
-				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
-			}
-			topLayout.setVisibility(View.GONE);
+				topLayout.setVisibility(View.GONE);
 			return true;
 		case R.id.replayVideoRecording:
-			if (!isVideoRecording && !isAudioRecording && existVideoRecord) {
 				replayVideoRecording();
-			} else {
-				Toast.makeText(context, "No Recent Video Record", Toast.LENGTH_SHORT).show();
-			}
 			return true;
 		case R.id.switchCamera:
 			front = !front;
-			surfaceView.setVisibility(View.VISIBLE);
+			if (front) {
+				cameraSide = "Front";
+			}
+			else {
+				cameraSide = "Back";
+			}
+			Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
 			return true;
 		case R.id.startAudioRecording:
-			if (!isVideoRecording && !isAudioRecording) {
 				startAudioRecording();
-			} else {
-				Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
-			}
 			return true;
 		case R.id.stopAudioRecording:
-			if (isAudioRecording) {
 				stopAudioRecording();
-			} else {
-				Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
-			}
 			return true;
 		case R.id.replayAudioRecording:
-			if (!isVideoRecording && !isAudioRecording && existAudioRecord) {
 				playAudio();
-			} else {
-				Toast.makeText(context, "No Recent Audio Record", Toast.LENGTH_SHORT).show();
-			}
 			return true;
 		case R.id.pauseReplayAudioRecording:
-			Toast.makeText(context, "Pausing replay", Toast.LENGTH_SHORT).show();
 			pauseAudio();
 			return true;
 		default:
@@ -761,9 +745,20 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			player.Pause();
 		}
 		super.onPause();
+		
+		stopAudioRecordingAndPlayingMusic();
+		
+		if (isAudioRecording) {
+			stopAudioRecording();
+		}
+		
+		if (isVideoRecording) {
+			stopVideoRecording();
+		}
+		
 		mp.stop();
 		metronomeController.stopMetronome();
-
+		getApplicationContext().getContentResolver().unregisterContentObserver(volumeListener);
 	}
 
 	/**********************************************************************************************************/
@@ -788,74 +783,90 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	}
 
 	private void startAudioRecording() {
-		recorder = new MediaRecorder();
-		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-		recorder.setOutputFormat(output_formats[currentFormat]);
-		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-		recorder.setOutputFile(getFilenameAudio());
-		recorder.setOnErrorListener(errorListener);
-		recorder.setOnInfoListener(infoListener);
-		try {
-			Toast.makeText(context, "Start Audio Recording", Toast.LENGTH_SHORT).show();
-			recorder.prepare();
-			recorder.start();
-			isAudioRecording = true;
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!isVideoRecording && !isAudioRecording) {
+			recorder = new MediaRecorder();
+			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+			recorder.setOutputFormat(output_formats[currentFormat]);
+			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+			recorder.setOutputFile(getFilenameAudio());
+			recorder.setOnErrorListener(errorListener);
+			recorder.setOnInfoListener(infoListener);
+			try {
+				Toast.makeText(context, "Start Audio Recording", Toast.LENGTH_SHORT).show();
+				recorder.prepare();
+				recorder.start();
+				isAudioRecording = true;
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
 		}
 	}
 
 	private void stopAudioRecording() {
-		isAudioRecording = false;
-		if (null != recorder) {
-			Toast.makeText(context, "Stop Audio Recording", Toast.LENGTH_SHORT).show();
-			recorder.stop();
-			recorder.reset();
-			recorder.release();
-			recorder = null;
-			existAudioRecord = true;
+		if (isAudioRecording) {
+			if (null != recorder) {
+				Toast.makeText(context, "Stop Audio Recording", Toast.LENGTH_SHORT).show();
+				recorder.stop();
+				recorder.reset();
+				recorder.release();
+				recorder = null;
+				existAudioRecord = true;
+				isAudioRecording = false;
+			}
+		} else {
+			Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
 		}
 	}
 
 	private void playAudio() {
-		if (!mp.isPlaying()) {
-			if (audioPaused == false) {
-				mp.reset();
-				try {
-					mp.setDataSource(pathAudio + "/" + fileName + ext);
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		if (!isVideoRecording && !isAudioRecording && existAudioRecord) {
+			if (!mp.isPlaying()) {
+				if (audioPaused == false) {
+					mp.reset();
+					try {
+						mp.setDataSource(pathAudio + "/" + fileName + ext);
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						mp.prepare();
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				try {
-					mp.prepare();
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				audioPaused = false;
+				Toast.makeText(SheetMusicActivity.this, "Play Last Audio Record", Toast.LENGTH_SHORT).show();
+				mp.start();
 			}
-			audioPaused = false;
-			Toast.makeText(SheetMusicActivity.this, "Play Last Audio Record", Toast.LENGTH_SHORT).show();
-			mp.start();
+		} else {
+			Toast.makeText(context, "No Recent Audio Record", Toast.LENGTH_SHORT).show();
 		}
 	}
 
 	private void pauseAudio() {
 		if (mp.isPlaying()) {
+			Toast.makeText(context, "Pausing Replay", Toast.LENGTH_SHORT).show();
 			mp.pause();
 			audioPaused = true;
 			Toast.makeText(SheetMusicActivity.this, "Last Audio Record Paused", Toast.LENGTH_SHORT).show();
+		}
+		else {
+			Toast.makeText(context, "Not Playing", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -877,7 +888,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/*** Video Recording Functions ***/
 
-	protected void startVideoRecording() throws IOException {
+	private void startVideoRecording() throws IOException {
 		mrec = new MediaRecorder(); // Works well
 		mCamera.stopPreview();
 		mCamera.unlock();
@@ -901,12 +912,16 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		mrec.start();
 	}
 
-	protected void stopVideoRecording() {
-		isVideoRecording = false;
-		existVideoRecord = true;
-		mrec.stop();
-		releaseMediaRecorder();
-		releaseCamera();
+	private void stopVideoRecording() {
+		if (isVideoRecording) {
+			existVideoRecord = true;
+			mrec.stop();
+			releaseMediaRecorder();
+			releaseCamera();
+			isVideoRecording = false;
+		} else {
+			Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void releaseMediaRecorder() {
@@ -933,12 +948,16 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	}
 
 	private void replayVideoRecording() {
-		String filename = fileName + ext;
-		String lastvideo = pathVideo + "/" + filename;
-		Intent intentToPlayVideo = new Intent(Intent.ACTION_VIEW);
-		intentToPlayVideo.setDataAndType(Uri.parse(lastvideo), "video/*");
-		startActivity(intentToPlayVideo);
-		this.finish();
+		if (!isVideoRecording && !isAudioRecording && existVideoRecord) {
+			String filename = fileName + ext;
+			String lastvideo = pathVideo + "/" + filename;
+			Intent intentToPlayVideo = new Intent(Intent.ACTION_VIEW);
+			intentToPlayVideo.setDataAndType(Uri.parse(lastvideo), "video/*");
+			startActivity(intentToPlayVideo);
+			this.finish();
+		} else {
+			Toast.makeText(context, "No Recent Video Record", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private String getFilenameVideo() {
@@ -1000,28 +1019,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		int action = event.getAction();
 		switch (keyCode) {
-		case KeyEvent.KEYCODE_VOLUME_UP:
-			if (action == KeyEvent.ACTION_UP) {
-				if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-					player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-				}
-				if (player.mute && player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-					player.unmute();
-				}
-			}
-			return true;
-		case KeyEvent.KEYCODE_VOLUME_DOWN:
-			if (action == KeyEvent.ACTION_UP) {
-				// Volume down key detected
-				if (player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0) {
-					player.volume = player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-				}
-				if (!player.mute && player.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
-					player.mute();
-				}
-				return true;
-			}
-			return true;
 		case KeyEvent.KEYCODE_MENU:
 			if (action == KeyEvent.ACTION_UP && menu != null && menu.findItem(R.id.settings) != null) {
 				menu.performIdentifierAction(R.id.settings, 0);
@@ -1034,13 +1031,11 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	@Override
 	public boolean onKeyOther(View view, Editable text, KeyEvent event) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void clearMetaKeyState(View view, Editable content, int states) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -1068,13 +1063,11 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	@Override
 	public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -1138,12 +1131,14 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	}
 	/** Stop Audio Recording and Stop the Media Player */
 	private void stopAudioRecordingAndPlayingMusic() {
-		isAudioRecordingAndPlayingMusic = false;
-		player.Pause();
-		player.player.stop();	// these two lines are here to prevent the player from
-        player.player.reset();	// playing outloud the very last note supposedly played
-		stopAudioRecording();
-		player.unmute();
+		if (isAudioRecordingAndPlayingMusic) {
+			player.Pause();
+			player.player.stop();	// these two lines are here to prevent the player from
+	        player.player.reset();	// playing outloud the very last note supposedly played
+			stopAudioRecording();
+			player.unmute();
+			isAudioRecordingAndPlayingMusic = false;
+		}
 	}
     
     /*** End of Recording and Playing Functions ***/

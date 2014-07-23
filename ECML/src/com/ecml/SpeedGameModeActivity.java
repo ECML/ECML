@@ -35,7 +35,14 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					ChooseSongGameActivity.openFile(ECML.song);
+					if (ECML.song != null) {
+						ChooseSongActivity.openFile(ECML.song);
+					}
+					else {
+						Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+						intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
+						startActivity(intent);
+					}
 				}
 			});
 
@@ -67,8 +74,8 @@ public class SpeedGameModeActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					
-					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
-					intent.putExtra(ChooseSongGameActivity.niveau,"1");
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"1");
 					startActivity(intent);
 				}
 			});
@@ -79,8 +86,8 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
-					intent.putExtra(ChooseSongGameActivity.niveau,"2");
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"2");
 					startActivity(intent);
 				}
 			});
@@ -91,8 +98,8 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
-					intent.putExtra(ChooseSongGameActivity.niveau,"3");
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"3");
 					startActivity(intent);
 				}
 			});
@@ -103,8 +110,8 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongGameActivity.class);
-					intent.putExtra(ChooseSongGameActivity.niveau,"4");
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"4");
 					startActivity(intent);
 				}
 			});

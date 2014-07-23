@@ -12,16 +12,18 @@
 
 package com.ecml;
 
-import java.io.*;
-import java.util.*;
-import android.app.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import android.app.ListActivity;
+import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.*;
-import android.widget.*;
-import android.util.Log;
-import android.view.*;
-import android.content.*;
-import com.ecml.R;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
 
 
 
@@ -38,7 +40,6 @@ public class FileBrowserActivity extends ListActivity {
         super.onCreate(state);
         setTheme(android.R.style.Theme_Holo_Light);
         setContentView(R.layout.file_browser);
-        setTitle("MidiSheetMusic: Browse Files");
     }
 
     @Override

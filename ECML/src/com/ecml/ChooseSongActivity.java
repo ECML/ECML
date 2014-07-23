@@ -12,18 +12,23 @@
 
 package com.ecml;
 
-import android.app.*;
-import android.os.*;
-import android.widget.*;
-import android.util.Log;
-import android.content.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import org.json.*;
-
-import android.graphics.*;
-import android.graphics.drawable.*;
-
-import com.ecml.R;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.TabActivity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 
 /** @class ChooseSongActivity
  * The ChooseSongActivity class is a tabbed view for choosing a song to play.
@@ -32,9 +37,12 @@ import com.ecml.R;
  * - Recent (RecentSongsActivity) : Display of list of recently opened songs
  * - Browse (FileBrowserActivity) : Let the user browse the filesystem for songs
  */
-public class ChooseSongActivity extends TabActivity {
+public class ChooseSongActivity extends TabActivity implements OnTabChangeListener {
 
+	private Intent intent;
     static ChooseSongActivity globalActivity;
+	public static final String  niveau = "niveau";
+    private ActionBar ab;
 
     @Override
     public void onCreate(Bundle state) {
@@ -44,10 +52,11 @@ public class ChooseSongActivity extends TabActivity {
         super.onCreate(state);
         setTheme(android.R.style.Theme_Holo_Light);
         
-      //Set Actionbar color
-        ActionBar ab = getActionBar();
+        //Set Actionbar color
+        ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
+        setTitle("ECML: Choose Song");
 
        
         Bitmap allFilesIcon = BitmapFactory.decodeResource(this.getResources(), R.drawable.allfilesicon);
@@ -67,7 +76,22 @@ public class ChooseSongActivity extends TabActivity {
         tabHost.addTab(tabHost.newTabSpec("Browse")
                 .setIndicator("Browse", new BitmapDrawable(browseFilesIcon))
                 .setContent(new Intent(this, FileBrowserActivity.class)));
+        
+        tabHost.setOnTabChangedListener(this);
 
+    }
+    
+    @Override
+    public void onTabChanged(String tabId) {
+    	if("All".equals(tabId)) {
+    		setTitle("ECML: Choose Song");
+    	}
+    	if("Recent".equals(tabId)) {
+    		setTitle("ECML: Recent Songs");
+    	}
+    	if("Browse".equals(tabId)) {
+    		setTitle("ECML: Browse Files");
+    	}
     }
 
     public static void openFile(FileUri file) {
@@ -80,10 +104,51 @@ public class ChooseSongActivity extends TabActivity {
             ChooseSongActivity.showErrorDialog("Error: Unable to open song: " + file.toString(), this);
             return;
         }
-        updateRecentFile(file);
-        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
-        intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
-        startActivity(intent);
+
+        ECML.song = file;
+        
+        String choice = this.getIntent().getStringExtra(niveau);
+        
+        if ( choice.equals("1"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
+            intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if (choice.equals("2"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl2.class);
+            intent.putExtra(SpeedGamelvl2.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if ( choice.equals("3"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl3.class);
+            intent.putExtra(SpeedGamelvl3.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if ( choice.equals("4"))
+        {
+        	updateRecentFile(file);
+            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl4.class);
+            intent.putExtra(SpeedGamelvl4.MidiTitleID, file.toString());
+            startActivity(intent);
+        }
+        else if ( choice.equals("chooseSong")) {
+	        updateRecentFile(file);
+	        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
+	        intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
+	        startActivity(intent);
+        }
+        else if ( choice.equals("readingBeginner")) {
+	        updateRecentFile(file);
+	        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
+	        intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
+	        startActivity(intent);
+        }
     }
 
 
@@ -133,5 +198,6 @@ public class ChooseSongActivity extends TabActivity {
         catch (Exception e) {
         }
     }
+    
 }
 
