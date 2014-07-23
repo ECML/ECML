@@ -1,14 +1,8 @@
 package com.calendar;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Date;
-import java.util.TimeZone;
-import java.text.SimpleDateFormat;
+
 
 import com.ecml.R;
-import com.ecml.R.color;
-import com.ecml.R.layout;
 
 import android.app.ActionBar;
 import android.app.Activity;

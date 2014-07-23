@@ -120,10 +120,10 @@
         <activity android:name="ReadingGameModeActivity"></activity>
         <activity android:name="ReadingGameBeginner"></activity>
         <activity android:name="ReadingGameNormal"></activity>
-        <activity android:name="CalendarPreferencesActivity"></activity>
-        <activity android:name="CalendarAddEventsActivity"></activity>
-        <activity android:name="CalendarRehearsalProgramActivity"></activity>
-        <activity android:name="CalendarDisplayActivity"></activity>
+        <activity android:name="com.calendar.CalendarPreferencesActivity"></activity>
+        <activity android:name="com.calendar.CalendarAddEventsActivity"></activity>
+        <activity android:name="com.calendar.CalendarRehearsalProgramActivity"></activity>
+        <activity android:name="com.calendar.CalendarDisplayActivity"></activity>
     </application>
 
 </manifest>
