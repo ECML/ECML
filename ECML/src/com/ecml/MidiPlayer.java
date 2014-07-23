@@ -162,6 +162,9 @@ public class MidiPlayer extends LinearLayout {
         audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         mute = (volume == 0);
+        if (volume == 0) {
+        	volume = 1;
+        }
         
         CreateButtons();
 
