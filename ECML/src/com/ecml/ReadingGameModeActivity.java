@@ -44,8 +44,7 @@ public class ReadingGameModeActivity extends Activity {
 
 		// Help button
 		Button help = (Button) findViewById(R.id.help);
-		Button beginner = (Button) findViewById(R.id.beginner);
-		beginner.setOnClickListener(new View.OnClickListener() {
+		help.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -65,7 +64,8 @@ public class ReadingGameModeActivity extends Activity {
 		});
 
 		// Beginner button
-		help.setOnClickListener(new View.OnClickListener() {
+		Button beginner = (Button) findViewById(R.id.beginner);
+		beginner.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
