@@ -151,8 +151,14 @@ public abstract class SpeedGamelvl extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
-
+				if (ECML.song != null) {
+					ChooseSongActivity.openFile(ECML.song);
+				}
+				else {
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
+					startActivity(intent);
+				}
 			}
 		});
 
