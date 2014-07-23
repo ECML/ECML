@@ -107,6 +107,8 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
         
         String choice = this.getIntent().getStringExtra(niveau);
         
+        ECML.song = file;
+        
         if ( choice.equals("1"))
         {
         	updateRecentFile(file);
@@ -139,6 +141,12 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
 	        updateRecentFile(file);
 	        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
 	        intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
+	        startActivity(intent);
+        }
+        else if ( choice.equals("readingBeginner")) {
+	        updateRecentFile(file);
+	        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
+	        intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
 	        startActivity(intent);
         }
     }

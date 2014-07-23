@@ -51,7 +51,14 @@ public class GameActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				ChooseSongActivity.openFile(ECML.song);
+				if (ECML.song != null) {
+					ChooseSongActivity.openFile(ECML.song);
+				}
+				else {
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
+					startActivity(intent);
+				}
 			}
 		});
 	}

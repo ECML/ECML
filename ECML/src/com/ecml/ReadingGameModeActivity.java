@@ -31,21 +31,21 @@ public class ReadingGameModeActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// if (ECML.song == null){
-				// // Uri uri =
-				// Uri.parse("file:///android_asset/Easy_Songs_Brahms_Lullaby.mid");
-				// // String title = "Easy_Songs_Brahms_Lullaby.mid";
-				// // FileUri file = new FileUri(uri, title);
-				// //
-				// ChooseSongActivity.openFile(file);
-				// }
-				ChooseSongActivity.openFile(ECML.song);
+				if (ECML.song != null) {
+					ChooseSongActivity.openFile(ECML.song);
+				}
+				else {
+					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
+					startActivity(intent);
+				}
 			}
 		});
 
 		// Help button
 		Button help = (Button) findViewById(R.id.help);
-		help.setOnClickListener(new View.OnClickListener() {
+		Button beginner = (Button) findViewById(R.id.beginner);
+		beginner.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -65,12 +65,12 @@ public class ReadingGameModeActivity extends Activity {
 		});
 
 		// Beginner button
-		Button beginner = (Button) findViewById(R.id.beginner);
-		beginner.setOnClickListener(new View.OnClickListener() {
+		help.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ReadingGameBeginner.class);
+				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+				intent.putExtra(ChooseSongActivity.niveau,"readingBeginner");
 				startActivity(intent);
 			}
 		});
@@ -81,8 +81,8 @@ public class ReadingGameModeActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ReadingGameNormal.class);
-				startActivity(intent);
+					Intent intent = new Intent(getApplicationContext(), ReadingGameNormal.class);
+					startActivity(intent);
 			}
 		});
 	}
