@@ -1,7 +1,11 @@
-package com.ecml;
+package com.calendar;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import com.ecml.R;
+import com.ecml.R.id;
+import com.ecml.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;

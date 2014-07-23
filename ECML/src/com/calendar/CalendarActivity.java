@@ -1,10 +1,14 @@
-package com.ecml;
+package com.calendar;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.text.SimpleDateFormat;
+
+import com.ecml.R;
+import com.ecml.R.color;
+import com.ecml.R.layout;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -68,11 +72,10 @@ public class CalendarActivity extends TabActivity {
 
 		// Set the Tab name and Activity
 		// that will be opened when particular Tab will be selected
+		Intent intentCalendar;
+		intentCalendar = new Intent().setClass(this, CalendarDisplayActivity.class);
 		tab1.setIndicator("Display calendar");
-		Intent intentDisplay;
-		intentDisplay = new Intent(android.content.Intent.ACTION_VIEW);
-		intentDisplay.setData(Uri.parse("http://www.youtube.com"));
-		tab1.setContent(intentDisplay);
+		tab1.setContent(intentCalendar);
 
 		tab2.setIndicator("Choose a Rehearsal program");
 		tab2.setContent(new Intent(this, CalendarRehearsalProgramActivity.class));
@@ -90,26 +93,6 @@ public class CalendarActivity extends TabActivity {
 		tabHost.addTab(tab2);
 		tabHost.addTab(tab3);
 		tabHost.addTab(tab4);
-
-		// // Display calendar button
-		// Button calendar = (Button) findViewById(R.id.calendar);
-		// calendar.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// // A date-time specified in milliseconds since the epoch.
-		// long startMillis = 0;
-		// Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
-		//
-		//
-		// builder.appendPath("time");
-		// ContentUris.appendId(builder, startMillis);
-		//
-		// Intent intent = new
-		// Intent(Intent.ACTION_VIEW).setData(builder.build());
-		// startActivity(intent);
-		// }
-		// });
 
 	}
 }

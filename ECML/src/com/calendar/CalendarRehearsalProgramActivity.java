@@ -1,4 +1,8 @@
-package com.ecml;
+package com.calendar;
+
+import com.ecml.R;
+import com.ecml.R.id;
+import com.ecml.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;

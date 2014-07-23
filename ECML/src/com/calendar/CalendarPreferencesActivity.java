@@ -1,4 +1,4 @@
-package com.ecml;
+package com.calendar;
 
 import android.app.*;
 import android.content.DialogInterface;
@@ -11,7 +11,9 @@ import android.widget.TimePicker;
 import android.graphics.*;
 import android.graphics.drawable.ColorDrawable;
 
+import com.ecml.MidiOptions;
 import com.ecml.R;
+import com.ecml.TimePreference;
 
 
 /** @class CalendarPreferencesActivity
