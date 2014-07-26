@@ -31,17 +31,17 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
 /** @class ChooseSongActivity
- * The ChooseSongActivity class is a tabbed view for choosing a song to play.
- * There are 3 tabs:
- * - All    (AllSongsActivity)    : Display a list of all songs
- * - Recent (RecentSongsActivity) : Display of list of recently opened songs
+ * The ChooseSongActivity class is a tabbed view for choosing a song to play.<br>
+ * There are 3 tabs:<br>
+ * - All    (AllSongsActivity)    : Display a list of all songs<br>
+ * - Recent (RecentSongsActivity) : Display of list of recently opened songs<br>
  * - Browse (FileBrowserActivity) : Let the user browse the filesystem for songs
  */
 public class ChooseSongActivity extends TabActivity implements OnTabChangeListener {
 
 	private Intent intent;
     static ChooseSongActivity globalActivity;
-	public static final String  niveau = "niveau";
+	public static final String  niveau = "niveau"; /* Should be passed as a parameter ? */
     private ActionBar ab;
 
     @Override
@@ -177,7 +177,7 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
             recentFiles.put(recentFileJson);
             for (int i = 0; i < prevRecentFiles.length(); i++) {
                 if (i >= 10) {
-                    break; // only store 10 most recent files
+                    break; // only store the 10 most recent files
                 }
                 JSONObject file = prevRecentFiles.getJSONObject(i); 
                 if (!FileUri.equalJson(recentFileJson, file)) {

@@ -31,10 +31,15 @@ public class ColorView extends View {
 	private Paint[] colorRings; /* Rings of color to display */
 	private Paint colorPreview; /* Small circle showing preview of color */
 	private int selectedColor; 	/* Currently selected color */
-
 	private int center; 		/* The center of the circle */
 	private int circleRadius; 	/* The radius of the circle */
+	private static final float PI = 3.1415926f; /* Approximation of Pi */
 
+	/** Create a color view
+	 * 
+	 * @param context The context
+	 * @param color The current color used for shading notes
+	 */
 	public ColorView(Context context, int color) {
 		super(context);
 		center = 100;
@@ -42,11 +47,12 @@ public class ColorView extends View {
 		selectedColor = color;
 	}
 
+	/** Get the current selected color */ 
 	public int getSelectedColor() {
 		return selectedColor;
 	}
 
-	/*
+	/**
 	 * Return the color wheel colors, for the given percent.
 	 * Percent is from 0.0 to 1.0, from center to outer-rim.
 	 * 0.0 is white
@@ -70,7 +76,7 @@ public class ColorView extends View {
 		return colors;
 	}
 
-	/*
+	/**
 	 * Create the color wheel.
 	 * Create 64 color rings, where each rings displays a rainbow gradient.
 	 */
@@ -124,12 +130,21 @@ public class ColorView extends View {
 		initColorRings();
 	}
 
-	/* Return the average of the two colors, using the given percent */
+	/** Return the average of the two colors, using the given percent
+	 * 
+	 * @param color1
+	 * @param color2
+	 * @param percent
+	 */
 	private int average(int color1, int color2, float percent) {
 		return color1 + java.lang.Math.round(percent * (color2 - color1));
 	}
 
-	/* Given the radius and angle (from 0 to 1) determine the color selected. */
+	/** Given the radius and angle (from 0 to 1) determine the color selected.
+	 * 
+	 * @param radius
+	 * @param angleUnit
+	 */
 	private int calculateColor(float radius, float angleUnit) {
 		int[] colors = colorsForRing(radius / circleRadius);
 		if (angleUnit <= 0) {
@@ -154,7 +169,6 @@ public class ColorView extends View {
 		return Color.argb(a, r, g, b);
 	}
 
-	private static final float PI = 3.1415926f;
 
 
 	/**
@@ -179,7 +193,9 @@ public class ColorView extends View {
 			if (angleUnit < 0) {
 				angleUnit += 1;
 			}
+			// Update the selected color after calculation
 			selectedColor = calculateColor(radius, angleUnit);
+			// Display the selected color
 			colorPreview.setColor(selectedColor);
 			invalidate();
 			break;

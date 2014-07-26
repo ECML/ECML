@@ -96,7 +96,7 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
         this.activity = null;
     }
     
-    /* Given a directory, add MIDI files (ending in .mid) to the songlist.
+    /** Given a directory, add MIDI files (ending in .mid) to the songlist.
      * If the directory contains subdirectories, call this method recursively.
      */
     private void loadMidiFilesFromDirectory(File dir, int depth) throws IOException {
@@ -147,7 +147,7 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
  * songs to choose from.  The list is created from the songs
  * shipped with MidiSheetMusic (in the assets directory), and 
  * also by searching for midi files in the internal/external 
- * device storage.
+ * device storage.<br>
  *
  * When a song is chosen, this calls the SheetMusicAcitivty, passing
  * the raw midi byte[] data as a parameter in the Intent.
