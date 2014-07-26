@@ -78,17 +78,18 @@ import com.metronome.Metronome;
 /**
  * @class SheetMusicActivity
  * 
- *        The SheetMusicActivity is the main activity.<br>
- *        The main components are:<br>
- *        - MidiPlayer : The buttons and speed bar at the top.<br>
- *        - Piano : For highlighting the piano notes during playback.<br>
- *        - SheetMusic : For highlighting the sheet music notes during playback.
+ * The SheetMusicActivity is the main activity.<br>
+ * The main components are:<br>
+ * - MidiPlayer : The buttons and speed bar at the top.<br>
+ * - Piano : For highlighting the piano notes during playback.<br>
+ * - SheetMusic : For highlighting the sheet music notes during playback.
  * 
  */
 
 public class SheetMusicActivity extends Activity implements SurfaceHolder.Callback, KeyListener {
 
 	/******************************************* MidiSheet variables ******************************************/
+	
 	public static final String MidiTitleID = "MidiTitleID";
 	public static final int settingsRequestCode = 1;
 
@@ -117,14 +118,15 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private String ext = ".mp4";	/* Extension of Audio Record files */
 
 	private static final String AUDIO_RECORDER_FOLDER = "AudioRecords";	/* Audio Records file name */
-	private MediaRecorder audioMediaRecorder;								/* Media Recorder */
+	private MediaRecorder audioMediaRecorder;							/* Audio Media Recorder */
 	private int output_format = MediaRecorder.OutputFormat.MPEG_4;		/* Output format (mp4) */
 	private MediaPlayer mediaPlayer = new MediaPlayer();				/* Media Player */
 
-	private boolean isAudioRecording;					/* Whether or not the Media Recorder is recording */
-	private boolean isAudioRecordingAndPlayingMusic;
 	private boolean existAudioRecord;					/* Whether or not an Audio Record already exists */
 	private boolean isAudioReplayPaused;				/* Whether or not the Media Player is paused */
+	private boolean isAudioRecording;					/* Whether or not the Media Recorder is recording */
+	private boolean isAudioRecordingAndPlayingMusic;	/* Whether or not the Media Record is recording while
+														   the music is playing */
 
 	private Handler timer;
 
@@ -249,7 +251,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		}
 
-		// Create the folder containing the music sheets ( in the library)
+		// Create the folder containing the music sheets (in the library)
 		File musicSheets = new File(sdcardPath + ECMLPath.concat(MUSIC_SHEET_FOLDER));
 		if (!musicSheets.exists()) {
 			if (!musicSheets.mkdirs()) {
@@ -257,7 +259,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		}
 
-		// Create the folder containing the records ( in the library)
+		// Create the folder containing the audio records (in the library)
 		File records = new File(sdcardPath + ECMLPath.concat(AUDIO_RECORDER_FOLDER));
 		if (!records.exists()) {
 			if (!records.mkdirs()) {
@@ -265,7 +267,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			}
 		}
 
-		// create the folder containing the video records
+		// Create the folder containing the video records
 		File videorecords = new File(sdcardPath + ECMLPath.concat(VIDEO_RECORDER_FOLDER));
 		if (!videorecords.exists()) {
 			if (!videorecords.mkdirs()) {
@@ -292,12 +294,12 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	} // END ONCREATE
 
-	/* Create the MidiPlayer and Piano views */
+	/** Create the MidiPlayer and Piano views */
 	void createView() {
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		player = new MidiPlayer(this);
-		volumeListener = new VolumeListener(this,new Handler(), player);
+		volumeListener = new VolumeListener(this, new Handler(), player);
 		getApplicationContext().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, volumeListener );
 		piano = new Piano(this);
 
@@ -376,8 +378,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				boolean result = sheet.getScrollAnimation().onTouchEvent(event);
 				switch (action) {
 				case MotionEvent.ACTION_DOWN:
-					// If we touch while music is playing, stop the midi player
+					// If we touch while music is playing, pause the midi player
 					if (player != null && player.playstate == player.playing) {
+						// If the user was recording himself while the music was playing
+						// pause the midi player and also stop recording
 						player.Pause();
 						stopAudioRecordingAndPlayingMusic();
 						sheet.getScrollAnimation().stopMotion();
@@ -528,14 +532,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				replayVideoRecording();
 			return true;
 		case R.id.switchCamera:
-			front = !front;
-			if (front) {
-				cameraSide = "Front";
-			}
-			else {
-				cameraSide = "Back";
-			}
-			Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
+			switchCamera();
 			return true;
 		case R.id.startAudioRecording:
 				startAudioRecording();
@@ -1044,6 +1041,18 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 		return cam;
 
+	}
+	
+	/** Switches the camera from front to back and vice versa */
+	private void switchCamera() {
+		front = !front;
+		if (front) {
+			cameraSide = "Front";
+		}
+		else {
+			cameraSide = "Back";
+		}
+		Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
 	}
 
 	/************************************* End of Video Recording Functions ***********************************/

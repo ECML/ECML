@@ -1,4 +1,4 @@
-package com.ecml;
+package com.recording;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +19,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.ecml.R;
 
 public class VideoRecordingActivity extends Activity {
 

@@ -23,6 +23,8 @@ import android.widget.ImageView;
 
 import com.calendar.CalendarActivity;
 import com.metronome.MetronomeActivity;
+import com.recording.AudioRecordingActivity;
+import com.recording.VideoRecordingActivity;
 
 /**
  * @class ECMLActivity

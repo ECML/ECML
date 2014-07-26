@@ -1,4 +1,4 @@
-package com.ecml;
+package com.recording;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,8 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.ecml.R;
 
 /** @class AudioRecordingActivity
  * 
