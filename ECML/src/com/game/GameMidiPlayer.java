@@ -5,14 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.ecml.MidiFile;
-import com.ecml.MidiFileException;
-import com.ecml.MidiOptions;
-import com.ecml.MidiPlayer;
-import com.ecml.Piano;
-import com.ecml.R;
-import com.ecml.SheetMusic;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -28,6 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.ecml.MidiFile;
+import com.ecml.MidiFileException;
+import com.ecml.MidiOptions;
+import com.ecml.MidiPlayer;
+import com.ecml.Piano;
+import com.ecml.R;
+import com.ecml.SheetMusic;
 
 public class GameMidiPlayer extends LinearLayout {
 	

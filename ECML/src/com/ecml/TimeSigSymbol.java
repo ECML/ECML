@@ -12,10 +12,13 @@
 
 package com.ecml;
 
-import android.graphics.*;
-import android.content.*;
-import android.content.res.*;
-import com.ecml.R;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 
 
 /** @class TimeSigSymbol

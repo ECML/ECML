@@ -1,8 +1,6 @@
 package com.calendar;
 
 
-import com.ecml.R;
-
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -12,6 +10,8 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
 import android.view.View;
 import android.widget.Button;
+
+import com.ecml.R;
 
 public class CalendarDisplayActivity extends Activity {
 

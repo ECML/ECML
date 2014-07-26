@@ -13,7 +13,6 @@
 
 package com.ecml;
 
-import java.util.*;
 
 
 /** @class LyricSymbol

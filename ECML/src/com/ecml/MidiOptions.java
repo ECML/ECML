@@ -13,10 +13,13 @@
 
 package com.ecml;
 
-import java.io.*;
-import android.util.Log;
-import org.json.*;
-import android.graphics.*;
+import java.io.Serializable;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.graphics.Color;
 
 /** @class MidiOptions
  * The MidiOptions class contains the available options for

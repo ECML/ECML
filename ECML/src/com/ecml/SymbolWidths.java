@@ -13,7 +13,8 @@
 
 package com.ecml;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /** @class SymbolWidths
  * The SymbolWidths class is used to vertically align notes in different

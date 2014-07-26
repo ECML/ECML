@@ -13,9 +13,11 @@
 
 package com.ecml;
 
-import java.io.*;
-import java.util.*;
-import android.util.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /** @class Pair - A pair of ints */
 class PairInt {

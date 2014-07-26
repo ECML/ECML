@@ -1,8 +1,8 @@
 package com.game;
 
-import android.os.Build;
-
 import java.util.Arrays;
+
+import android.os.Build;
 
 public final class DyWaPitchTrack {
     // Emulator can only do 8kHz. Device 44.1k.

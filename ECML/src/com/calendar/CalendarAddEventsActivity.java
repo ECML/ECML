@@ -3,20 +3,17 @@ package com.calendar;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import com.ecml.R;
-import com.ecml.R.id;
-import com.ecml.R.layout;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
-import android.text.format.Time;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.ecml.R;
 
 public class CalendarAddEventsActivity extends Activity {
 

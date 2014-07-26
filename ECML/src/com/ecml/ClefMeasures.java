@@ -13,7 +13,7 @@
 
 package com.ecml;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /** @class ClefMeasures
  * The ClefMeasures class is used to report what Clef (Treble or Bass) a
