@@ -6,8 +6,6 @@ import android.os.*;
 import android.preference.*;
 import android.graphics.*;
 
-import com.ecml.TimePreference;
-
 /**
  * @class CalendarPreferencesActivity The user can change settings for the
  *        calendar such as: - The preferred hour to start practice -

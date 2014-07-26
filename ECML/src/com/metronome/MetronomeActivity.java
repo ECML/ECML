@@ -1,4 +1,4 @@
-package com.ecml;
+package com.metronome;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -13,14 +13,31 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.metronome.MetronomeController;
+import com.ecml.R;
 
+/** @class MetronomeActivity
+ * 
+ * @author Nicolas and Anaïs
+ * <br>
+ * This activity includes a Metronome featuring a time signature which can vary from 0 to 9.<br>
+ * <p>You can control it by sliding the seek bar and by adding or removing 1 bpm to the tempo.<br>
+ * The Metronome used can vary from 1 to 200 bpm.<br>
+ * The default values are 60 bpm and no time signature.</p>
+ * Its volume depend on ring volume and not music volume.
+ */
 public class MetronomeActivity extends Activity {
 
-	MetronomeController metronomeController;	/* Metronome Controller */
-	SeekBar slider;								/* Slider that sets the tempo */
-	int accentBeep;								/* Time Signature */
-	TextView timeSignature;						/* The View for the Time Signature */
+	private Metronome metronome;		/* Metronome Controller */
+	private SeekBar slider;				/* Slider that sets the tempo */
+	private int accentBeep;				/* Time Signature */
+	private TextView timeSignature;		/* The View for the Time Signature */
+	private TextView startMetronome;	/* Start Button */
+	private TextView stopMetronome;		/* Stop Button */
+	private ImageView minus;			/* Minus Button*/ 
+	private ImageView plus;				/* Plus Button*/ 
+	private ActionBar actionBar;		/* Action Bar */
+	private PopupMenu popup;			/* Popup Menu for the Time Signature */
+	
 
 	/** Called when the activity is first created. */
 	@Override
@@ -29,18 +46,18 @@ public class MetronomeActivity extends Activity {
 		setTheme(android.R.style.Theme_Holo_Light);
 		
 		/* Action Bar */
-		ActionBar ab = getActionBar();
+		actionBar = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
+		actionBar.setBackgroundDrawable(colorDrawable);
 		/* End of Action bar */
 		
 		setContentView(R.layout.metronome);
 
 		/* Buttons */
-		TextView startMetronome = (TextView) findViewById(R.id.startMetronome);
-		TextView stopMetronome = (TextView) findViewById(R.id.stopMetronome);
-		ImageView minus = (ImageView) findViewById(R.id.minusTempo);
-		ImageView plus = (ImageView) findViewById(R.id.plusTempo);
+		startMetronome = (TextView) findViewById(R.id.startMetronome);
+		stopMetronome = (TextView) findViewById(R.id.stopMetronome);
+		minus = (ImageView) findViewById(R.id.minusTempo);
+		plus = (ImageView) findViewById(R.id.plusTempo);
 		timeSignature = (TextView) findViewById(R.id.timeSignature);
 		updateTimeSignatureView();
 		/* End of Buttons */
@@ -50,7 +67,7 @@ public class MetronomeActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				metronomeController.startMetronome();
+				metronome.startMetronome();
 			}
 		});
 
@@ -58,7 +75,7 @@ public class MetronomeActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				metronomeController.stopMetronome();
+				metronome.stopMetronome();
 			}
 		});
 
@@ -82,13 +99,13 @@ public class MetronomeActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				metronomeController.stopMetronome();
+				metronome.stopMetronome();
 				// Creating the instance of PopupMenu
-				PopupMenu popup = new PopupMenu(MetronomeActivity.this, timeSignature);
+				popup = new PopupMenu(MetronomeActivity.this, timeSignature);
 				// Inflating the Popup using xml file
 				popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
 				
-				// registering popup with OnMenuItemClickListener
+				// Registering popup with OnMenuItemClickListener
 				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 					public boolean onMenuItemClick(MenuItem item) {
 						if (item.getTitle() != "Off") {
@@ -98,8 +115,8 @@ public class MetronomeActivity extends Activity {
 							accentBeep = 0;
 						}
 						timeSignature.setText("Time Signature: " + item.getTitle());
-						metronomeController.setAccentBeep(accentBeep);
-						metronomeController.startMetronome();
+						metronome.setAccentBeep(accentBeep);
+						metronome.startMetronome();
 						return true;
 					}
 				});
@@ -109,7 +126,7 @@ public class MetronomeActivity extends Activity {
 		});
 		/* End of Buttons' Listeners */
 
-		metronomeController = new MetronomeController(this);
+		metronome = new Metronome(this);
 		setSliderListener();
 	}
 
@@ -117,16 +134,16 @@ public class MetronomeActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		metronomeController.stopMetronome();
+		metronome.stopMetronome();
 	}
 
-	/** Update the View for the Tempo */
+	/** Updates the View for the Tempo */
 	private void updateTempoView() {
 		TextView tempoView = ((TextView) findViewById(R.id.tempo));
-		tempoView.setText("Tempo: " + metronomeController.getTempo() + " bpm");
+		tempoView.setText("Tempo: " + metronome.getTempo() + " bpm");
 	}
 	
-	/** Update the View for the Time Signature */
+	/** Updates the View for the Time Signature */
 	private void updateTimeSignatureView() {
 		if (accentBeep == 0) {
 			timeSignature.setText("Time Signature: Off");
@@ -136,45 +153,46 @@ public class MetronomeActivity extends Activity {
 		}
 	}
 
-	/** Set the Slider Listener */
+	/** Sets the Slider Listener */
 	private void setSliderListener() {
 		slider = (SeekBar) findViewById(R.id.sliderMetronome);
-		slider.setMax(200 - 1); // -1 to avoid reaching 0
-		slider.setProgress(metronomeController.getTempo() - 1); // -1 to avoid reaching 0
+		slider.setMax(200 - 1); 						// -1 to avoid reaching 0
+		slider.setProgress(metronome.getTempo() - 1); 	// -1 to avoid reaching 0
 		updateTempoView();
 		
 		slider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				metronomeController.startMetronome();
+				metronome.startMetronome();
 			}
 
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				metronomeController.stopMetronome();
+				metronome.stopMetronome();
 			}
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				metronomeController.setTempo(progress); // updates the Variable Tempo of the Metronome
-				updateTempoView(); // updates the View
+				metronome.setTempo(progress); 	// updates the Variable Tempo of the Metronome
+				updateTempoView(); 				// updates the View
 			}
+			
 		});
 	}
 
-	/** Add 1 to the tempo */
+	/** Adds 1 to the tempo */
 	void plus() {
-		metronomeController.stopMetronome();
+		metronome.stopMetronome();
 		slider.setProgress(slider.getProgress() + 1); // onProgressChanged updates the Metronome and the View automatically
-		metronomeController.startMetronome();
+		metronome.startMetronome();
 	}
 
-	/** Remove 1 from the tempo */
+	/** Removes 1 from the tempo */
 	void minus() {
-		metronomeController.stopMetronome();
+		metronome.stopMetronome();
 		slider.setProgress(slider.getProgress() - 1); // onProgressChanged updates the Metronome and the View automatically
-		metronomeController.startMetronome();
+		metronome.startMetronome();
 	}
 
 }

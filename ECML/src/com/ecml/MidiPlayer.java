@@ -49,6 +49,10 @@ import android.widget.Toast;
  * - The Stop button
  * - The Fast Forward button
  * - The Playback speed bar
+ * - A - and + button for the speed bar
+ * - A Mute button
+ * - A Record button
+ * - A Replay button
  *
  * The sound of the midi file depends on
  * - The MidiOptions (taken from the menus)
@@ -81,22 +85,22 @@ public class MidiPlayer extends LinearLayout {
     static Bitmap plusImage;			 /** The + image for the speed bar */
     static Bitmap minusImage;			 /** The - image for the speed bar */
     
-    private ImageButton rewindButton;    /** The rewind button */
-    private ImageButton playButton;      /** The play/pause button */
-    private ImageButton stopButton;      /** The stop button */
-    private ImageButton fastFwdButton;   /** The fast forward button */
-    private ImageButton muteButton;      /** The mute button */
-    ImageButton pianoButton;	 		 /** The piano button */
-    ImageButton playAndRecordButton;	 /** The play and record button (mutes aswell) */
-    ImageButton playRecordButton;		 /** The replay record button */
-    private ImageButton plusButton;		 /** The + button for the speed bar */
-    private ImageButton minusButton;	 /** The - button for the speed bar */
-    private TextView speedText;          /** The "Speed %" label */
-    private SeekBar speedBar;    		 /** The seekbar for controlling the playback speed */
+    private ImageButton rewindButton;    		/** The rewind button */
+    private ImageButton playButton;      		/** The play/pause button */
+    private ImageButton stopButton;      		/** The stop button */
+    private ImageButton fastFwdButton;   		/** The fast forward button */
+    private ImageButton muteButton;      		/** The mute button */
+    private ImageButton pianoButton;	 		/** The piano button */
+    private ImageButton playAndRecordButton;	/** The synchronized play and record button (mutes aswell) */
+    private ImageButton playRecordButton;		/** The replay record button */
+    private ImageButton plusButton;		 		/** The + button for the speed bar */
+    private ImageButton minusButton;	 		/** The - button for the speed bar */
+    private TextView speedText;          		/** The "Speed %" label */
+    private SeekBar speedBar;    		 		/** The seekbar for controlling the playback speed */
     
-    boolean mute; 				 /** Tell whether or not the volume is mute */
-    int volume;			 		 /** Used to set the volume to zero */
-    AudioManager audioManager;   /** AudioManager used to mute and unmute music sound */
+    private boolean mute; 				 /** Tell whether or not the volume is mute */
+    private int volume;			 		 /** Used to set the volume to zero and to remember it after muting */
+    private AudioManager audioManager;   /** AudioManager used to mute and unmute music volume */
     
     int playstate;               /** The playing state of the Midi Player */
     final int stopped   = 1;     /** Currently stopped */
@@ -119,7 +123,50 @@ public class MidiPlayer extends LinearLayout {
     double currentPulseTime;    /** Time (in pulses) music is currently at */
     double prevPulseTime;       /** Time (in pulses) music was last at */
     Activity activity;          /** The parent activity. */
+    
+    
+    /** Gets the seek bar controlling the speed */
+    public ImageButton getPianoButton() {
+    	return pianoButton;
+    }
+    
+    /** Gets the Play and Record button */
+    public ImageButton getPlayAndRecordButton() {
+    	return playAndRecordButton;
+    }
+    
+    /** Gets the Replay button */
+    public ImageButton getPlayRecordButton() {
+    	return playRecordButton;
+    }
+    
+    /** Gets the seek bar controlling the speed */
+    public SeekBar getSpeedBar() {
+    	return speedBar;
+    }
+    
+    /** Gets whether the player is muted or not */
+    public boolean getMute() {
+    	return mute;
+    }
+    
+    /** Sets the player's volume
+     * @param volume
+     */
+    public void setVolume(int volume) {
+    	this.volume = volume;
+    }
 
+    /** Gets the current pulse time */
+    public Double getcurrentPulseTime() {
+    	return currentPulseTime;
+    }
+    
+    /** Gets the previous pulse time */
+    public Double getprevPulseTime() {
+    	return prevPulseTime;
+    }
+    
     
     /** Load the play/pause/stop button images */
     public static void LoadImages(Context context) {
@@ -142,8 +189,8 @@ public class MidiPlayer extends LinearLayout {
     }
 
 
-    /** Create a new MidiPlayer, displaying the play/stop buttons, and the
-     *  speed bar.  The midifile and sheetmusic are initially null.
+    /** Create a new MidiPlayer, displaying the play/stop buttons, the
+     *  speed bar, and the correct mute button.  The midifile and sheetmusic are initially null.
      */
     public MidiPlayer(Activity activity) {
         super(activity);
@@ -159,9 +206,11 @@ public class MidiPlayer extends LinearLayout {
         prevPulseTime = -10;
         this.setPadding(0, 0, 0, 0);
         
+        // Sets the right button for mute according to the current volume
         audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         mute = (volume == 0);
+        // Sets volume to 1 if volume was equal to 0 in case the user wants to unmute so that it really unmutes
         if (volume == 0) {
         	volume = 1;
         }
@@ -345,14 +394,14 @@ public class MidiPlayer extends LinearLayout {
         pianoButton.setScaleType(ImageView.ScaleType.FIT_XY);
         this.addView(pianoButton);
         
-        /* Create the Play and Record button */
+        /* Create the Play and Record button : Play Music And Start Recording at the same time */
         playAndRecordButton = new ImageButton(activity);
         playAndRecordButton.setBackgroundColor(getResources().getColor(R.color.orange));
         playAndRecordButton.setImageBitmap(playAndRecordImage);
         playAndRecordButton.setScaleType(ImageView.ScaleType.FIT_XY);
         this.addView(playAndRecordButton);
         
-        /* Create the Play button for the record button */
+        /* Create the Replay button for the above Play and Record button */
         playRecordButton = new ImageButton(activity);
         playRecordButton.setBackgroundColor(getResources().getColor(R.color.orange));
         playRecordButton.setImageBitmap(playRecordImage);
@@ -429,9 +478,12 @@ public class MidiPlayer extends LinearLayout {
         pianoButton.setLayoutParams(params);
         playAndRecordButton.setLayoutParams(params);
         playRecordButton.setLayoutParams(params);
+        // Sets the Visibility to the playRecordButton as Gone so that the user cannot press it yet
+        // since the user hasn't recorded anything yet
         playRecordButton.setVisibility(View.GONE);
     }
     
+    /** Sets the Piano with the right Visibility according to the options */
     public void SetPiano(Piano p, MidiOptions options) {
         piano = p;
         if (!options.showPiano) {
@@ -516,6 +568,7 @@ public class MidiPlayer extends LinearLayout {
         }
     }
 
+    /** Never used */
     private void checkFile(String name) {
         try {
             FileInputStream in = activity.openFileInput(name);
@@ -590,14 +643,17 @@ public class MidiPlayer extends LinearLayout {
         }
         // playstate is stopped or paused
 
-        // Hide the midi player, wait a little for the view
-        // to refresh, and then start playing
+        // Starts playing after the delay set in the options
         timer.removeCallbacks(TimerCallback);
         timer.postDelayed(DoPlay, options.delay);
     }
 
+    /** Perform the actual play, by playing the sound,
+     * shading the first notes to be played and updating the playstate
+     */
     Runnable DoPlay = new Runnable() {
       public void run() {
+    	// Forces the screen to stay lit
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         /* The startPulseTime is the pulse time of the midi file when
@@ -652,6 +708,7 @@ public class MidiPlayer extends LinearLayout {
         this.requestLayout();
         this.invalidate();
 
+        // Stop forcing the screen to stay lit
         activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
         if (midifile == null || sheet == null || numberTracks() == 0) {
@@ -669,7 +726,6 @@ public class MidiPlayer extends LinearLayout {
      *  Then do the actual stop.
      */
     public void Stop() {
-        this.setVisibility(View.VISIBLE);
         if (midifile == null || sheet == null || playstate == stopped) {
             return;
         }
@@ -697,7 +753,6 @@ public class MidiPlayer extends LinearLayout {
         startPulseTime = 0;
         currentPulseTime = 0;
         prevPulseTime = 0;
-        setVisibility(View.VISIBLE);
         StopSound();
     }
 
@@ -888,21 +943,6 @@ public class MidiPlayer extends LinearLayout {
         timer.postDelayed(DoPlay, 300);
     }
     
-    public Double getcurrentPulseTime()
-    {
-    	return currentPulseTime;
-    }
-    
-    public Double getprevPulseTime()
-    {
-    	return prevPulseTime;
-    }
-    
-    
-    public SeekBar getSpeedBar()
-    {
-    	return speedBar;
-    }
 }
 
 

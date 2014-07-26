@@ -28,13 +28,13 @@ public class VolumeListener extends ContentObserver {
         int volume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
 
         if (volume != 0) {
-        	player.volume = volume;
+        	player.setVolume(volume);
         }
         
-        if (volume == 0 && !player.mute) {
+        if (volume == 0 && !player.getMute()) {
 		    player.mute();
         }
-        if (volume != 0 && player.mute) {
+        if (volume != 0 && player.getMute()) {
         	player.unmute();
         }
     }

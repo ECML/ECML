@@ -109,7 +109,7 @@
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity
-            android:name=".MetronomeActivity"
+            android:name="com.metronome.MetronomeActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity

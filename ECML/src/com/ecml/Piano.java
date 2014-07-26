@@ -93,7 +93,7 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
         holder.addCallback(this);
     }
 
-    /** Get the preferreed width/height, given the screen width/height */
+    /** Get the preferred width/height, given the screen width/height */
     public static Point getPreferredSize(int screenwidth, int screenheight) {
         int keywidth = (int)(screenwidth / (2.0 + KeysPerOctave * MaxOctave));
         if (keywidth % 2 != 0) {

@@ -256,7 +256,7 @@ public abstract class SpeedGamelvl extends Activity {
 		topLayout.setVisibility(View.GONE);
 		layout.addView(topLayout);
 
-		player.pianoButton.setOnClickListener(new View.OnClickListener() {
+		player.getPianoButton().setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				options.showPiano = !options.showPiano;
 				player.SetPiano(piano, options);
@@ -270,15 +270,15 @@ public abstract class SpeedGamelvl extends Activity {
 			}
 		});
 
-		player.playAndRecordButton.setOnClickListener(new View.OnClickListener() {
+		player.getPlayAndRecordButton().setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				//startAudioRecordingAndPlayingMusic();
+//				startAudioRecordingAndPlayingMusic();
 			}
 		});
 
-		player.playRecordButton.setOnClickListener(new View.OnClickListener() {
+		player.getPlayRecordButton().setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				//playAudio();
+//				playAudio();
 			}
 		});
 

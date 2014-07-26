@@ -28,6 +28,7 @@ import android.graphics.drawable.ColorDrawable;
 
 import com.calendar.CalendarActivity;
 import com.ecml.R;
+import com.metronome.MetronomeActivity;
 
 /**
  * @class ECMLActivity
