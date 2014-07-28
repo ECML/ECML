@@ -28,7 +28,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 		
 		Tracks = midifile.getTracks();
 		
-		// We use by default the intrument n°0 wich is the piano
+		// We use by default the instrument n°0 which is the piano
 		Notes = findNotes(Tracks,0);
 	
 	// Launch the game = Play button
@@ -44,7 +44,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 			textView.setText("Play the note n°"+compteurTexte);
 						
 			
-			// Pitch Detetion launching 
+			// Pitch Detection launching 
 	        pitchPoster = new MicrophonePitchPoster(60);
 	        pitchPoster.setHandler(new UIUpdateHandler());
 	        pitchPoster.start();
