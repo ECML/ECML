@@ -31,17 +31,17 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
 /** @class ChooseSongActivity
- * The ChooseSongActivity class is a tabbed view for choosing a song to play.
- * There are 3 tabs:
- * - All    (AllSongsActivity)    : Display a list of all songs
- * - Recent (RecentSongsActivity) : Display of list of recently opened songs
+ * The ChooseSongActivity class is a tabbed view for choosing a song to play.<br>
+ * There are 3 tabs:<br>
+ * - All    (AllSongsActivity)    : Display a list of all songs<br>
+ * - Recent (RecentSongsActivity) : Display of list of recently opened songs<br>
  * - Browse (FileBrowserActivity) : Let the user browse the filesystem for songs
  */
 public class ChooseSongActivity extends TabActivity implements OnTabChangeListener {
 
 	private Intent intent;
     static ChooseSongActivity globalActivity;
-	public static final String  niveau = "niveau";
+	public static final String  niveau = "niveau"; /* Should be passed as a parameter ? */
     private ActionBar ab;
 
     @Override
@@ -98,6 +98,7 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
         globalActivity.doOpenFile(file);
     }
 
+    /** Open the chosen file in the right activity */ 
     public void doOpenFile(FileUri file) {
         byte[] data = file.getData(this);
         if (data == null || data.length <= 6 || !MidiFile.hasMidiHeader(data)) {
@@ -109,45 +110,36 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
         
         String choice = this.getIntent().getStringExtra(niveau);
         
-        if ( choice.equals("1"))
-        {
-        	updateRecentFile(file);
-            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
-            intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
-            startActivity(intent);
-        }
-        else if (choice.equals("2"))
-        {
-        	updateRecentFile(file);
-            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl2.class);
-            intent.putExtra(SpeedGamelvl2.MidiTitleID, file.toString());
-            startActivity(intent);
-        }
-        else if ( choice.equals("3"))
-        {
-        	updateRecentFile(file);
-            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl3.class);
-            intent.putExtra(SpeedGamelvl3.MidiTitleID, file.toString());
-            startActivity(intent);
-        }
-        else if ( choice.equals("4"))
-        {
-        	updateRecentFile(file);
-            intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl4.class);
-            intent.putExtra(SpeedGamelvl4.MidiTitleID, file.toString());
-            startActivity(intent);
-        }
-        else if ( choice.equals("chooseSong")) {
-	        updateRecentFile(file);
-	        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
-	        intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
-	        startActivity(intent);
-        }
-        else if ( choice.equals("readingBeginner")) {
-	        updateRecentFile(file);
-	        Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
-	        intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
-	        startActivity(intent);
+		if (choice.equals("1")) {
+			updateRecentFile(file);
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
+			intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
+			startActivity(intent);
+		} else if (choice.equals("2")) {
+			updateRecentFile(file);
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl2.class);
+			intent.putExtra(SpeedGamelvl2.MidiTitleID, file.toString());
+			startActivity(intent);
+		} else if (choice.equals("3")) {
+			updateRecentFile(file);
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl3.class);
+			intent.putExtra(SpeedGamelvl3.MidiTitleID, file.toString());
+			startActivity(intent);
+		} else if (choice.equals("4")) {
+			updateRecentFile(file);
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl4.class);
+			intent.putExtra(SpeedGamelvl4.MidiTitleID, file.toString());
+			startActivity(intent);
+		} else if (choice.equals("chooseSong")) {
+			updateRecentFile(file);
+			Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
+			intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
+			startActivity(intent);
+		} else if (choice.equals("readingBeginner")) {
+			updateRecentFile(file);
+			Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
+			intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
+			startActivity(intent);
         }
     }
 
@@ -185,7 +177,7 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
             recentFiles.put(recentFileJson);
             for (int i = 0; i < prevRecentFiles.length(); i++) {
                 if (i >= 10) {
-                    break; // only store 10 most recent files
+                    break; // only store the 10 most recent files
                 }
                 JSONObject file = prevRecentFiles.getJSONObject(i); 
                 if (!FileUri.equalJson(recentFileJson, file)) {

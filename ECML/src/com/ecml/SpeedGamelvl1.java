@@ -1,29 +1,15 @@
 package com.ecml;
 
 import java.util.ArrayList;
-import java.util.zip.CRC32;
 
-
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.game.*;
+import com.game.MicrophonePitchPoster;
 
 /* First implementation of the SpeeGame
  * Wait for the users to play the right note */

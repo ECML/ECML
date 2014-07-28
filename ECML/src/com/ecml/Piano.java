@@ -12,11 +12,18 @@
 
 package com.ecml;
 
-import java.util.*;
-import android.content.*;
-import android.util.*;
-import android.graphics.*;
-import android.view.*;
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 
 /** @class Piano
@@ -93,7 +100,7 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
         holder.addCallback(this);
     }
 
-    /** Get the preferreed width/height, given the screen width/height */
+    /** Get the preferred width/height, given the screen width/height */
     public static Point getPreferredSize(int screenwidth, int screenheight) {
         int keywidth = (int)(screenwidth / (2.0 + KeysPerOctave * MaxOctave));
         if (keywidth % 2 != 0) {

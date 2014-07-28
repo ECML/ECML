@@ -3,31 +3,27 @@ package com.ecml;
 import java.util.ArrayList;
 import java.util.zip.CRC32;
 
-import com.game.MicrophonePitchPoster;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.game.MicrophonePitchPoster;
 
 
 /* abstract class wich define the main part of all the speedgame activities */
@@ -256,7 +252,7 @@ public abstract class SpeedGamelvl extends Activity {
 		topLayout.setVisibility(View.GONE);
 		layout.addView(topLayout);
 
-		player.pianoButton.setOnClickListener(new View.OnClickListener() {
+		player.getPianoButton().setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				options.showPiano = !options.showPiano;
 				player.SetPiano(piano, options);
@@ -270,15 +266,15 @@ public abstract class SpeedGamelvl extends Activity {
 			}
 		});
 
-		player.playAndRecordButton.setOnClickListener(new View.OnClickListener() {
+		player.getPlayAndRecordButton().setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				//startAudioRecordingAndPlayingMusic();
+//				startAudioRecordingAndPlayingMusic();
 			}
 		});
 
-		player.playRecordButton.setOnClickListener(new View.OnClickListener() {
+		player.getPlayRecordButton().setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				//playAudio();
+//				playAudio();
 			}
 		});
 

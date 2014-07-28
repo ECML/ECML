@@ -12,22 +12,19 @@
 
 package com.ecml;
 
-import java.io.IOException;
-
 import android.app.ActionBar;
 import android.app.Activity;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
-import android.content.*;
-import android.content.res.*;
-import android.graphics.*;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.calendar.CalendarActivity;
-import com.ecml.R;
+import com.metronome.MetronomeActivity;
+import com.recording.AudioRecordingActivity;
+import com.recording.VideoRecordingActivity;
 
 /**
  * @class ECMLActivity

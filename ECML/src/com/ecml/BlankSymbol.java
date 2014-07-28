@@ -12,7 +12,8 @@
 
 package com.ecml;
 
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 
 
 /** @class BlankSymbol 

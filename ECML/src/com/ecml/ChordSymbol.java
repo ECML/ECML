@@ -12,8 +12,12 @@
 
 package com.ecml;
 
-import java.util.*;
-import android.graphics.*;
+import java.util.ArrayList;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 
 
 /** @class ChordSymbol
@@ -129,14 +133,14 @@ public class ChordSymbol implements MusicSymbol {
 
 
     /** Given the raw midi notes (the note number and duration in pulses),
-     * calculate the following note data:
-     * - The white key
-     * - The accidental (if any)
-     * - The note duration (half, quarter, eighth, etc)
-     * - The side it should be drawn (left or side)
+     * calculate the following note data:<br>
+     * - The white key<br>
+     * - The accidental (if any)<br>
+     * - The note duration (half, quarter, eighth, etc)<br>
+     * - The side it should be drawn (left or side)<br>
      * By default, notes are drawn on the left side.  However, if two notes
      * overlap (like A and B) you cannot draw the next note directly above it.
-     * Instead you must shift one of the notes to the right.
+     * Instead you must shift one of the notes to the right.<br><br>
      *
      * The KeySignature is used to determine the white key and accidental.
      * The TimeSignature is used to determine the duration.
@@ -486,7 +490,7 @@ public class ChordSymbol implements MusicSymbol {
         canvas.translate(-(getWidth() - getMinWidth()), 0);
     }
 
-    /* Draw the accidental symbols.  If two symbols overlap (if they
+    /** Draw the accidental symbols.  If two symbols overlap (if they
      * are less than 6 notes apart), we cannot draw the symbol directly
      * above the previous one.  Instead, we must shift it to the right.
      * @param ytop The ylocation (in pixels) where the top of the staff starts.

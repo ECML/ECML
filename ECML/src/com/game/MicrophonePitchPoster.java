@@ -5,8 +5,6 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Handler;
 
-import java.io.Serializable;
-
 
 public class MicrophonePitchPoster extends Thread {
 

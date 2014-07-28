@@ -12,7 +12,7 @@
 
 package com.ecml;
 
-import java.io.*;
+import java.io.Serializable;
 
 /** @class TimeSignature
  * The TimeSignature class represents

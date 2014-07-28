@@ -73,7 +73,7 @@
     </item>
     <item
         android:id="@+id/metronome"
-        android:actionLayout="@layout/abmetronome"
+        android:actionLayout="@layout/ab_metronome"
         android:icon="@drawable/metronome"
         android:showAsAction="always|collapseActionView"
         android:title="Metronome">

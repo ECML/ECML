@@ -13,8 +13,7 @@
 
 package com.ecml;
 
-import java.io.*;
-import android.util.*;
+import java.io.UnsupportedEncodingException;
 
 
 

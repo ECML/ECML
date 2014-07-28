@@ -1,14 +1,3 @@
-/*
- * Copyright (c) 2012 Madhav Vaidyanathan
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License version 2.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- */
 
 package com.ecml;
 
@@ -24,7 +13,8 @@ import android.view.View;
  *  The ColorPreference is used in a PreferenceScreen to let
  *  the user choose a color for an option.
  * 
- *  This Preference displays text, plus an additional color box and a Cancel, an Off and an OK Button
+ *  This Preference displays text, plus an additional color box
+ *  and a Cancel, an Off and an OK Button
  */
 
 public class ColorPreference extends Preference {
@@ -36,19 +26,32 @@ public class ColorPreference extends Preference {
 	private ColorView colorView;	/* The colorView that allows us to get the selected Color */
 
 
-	public ColorPreference(Context ctx) {
-		super(ctx);
-		context = ctx;
+	/** Create a ColorPreference
+	 * 
+	 * @param context The context
+	 */
+	public ColorPreference(Context context) {
+		super(context);
+		this.context = context;
 		setWidgetLayoutResource(R.layout.color_preference);
 	}
 
-	public void setColor(int value) {
-		color = value;
+	/** Set the color that will be chosen after validating.<br>
+	 * This color will also be displayed in the top left corner
+	 * of the Alert Dialog
+	 *  
+	 * @param color The color chosen
+	 */
+	public void setColor(int color) {
+		this.color = color;
 		if (colorview != null) {
 			colorview.setBackgroundColor(color);
 		}
 	}
 
+	/** Get the current color.<br>
+	 * This color is normally the one displayed in the top left hand corner
+	 * of the Alert Dialog */
 	public int getColor() {
 		return color;
 	}
@@ -64,24 +67,28 @@ public class ColorPreference extends Preference {
 		}
 	}
 
-	/* When clicked, display the color picker dialog */
+	/** When clicked, display the color picker dialog */
 	protected void onClick() {
 
+		// Create a builder to create the alert dialog
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle("Pick a Color");
 
+		// Set the cancel button
 		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface builder, int whichButton) {
 			}
 		});
 
+		// Set the Off button (it isn't really off, it is just unseen because it is white)
 		builder.setNeutralButton("Off", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface builder, int which) {
-				color = Color.WHITE;
+				color = Color.WHITE; // Do NOT use Color.TRANSPARENT because it does NOT work right
 				colorview.setBackgroundColor(color);
 			}
 		});
 
+		// Set the OK button to validate the choice
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface builder, int whichButton) {
 				color = colorView.getSelectedColor();
@@ -89,9 +96,11 @@ public class ColorPreference extends Preference {
 			}
 		});
 
+		// Create the color circle where the user can select the color desired
 		colorView = new ColorView(getContext(), color);
 		builder.setView(colorView);
 
+		// Actuallay create the Alert Dialog
 		dialog = builder.create();
 		dialog.show();
 	}

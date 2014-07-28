@@ -1,7 +1,6 @@
-package com.ecml;
+package com.calendar;
 
 import android.content.Context;
-
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;

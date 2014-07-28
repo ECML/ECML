@@ -12,8 +12,13 @@
 
 package com.ecml;
 
-import java.util.*;
-import android.graphics.*;
+import java.util.ArrayList;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Rect;
 
 
 /* @class Staff

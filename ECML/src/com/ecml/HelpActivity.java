@@ -14,8 +14,7 @@ package com.ecml;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.webkit.*;
-import com.ecml.R;
+import android.webkit.WebView;
 
 /** @class HelpActivity
  *  The HelpActivity displays the help.html file in the assets directory.

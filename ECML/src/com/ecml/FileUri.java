@@ -12,14 +12,17 @@
 
 package com.ecml;
 
-import android.content.*;
-import android.content.res.*;
-import java.io.*;
-import java.util.*;
-import android.net.*;
-import android.provider.*;
-import org.json.*;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Comparator;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.res.AssetManager;
+import android.net.Uri;
 
 /** @class FileUri
  * Represents a reference to a file.

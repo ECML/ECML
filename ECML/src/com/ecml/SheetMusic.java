@@ -12,16 +12,20 @@
 
 package com.ecml;
 
-import java.util.*;
-import java.io.*;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
-import android.app.*;
-import android.content.*;
-import android.graphics.*;
-import android.os.*;
-import android.util.Log;
-import android.view.*;
-import android.view.animation.AnimationUtils;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 /** @class BoxedInt **/
 class BoxedInt {

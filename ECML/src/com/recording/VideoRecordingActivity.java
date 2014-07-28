@@ -1,4 +1,4 @@
-package com.ecml;
+package com.recording;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,16 +12,15 @@ import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.net.Uri;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.SurfaceHolder;
-import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.ecml.R;
 
 public class VideoRecordingActivity extends Activity {
 

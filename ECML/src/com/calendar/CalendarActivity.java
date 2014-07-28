@@ -2,38 +2,16 @@ package com.calendar;
 
 
 
-import com.ecml.R;
-
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.TabActivity;
-import android.content.ContentUris;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
-import android.provider.CalendarContract.Events;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.content.*;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
+
+import com.ecml.R;
 
 public class CalendarActivity extends TabActivity {
 

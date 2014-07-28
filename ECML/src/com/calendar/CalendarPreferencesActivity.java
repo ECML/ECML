@@ -1,12 +1,16 @@
 package com.calendar;
 
+import android.graphics.Color;
+import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceScreen;
 import android.text.format.Time;
 import android.util.Log;
-import android.os.*;
-import android.preference.*;
-import android.graphics.*;
-
-import com.ecml.TimePreference;
 
 /**
  * @class CalendarPreferencesActivity The user can change settings for the

@@ -1,7 +1,5 @@
 package com.calendar;
 
-import com.ecml.R;
-
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -12,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.ecml.R;
 
 public class CalendarRehearsalProgramActivity extends Activity {
 	

@@ -13,7 +13,7 @@
 
 package com.ecml;
 
-import java.util.*;
+import java.util.Comparator;
 
 
 /** @class WhiteNote
