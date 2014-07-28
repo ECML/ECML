@@ -17,28 +17,28 @@
             android:id="@+id/help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Help"
             android:textColor="#ffffff"
-            android:textSize="20sp" >
+            android:textSize="15sp" >
         </Button>
 
         <Button
             android:id="@+id/game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Change game"
             android:textColor="#ffffff"
-            android:textSize="20sp" >
+            android:textSize="15sp" >
         </Button>
 
         <Button
@@ -48,11 +48,11 @@
             android:layout_marginBottom="80dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Back to the score"
             android:textColor="#ffffff"
-            android:textSize="20sp" >
+            android:textSize="15sp" >
         </Button>
     </LinearLayout>
 
@@ -70,98 +70,168 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="La"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/lad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="La#/Sib"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/si"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Si"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/donote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Do"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/dod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Do#/Réb"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/re"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Ré"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Ré#/Mib"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/mi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Mi"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/fa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Fa"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/fad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Fa#/Sib"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/sol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Sol"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/sold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Sol#/Lab"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
     </LinearLayout>
 
 </RelativeLayout>

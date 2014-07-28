@@ -43,7 +43,7 @@ public class CalendarPreferencesActivity extends PreferenceActivity implements P
 	/***Different settings for the Calendar that can be chosen in the calendar preferences */
 	public static String location_string;
 	public static boolean availability_boolean;
-	public static Time hour;
+	public static Time preferred_time;
 	public static boolean reminder;
 	public static String alarmMethod_string;
 	public static int minutePriorEvent;
@@ -229,7 +229,8 @@ public class CalendarPreferencesActivity extends PreferenceActivity implements P
 		location_string = location.getText();
 		minutePriorEvent = StringToInt(minutesPriorAlarm.getValue());
 		alarmMethod_string = alarmMethod.getValue();
-		hour = time;
+		preferred_time.hour = time.hour;
+		preferred_time.minute = time.minute;
 	}
 
 	//Different choices for the alarm method
@@ -264,13 +265,21 @@ public class CalendarPreferencesActivity extends PreferenceActivity implements P
 	public static void defaultSettings() {
 		location_string = "home";
 		availability_boolean = true;
-		hour = new Time();
-		hour.setToNow();
-		Log.i("hour", "" + hour);
+		preferred_time.hour=17;
+		preferred_time.minute=0;
+		//Log.i("hour", "" + getHour());
 		reminder = true;
 		alarmMethod_string = "alert";
 		minutePriorEvent = 10;
 		guestsOtherGuests = false;
 		guestsSeeAttendees = false;
+	}
+
+	public static Time getHour() {
+		return preferred_time;
+	}
+
+	public static void setHour(Time hour) {
+		CalendarPreferencesActivity.preferred_time = hour;
 	}
 }

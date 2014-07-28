@@ -3,6 +3,10 @@ package com.calendar;
 import com.ecml.R;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +23,7 @@ public class CalendarRehearsalProgramActivity extends Activity {
 		populateListView();
 		/**Allowed to add an action when on item from the list view is selected */
 		registerClickCallback();
+		
 	}
 
 	private void registerClickCallback() {
