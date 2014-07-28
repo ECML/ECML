@@ -16,13 +16,14 @@ package com.ecml;
 
 
 /** @class LyricSymbol
+ * <br>
  *  A lyric contains the lyric to display, the start time the lyric occurs at,
  *  the the x-coordinate where it will be displayed.
  */
 public class LyricSymbol {
-    private int starttime;   /** The start time, in pulses */
-    private String text;     /** The lyric text */
-    private int x;           /** The x (horizontal) position within the staff */
+    private int starttime;   /* The start time, in pulses */
+    private String text;     /* The lyric text */
+    private int x;           /* The x (horizontal) position within the staff */
 
     public LyricSymbol(int starttime, String text) {
         this.starttime = starttime; 
@@ -38,7 +39,7 @@ public class LyricSymbol {
     public int getX() { return x; }
     public void setX(int value) { x = value; }
 
-    /* Return the minimum width in pixels needed to display this lyric.
+    /** Return the minimum width in pixels needed to display this lyric.
      * This is an estimation, not exact.
      */
     public int getMinWidth() { 

@@ -18,18 +18,19 @@ import android.graphics.Path;
 
 
 /** @class Stem
+ * <br>
  * The Stem class is used by ChordSymbol to draw the stem portion of
- * the chord.  The stem has the following fields:
+ * the chord.  The stem has the following fields:<br>
  *
- * duration  - The duration of the stem.
- * direction - Either Up or Down
- * side      - Either left or right
- * top       - The topmost note in the chord
- * bottom    - The bottommost note in the chord
+ * duration  - The duration of the stem.<br>
+ * direction - Either Up or Down<br>
+ * side      - Either left or right<br>
+ * top       - The topmost note in the chord<br>
+ * bottom    - The bottommost note in the chord<br>
  * end       - The note position where the stem ends.  This is usually
  *             six notes past the last note in the chord.  For 8th/16th
- *             notes, the stem must extend even more.
- *
+ *             notes, the stem must extend even more.<br>
+ *<br>
  * The SheetMusic class can change the direction of a stem after it
  * has been created.  The side and end fields may also change due to
  * the direction change.  But other fields will not change.
@@ -41,22 +42,23 @@ public class Stem {
     public static final int LeftSide = 1;  /* The stem is to the left of the note */
     public static final int RightSide = 2; /* The stem is to the right of the note */
 
-    private NoteDuration duration; /** Duration of the stem. */
-    private int direction;         /** Up, Down, or None */
-    private WhiteNote top;         /** Topmost note in chord */
-    private WhiteNote bottom;      /** Bottommost note in chord */
-    private WhiteNote end;         /** Location of end of the stem */
-    private boolean notesoverlap;     /** Do the chord notes overlap */
-    private int side;              /** Left side or right side of note */
+    private NoteDuration duration; /* Duration of the stem. */
+    private int direction;         /* Up, Down, or None */
+    private WhiteNote top;         /* Topmost note in chord */
+    private WhiteNote bottom;      /* Bottommost note in chord */
+    private WhiteNote end;         /* Location of end of the stem */
+    private boolean notesoverlap;  /* Do the chord notes overlap */
+    private int side;              /* Left side or right side of note */
 
-    private Stem pair;              /** If pair != null, this is a horizontal 
+    private Stem pair;              /* If pair != null, this is a horizontal 
                                      * beam stem to another chord */
-    private int width_to_pair;      /** The width (in pixels) to the chord pair */
-    private boolean receiver_in_pair;  /** This stem is the receiver of a horizontal
-                                    * beam stem from another chord. */
+    private int width_to_pair;      /* The width (in pixels) to the chord pair */
+    private boolean receiver_in_pair;  /* This stem is the receiver of a horizontal
+                                    	* beam stem from another chord. */
 
-    /** Get/Set the direction of the stem (Up or Down) */
+    /** Get the direction of the stem (Up or Down) */
     public int getDirection() { return direction; }
+    /** Set the direction of the stem (Up or Down) */
     public void setDirection(int value) { ChangeDirection(value); }
 
     /** Get the duration of the stem (Eigth, Sixteenth, ThirtySecond) */
@@ -68,17 +70,20 @@ public class Stem {
     /** Get the bottom note in the chord. This is needed to determine the stem direction */
     public WhiteNote getBottom() { return bottom; }
 
-    /** Get/Set the location where the stem ends.  This is usually six notes
+    /** Get the location where the stem ends.  This is usually six notes
      * past the last note in the chord. See method CalculateEnd.
      */
     public WhiteNote getEnd() { return end; }
+    /** Set the location where the stem ends.  This is usually six notes
+     * past the last note in the chord. See method CalculateEnd.
+     */
     public void setEnd(WhiteNote value) { end = value; }
 
+    public boolean getReceiver() { return receiver_in_pair; }
     /** Set this Stem to be the receiver of a horizontal beam, as part
      * of a chord pair.  In Draw(), if this stem is a receiver, we
      * don't draw a curvy stem, we only draw the vertical line.
      */
-    public boolean getReceiver() { return receiver_in_pair; }
     public void setReceiver(boolean value) { receiver_in_pair = value; }
 
     /** Create a new stem.  The top note, bottom note, and direction are 
@@ -187,7 +192,9 @@ public class Stem {
             DrawCurvyStem(canvas, paint, ytop, topstaff);
     }
 
-    /** Draw the vertical line of the stem 
+    /** Draw the vertical line of the stem
+     * @param canvas
+     * @param paint
      * @param ytop The y location (in pixels) where the top of the staff starts.
      * @param topstaff  The note at the top of the staff.
      */
@@ -223,6 +230,8 @@ public class Stem {
     }
 
     /** Draw a curvy stem tail.  This is only used for single chords, not chord pairs.
+     * @param canvas
+     * @param paint
      * @param ytop The y location (in pixels) where the top of the staff starts.
      * @param topstaff  The note at the top of the staff.
      */
@@ -328,7 +337,9 @@ public class Stem {
 
     }
 
-    /* Draw a horizontal beam stem, connecting this stem with the Stem pair.
+    /** Draw a horizontal beam stem, connecting this stem with the Stem pair.
+     * @param canvas
+     * @param paint
      * @param ytop The y location (in pixels) where the top of the staff starts.
      * @param topstaff  The note at the top of the staff.
      */

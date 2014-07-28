@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 
 /** @class HelpActivity
+ * <br>
  *  The HelpActivity displays the help.html file in the assets directory.
  */
 public class HelpActivity extends Activity {

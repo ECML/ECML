@@ -14,21 +14,21 @@ package com.ecml;
 
 
 /** @class KeySignature
+ * <br>
  * The KeySignature class represents a key signature, like G Major
  * or B-flat Major.  For sheet music, we only care about the number
  * of sharps or flats in the key signature, not whether it is major
  * or minor.
- *
- * The main operations of this class are:
- * - Guessing the key signature, given the notes in a song.
- * - Generating the accidental symbols for the key signature.
- * - Determining whether a particular note requires an accidental
+ * <br>
+ * The main operations of this class are:<br>
+ * - Guessing the key signature, given the notes in a song.<br>
+ * - Generating the accidental symbols for the key signature.<br>
+ * - Determining whether a particular note requires an accidental<br>
  *   or not.
  *
  */
-
 public class KeySignature {
-    /** The number of sharps in each key signature */
+    /* The number of sharps in each key signature */
     public static final int C = 0;
     public static final int G = 1;
     public static final int D = 2;
@@ -36,7 +36,7 @@ public class KeySignature {
     public static final int E = 4;
     public static final int B = 5;
 
-    /** The number of flats in each key signature */
+    /* The number of flats in each key signature */
     public static final int F = 1;
     public static final int Bflat = 2;
     public static final int Eflat = 3;
@@ -44,7 +44,7 @@ public class KeySignature {
     public static final int Dflat = 5;
     public static final int Gflat = 6;
 
-    /** The two arrays below are key maps.  They take a major key
+    /* The two arrays below are key maps.  They take a major key
      * (like G major, B-flat major) and a note in the scale, and
      * return the Accidental required to display that note in the
      * given key.  In a nutshel, the map is
@@ -54,8 +54,8 @@ public class KeySignature {
     private static Accid[][] sharpkeys;
     private static Accid[][] flatkeys;
 
-    private int num_flats;   /** The number of sharps in the key, 0 thru 6 */
-    private int num_sharps;  /** The number of flats in the key, 0 thru 6 */
+    private int num_flats;   /* The number of sharps in the key, 0 thru 6 */
+    private int num_sharps;  /* The number of flats in the key, 0 thru 6 */
 
     /** The accidental symbols that denote this key, in a treble clef */
     private AccidSymbol[] treble;
@@ -89,7 +89,9 @@ public class KeySignature {
         CreateSymbols();
     }
 
-    /** Create new key signature, with the given notescale.
+    /** Create new key signature
+     * 
+     * @param notescale
      */
     public KeySignature(int notescale) {
         num_sharps = num_flats = 0;
@@ -115,7 +117,7 @@ public class KeySignature {
         CreateSymbols();
     }
 
-    /** Iniitalize the sharpkeys and flatkeys maps */
+    /** Initialize the sharpkeys and flatkeys maps */
     private static void CreateAccidentalMaps() {
         if (sharpkeys != null)
             return; 
@@ -397,8 +399,9 @@ public class KeySignature {
         }
     }
 
-    /** Return the Accidental symbols for displaying this key signature
-     * for the given clef.
+    /** Return the Accidental symbols for displaying this key signature for the given clef
+     *  
+     * @param clef
      */
     public AccidSymbol[] GetSymbols(Clef clef) {
         if (clef == Clef.Treble)
@@ -619,7 +622,7 @@ public class KeySignature {
             return false;
     }
 
-    /* Return the Major Key of this Key Signature */
+    /** Return the Major Key of this Key Signature */
     public int Notescale() {
         int[] flatmajor = {
             NoteScale.C, NoteScale.F, NoteScale.Bflat, NoteScale.Eflat,
@@ -656,7 +659,7 @@ public class KeySignature {
         }
     }
 
-    /* Return a string representation of this key signature.
+    /** Return a string representation of this key signature.
      * We only return the major key signature, not the minor one.
      */
     @Override

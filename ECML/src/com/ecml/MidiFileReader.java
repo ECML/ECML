@@ -18,6 +18,7 @@ import java.io.UnsupportedEncodingException;
 
 
 /** @class MidiFileReader
+ * <br>
  * The MidiFileReader is used to read low-level binary data from a file.
  * This class can do the following:
  *
@@ -33,8 +34,8 @@ import java.io.UnsupportedEncodingException;
  */
 
 public class MidiFileReader {
-    private byte[] data;       /** The entire midi file data */
-    private int parse_offset;  /** The current offset while parsing */
+    private byte[] data;       /* The entire midi file data */
+    private int parse_offset;  /* The current offset while parsing */
 
     /** Create a new MidiFileReader for the given filename */
     /** Not used

@@ -10,6 +10,7 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,44 +24,44 @@ import android.widget.ToggleButton;
 
 /** @class TuningForkActivity
  * 
- * @author Nicolas
- *
  * <br>The Tuning Fork is an activity allowing you to play all pitches from 100Hz to 16000Hz on a tablet.<br>
  * It features buttons to shift up and down octaves aswell as notes. It also includes a slide bar to
  * adjust the reference pitch.<br>
- * An octave is composed of 12 notes. The tuning fork can theoratically play 124 notes (from 1 to 124).<br>
+ * An octave is composed of 12 notes from C to B. The tuning fork can theoretically play 124 notes (from 1 to 124).<br>
  * 61 corresponds to A4 (440 Hz)
+ * 1 corresponds to A-1
+ * 124 corresponds to C10
  *
  */
 public class TuningForkActivity extends Activity {
 
-	// sets up the objects that are on the screen
-	private TextView freqView;			/* the text view displaying the current frequency */
-	private ToggleButton toggle;		/* the on/off button */
-	private int sineFreq;				/* the current note (to be converted) */
-	private TextView previousOctave;	/* the button to shift down an octave */
-	private TextView nextOctave;		/* the button to shift up an octave */
-	private TextView previousNote;		/* the button to shift down a note */
-	private TextView nextNote;			/* the button to shift up a note */
-	private SeekBar pitchBar;			/* the slide bar to adjust the reference pitch */
-	private TextView octave;			/* the text view displaying the current octave */
-	private TextView note;				/* the text view displaying the current note */
-	private TextView refOctave;			/* the button to get back to octave #4 */
-	private TextView refNote;			/* the button to get back to the note A of the current octave */
-	private TextView refPitch;			/* the button to get back to the middle of the slide bar */
-	private boolean running = false;	/* the boolean telling whether or not a sound is being played */
+	// Set up the objects that are on the screen
+	private TextView freqView;			/* The text view displaying the current frequency */
+	private ToggleButton toggle;		/* The on/off button */
+	private int sineFreq;				/* The current note (to be converted) */
+	private TextView previousOctave;	/* The button to shift down an octave */
+	private TextView nextOctave;		/* The button to shift up an octave */
+	private TextView previousNote;		/* The button to shift down a note */
+	private TextView nextNote;			/* The button to shift up a note */
+	private SeekBar pitchBar;			/* The slide bar to adjust the reference pitch */
+	private TextView octave;			/* The text view displaying the current octave */
+	private TextView note;				/* The text view displaying the current note */
+	private TextView refOctave;			/* The button to get back to octave #4 */
+	private TextView refNote;			/* The button to get back to the note A of the current octave */
+	private TextView refPitch;			/* The button to get back to the middle of the slide bar */
+	private boolean running = false;	/* The boolean telling whether or not a sound is being played */
 
-	// Variables for tone generation
+	/* Variables for tone generation */
 	private final int sampleRate = 44000;
 	private final int targetSamples = 5500;
 	private int numSamples = 5500;   // calculated with respect to frequency later
 	private int numCycles = 500;    // calculated with respect to frequency later
 
-	// The array is made bigger than needed so they can be adjusted
+	/* The array is made bigger than needed so they can be adjusted */
 	private double sample[] = new double[targetSamples * 2];
 	private byte generatedSnd[] = new byte[2 * 2 * targetSamples];
 
-	// The array of the notes
+	/* The array of the notes */
 	private String[] notes = { "G\u266F/ A\u266D", "A", "A\u266F/ B\u266D", "B", "C", "C\u266F/ D\u266D", "D", "D\u266F/ E\u266D", "E", "F",
 			"F\u266F/ G\u266D", "G" };
 
@@ -77,26 +78,26 @@ public class TuningForkActivity extends Activity {
 		ab.setBackgroundDrawable(colorDrawable);
 		/* End of Action bar */
 
-		// Sets the buttons
+		// Set the buttons
 		toggle = (ToggleButton) findViewById(R.id.toggleButton);
 		previousOctave = (TextView) findViewById(R.id.previousOctave);
 		nextOctave = (TextView) findViewById(R.id.nextOctave);
 		previousNote = (TextView) findViewById(R.id.previousNote);
 		nextNote = (TextView) findViewById(R.id.nextNote);
-		// Sets the slide bar
+		// Set the slide bar
 		pitchBar = (SeekBar) findViewById(R.id.PitchBar);
-		// Sets the views to be updated when changing frequency
+		// Set the views to be updated when changing frequency
 		octave = (TextView) findViewById(R.id.numberOctave);
 		note = (TextView) findViewById(R.id.letterNote);
 		freqView = (TextView) findViewById(R.id.numberFrequence);
-		// Sets the buttons to go back to reference notes
+		// Set the buttons to go back to reference notes
 		refOctave = (TextView) findViewById(R.id.adjustOctave);
 		refNote = (TextView) findViewById(R.id.adjustNote);
 		refPitch = (TextView) findViewById(R.id.textViewAdjRefPitch);
 		
 		
 
-		// Sets each onClickListener on the corresponding button
+		// Set each onClickListener on the corresponding button
 		toggle.setOnClickListener(toggleListener);
 		
 		pitchBar.setOnSeekBarChangeListener(sineFreqBarListener);
@@ -149,27 +150,29 @@ public class TuningForkActivity extends Activity {
 
 		});
 		
-		// Always gives the current note in octave #4 (note between 52 and 63)
+		// Always give the current note in octave #4 (note between 52 and 63)
 		refOctave.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				sineFreq = ((sineFreq - 4) % 12) + 52;
+				Log.i("Freq", "" + sineFreq);
 				updateView();
 			}
 		});
 		
-		// Always gives the note A in the current octave (note of the form 12k+1)
+		// Always give the note A in the current octave (note of the form 12k+1)
 		refNote.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				sineFreq = ((int) Math.floor((sineFreq - 4.0) / 12) + 1) * 12 + 1;
+				Log.i("Freq", "" + sineFreq);
 				updateView();
 			}
 		});
 
-		// Sets the slide bar back to the middle
+		// Set the slide bar back to the middle
 		refPitch.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -210,10 +213,10 @@ public class TuningForkActivity extends Activity {
 	OnClickListener toggleListener = new OnClickListener() {
 		public void onClick(View v) {
 
-			// Kills any existing threads in case the button is being spammed
+			// Kill any existing threads in case the button is being spammed
 			running = false;
 
-			// Checks if light is off, if so, turn it on
+			// Check if light is off, if so, turn it on
 			if (toggle.isChecked()) { // Turn on the sound
 				genTone(convertProgress_Hz(sineFreq));
 				new BeepTask().execute();
@@ -223,7 +226,7 @@ public class TuningForkActivity extends Activity {
 	};
 	
 	/**
-	 * A call-back for when the user moves the sine seek bars
+	 * A call-back for when the user change the sine Frequency
 	 */
 	OnSeekBarChangeListener sineFreqBarListener = new OnSeekBarChangeListener() {
 
@@ -284,7 +287,7 @@ public class TuningForkActivity extends Activity {
 	// http://stackoverflow.com/questions/2413426/playing-an-arbitrary-tone-with-android
 	// functions for tone generation
 	/** Calculates the correct tone according to the frequency */
-	void genTone(double freqOfTone) {
+	private void genTone(double freqOfTone) {
 
 		// Clean out the arrays
 		for (int i = 0; i < targetSamples * 2; ++i) {
@@ -319,8 +322,8 @@ public class TuningForkActivity extends Activity {
 		}
 	}
 
-	/** Actually plays the sound at the selected frequency after calling genTone(freqOfTone) */
-	void playSound() {
+	/** Actually play the sound at the selected frequency after calling genTone(freqOfTone) */
+	private void playSound() {
 
 		final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_CONFIGURATION_MONO,
 				AudioFormat.ENCODING_PCM_16BIT, numSamples * 2, AudioTrack.MODE_STREAM);
@@ -334,7 +337,10 @@ public class TuningForkActivity extends Activity {
 	}
 
 
-	/** Function to convert the note into time and frequency */
+	/** Convert the note into time and frequency
+	 * 
+	 * @param note
+	 */
 	private double convertProgress_Hz(int note) {
 		// http://www.phy.mtu.edu/~suits/NoteFreqCalcs.html
 		// Java was bad at powers math of non integers, so made a loop to do the
@@ -350,7 +356,7 @@ public class TuningForkActivity extends Activity {
 		return Hz;
 	}
 
-	/** Updates the view : the frequency, the octave and the note */
+	/** Update the view : the frequency, the octave and the note */
 	private void updateView() {
 		freqView.setText(Double.toString(convertProgress_Hz(sineFreq)));
 		octave.setText(Integer.toString((int) Math.floor((sineFreq - 4.0) / 12)));
@@ -361,19 +367,22 @@ public class TuningForkActivity extends Activity {
 		}
 	}
 	
-	/** Opens an Alert Dialog explaining how to use the Tuning Fork */
+	/** Open an Alert Dialog explaining how to use the Tuning Fork */
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
 		final View dialogView = inflator.inflate(R.layout.help_tuning_fork, null);
 
+		// Create an Alert Dialog builder
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("HELP");
 		builder.setView(dialogView);
+		// Set an OK button
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface builder, int whichButton) {
 
 			}
 		});
+		// Actually create the Alert Dialog
 		AlertDialog dialog = builder.create();
 		dialog.show();
 	}

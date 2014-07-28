@@ -8,6 +8,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/** @class GameActivity
+ * <br>
+ * The Game Activity is the main screen activity for the different games :
+ * <ul>
+ * 		<li>Speed</li>
+ * 		<li>Musical Ear</li>
+ * 		<li>Reading of Notes</li>
+ * 		<li>Technique</li>
+ * </ul>
+ * From this point, you can also choose to go back to the score.
+ */
 public class GameActivity extends Activity {
 
 	/** Called when the activity is first created. */

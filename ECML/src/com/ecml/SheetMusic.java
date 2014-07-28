@@ -33,74 +33,79 @@ class BoxedInt {
 }
 
 /** @class SheetMusic
+ * <br>
+ * The SheetMusic Control is the main class for displaying the sheet music.<br>
+ * The SheetMusic class has the following public methods:<br>
  *
- * The SheetMusic Control is the main class for displaying the sheet music.
- * The SheetMusic class has the following public methods:
- *
- * SheetMusic()
- *   Create a new SheetMusic control from the given midi file and options.
+ * - SheetMusic() : 
+ *   Create a new SheetMusic control from the given midi file and options.<br>
  * 
- * onDraw()
- *   Method called to draw the SheetMuisc
+ * - onDraw() :
+ *   Method called to draw the SheetMuisc<br>
  *
- * shadeNotes()
- *   Shade all the notes played at a given pulse time.
+ * - shadeNotes() :
+ *   Shade all the notes played at a given pulse time.<br>
  */
 public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, ScrollAnimationListener {
 
     /* Measurements used when drawing.  All measurements are in pixels. */
-    public static final int LineWidth  = 1;   /** The width of a line */
-    public static final int LeftMargin = 4;   /** The left margin */
-    public static final int LineSpace  = 7;   /** The space between lines in the staff */
-    public static final int StaffHeight = LineSpace*4 + LineWidth*5;  /** The height between the 5 horizontal lines of the staff */
+    public static final int LineWidth  = 1;   /* The width of a line */
+    public static final int LeftMargin = 4;   /* The left margin */
+    public static final int LineSpace  = 7;   /* The space between lines in the staff */
+    public static final int StaffHeight = LineSpace*4 + LineWidth*5;  /* The height between the 5 horizontal lines of the staff */
 
-    public static final int NoteHeight = LineSpace + LineWidth; /** The height of a whole note */
-    public static final int NoteWidth = 3 * LineSpace/2;        /** The width of a whole note */
+    public static final int NoteHeight = LineSpace + LineWidth; /* The height of a whole note */
+    public static final int NoteWidth = 3 * LineSpace/2;        /* The width of a whole note */
 
-    public static final int PageWidth = 800;    /** The width of each page */
-    public static final int PageHeight = 1050;  /** The height of each page (when printing) */
-    public static final int TitleHeight = 14;   /** Height of title on first page */
+    public static final int PageWidth = 800;    /* The width of each page */
+    public static final int PageHeight = 1050;  /* The height of each page (when printing) */
+    public static final int TitleHeight = 14;   /* Height of title on first page */
 
     public static final int ImmediateScroll = 1;
     public static final int GradualScroll   = 2;
     public static final int DontScroll      = 3;
 
-    private ArrayList<Staff> staffs;  /** The array of staffs to display (from top to bottom) */
-    private KeySignature mainkey;     /** The main key signature */
+    private ArrayList<Staff> staffs;  /* The array of staffs to display (from top to bottom) */
+    private KeySignature mainkey;     /* The main key signature */
 
-    private String   filename;        /** The midi filename */
-    private int      numtracks;       /** The number of tracks */
-    private float    zoom;            /** The zoom level to draw at (1.0 == 100%) */
-    private boolean  scrollVert;      /** Whether to scroll vertically or horizontally */
-    private int      showNoteLetters; /** Display the note letters */
-    private int[]    NoteColors;      /** The note colors to use */
-    private int      shade1;          /** The color for shading */
-    private int      shade2;          /** The color for shading left-hand piano */
-    private Paint    paint;           /** The paint for drawing */
-    private boolean  surfaceReady;    /** True if we can draw on the surface */
-    private Bitmap   bufferBitmap;    /** The bitmap for drawing */
-    private Canvas   bufferCanvas;    /** The canvas for drawing */
-    private MidiPlayer player;        /** For pausing the music */
-    private int      playerHeight;    /** Height of the midi player */
-    private int      screenwidth;     /** The screen width */
-    private int      screenheight;    /** The screen height */
+    private String   filename;        /* The midi filename */
+    private int      numtracks;       /* The number of tracks */
+    private float    zoom;            /* The zoom level to draw at (1.0 == 100%) */
+    private boolean  scrollVert;      /* Whether to scroll vertically or horizontally */
+    private int      showNoteLetters; /* Display the note letters */
+    private int[]    NoteColors;      /* The note colors to use */
+    private int      shade1;          /* The color for shading */
+    private int      shade2;          /* The color for shading left-hand piano */
+    private Paint    paint;           /* The paint for drawing */
+    private boolean  surfaceReady;    /* True if we can draw on the surface */
+    private Bitmap   bufferBitmap;    /* The bitmap for drawing */
+    private Canvas   bufferCanvas;    /* The canvas for drawing */
+    private MidiPlayer player;        /* For pausing the music */
+    private int      playerHeight;    /* Height of the midi player */
+    private int      screenwidth;     /* The screen width */
+    private int      screenheight;    /* The screen height */
 
     /* fields used for scrolling */
 
-    private int      sheetwidth;      /** The sheet music width (excluding zoom) */
-    private int      sheetheight;     /** The sheet music height (excluding zoom) */
-    private int      viewwidth;       /** The width of this view. */
-    private int      viewheight;      /** The height of this view. */
-    private int      bufferX;         /** The (left,top) of the bufferCanvas */
+    private int      sheetwidth;      /* The sheet music width (excluding zoom) */
+    private int      sheetheight;     /* The sheet music height (excluding zoom) */
+    private int      viewwidth;       /* The width of this view. */
+    private int      viewheight;      /* The height of this view. */
+    private int      bufferX;         /* The (left,top) of the bufferCanvas */
     private int      bufferY; 
-    private int      scrollX;         /** The (left,top) of the scroll clip */
+    private int      scrollX;         /* The (left,top) of the scroll clip */
     private int      scrollY;
     private ScrollAnimation scrollAnimation;
     
+    /** Get the scroll animation of this sheet music */
     public ScrollAnimation getScrollAnimation() {
 		return scrollAnimation;
 	}
 
+    /** Create a new SheetMusic depending on the context
+     * 
+     * @param context
+     */
 	public SheetMusic(Context context) {
         super(context);
         SurfaceHolder holder = getHolder();
@@ -212,7 +217,7 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
         sheetheight += LeftMargin;
     }
 
-    /* Adjust the zoom level so that the sheet music page (PageWidth)
+    /** Adjust the zoom level so that the sheet music page (PageWidth)
      * fits within the width. If the heightspec is 0, return the screenheight.
      * Else, use the given view width/height. 
      */
@@ -329,6 +334,12 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
      * that contains the chord symbols, vertical bars, rests, and
      * clef changes.
      * Return a list of symbols (ChordSymbol, BarSymbol, RestSymbol, ClefSymbol)
+     * 
+     * @param chords
+     * @param clefs
+     * @param time The Time Signature
+     * @param lastStart
+     * 
      */
     private ArrayList<MusicSymbol> 
     CreateSymbols(ArrayList<ChordSymbol> chords, ClefMeasures clefs,
@@ -342,8 +353,12 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
         return symbols;
     }
 
-    /** Add in the vertical bars delimiting measures. 
-     *  Also, add the time signature symbols.
+    /** Add in the vertical bars delimiting measures.
+     * Also, add the time signature symbols.
+     * @param chords
+     * @param time
+     * @param lastStart
+     * @return
      */
     private ArrayList<MusicSymbol> 
     AddBars(ArrayList<ChordSymbol> chords, TimeSignature time, int lastStart) {
@@ -378,8 +393,11 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
         return symbols;
     }
 
-    /** Add rest symbols between notes.  All times below are 
-     * measured in pulses.
+    /** Add rest symbols between notes. All times below are measured in pulses.
+     * 
+     * @param symbols
+     * @param time
+     * @return
      */
     private
     ArrayList<MusicSymbol> AddRests(ArrayList<MusicSymbol> symbols, TimeSignature time) {
@@ -410,8 +428,13 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
         return result;
     }
 
-    /** Return the rest symbols needed to fill the time interval between
-     * start and end.  If no rests are needed, return nil.
+    /** Return the rest symbols needed to fill the time interval between start and end. 
+     * If no rests are needed, return nil.
+     * 
+     * @param time The Time Signature
+     * @param start
+     * @param end
+     * @return
      */
     private
     RestSymbol[] GetRests(TimeSignature time, int start, int end) {
@@ -463,6 +486,10 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
      * change in clef.  This function adds these Clef change symbols.
      * This function does not add the main Clef Symbol that begins each
      * staff.  That is done in the Staff() contructor.
+     * 
+     * @param symbols
+     * @param clefs
+     * @param time The Time Signature
      */
     private
     ArrayList<MusicSymbol> AddClefChanges(ArrayList<MusicSymbol> symbols,
@@ -502,6 +529,11 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
      * The method SymbolWidths.GetExtraWidth() returns the extra width
      * needed for a track to match the maximum symbol width for a given
      * starttime.
+     * 
+     * @param allsymbols
+     * @param widths The width of the symbols
+     * @param options The Midi Options 
+     * 
      */
     private
     void AlignSymbols(ArrayList<ArrayList<MusicSymbol>> allsymbols, SymbolWidths widths, MidiOptions options) {
@@ -582,6 +614,11 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
      *  Store the indexes of the consecutive chords in chordIndexes.
      *  Store the horizontal distance (pixels) between the first and last chord.
      *  If we failed to find consecutive chords, return false.
+     *  @param symbols The List of the Music Symbols
+     *  @param time The Time Signature
+     *  @param chordIndexes
+     *  @param horizDistance
+     *  
      */
     private static boolean
     FindConsecutiveChords(ArrayList<MusicSymbol> symbols, TimeSignature time,
@@ -641,6 +678,12 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
     /** Connect chords of the same duration with a horizontal beam.
      *  numChords is the number of chords per beam (2, 3, 4, or 6).
      *  if startBeat is true, the first chord must start on a quarter note beat.
+     *  
+     *  @param allsymbols
+     *  @param time The Time Signature
+     *  @param numChords
+     *  @param startBeat
+     *  
      */
     private static void
     CreateBeamedChords(ArrayList<ArrayList<MusicSymbol>> allsymbols, TimeSignature time,
@@ -681,15 +724,19 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
     }
 
 
-    /** Connect chords of the same duration with a horizontal beam.
+    /** Connect chords of the same duration with a horizontal beam.<br>
      *
-     *  We create beams in the following order:
-     *  - 6 connected 8th note chords, in 3/4, 6/8, or 6/4 time
-     *  - Triplets that start on quarter note beats
-     *  - 3 connected chords that start on quarter note beats (12/8 time only)
-     *  - 4 connected chords that start on quarter note beats (4/4 or 2/4 time only)
-     *  - 2 connected chords that start on quarter note beats
-     *  - 2 connected chords that start on any beat
+     *  We create beams in the following order:<br>
+     *  - 6 connected 8th note chords, in 3/4, 6/8, or 6/4 time<br>
+     *  - Triplets that start on quarter note beats<br>
+     *  - 3 connected chords that start on quarter note beats (12/8 time only)<br>
+     *  - 4 connected chords that start on quarter note beats (4/4 or 2/4 time only)<br>
+     *  - 2 connected chords that start on quarter note beats<br>
+     *  - 2 connected chords that start on any beat<br>
+     *  
+     *  @param allsymbols
+     *  @param time The Time Signature
+     *  
      */
     private static void
     CreateAllBeamedChords(ArrayList<ArrayList<MusicSymbol>> allsymbols, TimeSignature time) {
@@ -706,7 +753,10 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
     }
 
 
-    /** Get the width (in pixels) needed to display the key signature */
+    /** Get the width (in pixels) needed to display the key signature
+     * 
+     * @param key
+     */
     public static int
     KeySignatureWidth(KeySignature key) {
         ClefSymbol clefsym = new ClefSymbol(Clef.Treble, 0, false);
@@ -1400,6 +1450,10 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
         }
     }
 
+    /** Set the Midi Player
+     * 
+     * @param p The MidiPlayer
+     */
     public void setPlayer(MidiPlayer p) {
         player = p;
     }

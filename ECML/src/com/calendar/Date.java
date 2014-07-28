@@ -20,18 +20,20 @@ public class Date {
 	private int[] monthOfLeapYear = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	private int[] monthOfNotLeapYear = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-	/** Creates a new date */
+	/** Create a new date */
 	public Date() {
 		
 	}
 	
-	/** Create a new date with the parameters you want
+	/** Create a new date with the parameters you want.<br>
+	 * Always create a valid date. If you set month to 14, it will add a year
+	 * to the number of year you've chosen
 	 * 
-	 * @param year
-	 * @param month (from 0 to 11)
-	 * @param day 
-	 * @param hour
-	 * @param minute
+	 * @param year The year of the date
+	 * @param month The month of the date (from 0 for January to 11 for December)
+	 * @param day The day of the date (from 1 to the number of days of this month)
+	 * @param hour The hour of the date
+	 * @param minute The minute of the date
 	 * 
 	 */
 	public Date(int year, int month, int day, int hour, int minute) {
@@ -42,7 +44,7 @@ public class Date {
 		this.addYear(year);
 	}
 
-	/** Copies a date */
+	/** Copy a date */
 	public Date copy() {
 		Date dateCopy = new Date();
 		dateCopy.minute = this.minute;
@@ -53,7 +55,7 @@ public class Date {
 		return dateCopy;
 	}
 	
-	/** Checks whether or not it's leap year.
+	/** Check whether or not it's leap year.
 	 * 
 	 * This is a leap year if this a multiple of 4 but not of 100 or if it's a multiple of 400)
 	 * 
@@ -62,9 +64,9 @@ public class Date {
 		return ((this.year % 4 == 0 && this.year % 100 != 0) || this.year % 400 == 0);
 	}
 
-	/** Adds the number of years you want to the current date
+	/** Add the number of years you want to the current date
 	 * 
-	 * @param year
+	 * @param year The number of years to add
 	 * 
 	 */
 	public Date addYear(int year) {
@@ -72,9 +74,12 @@ public class Date {
 		return this;
 	}
 
-	/** Adds the number of months you want to the current date
+	/** Add the number of months you want to the current date
+	 * <br>
+	 * Adding a month to the 31st of January will return the 1st of March because
+	 * February doesn't have 31 days.
 	 * 
-	 * @param month
+	 * @param month The number of months to add
 	 * 
 	 */
 	public Date addMonth(int month) {
@@ -97,6 +102,7 @@ public class Date {
                   || (leapYear && this.month == 1 && this.day > 29) || (!leapYear && this.month == 1 && this.day > 28)) {
 			this.month++;
 			this.day = 1;
+			/* If this month is January, then we've entered in a new year */
 			if (this.month == 0) {
 				this.year++;
 			}
@@ -106,7 +112,7 @@ public class Date {
 
 	/** Adds the number of days you want to the current date
 	 * 
-	 * @param day
+	 * @param day The number of days to add
 	 * 
 	 */
 	public Date addDay(int day) {
@@ -117,7 +123,8 @@ public class Date {
 		} else {
 			months = monthOfNotLeapYear;
 		}
-		/* while the number of days added to the current day exceeds the number of days in the current month, go to the next month and remove the number of days of the former current month */
+		/* while the number of days added to the current day exceeds the number of days in the current month,
+		 * go to the next month and remove the number of days of the former current month */
 		while (this.day + daysToAdd > months[this.month]) {
 			this.month = (this.month + 1) % 12;
 			if (this.month == 0) {
@@ -139,7 +146,7 @@ public class Date {
 
 	/** Adds the number of hours you want to the current date
 	 * 
-	 * @param hour
+	 * @param hour The number of hours to add
 	 * 
 	 */
 	public Date addHour(int hour) {
@@ -151,7 +158,7 @@ public class Date {
 
 	/** Adds the number of minutes you want to the current date
 	 * 
-	 *  @param minute
+	 *  @param minute The number of minutes to add
 	 *  
 	 */
 	public Date addMinute(int minute) {
@@ -164,12 +171,15 @@ public class Date {
 	
 	/** Adds the amout of time you want to the current date starting with the smallest
 	 * period of time and so on (minute then hour etc..)
+	 * <br>
+	 * So for example, adding a month and a day to the 31st of January will return
+	 * the 1st of March and not the 2nd of March.
 	 * 
-	 *  @param year
-	 *  @param month
-	 *  @param day
-	 *  @param hour
-	 *  @param minute
+	 *  @param year The number of years to add
+	 *  @param month The number of months to add
+	 *  @param day The number of days to add
+	 *  @param hour The number of hours to add
+	 *  @param minute The number of minutes to add
 	 *  
 	 */
 	public Date addTime(int year, int month, int day, int hour, int minute) {

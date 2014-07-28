@@ -77,7 +77,7 @@ import com.metronome.Metronome;
 
 /**
  * @class SheetMusicActivity
- * 
+ * <br>
  * The SheetMusicActivity is the main activity.<br>
  * The main components are:<br>
  * - MidiPlayer : The buttons and speed bar at the top.<br>

@@ -27,14 +27,14 @@ import android.view.SurfaceView;
 
 
 /** @class Piano
- *
+ *<br>
  * The Piano Control is the panel at the top that displays the
- * piano, and highlights the piano notes during playback.
+ * piano, and highlights the piano notes during playback.<br>
  * The main methods are:
- *
+ *<br>
  * SetMidiFile() - Set the Midi file to use for shading.  The Midi file
  *                 is needed to determine which notes to shade.
- *
+ *<br>
  * ShadeNotes() - Shade notes on the piano that occur at a given pulse time.
  *
  */
@@ -42,27 +42,27 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
     public static final int KeysPerOctave = 7;
     public static final int MaxOctave = 6;
 
-    private static int WhiteKeyWidth;  /** Width of a single white key */
-    private static int WhiteKeyHeight; /** Height of a single white key */
-    private static int BlackKeyWidth;  /** Width of a single black key */
-    private static int BlackKeyHeight; /** Height of a single black key */
-    private static int margin;         /** The top/left margin to the piano (0) */
-    private static int BlackBorder;    /** The width of the black border around the keys */
+    private static int WhiteKeyWidth;  /* Width of a single white key */
+    private static int WhiteKeyHeight; /* Height of a single white key */
+    private static int BlackKeyWidth;  /* Width of a single black key */
+    private static int BlackKeyHeight; /* Height of a single black key */
+    private static int margin;         /* The top/left margin to the piano (0) */
+    private static int BlackBorder;    /* The width of the black border around the keys */
 
-    private static int[] blackKeyOffsets;   /** The x pixles of the black keys */
+    private static int[] blackKeyOffsets;   /* The x pixles of the black keys */
 
-    /* The colors for drawing black/gray lines */
+    /** The colors for drawing black/gray lines */
     private int gray1, gray2, gray3, shade1, shade2;
 
-    private boolean useTwoColors;         /** If true, use two colors for highlighting */
-    private ArrayList<MidiNote> notes;    /** The Midi notes for shading */
-    private int maxShadeDuration;         /** The maximum duration we'll shade a note for */
-    private int showNoteLetters;          /** Display the letter for each piano note */
-    private Paint paint;                  /** The paint options for drawing */
-    private boolean surfaceReady;         /** True if we can draw on the surface */
-    private Bitmap  bufferBitmap;         /** The bitmap for double-buffering */
-    private Canvas  bufferCanvas;         /** The canvas for double-buffering */
-    private MidiPlayer player;            /** Used to pause the player */
+    private boolean useTwoColors;         /* If true, use two colors for highlighting */
+    private ArrayList<MidiNote> notes;    /* The Midi notes for shading */
+    private int maxShadeDuration;         /* The maximum duration we'll shade a note for */
+    private int showNoteLetters;          /* Display the letter for each piano note */
+    private Paint paint;                  /* The paint options for drawing */
+    private boolean surfaceReady;         /* True if we can draw on the surface */
+    private Bitmap  bufferBitmap;         /* The bitmap for double-buffering */
+    private Canvas  bufferCanvas;         /* The canvas for double-buffering */
+    private MidiPlayer player;            /* Used to pause the player */
 
     /** Create a new Piano. */
     public Piano(Context context) {
@@ -274,7 +274,7 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
  
-    /* Draw the Black keys */
+    /** Draw the Black keys */
     private void DrawBlackKeys(Canvas canvas) {
         paint.setStyle(Paint.Style.FILL); 
         for (int octave = 0; octave < MaxOctave; octave++) {
@@ -295,7 +295,7 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
         paint.setStyle(Paint.Style.STROKE); 
     }
 
-    /* Draw the black border area surrounding the piano keys.
+    /** Draw the black border area surrounding the piano keys.
      * Also, draw gray outlines at the bottom of the white keys.
      */
     private void DrawBlackBorder(Canvas canvas) {
@@ -399,7 +399,7 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    /* Shade the given note with the given brush.
+    /** Shade the given note with the given brush.
      * We only draw notes from notenumber 24 to 96.
      * (Middle-C is 60).
      */

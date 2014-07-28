@@ -20,14 +20,15 @@ import android.graphics.Path;
 
 
 /** @class AccidSymbol
+ * <br>
  * An accidental (accid) symbol represents a sharp, flat, or natural
  * accidental that is displayed at a specific position (note and clef).
  */
 public class AccidSymbol implements MusicSymbol {
-    private Accid accid;          /** The accidental (sharp, flat, natural) */
-    private WhiteNote whitenote;  /** The white note where the symbol occurs */
-    private Clef clef;            /** Which clef the symbols is in */
-    private int width;            /** Width of symbol */
+    private Accid accid;          /* The accidental (sharp, flat, natural) */
+    private WhiteNote whitenote;  /* The white note where the symbol occurs */
+    private Clef clef;            /* Which clef the symbols is in */
+    private int width;            /* Width of symbol */
 
     /** 
      * Create a new AccidSymbol with the given accidental, that is

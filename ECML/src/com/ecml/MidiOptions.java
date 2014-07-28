@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import android.graphics.Color;
 
 /** @class MidiOptions
+ * <br>
  * The MidiOptions class contains the available options for
  * modifying the sheet music and sound.  These options are collected
  * from the SettingsActivity, and are passed to the SheetMusic and
@@ -37,40 +38,44 @@ public class MidiOptions implements Serializable {
     public static final int NoteNameFixedNumber    = 4;
     public static final int NoteNameMovableNumber  = 5;
 
-    public boolean showPiano;        /** Display the piano */
-    public boolean[] tracks;         /** Which tracks to display (true = display) */
-    public static int[] instruments;        /** Which instruments to use per track */
-    public static boolean useDefaultInstruments; /** If true, don't change instruments */
-    public boolean scrollVert;       /** Whether to scroll vertically or horizontally */
-    public boolean largeNoteSize;    /** Display large or small note sizes */
-    public boolean twoStaffs;        /** Combine tracks into two staffs ? */
-    public int showNoteLetters;      /** Show the letters (A, A#, etc) next to the notes */
-    public boolean showLyrics;       /** Show the lyrics under each note */
-    public boolean showMeasures;     /** Show the measure numbers for each staff */
-    public int shifttime;            /** Shift note start times by the given amount */
-    public int transpose;            /** Shift note key up/down by given amount */
-    public int key;                  /** Use the given KeySignature (NoteScale) */
-    public TimeSignature time;       /** Use the given time signature (null for default) */
-    public TimeSignature defaultTime;  /** The default time signature */
-    public int combineInterval;      /** Combine notes within given time interval (msec) */
-    public int shade1Color;   /** The color to use for shading */
-    public int shade2Color;   /** The color to use for shading the left hand piano */
-    public int delay;		  /** The delay in milliseconds after which the music starts */
+    public boolean showPiano;        /* Display the piano */
+    public boolean[] tracks;         /* Which tracks to display (true = display) */
+    public static int[] instruments;        /* Which instruments to use per track */
+    public static boolean useDefaultInstruments; /* If true, don't change instruments */
+    public boolean scrollVert;       /* Whether to scroll vertically or horizontally */
+    public boolean largeNoteSize;    /* Display large or small note sizes */
+    public boolean twoStaffs;        /* Combine tracks into two staffs ? */
+    public int showNoteLetters;      /* Show the letters (A, A#, etc) next to the notes */
+    public boolean showLyrics;       /* Show the lyrics under each note */
+    public boolean showMeasures;     /* Show the measure numbers for each staff */
+    public int shifttime;            /* Shift note start times by the given amount */
+    public int transpose;            /* Shift note key up/down by given amount */
+    public int key;                  /* Use the given KeySignature (NoteScale) */
+    public TimeSignature time;       /* Use the given time signature (null for default) */
+    public TimeSignature defaultTime;  /* The default time signature */
+    public int combineInterval;      /* Combine notes within given time interval (msec) */
+    public int shade1Color;   /* The color to use for shading */
+    public int shade2Color;   /* The color to use for shading the left hand piano */
+    public int delay;		  /* The delay in milliseconds after which the music starts */
 
-    public boolean[] mute;    /** Which tracks to mute (true = mute) */
-    public int  tempo;        /** The tempo, in microseconds per quarter note */
-    public int  pauseTime;    /** Start the midi music at the given pause time */
+    public boolean[] mute;    /* Which tracks to mute (true = mute) */
+    public int  tempo;        /* The tempo, in microseconds per quarter note */
+    public int  pauseTime;    /* Start the midi music at the given pause time */
 
-    public boolean playMeasuresInLoop; /** Play the selected measures in a loop */
-    public int     playMeasuresInLoopStart; /** Start measure to play in loop */
-    public int     playMeasuresInLoopEnd;   /** End measure to play in loop */
-    public int     lastMeasure;             /** The last measure in the song */
+    public boolean playMeasuresInLoop; /* Play the selected measures in a loop */
+    public int     playMeasuresInLoopStart; /* Start measure to play in loop */
+    public int     playMeasuresInLoopEnd;   /* End measure to play in loop */
+    public int     lastMeasure;             /* The last measure in the song */
 
 
+    /** Create a new MidiOptions Object that is null */ 
     public MidiOptions() {
     }
 
-    /* Initialize the default settings/options for the given MidiFile */
+    /** Initialize the default settings/options for the given MidiFile
+     * 
+     * @param midifile
+     */
     public MidiOptions(MidiFile midifile) {
         showPiano = true;
         int num_tracks = midifile.getTracks().size();
@@ -119,7 +124,7 @@ public class MidiOptions implements Serializable {
         delay = 1000;
     }
 
-    /* Convert this MidiOptions object into a JSON string. */
+    /** Convert this MidiOptions object into a JSON string. */
     public String toJson() {
         try {
             JSONObject json = new JSONObject();
@@ -175,7 +180,10 @@ public class MidiOptions implements Serializable {
         }
     }
 
-    /* Initialize the options from a json string */
+    /** Initialize the options from a json string
+     * 
+     * @param jsonString
+     */
     public static MidiOptions fromJson(String jsonString) {
         if (jsonString == null) {
             return null;
@@ -234,7 +242,10 @@ public class MidiOptions implements Serializable {
     }
 
 
-    /* Merge in the saved options to this MidiOptions.*/
+    /** Merge in the saved options to this MidiOptions
+     * 
+     * @param saved Saved MidiOptions
+     */
     void merge(MidiOptions saved) {
         if (saved.tracks.length == tracks.length) {
             for (int i = 0; i < tracks.length; i++) {
@@ -299,6 +310,7 @@ public class MidiOptions implements Serializable {
         return result;
     }
 
+    /** Copy the Object MidiOptions */
     public MidiOptions copy() {
         MidiOptions options = new MidiOptions();
         options.tracks = new boolean[tracks.length];

@@ -25,6 +25,7 @@ import android.widget.ListView;
 
 
 /** @class RecentSongsActivity
+ * <br>
  * The RecentSongsActivity class displays a list of songs
  * that were recently accessed.  The list comes from the
  * SharedPreferences ????

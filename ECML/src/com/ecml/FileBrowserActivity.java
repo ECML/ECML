@@ -55,7 +55,7 @@ public class FileBrowserActivity extends ListActivity {
         loadDirectory(lastBrowsedDirectory);
     }
 
-    /* Scan the files in the new directory, and store them in the filelist.
+    /** Scan the files in the new directory, and store them in the filelist.
      * Update the UI by refreshing the list adapter.
      */
     private void loadDirectory(String newdirectory) {

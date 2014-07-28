@@ -25,6 +25,7 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 
 /** @class FileUri
+ * <br>
  * Represents a reference to a file.
  * The file could be either in the /assets directory, 
  * the internal storage, or the external storage.
@@ -33,7 +34,11 @@ public class FileUri implements Comparator<FileUri> {
     private Uri uri;                  /** The URI path to the file */
     private String displayName;       /** The name to display */
 
-    /** Create a Uri with the given display name */
+    /** Create a Uri with the given display name
+     * 
+     * @param uri
+     * @param path
+     */
     public FileUri(Uri uri, String path) {
         this.uri = uri;
         if (path == null) {
@@ -42,7 +47,10 @@ public class FileUri implements Comparator<FileUri> {
         displayName = displayNameFromPath(path);
     }
 
-    /** Given a path name, return a display name */
+    /** Given a path name, return a display name
+     * 
+     * @param path
+     */
     public static String displayNameFromPath(String path) {
         String displayName = path;
         displayName = displayName.replace("__", ": ");
@@ -72,7 +80,12 @@ public class FileUri implements Comparator<FileUri> {
         return uri;
     }
 
-    /** Compare two files by their display name */
+    /** Compare two files by their display name
+     * 
+     * @param f1 first FileUri
+     * @param f2 second FileUri
+     * 
+     */
     public int compare(FileUri f1, FileUri f2) {
         return f1.displayName.compareToIgnoreCase(f2.displayName);
     }
@@ -139,7 +152,7 @@ public class FileUri implements Comparator<FileUri> {
         }
     }
 
-    /* Convert this URI to a JSON string */
+    /** Convert this URI to a JSON string */
     public JSONObject toJson() {
         try {
             JSONObject json = new JSONObject();
@@ -155,7 +168,12 @@ public class FileUri implements Comparator<FileUri> {
         }
     }
 
-    /* Initialize this URI from a json string */
+    /** Initialize this URI from a json string
+     * 
+     * @param obj
+     * @param activity
+     * @return FileUri
+     */
     public static FileUri fromJson(JSONObject obj, Activity activity) {
         try {
             String displayName = obj.optString("displayName", null);
@@ -183,7 +201,11 @@ public class FileUri implements Comparator<FileUri> {
         return s1.equals(s2);
     }
     
-    /* Return true if the two FileUri json objects are equal */
+    /** Return true if the two FileUri json objects are equal
+     * 
+     * @param obj1
+     * @param obj2
+     */
     public static boolean equalJson(JSONObject obj1, JSONObject obj2) {
         String displayName1 = obj1.optString("displayName", null);
         String uriString1 = obj1.optString("uri", null);

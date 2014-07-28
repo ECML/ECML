@@ -17,15 +17,16 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 
-/* @class RestSymbol
+/** @class RestSymbol
+ * <br>
  * A Rest symbol represents a rest - whole, half, quarter, or eighth.
  * The Rest symbol has a starttime and a duration, just like a regular
  * note.
  */
 public class RestSymbol implements MusicSymbol {
-    private int starttime;          /** The starttime of the rest */
-    private NoteDuration duration;  /** The rest duration (eighth, quarter, half, whole) */
-    private int width;              /** The width in pixels */
+    private int starttime;          /* The starttime of the rest */
+    private NoteDuration duration;  /* The rest duration (eighth, quarter, half, whole) */
+    private int width;              /* The width in pixels */
 
     /** Create a new rest symbol with the given start time and duration */
     public RestSymbol(int start, NoteDuration dur) {
@@ -39,10 +40,13 @@ public class RestSymbol implements MusicSymbol {
      */
     public int getStartTime() { return starttime; }
 
-    /** Get/Set the width (in pixels) of this symbol. The width is set
+    /** Get the width (in pixels) of this symbol. The width is set
      * in SheetMusic.AlignSymbols() to vertically align symbols.
      */
     public int getWidth() { return width; }
+    /** Set the width (in pixels) of this symbol. The width is set
+     * in SheetMusic.AlignSymbols() to vertically align symbols.
+     */
     public void setWidth(int value) { width = value; }
 
     /** Get the minimum width (in pixels) needed to draw this symbol */

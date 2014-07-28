@@ -21,7 +21,8 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 
-/** @class ClefSymbol 
+/** @class ClefSymbol
+ * <br>
  * A ClefSymbol represents either a Treble or Bass Clef image.
  * The clef can be either normal or small size.  Normal size is
  * used at the beginning of a new staff, on the left side.  The
@@ -29,12 +30,12 @@ import android.graphics.Rect;
  */
 
 public class ClefSymbol implements MusicSymbol {
-    public static Bitmap treble;  /** The treble clef image */
-    private static Bitmap bass;    /** The bass clef image */
+    public static Bitmap treble;  /* The treble clef image */
+    private static Bitmap bass;   /* The bass clef image */
 
-    private int starttime;        /** Start time of the symbol */
-    private boolean smallsize;    /** True if this is a small clef, false otherwise */
-    private Clef clef;            /** The clef, Treble or Bass */
+    private int starttime;        /* Start time of the symbol */
+    private boolean smallsize;    /* True if this is a small clef, false otherwise */
+    private Clef clef;            /* The clef, Treble or Bass */
     private int width;
 
     /** Create a new ClefSymbol, with the given clef, starttime, and size */
@@ -67,10 +68,13 @@ public class ClefSymbol implements MusicSymbol {
             return SheetMusic.NoteWidth * 3;
     } 
 
-    /** Get/Set the width (in pixels) of this symbol. The width is set
+    /** Get the width (in pixels) of this symbol. The width is set
      * in SheetMusic.AlignSymbols() to vertically align symbols.
      */
     public int getWidth() { return width; }
+    /** Set the width (in pixels) of this symbol. The width is set
+     * in SheetMusic.AlignSymbols() to vertically align symbols.
+     */
     public void setWidth(int value){ width = value; }
 
     /** Get the number of pixels this symbol extends above the staff. Used

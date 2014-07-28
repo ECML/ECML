@@ -18,6 +18,7 @@ import java.util.Comparator;
 
 
 /** @class MidiNote
+ * <br>
  * A MidiNote contains
  *
  * starttime - The time (measured in pulses) when the note is pressed.
@@ -34,13 +35,13 @@ import java.util.Comparator;
  * is found, the duration is set by the method NoteOff().
  */
 public class MidiNote implements Comparator<MidiNote> {
-    private int starttime;   /** The start time, in pulses */
-    private int channel;     /** The channel */
-    private int notenumber;  /** The note, from 0 to 127. Middle C is 60 */
-    private int duration;    /** The duration, in pulses */
+    private int starttime;   /* The start time, in pulses */
+    private int channel;     /* The channel */
+    private int notenumber;  /* The note, from 0 to 127. Middle C is 60 */
+    private int duration;    /* The duration, in pulses */
 
 
-    /* Create a new MidiNote.  This is called when a NoteOn event is
+    /** Create a new MidiNote.  This is called when a NoteOn event is
      * encountered in the MidiFile.
      */
     public MidiNote(int starttime, int channel, int notenumber, int duration) {
@@ -65,7 +66,7 @@ public class MidiNote implements Comparator<MidiNote> {
     public int getDuration() { return duration; }
     public void setDuration(int value) { duration = value; }
 
-    /* A NoteOff event occurs for this note at the given time.
+    /** A NoteOff event occurs for this note at the given time.
      * Calculate the note duration based on the noteoff event.
      */
     public void NoteOff(int endtime) {
@@ -83,6 +84,7 @@ public class MidiNote implements Comparator<MidiNote> {
     }
 
 
+    /** Clone the MidiNote */
     public MidiNote Clone() {
         return new MidiNote(starttime, channel, notenumber, duration);
     }

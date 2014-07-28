@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 
 /** @class ScanMidiFiles
+ * <br>
  * The ScanMidiFiles class is used to scan for midi files
  * on a background thread.
  */
@@ -143,6 +144,7 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
 
 
 /** @class AllSongsActivity
+ * <br>
  * The AllSongsActivity class is used to display a list of
  * songs to choose from.  The list is created from the songs
  * shipped with MidiSheetMusic (in the assets directory), and 
@@ -223,7 +225,7 @@ public class AllSongsActivity extends ListActivity implements TextWatcher {
         filterText.addTextChangedListener(this);
         filterText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
-        // hide keyboard by default
+        // Hide keyboard by default
         filterText.clearFocus();
         InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(filterText.getWindowToken(), 0);

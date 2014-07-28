@@ -16,12 +16,13 @@ package com.ecml;
 import java.util.ArrayList;
 
 /** @class ClefMeasures
+ * <br>
  * The ClefMeasures class is used to report what Clef (Treble or Bass) a
  * given measure uses.
  */
 public class ClefMeasures {
-    private ArrayList<Clef> clefs;  /** The clefs used for each measure (for a single track) */
-    private int measure;       		/** The length of a measure, in pulses */
+    private ArrayList<Clef> clefs;  /* The clefs used for each measure (for a single track) */
+    private int measure;       		/* The length of a measure, in pulses */
 
  
     /** Given the notes in a track, calculate the appropriate Clef to use
