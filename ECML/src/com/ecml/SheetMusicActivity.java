@@ -113,20 +113,20 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/*************************************** Audio Recording Variables *******************************************/
 
-	private long fileName;			/* File name of last Audio Record */
+	private long audioFileName;		/* File name of last Audio Record */
 	private String pathAudio;		/* Path of last Audio Record */
-	private String ext = ".mp4";	/* Extension of Audio Record files */
+	private String ext = ".mp4";	/* Extension of Audio and VIDEO Record files */
 
-	private static final String AUDIO_RECORDER_FOLDER = "AudioRecords";	/* Audio Records file name */
+	private static final String AUDIO_RECORDER_FOLDER = "AudioRecords";	/* Audio Records folder name */
 	private MediaRecorder audioMediaRecorder;							/* Audio Media Recorder */
 	private int output_format = MediaRecorder.OutputFormat.MPEG_4;		/* Output format (mp4) */
 	private MediaPlayer mediaPlayer = new MediaPlayer();				/* Media Player */
 
 	private boolean existAudioRecord;					/* Whether or not an Audio Record already exists */
-	private boolean isAudioReplayPaused;				/* Whether or not the Media Player is paused */
-	private boolean isAudioRecording;					/* Whether or not the Media Recorder is recording */
-	private boolean isAudioRecordingAndPlayingMusic;	/* Whether or not the Media Record is recording while
-														   the music is playing */
+	private boolean isAudioReplayPaused;				/* Whether or not the Audio Media Player is paused */
+	private boolean isAudioRecording;					/* Whether or not the Audio Media Recorder is recording */
+	private boolean isAudioRecordingAndPlayingMusic;	/* Whether or not the Audio Media Record is recording
+														 * while the music is playing */
 
 	private Handler timer;
 
@@ -134,40 +134,41 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/***************************************** Video Recording Variables **************************************/
 
-	private SurfaceView surfaceView;
-	private SurfaceHolder surfaceHolder;
-	private MediaRecorder mrec;
-	private Camera mCamera;
-	private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";
-	private String pathVideo;
-	private boolean isVideoRecording;
-	private boolean existVideoRecord;
-	private boolean front = true;
-	private String cameraSide;
+	private long videoFileName;					/* File name of last Video Record */
+	private SurfaceView surfaceView;			/* The Surface View needed for the Camera */
+	private SurfaceHolder surfaceHolder;		/* The Surface Holder needed for the Camera */
+	private MediaRecorder videoMediaRecorder;	/* Video Media Recorder */
+	private Camera camera;						/* The Camera */
+	private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";	/* Video Records folder name */
+	private String pathVideo;			/* Path of last Video Record */
+	private boolean existVideoRecord;	/* Whether or not an Video Record already exists */
+	private boolean isVideoRecording;	/* Whether or not the Video Media Recorder is recording */
+	private boolean front = true;		/* Whether the front camera or the back camera is used */
+	private String cameraSide;			/* The String telling which camera is used accordingly to 'front' */
 
-	private View topLayout;
+	private View topLayout;		/* The Layout in which the Camera is displayed (needs to be improved) */
 
 	/************************************ End of Video Recording Variables ************************************/
 
 	/****************************************** File Variables ************************************************/
 
-	private static String sdcardPath = "sdcard/";
-	private static String ECMLPath = "ECML/";
-	private static final String MUSIC_SHEET_FOLDER = "MusicSheets";
+	private static String sdcardPath = "sdcard/";	/* Path to the SD card */
+	private static String ECMLPath = "ECML/";		/* Path to the ECML folder from the sdcard */
+	private static final String MUSIC_SHEET_FOLDER = "MusicSheets"; /* Music Sheet folder name */
 
 	/***************************************** End of File Variables *******************************************/
 
 	/****************************************** Metronome Variables ********************************************/
 
-	private Metronome metronome;
-	private SeekBar slider;
-	private View abMetronome;
+	private Metronome metronome;	/* The Metronome */
+	private SeekBar slider;			/* The Slider for the Metronome's Tempo */
+	private View abMetronome;		/* The Metronome View in the Action Bar */
 
 	/************************************** End of Metronome Variables *****************************************/
 
-	private final Context context = this; /* Context of this activity */
-	private Menu menu;
-	private VolumeListener volumeListener;
+	private final Context context = this;	/* Context of this activity */
+	private Menu menu;						/* Actually the Action Bar and NOT the overflowing menu */
+	private VolumeListener volumeListener;	/* The Volume Listener to handle volume changes */
 
 	/**********************************************************************************************************/
 	/**********************************************************************************************************/
@@ -508,40 +509,31 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			return true;
 		case R.id.startVideoRecording:
 			surfaceView.setVisibility(View.VISIBLE);
-			if (!isVideoRecording && !isAudioRecording) {
-				if (front) {
-					mCamera = openFrontFacingCamera();
-				} else {
-					mCamera = Camera.open();
-				}
-				try {
-					startVideoRecording();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			} else {
-				Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
+			try {
+				startVideoRecording();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			return true;
 		case R.id.stopVideoRecording:
-				stopVideoRecording();
-				surfaceView.setVisibility(View.GONE);
-				topLayout.setVisibility(View.GONE);
+			stopVideoRecording();
+			surfaceView.setVisibility(View.GONE);
+			topLayout.setVisibility(View.GONE);
 			return true;
 		case R.id.replayVideoRecording:
-				replayVideoRecording();
+			replayVideoRecording();
 			return true;
 		case R.id.switchCamera:
 			switchCamera();
 			return true;
 		case R.id.startAudioRecording:
-				startAudioRecording();
+			startAudioRecording();
 			return true;
 		case R.id.stopAudioRecording:
-				stopAudioRecording();
+			stopAudioRecording();
 			return true;
 		case R.id.replayAudioRecording:
-				playAudio();
+			playAudio();
 			return true;
 		case R.id.pauseReplayAudioRecording:
 			pauseAudio();
@@ -777,19 +769,19 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/************************************ Audio Recording functions *******************************************/
 
-	/** Gets the Filename of the next Audio Record, also updates the path */
+	/** Get the Filename of the next Audio Record, also update the path */
 	private String getFilenameAudio() {
 		String filepath = Environment.getExternalStorageDirectory().getPath();
 		File file = new File(filepath, ECMLPath + AUDIO_RECORDER_FOLDER);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
-		fileName = System.currentTimeMillis();
+		audioFileName = System.currentTimeMillis();
 		pathAudio = file.getAbsolutePath();
-		return (pathAudio + "/" + fileName + ext);
+		return (pathAudio + "/" + audioFileName + ext);
 	}
 
-	/** Starts Audio Recording if not recording audio or video yet */
+	/** Start Audio Recording if not recording audio or video yet */
 	private void startAudioRecording() {
 		if (!isVideoRecording && !isAudioRecording) {
 			audioMediaRecorder = new MediaRecorder();
@@ -814,7 +806,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	}
 
-	/** Stops Audio Recording if currently recording */
+	/** Stop Audio Recording if currently recording */
 	private void stopAudioRecording() {
 		if (isAudioRecording) {
 			if (null != audioMediaRecorder) {
@@ -831,7 +823,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	}
 
-	/** Replays last Audio Record
+	/** Replay last Audio Record
 	 * if not currently audio or video recording
 	 * and if there is one to replay
 	 * and if it's not already playing it
@@ -844,7 +836,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 												// Audio Record because it may have not been done yet
 						mediaPlayer.reset();
 						try {
-							mediaPlayer.setDataSource(pathAudio + "/" + fileName + ext);
+							mediaPlayer.setDataSource(pathAudio + "/" + audioFileName + ext);
 						} catch (IllegalArgumentException e) {
 							e.printStackTrace();
 						} catch (IllegalStateException e) {
@@ -874,7 +866,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	}
 
-	/** Pauses the Replay if it's currently playing */
+	/** Pause the Replay if it's currently playing */
 	private void pauseAudio() {
 		if (mediaPlayer.isPlaying()) {
 			Toast.makeText(context, "Pausing Audio Replay", Toast.LENGTH_SHORT).show();
@@ -886,7 +878,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	}
 
-	/** Checks if there are no errors */
+	/** Check if there are no errors */
 	private MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
 		@Override
 		public void onError(MediaRecorder mr, int what, int extra) {
@@ -894,7 +886,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	};
 
-	/** Listens to the info the Media Recorder could give */
+	/** Listen to the info the Media Recorder could give */
 	private MediaRecorder.OnInfoListener infoListener = new MediaRecorder.OnInfoListener() {
 		@Override
 		public void onInfo(MediaRecorder mr, int what, int extra) {
@@ -906,51 +898,60 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/**************************************** Video Recording Functions ***************************************/
 	
-	/** Gets the Filename of the next Video Record, also updates the path */
+	/** Get the Filename of the next Video Record, also updates the path */
 	private String getFilenameVideo() {
 		String filepath = Environment.getExternalStorageDirectory().getPath();
 		File file = new File(filepath, ECMLPath + VIDEO_RECORDER_FOLDER);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
-		fileName = System.currentTimeMillis();
+		videoFileName = System.currentTimeMillis();
 		pathVideo = file.getAbsolutePath();
-		return (pathVideo + "/" + fileName + ext);
+		return (pathVideo + "/" + videoFileName + ext);
 	}
 
-	/** Starts Video Recording if not recording audio or video yet */
+	/** Start Video Recording if not recording audio or video yet */
 	private void startVideoRecording() throws IOException {
-		mrec = new MediaRecorder(); // Works well
-		mCamera.stopPreview();
-		mCamera.unlock();
-		mrec.setCamera(mCamera);
-
-		mrec.setPreviewDisplay(surfaceHolder.getSurface());
-		mrec.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-		mrec.setAudioSource(MediaRecorder.AudioSource.MIC);
-
-		if (front) {
-			mrec.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
+		if (!isVideoRecording && !isAudioRecording) {
+			if (front) {
+				camera = openFrontFacingCamera();
+			} else {
+				camera = Camera.open();
+			}
+			videoMediaRecorder = new MediaRecorder(); // Works well
+			camera.stopPreview();
+			camera.unlock();
+			videoMediaRecorder.setCamera(camera);
+	
+			videoMediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
+			videoMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+			videoMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+	
+			if (front) {
+				videoMediaRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
+			} else {
+				videoMediaRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_BACK, CamcorderProfile.QUALITY_HIGH));
+			}
+	
+			videoMediaRecorder.setOutputFile(getFilenameVideo());
+			videoMediaRecorder.setVideoFrameRate(10);
+	
+			videoMediaRecorder.prepare();
+			isVideoRecording = true;
+			videoMediaRecorder.start();
 		} else {
-			mrec.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_BACK, CamcorderProfile.QUALITY_HIGH));
+			Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
 		}
-
-		mrec.setOutputFile(getFilenameVideo());
-		mrec.setVideoFrameRate(10);
-
-		mrec.prepare();
-		isVideoRecording = true;
-		mrec.start();
 	}
 
-	/** Stops Video Recording if currently recording,
+	/** Stop Video Recording if currently recording,
 	 * and release video media recorder
 	 * and release camera for other apps
 	 */
 	private void stopVideoRecording() {
 		if (isVideoRecording) {
 			existVideoRecord = true;
-			mrec.stop();
+			videoMediaRecorder.stop();
 			releaseMediaRecorder();
 			releaseCamera();
 			isVideoRecording = false;
@@ -964,38 +965,37 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	 * to use this ressource
 	 */
 	private void releaseMediaRecorder() {
-		if (mrec != null) {
-			mrec.reset(); // clear recorder configuration
-			mrec.release(); // release the recorder object
-			mrec = null;
-			mCamera.lock(); // lock camera for later use
+		if (videoMediaRecorder != null) {
+			videoMediaRecorder.reset(); // clear recorder configuration
+			videoMediaRecorder.release(); // release the recorder object
+			videoMediaRecorder = null;
+			camera.lock(); // lock camera for later use
 		}
 	}
 
 	/** Release the camera for other apps */
 	private void releaseCamera() {
-		if (mCamera != null) {
-			mCamera.release(); // release the camera for other applications
+		if (camera != null) {
+			camera.release(); // release the camera for other applications
 			if (front) {
-				mCamera = openFrontFacingCamera();
-				mCamera.release();
+				camera = openFrontFacingCamera();
+				camera.release();
 			} else {
-				mCamera = Camera.open();
-				mCamera.release();
+				camera = Camera.open();
+				camera.release();
 			}
 
 		}
 	}
 
-	/** Replays last Audio Record
+	/** Replay last Audio Record
 	 * if not currently audio or video recording
 	 * and if there is one to replay
-	 * and if it's not already playing it
 	 */
 	private void replayVideoRecording() {
 		if (!isVideoRecording && !isAudioRecording) {
 			if (existVideoRecord) {
-				String filename = fileName + ext;
+				String filename = videoFileName + ext;
 				String lastvideo = pathVideo + "/" + filename;
 				Intent intentToPlayVideo = new Intent(Intent.ACTION_VIEW);
 				intentToPlayVideo.setDataAndType(Uri.parse(lastvideo), "video/*");
@@ -1010,24 +1010,28 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 	}
 
+	/** Necessary function for the camera */
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 	}
 
+	/** Necessary function for the camera */
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 	}
 
+	/** Necessary function for the camera */
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 	}
 
-	/** Opens the front facing camera */
+	/** Open the front facing camera */
 	private Camera openFrontFacingCamera() {
 		int cameraCount = 0;
 		Camera cam = null;
 		Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
 		cameraCount = Camera.getNumberOfCameras();
+		Log.i("CameraNumber", "" + cameraCount);
 		for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
 			Camera.getCameraInfo(camIdx, cameraInfo);
 			if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
@@ -1043,16 +1047,21 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	}
 	
-	/** Switches the camera from front to back and vice versa */
+	/** Switch the camera from front to back and vice versa */
 	private void switchCamera() {
-		front = !front;
-		if (front) {
-			cameraSide = "Front";
-		}
-		else {
-			cameraSide = "Back";
-		}
-		Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
+		// We should add a test here
+//		if (Camera.getNumberOfCameras() > 1) {
+			front = !front;
+			if (front) {
+				cameraSide = "Front";
+			}
+			else {
+				cameraSide = "Back";
+			}
+			Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
+//		} else {
+//			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
+//		}
 	}
 
 	/************************************* End of Video Recording Functions ***********************************/
@@ -1120,7 +1129,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		tempoView.setText("Tempo : " + metronome.getTempo() + " bpm");
 	}
 
-	/** Sets the Slider Listener */
+	/** Set the Slider Listener */
 	private void setSliderListener() {
 		slider = (SeekBar) abMetronome.findViewById(R.id.slider);
 		slider.setMax(200-1); 						// -1 to avoid reaching 0
@@ -1141,8 +1150,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				metronome.setTempo(progress); 	// updates the Variable Tempo of the Metronome
-				updateTempoView(); 				// updates the View
+				metronome.setTempo(progress); 	// update the Variable Tempo of the Metronome
+				updateTempoView(); 				// update the View
 			}
 			
 		});

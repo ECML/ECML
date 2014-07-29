@@ -24,8 +24,10 @@ import android.widget.ImageView;
 import com.calendar.CalendarActivity;
 import com.game.GameActivity;
 import com.metronome.MetronomeActivity;
-import com.recording.AudioRecordingActivity;
-import com.recording.VideoRecordingActivity;
+import com.sideActivities.AudioRecordingActivity;
+import com.sideActivities.TuningForkActivity;
+import com.sideActivities.VideoRecordingActivity;
+import com.sideActivities.YoutubeActivity;
 
 /**
  * @class ECMLActivity

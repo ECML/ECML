@@ -10,16 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ecml.ECML;
 import com.ecml.MidiNote;
 import com.ecml.MidiTrack;
 import com.ecml.R;
 import com.ecml.R.id;
 
 /* Second implementation of the SpeeGame
- * Player reading sheetmusic at slow speed
- * The user must play the note when they are highlight on the player */
+ * The Player reads the sheet music at either a very slow, slow or real speed
+ * The user must play the notes when they are highlighted on the sheet music */
 
-public class SpeedGamelvl2 extends SpeedGamelvl {
+public class SpeedGamelvln extends SpeedGamelvl {
 	
 	private TextView textView;
 	private boolean end = false;
@@ -28,7 +29,13 @@ public class SpeedGamelvl2 extends SpeedGamelvl {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		player.getSpeedBar().setProgress(30-30);
+		if (ECML.speedLvl == 2) {
+			player.getSpeedBar().setProgress(30-30);
+		} else if (ECML.speedLvl == 3) {
+			player.getSpeedBar().setProgress(70-30);
+		} else if (ECML.speedLvl == 4) {
+			player.getSpeedBar().setProgress(100-30);
+		}
 		
 		// Extracting the Tracks
 		Tracks = midifile.getTracks();
