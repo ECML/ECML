@@ -1,4 +1,4 @@
-package com.ecml;
+package com.game;
 
 import java.util.ArrayList;
 import java.util.zip.CRC32;
@@ -23,9 +23,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.ecml.ChooseSongActivity;
+import com.ecml.ClefSymbol;
+import com.ecml.ECML;
+import com.ecml.FileUri;
+import com.ecml.MidiFile;
+import com.ecml.MidiFileException;
+import com.ecml.MidiNote;
+import com.ecml.MidiOptions;
+import com.ecml.MidiPlayer;
+import com.ecml.MidiTrack;
+import com.ecml.Piano;
+import com.ecml.R;
+import com.ecml.ScrollAnimation;
+import com.ecml.SheetMusic;
+import com.ecml.TimeSigSymbol;
+import com.ecml.R.color;
+import com.ecml.R.id;
+import com.ecml.R.layout;
+
+
 /* abstract class wich define the main part of all the speedgame activities */
 
-public abstract class ReadingGame extends Activity {
+public abstract class SpeedGamelvl extends Activity {
 
 
     protected enum KeyDisplay {
@@ -82,12 +102,18 @@ public abstract class ReadingGame extends Activity {
 	public static int noteplace;
 	protected MidiNote note;
 
+	/*** PitchDetection variables ***/
+
+	protected MicrophonePitchPoster pitchPoster;
+
+	/*** End of PitchDetection variables ***/
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTheme(android.R.style.Theme_Holo_Light);
-		setContentView(R.layout.choice);
+		setContentView(R.layout.speedgamelvl1);
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
@@ -97,6 +123,8 @@ public abstract class ReadingGame extends Activity {
 		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
 		 * GAME BUTTON
 		 **********/
+
+
 
 		ClefSymbol.LoadImages(this);
 		TimeSigSymbol.LoadImages(this);
@@ -143,7 +171,7 @@ public abstract class ReadingGame extends Activity {
 
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
-		choice = getLayoutInflater().inflate(R.layout.choice, layout, false);
+		choice = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
 		layout.addView(choice);
 		setContentView(layout);
 
@@ -187,7 +215,12 @@ public abstract class ReadingGame extends Activity {
 				{
 					player.Stop();
 				}
-								
+				if ( pitchPoster != null )
+				{
+			        pitchPoster.stopSampling();
+				}
+		        pitchPoster = null;
+				
 				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(intent);
 			}
@@ -205,6 +238,11 @@ public abstract class ReadingGame extends Activity {
 				{
 					player.Stop();
 				}
+				if ( pitchPoster != null )
+				{
+			        pitchPoster.stopSampling();
+				}
+		        pitchPoster = null;
 			}
 		});
 
@@ -337,6 +375,11 @@ public abstract class ReadingGame extends Activity {
 	{
 		point = false;
 		player.Pause();
+		if ( pitchPoster != null)
+		{
+			pitchPoster.stopSampling();
+		}
+		pitchPoster = null;
 	}
 
 	/** When this activity resumes, redraw all the views */
@@ -359,13 +402,18 @@ public abstract class ReadingGame extends Activity {
 		if (player != null) {
 			player.Pause();
 		}
+		if ( pitchPoster != null)
+		{
+			pitchPoster.stopSampling();
+		}
+        pitchPoster = null;
 		super.onPause();
 	}
 
 	
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
-		final View dialogView = inflator.inflate(R.layout.help_reading_notes, null);
+		final View dialogView = inflator.inflate(R.layout.speed_game_help, null);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("HELP");
@@ -380,4 +428,6 @@ public abstract class ReadingGame extends Activity {
 	}
 	
 }
+
+
 

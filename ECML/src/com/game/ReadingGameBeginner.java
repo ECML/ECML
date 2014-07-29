@@ -1,6 +1,11 @@
-package com.ecml;
+package com.game;
 
 import java.util.ArrayList;
+
+import com.ecml.MidiNote;
+import com.ecml.MidiTrack;
+import com.ecml.R;
+import com.ecml.R.id;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

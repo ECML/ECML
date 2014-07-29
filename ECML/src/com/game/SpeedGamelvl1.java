@@ -1,4 +1,4 @@
-package com.ecml;
+package com.game;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.game.MicrophonePitchPoster;
+import com.ecml.MidiNote;
+import com.ecml.MidiTrack;
+import com.ecml.R;
+import com.ecml.R.id;
 
 /* First implementation of the SpeeGame
  * Wait for the users to play the right note */

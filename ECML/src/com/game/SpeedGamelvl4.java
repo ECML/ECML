@@ -1,4 +1,4 @@
-package com.ecml;
+package com.game;
 
 import java.util.ArrayList;
 
@@ -10,14 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.game.MicrophonePitchPoster;
+import com.ecml.MidiNote;
+import com.ecml.MidiTrack;
+import com.ecml.R;
+import com.ecml.R.id;
 
-/* Second implementation of the SpeeGame
- * Player reading sheetmusic at slow speed
+/* Fourth implementation of the SpeeGame
+ * Player reading sheetmusic at real speed
  * The user must play the note when they are highlight on the player */
 
-public class SpeedGamelvl2 extends SpeedGamelvl {
-	
+public class SpeedGamelvl4 extends SpeedGamelvl {
+
 	private TextView textView;
 	private boolean end = false;
 
@@ -25,7 +28,7 @@ public class SpeedGamelvl2 extends SpeedGamelvl {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		player.getSpeedBar().setProgress(30-30);
+		player.getSpeedBar().setProgress(100-30);
 		
 		// Extracting the Tracks
 		Tracks = midifile.getTracks();
@@ -41,7 +44,6 @@ public class SpeedGamelvl2 extends SpeedGamelvl {
 
 		@Override
 		public void onClick(View v) {
-			point = true;
 			
 			// If the game has been finished, set the score to 0
 			if (end)
@@ -100,8 +102,8 @@ public class SpeedGamelvl2 extends SpeedGamelvl {
             	 String test = Notes.get(counter).Pitch();
             	 
             	 if ( test.equals(noteNames[keyDisplay.ordinal()][data.note % 12]))
-            	 {         		 
-            		 
+            	 {
+
             		 int début = Notes.get(counter).getStartTime();
             		 int fin = Notes.get(counter).getEndTime();
             		 
@@ -163,4 +165,5 @@ public class SpeedGamelvl2 extends SpeedGamelvl {
         }
         
     }
+	
 }

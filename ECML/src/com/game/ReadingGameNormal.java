@@ -1,4 +1,8 @@
-package com.ecml;
+package com.game;
+
+import com.ecml.R;
+import com.ecml.R.color;
+import com.ecml.R.layout;
 
 import android.app.ActionBar;
 import android.app.Activity;
