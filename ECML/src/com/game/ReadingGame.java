@@ -141,6 +141,10 @@ public abstract class ReadingGame extends Activity {
 		options.shade1Color = settings.getInt("shade1Color", options.shade1Color);
 		options.shade2Color = settings.getInt("shade2Color", options.shade2Color);
 		options.showPiano = settings.getBoolean("showPiano", true);
+		options.tracks[0] = true;
+		for (int i = 1 ; i < options.tracks.length ; i++) {
+			options.tracks[i] = false;
+		}
 		String json = settings.getString("" + midiCRC, null);
 		MidiOptions savedOptions = MidiOptions.fromJson(json);
 		if (savedOptions != null) {
