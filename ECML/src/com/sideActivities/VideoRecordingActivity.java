@@ -95,9 +95,7 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 
 			@Override
 			public void onClick(View v) {
-				if (isRecording) {
-					stopVideoRecording();
-				}
+				stopVideoRecording();
 			}
 			
 		});
