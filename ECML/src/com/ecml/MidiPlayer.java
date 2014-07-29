@@ -40,6 +40,7 @@ import android.widget.Toast;
 
 
 /** @class MidiPlayer
+ * <br>
  *
  * The MidiPlayer is the panel at the top used to play the sound
  * of the midi file.  It consists of:
@@ -71,104 +72,106 @@ import android.widget.Toast;
  * and determines which notes to shade.
  */
 public class MidiPlayer extends LinearLayout {
-    static Bitmap rewindImage;           /** The rewind image */
-    static Bitmap playImage;             /** The play image */
-    static Bitmap pauseImage;            /** The pause image */
-    static Bitmap stopImage;             /** The stop image */
-    static Bitmap fastFwdImage;          /** The fast forward image */
-    static Bitmap volumeImage;           /** The volume image */
-    static Bitmap muteOnImage;			 /** The mute image */
-    static Bitmap muteOffImage;			 /** The unmute image */
-    static Bitmap pianoImage;			 /** The piano image */
-    static Bitmap playAndRecordImage;	 /** The rec and play image */
-    static Bitmap playRecordImage;		 /** The replay record image */
-    static Bitmap plusImage;			 /** The + image for the speed bar */
-    static Bitmap minusImage;			 /** The - image for the speed bar */
+    static Bitmap rewindImage;           /* The rewind image */
+    static Bitmap playImage;             /* The play image */
+    static Bitmap pauseImage;            /* The pause image */
+    static Bitmap stopImage;             /* The stop image */
+    static Bitmap fastFwdImage;          /* The fast forward image */
+    static Bitmap volumeImage;           /* The volume image */
+    static Bitmap muteOnImage;			 /* The mute image */
+    static Bitmap muteOffImage;			 /* The unmute image */
+    static Bitmap pianoImage;			 /* The piano image */
+    static Bitmap playAndRecordImage;	 /* The rec and play image */
+    static Bitmap playRecordImage;		 /* The replay record image */
+    static Bitmap plusImage;			 /* The + image for the speed bar */
+    static Bitmap minusImage;			 /* The - image for the speed bar */
     
-    private ImageButton rewindButton;    		/** The rewind button */
-    private ImageButton playButton;      		/** The play/pause button */
-    private ImageButton stopButton;      		/** The stop button */
-    private ImageButton fastFwdButton;   		/** The fast forward button */
-    private ImageButton muteButton;      		/** The mute button */
-    private ImageButton pianoButton;	 		/** The piano button */
-    private ImageButton playAndRecordButton;	/** The synchronized play and record button (mutes aswell) */
-    private ImageButton playRecordButton;		/** The replay record button */
-    private ImageButton plusButton;		 		/** The + button for the speed bar */
-    private ImageButton minusButton;	 		/** The - button for the speed bar */
-    private TextView speedText;          		/** The "Speed %" label */
-    private SeekBar speedBar;    		 		/** The seekbar for controlling the playback speed */
+    private ImageButton rewindButton;    		/* The rewind button */
+    private ImageButton playButton;      		/* The play/pause button */
+    private ImageButton stopButton;      		/* The stop button */
+    private ImageButton fastFwdButton;   		/* The fast forward button */
+    private ImageButton muteButton;      		/* The mute button */
+    private ImageButton pianoButton;	 		/* The piano button */
+    private ImageButton playAndRecordButton;	/* The synchronized play and record button (mutes aswell) */
+    private ImageButton playRecordButton;		/* The replay record button */
+    private ImageButton plusButton;		 		/* The + button for the speed bar */
+    private ImageButton minusButton;	 		/* The - button for the speed bar */
+    private TextView speedText;          		/* The "Speed %" label */
+    private SeekBar speedBar;    		 		/* The seekbar for controlling the playback speed */
     
-    private boolean mute; 				 /** Tell whether or not the volume is mute */
-    private int volume;			 		 /** Used to set the volume to zero and to remember it after muting */
-    private AudioManager audioManager;   /** AudioManager used to mute and unmute music volume */
-    
-    int playstate;               /** The playing state of the Midi Player */
-    final int stopped   = 1;     /** Currently stopped */
-    final int playing   = 2;     /** Currently playing music */
-    final int paused    = 3;     /** Currently paused */
-    final int initStop  = 4;     /** Transitioning from playing to stop */
-    final int initPause = 5;     /** Transitioning from playing to pause */
+    private boolean mute; 				 /* Tell whether or not the volume is mute */
+    private int volume;			 		 /* Used to set the volume to zero and to remember it after muting */
+    private AudioManager audioManager;   /* AudioManager used to mute and unmute music volume */
+    public int playstate;               /* The playing state of the Midi Player */
+    private final int stopped   = 1;     /* Currently stopped */
+    public final int playing   = 2;     /* Currently playing music */
+    private final int paused    = 3;     /* Currently paused */
+    private final int initStop  = 4;     /* Transitioning from playing to stop */
+    private final int initPause = 5;     /* Transitioning from playing to pause */
 
-    final String tempSoundFile = "playing.mid"; /** The filename to play sound from */
+    private final String tempSoundFile = "playing.mid"; /* The filename to play sound from */
 
-    MediaPlayer player;         /** For playing the audio */
-    MidiFile midifile;          /** The midi file to play */
-    MidiOptions options;        /** The sound options for playing the midi file */
-    double pulsesPerMsec;       /** The number of pulses per millisec */
-    SheetMusic sheet;           /** The sheet music to shade while playing */
-    Piano piano;                /** The piano to shade while playing */
-    Handler timer;              /** Timer used to update the sheet music while playing */
-    long startTime;             /** Absolute time when music started playing (msec) */
-    double startPulseTime;      /** Time (in pulses) when music started playing */
-    double currentPulseTime;    /** Time (in pulses) music is currently at */
-    double prevPulseTime;       /** Time (in pulses) music was last at */
-    Activity activity;          /** The parent activity. */
+    public MediaPlayer player;         /* For playing the audio */
+    private MidiFile midifile;          /* The midi file to play */
+    private MidiOptions options;        /* The sound options for playing the midi file */
+    private double pulsesPerMsec;       /* The number of pulses per millisec */
+    private SheetMusic sheet;           /* The sheet music to shade while playing */
+    private Piano piano;                /* The piano to shade while playing */
+    private Handler timer;              /* Timer used to update the sheet music while playing */
+    private long startTime;             /* Absolute time when music started playing (msec) */
+    private double startPulseTime;      /* Time (in pulses) when music started playing */
+    private double currentPulseTime;    /* Time (in pulses) music is currently at */
+    private double prevPulseTime;       /* Time (in pulses) music was last at */
+    private Activity activity;          /* The parent activity. */
     
     
-    /** Gets the seek bar controlling the speed */
+    /** Get the seek bar controlling the speed */
     public ImageButton getPianoButton() {
     	return pianoButton;
     }
     
-    /** Gets the Play and Record button */
+    /** Get the Play and Record button */
     public ImageButton getPlayAndRecordButton() {
     	return playAndRecordButton;
     }
     
-    /** Gets the Replay button */
+    /** Get the Replay button */
     public ImageButton getPlayRecordButton() {
     	return playRecordButton;
     }
     
-    /** Gets the seek bar controlling the speed */
+    /** Get the seek bar controlling the speed */
     public SeekBar getSpeedBar() {
     	return speedBar;
     }
     
-    /** Gets whether the player is muted or not */
+    /** Get whether the player is muted or not */
     public boolean getMute() {
     	return mute;
     }
     
-    /** Sets the player's volume
+    /** Set the player's volume
      * @param volume
      */
     public void setVolume(int volume) {
     	this.volume = volume;
     }
 
-    /** Gets the current pulse time */
+    /** Get the current pulse time */
     public Double getcurrentPulseTime() {
     	return currentPulseTime;
     }
     
-    /** Gets the previous pulse time */
+    /** Get the previous pulse time */
     public Double getprevPulseTime() {
     	return prevPulseTime;
     }
     
     
-    /** Load the play/pause/stop button images */
+    /** Load the play/pause/stop button images
+     * 
+     * @param context
+     */
     public static void LoadImages(Context context) {
         if (rewindImage != null) {
             return;
@@ -190,7 +193,11 @@ public class MidiPlayer extends LinearLayout {
 
 
     /** Create a new MidiPlayer, displaying the play/stop buttons, the
-     *  speed bar, and the correct mute button.  The midifile and sheetmusic are initially null.
+     *  speed bar, the show/hide piano button, the correct mute button
+     *  and the rec button.  The midifile and sheetmusic are initially null.
+     *  
+     *  @param activity The current activity
+     *  
      */
     public MidiPlayer(Activity activity) {
         super(activity);
@@ -206,11 +213,11 @@ public class MidiPlayer extends LinearLayout {
         prevPulseTime = -10;
         this.setPadding(0, 0, 0, 0);
         
-        // Sets the right button for mute according to the current volume
+        // Set the right button for mute according to the current volume
         audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         mute = (volume == 0);
-        // Sets volume to 1 if volume was equal to 0 in case the user wants to unmute so that it really unmutes
+        // Set volume to 1 if volume was equal to 0 in case the user wants to unmute so that it really unmutes
         if (volume == 0) {
         	volume = 1;
         }
@@ -414,7 +421,13 @@ public class MidiPlayer extends LinearLayout {
         timer = new Handler();
     }
 
-    void resizeButtons(int newwidth, int newheight) {
+    /** Resize the buttons of the player according to the new width and the newheight
+     * so that it adapts to every screen.
+     * 
+     * @param newwidth
+     * @param newheight
+     */
+    public void resizeButtons(int newwidth, int newheight) {
         int buttonheight = newheight;
         int pad = buttonheight/6;
         rewindButton.setPadding(pad, pad, pad, pad);
@@ -478,12 +491,16 @@ public class MidiPlayer extends LinearLayout {
         pianoButton.setLayoutParams(params);
         playAndRecordButton.setLayoutParams(params);
         playRecordButton.setLayoutParams(params);
-        // Sets the Visibility to the playRecordButton as Gone so that the user cannot press it yet
+        // Set the Visibility to the playRecordButton as Gone so that the user cannot press it yet
         // since the user hasn't recorded anything yet
         playRecordButton.setVisibility(View.GONE);
     }
     
-    /** Sets the Piano with the right Visibility according to the options */
+    /** Sets the Piano with the right Visibility according to the options
+     * 
+     * @param p The piano
+     * @param options The MidiOptions
+     */
     public void SetPiano(Piano p, MidiOptions options) {
         piano = p;
         if (!options.showPiano) {
@@ -604,7 +621,10 @@ public class MidiPlayer extends LinearLayout {
     }
 
 
-    /** Play the sound for the given MIDI file */
+    /** Play the sound for the given MIDI file
+     * 
+     * @param filename The filename String
+     */
     private void PlaySound(String filename) {
         if (player == null)
             return;
@@ -743,7 +763,7 @@ public class MidiPlayer extends LinearLayout {
     /** Perform the actual stop, by stopping the sound,
      *  removing any shading, and clearing the state.
      */
-    void DoStop() { 
+    private void DoStop() { 
         playstate = stopped;
         timer.removeCallbacks(TimerCallback);
         sheet.ShadeNotes(-10, (int)prevPulseTime, SheetMusic.DontScroll);
@@ -762,7 +782,7 @@ public class MidiPlayer extends LinearLayout {
      *  So to rewind, just decrease the currentPulseTime,
      *  and re-shade the sheet music.
      */
-    void Rewind() {
+    private void Rewind() {
         if (midifile == null || sheet == null || playstate != paused) {
             return;
         }
@@ -786,7 +806,7 @@ public class MidiPlayer extends LinearLayout {
      *  So to fast forward, just increase the currentPulseTime,
      *  and re-shade the sheet music.
      */
-    void FastForward() {
+    private void FastForward() {
         if (midifile == null || sheet == null) {
             return;
         }
@@ -809,18 +829,18 @@ public class MidiPlayer extends LinearLayout {
     }
     
     /** Set the speed bar back to 100% */
-    void backTo100() {
+    private void backTo100() {
     	speedBar.setProgress(100-30 /* added later */);
     }
     
     
-    /** Plus 1 in the speed bar */
-    void plus() {
+    /** Add 1 to the speed bar */
+    private void plus() {
     	speedBar.setProgress(speedBar.getProgress() + 1);    	
      }
     
-    /** Minus 1 in the speed bar */
-    void minus() {
+    /** Remove 1 from the speed bar */
+    private void minus() {
     	speedBar.setProgress(speedBar.getProgress() - 1);  
     }
     
@@ -834,7 +854,7 @@ public class MidiPlayer extends LinearLayout {
     	audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
     
-    /** Unmutes the player and set the last volume saved back */
+    /** Unmutes the player and set back the last volume that was saved */
     public void unmute() {
     	mute = false ;
     	muteButton.setImageBitmap(muteOffImage);

@@ -15,13 +15,14 @@ package com.ecml;
 
 
 /**@class DictInt
+ * <br>
  *  The DictInt class is a dictionary mapping integers to integers.
  */
 public class DictInt {
-    private int[] keys;    /** Sorted array of integer keys */
-    private int[] values;  /** Array of integer values */
-    private int size;      /** Number of keys */
-    private int lastpos;   /** The index from the last "get" method */
+    private int[] keys;    /* Sorted array of integer keys */
+    private int[] values;  /* Array of integer values */
+    private int size;      /* Number of keys */
+    private int lastpos;   /* The index from the last "get" method */
 
     /** Create a new DictInt instance with the given capacity.
      * Initialize two int arrays,  one to store the keys and one

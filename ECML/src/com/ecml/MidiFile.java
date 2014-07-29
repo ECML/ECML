@@ -159,51 +159,55 @@ class PairInt {
 
 
 /** @class MidiFile
- *
- * The MidiFile class contains the parsed data from the Midi File.
+ * <br>
+ * The MidiFile class contains the parsed data from the Midi File.<br>
  * It contains:
- * - All the tracks in the midi file, including all MidiNotes per track.
- * - The time signature (e.g. 4/4, 3/4, 6/8)
- * - The number of pulses per quarter note.
- * - The tempo (number of microseconds per quarter note).
+ * <ul>
+ * 	<li>All the tracks in the midi file, including all MidiNotes per track.</li>
+ * 	<li>The time signature (e.g. 4/4, 3/4, 6/8)</li>
+ *	<li>The number of pulses per quarter note.</li>
+ * 	<li>The tempo (number of microseconds per quarter note).</li>
+ * </ul>
  *
  * The constructor takes a filename as input, and upon returning,
  * contains the parsed data from the midi file.
- *
+ * <br>
  * The methods ReadTrack() and ReadMetaEvent() are helper functions called
  * by the constructor during the parsing.
- *
+ * <br>
  * After the MidiFile is parsed and created, the user can retrieve the 
  * tracks and notes by using the property Tracks and Tracks.Notes.
- *
+ * <br>
  * There are two methods for modifying the midi data based on the menu
  * options selected:
+ * <ul>
+ * 		<li> ChangeMidiNotes() :<br>
+ *   		 Apply the menu options to the parsed MidiFile.  This uses the helper functions:
+ *     		 <ul>
+ *     		 	<li>SplitTrack()</li>
+ *     		 	<li>CombineToTwoTracks()</li>
+ *     		 	<li>ShiftTime()</li>
+ *     		 	<li>Transpose()</li>
+ *     		 	<li>RoundStartTimes()</li>
+ *     		 	<li>RoundDurations()</li>
+ *     		 </ul>
  *
- * - ChangeMidiNotes()
- *   Apply the menu options to the parsed MidiFile.  This uses the helper functions:
- *     SplitTrack()
- *     CombineToTwoTracks()
- *     ShiftTime()
- *     Transpose()
- *     RoundStartTimes()
- *     RoundDurations()
- *
- * - ChangeSound()
- *   Apply the menu options to the MIDI music data, and save the modified midi data 
- *   to a file, for playback. 
- *   
+ * 		<li>ChangeSound() :<br>
+ *   		Apply the menu options to the MIDI music data, and save the modified midi data 
+ *   		to a file, for playback. 
+ * </ul>
  */
 
 public class MidiFile {
-    private FileUri fileuri;          /** The file reference */
-    private String filename;          /** The Midi file name */
-    private ArrayList<ArrayList<MidiEvent>> allevents; /** The raw MidiEvents, one list per track */
-    private ArrayList<MidiTrack> tracks ;  /** The tracks of the midifile that have notes */
-    private short trackmode;         /** 0 (single track), 1 (simultaneous tracks) 2 (independent tracks) */
-    private TimeSignature timesig;    /** The time signature */
-    private int quarternote;          /** The number of pulses per quarter note */
-    private int totalpulses;          /** The total length of the song, in pulses */
-    private boolean trackPerChannel;  /** True if we've split each channel into a track */
+    private FileUri fileuri;          						/* The file reference */
+    private String filename;          						/* The Midi file name */
+    private ArrayList<ArrayList<MidiEvent>> allevents; 		/* The raw MidiEvents, one list per track */
+    private ArrayList<MidiTrack> tracks ;  					/* The tracks of the midifile that have notes */
+    private short trackmode;         						/* 0 (single track), 1 (simultaneous tracks) 2 (independent tracks) */
+    private TimeSignature timesig;    						/* The time signature */
+    private int quarternote;          						/* The number of pulses per quarter note */
+    private int totalpulses;          						/* The total length of the song, in pulses */
+    private boolean trackPerChannel;  						/* True if we've split each channel into a track */
 
     /* The list of Midi Events */
     public static final byte EventNoteOff         = (byte)0x80;
@@ -231,7 +235,7 @@ public class MidiFile {
     public static final byte MetaEventTimeSignature = (byte)0x58;
     public static final byte MetaEventKeySignature  = (byte)0x59;
 
-    /* The Program Change event gives the instrument that should
+    /** The Program Change event gives the instrument that should
      * be used for a particular channel.  The following table
      * maps each instrument number (0 thru 128) to an instrument
      * name.
@@ -1207,7 +1211,7 @@ public class MidiFile {
     }
 
    
-    /* Find the highest and lowest notes that overlap this interval (starttime to endtime).
+    /** Find the highest and lowest notes that overlap this interval (starttime to endtime).
      * This method is used by SplitTrack to determine which staff (top or bottom) a note
      * should go to.
      *
@@ -1243,7 +1247,7 @@ public class MidiFile {
         }
     }
 
-    /* Find the highest and lowest notes that start at this exact start time */
+    /** Find the highest and lowest notes that start at this exact start time */
     private static void
     FindExactHighLowNotes(ArrayList<MidiNote> notes, int startindex, int starttime,
                           PairInt pair) {
@@ -1267,7 +1271,7 @@ public class MidiFile {
 
 
  
-    /* Split the given MidiTrack into two tracks, top and bottom.
+    /** Split the given MidiTrack into two tracks, top and bottom.
      * The highest notes will go into top, the lowest into bottom.
      * This function is used to split piano songs into left-hand (bottom)
      * and right-hand (top) tracks.
@@ -1761,7 +1765,7 @@ public class MidiFile {
         return result;
     }
 
-    /* Command-line program to print out a parsed Midi file. Used for debugging.
+    /** Command-line program to print out a parsed Midi file. Used for debugging.
      * To run:
      * - Change main2 to main
      * - javac MidiFile.java

@@ -19,21 +19,22 @@ import java.util.ArrayList;
 
 
 /** @class MidiTrack
- * The MidiTrack takes as input the raw MidiEvents for the track, and gets:
- * - The list of midi notes in the track.
- * - The first instrument used in the track.
+ * <br>
+ * The MidiTrack takes as input the raw MidiEvents for the track, and gets:<br>
+ * - The list of midi notes in the track.<br>
+ * - The first instrument used in the track.<br>
  *
  * For each NoteOn event in the midi file, a new MidiNote is created
  * and added to the track, using the AddNote() method.
- * 
+ * <br>
  * The NoteOff() method is called when a NoteOff event is encountered,
  * in order to update the duration of the MidiNote.
  */ 
 public class MidiTrack {
-    private int tracknum;                 /** The track number */
-    private ArrayList<MidiNote> notes;    /** List of Midi notes */
-    private int instrument;               /** Instrument for this track */
-    private ArrayList<MidiEvent> lyrics;  /** The lyrics in this track */
+    private int tracknum;                 /* The track number */
+    private ArrayList<MidiNote> notes;    /* List of Midi notes */
+    private int instrument;               /* Instrument for this track */
+    private ArrayList<MidiEvent> lyrics;  /* The lyrics in this track */
 
     /** Create an empty MidiTrack.  Used by the Clone method */
     public MidiTrack(int tracknum) {

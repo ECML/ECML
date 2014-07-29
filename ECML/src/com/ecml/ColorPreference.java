@@ -10,9 +10,10 @@ import android.view.View;
 
 /**
  * @class ColorPreference
+ * <br>
  *  The ColorPreference is used in a PreferenceScreen to let
  *  the user choose a color for an option.
- * 
+ * <br>
  *  This Preference displays text, plus an additional color box
  *  and a Cancel, an Off and an OK Button
  */
@@ -100,7 +101,7 @@ public class ColorPreference extends Preference {
 		colorView = new ColorView(getContext(), color);
 		builder.setView(colorView);
 
-		// Actuallay create the Alert Dialog
+		// Actually create the Alert Dialog
 		dialog = builder.create();
 		dialog.show();
 	}

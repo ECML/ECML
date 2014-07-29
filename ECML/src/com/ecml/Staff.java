@@ -21,38 +21,40 @@ import android.graphics.Point;
 import android.graphics.Rect;
 
 
-/* @class Staff
+/** @class Staff
+ * <br>
  * The Staff is used to draw a single Staff (a row of measures) in the 
- * SheetMusic Control. A Staff needs to draw
- * - The Clef
- * - The key signature
- * - The horizontal lines
- * - A list of MusicSymbols
- * - The left and right vertical lines
- *
+ * SheetMusic Control. A Staff needs to draw :
+ * <ul>
+ * 	<li>The Clef</li>
+ * 	<li>The key signature</li>
+ * 	<li>The horizontal lines</li>
+ * 	<li>A list of MusicSymbols</li>
+ * 	<li>The left and right vertical lines</li>
+ * </ul>
  * The height of the Staff is determined by the number of pixels each
  * MusicSymbol extends above and below the staff.
- *
+ * <br>
  * The vertical lines (left and right sides) of the staff are joined
- * with the staffs above and below it, with one exception.  
+ * with the staffs above and below it, with one exception.<br>
  * The last track is not joined with the first track.
  */
 
 public class Staff {
-    private ArrayList<MusicSymbol> symbols;  /** The music symbols in this staff */
-    private ArrayList<LyricSymbol> lyrics;   /** The lyrics to display (can be null) */
-    private int ytop;                   /** The y pixel of the top of the staff */
-    private ClefSymbol clefsym;         /** The left-side Clef symbol */
-    private AccidSymbol[] keys;         /** The key signature symbols */
-    private boolean showMeasures;       /** If true, show the measure numbers */
-    private int keysigWidth;            /** The width of the clef and key signature */
-    private int width;                  /** The width of the staff in pixels */
-    private int height;                 /** The height of the staff in pixels */
-    private int tracknum;               /** The track this staff represents */
-    private int totaltracks;            /** The total number of tracks */
-    private int starttime;              /** The time (in pulses) of first symbol */
-    private int endtime;                /** The time (in pulses) of last symbol */
-    private int measureLength;          /** The time (in pulses) of a measure */
+    private ArrayList<MusicSymbol> symbols;  /* The music symbols in this staff */
+    private ArrayList<LyricSymbol> lyrics;   /* The lyrics to display (can be null) */
+    private int ytop;                   /* The y pixel of the top of the staff */
+    private ClefSymbol clefsym;         /* The left-side Clef symbol */
+    private AccidSymbol[] keys;         /* The key signature symbols */
+    private boolean showMeasures;       /* If true, show the measure numbers */
+    private int keysigWidth;            /* The width of the clef and key signature */
+    private int width;                  /* The width of the staff in pixels */
+    private int height;                 /* The height of the staff in pixels */
+    private int tracknum;               /* The track this staff represents */
+    private int totaltracks;            /* The total number of tracks */
+    private int starttime;              /* The time (in pulses) of first symbol */
+    private int endtime;                /* The time (in pulses) of last symbol */
+    private int measureLength;          /* The time (in pulses) of a measure */
 
     /** Create a new staff with the given list of music symbols,
      * and the given key signature.  The clef is determined by
@@ -105,6 +107,8 @@ public class Staff {
      *  automatically scroll the music while playing.
      */
     public int getEndTime() { return endtime; }
+    
+    /** Set the ending time of the staff */
     public void setEndTime(int value) { endtime = value; }
 
     /** Find the initial clef to use for this staff.  Use the clef of

@@ -18,13 +18,14 @@ import android.graphics.Paint;
 
 
 /** @class BarSymbol
+ * <br>
  * The BarSymbol represents the vertical bars which delimit measures.
  * The starttime of the symbol is the beginning of the new
  * measure.
  */
 public class BarSymbol implements MusicSymbol {
-    private int starttime;
-    private int width;
+    private int starttime;	/* The beginning of the new measure */
+    private int width;		/* The width (in pixels) of this symbol */
 
     /** Create a BarSymbol. The starttime should be the beginning of a measure. */
     public BarSymbol(int starttime) {
@@ -40,10 +41,13 @@ public class BarSymbol implements MusicSymbol {
     /** Get the minimum width (in pixels) needed to draw this symbol */
     public int getMinWidth() { return 2 * SheetMusic.LineSpace; }
 
-    /** Get/Set the width (in pixels) of this symbol. The width is set
+    /** Get the width (in pixels) of this symbol. The width is set
      * in SheetMusic.AlignSymbols() to vertically align symbols.
      */
     public int getWidth() { return width; }
+    /** Set the width (in pixels) of this symbol. The width is set
+     * in SheetMusic.AlignSymbols() to vertically align symbols.
+     */
     public void setWidth(int value) { width = value; }
 
     /** Get the number of pixels this symbol extends above the staff. Used

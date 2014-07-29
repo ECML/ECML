@@ -40,7 +40,7 @@ import android.preference.PreferenceScreen;
  *  - Change the colors for shading the left/right hands.
  *  - Whether to display measure numbers
  *  - Play selected measures in a loop
- *  - How long to wait before starting to play the music
+ *  - How long to wait before starting to play the music (delay)
  * 
  * When created, pass an Intent parameter containing MidiOptions.
  * When destroyed, this activity passes the result MidiOptions to the Intent.
@@ -64,6 +64,7 @@ public class SettingsActivity extends PreferenceActivity
     private CheckBoxPreference showPiano;         /** Show the piano */
     private CheckBoxPreference showMeasures;      /** Show the measure numbers */
     private CheckBoxPreference showLyrics;        /** Show the lyrics */
+    private ListPreference delay;				  /** How long to wait before playing the song */
     private CheckBoxPreference twoStaffs;         /** Combine tracks into two staffs */
     private ListPreference showNoteLetters;       /** Show the note letters */
     private ListPreference transpose;             /** Transpose notes */
@@ -74,7 +75,6 @@ public class SettingsActivity extends PreferenceActivity
     private ColorPreference shade1Color;          /** Right-hand color */
     private ColorPreference shade2Color;          /** Left-hand color */
     
-    private ListPreference delay;				  /** How long to wait before playing the song */
 
     /** Play the measures from start to end in a loop */
     private CheckBoxPreference playMeasuresInLoop;
@@ -401,7 +401,7 @@ public class SettingsActivity extends PreferenceActivity
         root.addPreference(loopEnd);
     }
 
-    /* Create the "Restore Default Settings" preference */
+    /** Create the "Restore Default Settings" preference */
     private void createRestoreDefaultPrefs(PreferenceScreen root) {
         restoreDefaults = new Preference(this);
         restoreDefaults.setTitle(R.string.restore_defaults);
@@ -409,7 +409,7 @@ public class SettingsActivity extends PreferenceActivity
         root.addPreference(restoreDefaults);
     } 
     
-    /* Create the "Unmute and Display all Tracks" preference */
+    /** Create the "Unmute and Display all Tracks" preference */
     private void createRestoreAllTracks(PreferenceScreen root) {
     	setAllTracks = new Preference(this);
     	setAllTracks.setTitle(R.string.set_all_tracks);
@@ -432,12 +432,12 @@ public class SettingsActivity extends PreferenceActivity
         options.scrollVert = scrollVertically.isChecked();
         options.showPiano = showPiano.isChecked();
         options.showLyrics = showLyrics.isChecked();
+        options.delay = Integer.parseInt(delay.getValue());
         if (twoStaffs != null)
             options.twoStaffs = twoStaffs.isChecked();
         else
             options.twoStaffs = false;
 
-        options.delay = Integer.parseInt(delay.getValue());
         options.showNoteLetters = Integer.parseInt(showNoteLetters.getValue());
         options.transpose = Integer.parseInt(transpose.getValue());
         options.key = Integer.parseInt(key.getValue());

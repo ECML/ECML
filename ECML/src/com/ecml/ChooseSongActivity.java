@@ -31,6 +31,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
 /** @class ChooseSongActivity
+ * <br>
  * The ChooseSongActivity class is a tabbed view for choosing a song to play.<br>
  * There are 3 tabs:<br>
  * - All    (AllSongsActivity)    : Display a list of all songs<br>
@@ -42,7 +43,7 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
 	private Intent intent;
     static ChooseSongActivity globalActivity;
 	public static final String  niveau = "niveau"; /* Should be passed as a parameter ? */
-    private ActionBar ab;
+    private ActionBar ab;	/* The Action Bar */
 
     @Override
     public void onCreate(Bundle state) {
@@ -52,7 +53,7 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
         super.onCreate(state);
         setTheme(android.R.style.Theme_Holo_Light);
         
-        //Set Actionbar color
+        // Set Action Bar color
         ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
@@ -99,7 +100,7 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
     }
 
     /** Open the chosen file in the right activity */ 
-    public void doOpenFile(FileUri file) {
+    public void doOpenFile(FileUri file /* need to add a new parameter to choose which activity to start */) {
         byte[] data = file.getData(this);
         if (data == null || data.length <= 6 || !MidiFile.hasMidiHeader(data)) {
             ChooseSongActivity.showErrorDialog("Error: Unable to open song: " + file.toString(), this);
@@ -110,8 +111,8 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
         
         String choice = this.getIntent().getStringExtra(niveau);
         
+        updateRecentFile(file);
 		if (choice.equals("1")) {
-			updateRecentFile(file);
 			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
 			intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
 			startActivity(intent);

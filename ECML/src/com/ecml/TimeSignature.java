@@ -27,11 +27,11 @@ import java.io.Serializable;
  */
 
 public class TimeSignature implements Serializable {
-    private int numerator;      /** Numerator of the time signature */
-    private int denominator;    /** Denominator of the time signature */
-    private int quarternote;    /** Number of pulses per quarter note */
-    private int measure;        /** Number of pulses per measure */
-    private int tempo;          /** Number of microseconds per quarter note */
+    private int numerator;      /* Numerator of the time signature */
+    private int denominator;    /* Denominator of the time signature */
+    private int quarternote;    /* Number of pulses per quarter note */
+    private int measure;        /* Number of pulses per measure */
+    private int tempo;          /* Number of microseconds per quarter note */
 
     /** Get the numerator of the time signature */
     public int getNumerator() { return numerator; }
@@ -48,8 +48,12 @@ public class TimeSignature implements Serializable {
     /** Get the number of microseconds per quarter note */ 
     public int getTempo() { return tempo; }
 
-    /** Create a new time signature, with the given numerator,
-     * denominator, pulses per quarter note, and tempo.
+    /** Create a new time signature
+     * 
+     * @param numerator
+     * @param denominator
+     * @param quarternote
+     * @param tempo
      */
     public TimeSignature(int numerator, int denominator, int quarternote, int tempo) {
         if (numerator <= 0 || denominator <= 0 || quarternote <= 0) {
@@ -80,7 +84,10 @@ public class TimeSignature implements Serializable {
         return time / measure;
     }
 
-    /** Given a duration in pulses, return the closest note duration. */
+    /** Given a duration in pulses, return the closest note duration.
+     * 
+     * @param duration
+     */
     public NoteDuration GetNoteDuration(int duration) {
         int whole = quarternote * 4;
 

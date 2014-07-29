@@ -22,19 +22,24 @@ import android.graphics.Rect;
 
 
 /** @class TimeSigSymbol
+ * <br>
  * A TimeSigSymbol represents the time signature at the beginning
  * of the staff. We use pre-made images for the numbers, instead of
  * drawing strings.
  */
 
 public class TimeSigSymbol implements MusicSymbol {
-    private static Bitmap[] images; /** The images for each number */
-    private int  numerator;         /** The numerator */
-    private int  denominator;       /** The denominator */
-    private int  width;             /** The width in pixels */
-    private boolean candraw;        /** True if we can draw the time signature */
+    private static Bitmap[] images; /* The images for each number */
+    private int  numerator;         /* The numerator */
+    private int  denominator;       /* The denominator */
+    private int  width;             /* The width in pixels */
+    private boolean candraw;        /* True if we can draw the time signature */
 
-    /** Create a new TimeSigSymbol */
+    /** Create a new TimeSigSymbol
+     * 
+     * @param numer
+     * @param denom
+     */
     public TimeSigSymbol(int numer, int denom) {
         numerator = numer;
         denominator = denom;
@@ -75,10 +80,13 @@ public class TimeSigSymbol implements MusicSymbol {
             return 0;
     }
 
-    /** Get/Set the width (in pixels) of this symbol. The width is set
+    /** Get the width (in pixels) of this symbol. The width is set
      * in SheetMusic.AlignSymbols() to vertically align symbols.
      */
     public int getWidth()   { return width; }
+    /** Set the width (in pixels) of this symbol. The width is set
+     * in SheetMusic.AlignSymbols() to vertically align symbols.
+     */
     public void setWidth(int value) { width = value; }
 
     /** Get the number of pixels this symbol extends above the staff. Used

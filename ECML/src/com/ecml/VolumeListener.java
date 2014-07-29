@@ -7,22 +7,18 @@ import android.os.Handler;
 
 /**
  * @class VolumeListener
- * 
- * @author Nicolas
- * 
- *         The Volume Listener is used to detect when the volume is muted so
- *         that
- *         the mute image can be updated when needed. It is also used to
- *         remember
- *         the value of the volume before a mute call
+ * <br>
+ * The Volume Listener is used to detect when the volume is muted so
+ * that the mute image can be updated when needed. It is also used to
+ * remember the value of the volume before a mute call.
  */
 public class VolumeListener extends ContentObserver {
 
-	private Context context; /* Context of the activity */
-	private MidiPlayer player; /* The Midi Player to handle */
+	private Context context;	/* Context of the activity */
+	private MidiPlayer player;	/* The Midi Player to handle */
 
 	/**
-	 * Creates a Volume Listener
+	 * Create a Volume Listener
 	 * 
 	 * @param context
 	 *            The context of the activity
@@ -44,28 +40,29 @@ public class VolumeListener extends ContentObserver {
 
 	/**
 	 * The Listener itself :
-	 * - updates volume if needed
-	 * - updates the mute image if needed
+	 * <ul>
+	 * 		<li>update volume if needed</li>
+	 * 		<li>update the mute image if needed</li>
+	 * </ul>
 	 */
 	@Override
 	public void onChange(boolean selfChange) {
 		super.onChange(selfChange);
 
-		// Gets the volume
+		// Get the volume
 		AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		int volume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
 
 		// If the volume has changed and isn't equal 0, then update volume
 		if (volume != 0) {
 			player.setVolume(volume);
-			// If the player is in mute state, then unmute it because it
-			// shouldn't be
+			// If the player is in mute state, then unmute it because it shouldn't be
 			if (player.getMute()) {
 				player.unmute();
 			}
 		}
 
-		// If the volume is now equal to 0, put the midi player in mute state
+		// If the volume is now equal to 0, put the Midi Player in mute state
 		if (volume == 0 && !player.getMute()) {
 			player.mute();
 		}

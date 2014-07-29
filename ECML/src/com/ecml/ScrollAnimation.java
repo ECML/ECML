@@ -20,40 +20,45 @@ import android.view.animation.AnimationUtils;
  */
 
 public class ScrollAnimation {
-    private final float timerInterval = 50.0f;    /** Call timer every 50 msec */
-    private final float totalFlingTime = 3000.0f; /** Fling lasts 3 sec */
+    private final float timerInterval = 50.0f;    /* Call timer every 50 msec */
+    private final float totalFlingTime = 3000.0f; /* Fling lasts 3 sec */
 
-    ScrollAnimationListener listener;/** Callback to invoke when scroll position changes */
-    private boolean  scrollVert;     /** True if we're scrolling vertically */
-    private boolean  inMotion;       /** True if we're in a motion event */
-    private float    downX;          /** x-pixel when down touch occurs */
-    private float    downY;          /** y-pixel when down touch occurs */
-    private float    moveX;          /** x-pixel when move touch occurs */
-    private float    moveY;          /** y-pixel when move touch occurs */
-    private float    prevMoveX;      /** x-pixel when previous move touch occurs */
-    private float    prevMoveY;      /** y-pixel when previous move touch occurs */
-    private float    upX;            /** x-pixel when up touch occurs */
-    private float    upY;            /** y-pixel when up touch occurs */
-    private float    deltaX;         /** change in x-pixel from move touch */
-    private float    deltaY;         /** change in y-pixel from move touch */
-    private long     downTime;       /** Time (millisec) when down touch occurs */
-    private long     moveTime;       /** Time (millisec) when move touch occurs */
-    private long     prevMoveTime;   /** Time (millisec) when previous move touch occurs */
-    private long     upTime;         /** Time (millisec) when up touch occurs */
-    private long     flingStartTime; /** Time (millisec) when up fling started */
-    private float    flingVelocity;  /** Initial fling velocity (pixels/sec) */
-    private float    velocityX;      /** Velocity of move (pixels/sec) */
-    private float    velocityY;      /** Velocity of move (pixels/sec) */
-    private Handler  scrollTimer;    /** Timer for doing 'fling' scrolling */
+    ScrollAnimationListener listener;/* Callback to invoke when scroll position changes */
+    private boolean  scrollVert;     /* True if we're scrolling vertically */
+    private boolean  inMotion;       /* True if we're in a motion event */
+    private float    downX;          /* x-pixel when down touch occurs */
+    private float    downY;          /* y-pixel when down touch occurs */
+    private float    moveX;          /* x-pixel when move touch occurs */
+    private float    moveY;          /* y-pixel when move touch occurs */
+    private float    prevMoveX;      /* x-pixel when previous move touch occurs */
+    private float    prevMoveY;      /* y-pixel when previous move touch occurs */
+    private float    upX;            /* x-pixel when up touch occurs */
+    private float    upY;            /* y-pixel when up touch occurs */
+    private float    deltaX;         /* change in x-pixel from move touch */
+    private float    deltaY;         /* change in y-pixel from move touch */
+    private long     downTime;       /* Time (millisec) when down touch occurs */
+    private long     moveTime;       /* Time (millisec) when move touch occurs */
+    private long     prevMoveTime;   /* Time (millisec) when previous move touch occurs */
+    private long     upTime;         /* Time (millisec) when up touch occurs */
+    private long     flingStartTime; /* Time (millisec) when up fling started */
+    private float    flingVelocity;  /* Initial fling velocity (pixels/sec) */
+    private float    velocityX;      /* Velocity of move (pixels/sec) */
+    private float    velocityY;      /* Velocity of move (pixels/sec) */
+    private Handler  scrollTimer;    /* Timer for doing 'fling' scrolling */
 
 
+    /** Create a new ScrollAnimation
+     * 
+     * @param listener The scroll listener (normally the sheet music)
+     * @param scrollVert Whether we scroll the sheet music vertically or not
+     */
     public ScrollAnimation(ScrollAnimationListener listener, boolean scrollVert) {
         this.listener = listener;
         this.scrollVert = scrollVert;
         scrollTimer = new Handler();
     }
 
-    /* Motion has stopped */
+    /** Motion has stopped */
     public void stopMotion() {
         inMotion = false;
         downX = downY = moveX = moveY = prevMoveX = prevMoveY = upX = upY = deltaX = deltaY = velocityX = velocityY = 0;

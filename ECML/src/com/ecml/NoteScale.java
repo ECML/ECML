@@ -14,7 +14,10 @@
 package com.ecml;
 
 
-/** Enumeration of the notes in a scale (A, A#, ... G#) */
+/** @class NoteScale
+ * <br>
+ * Enumeration of the notes in a scale (A, A#, ... G#)
+ */
 public class NoteScale {
     public static final int A      = 0;
     public static final int Asharp = 1;

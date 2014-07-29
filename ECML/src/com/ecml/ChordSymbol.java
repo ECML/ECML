@@ -21,6 +21,7 @@ import android.graphics.RectF;
 
 
 /** @class ChordSymbol
+ * <br>
  * A chord symbol represents a group of notes that are played at the same
  * time.  A chord includes the notes, the accidental symbols for each
  * note, and the stem (or stems) to use.  A single chord may have two 
@@ -28,16 +29,16 @@ import android.graphics.RectF;
  * quarter note, and another is an eighth note).
  */
 public class ChordSymbol implements MusicSymbol {
-    private Clef clef;             /** Which clef the chord is being drawn in */
-    private int starttime;         /** The time (in pulses) the notes occurs at */
-    private int endtime;           /** The starttime plus the longest note duration */
-    private NoteData[] notedata;   /** The notes to draw */
-    private AccidSymbol[] accidsymbols;   /** The accidental symbols to draw */
-    private int width;             /** The width of the chord */
-    private Stem stem1;            /** The stem of the chord. Can be null. */
-    private Stem stem2;            /** The second stem of the chord. Can be null */
-    private boolean hastwostems;   /** True if this chord has two stems */
-    private SheetMusic sheetmusic; /** Used to get colors and other options */
+    private Clef clef;             /* Which clef the chord is being drawn in */
+    private int starttime;         /* The time (in pulses) the notes occurs at */
+    private int endtime;           /* The starttime plus the longest note duration */
+    private NoteData[] notedata;   /* The notes to draw */
+    private AccidSymbol[] accidsymbols;   /* The accidental symbols to draw */
+    private int width;             /* The width of the chord */
+    private Stem stem1;            /* The stem of the chord. Can be null. */
+    private Stem stem2;            /* The second stem of the chord. Can be null */
+    private boolean hastwostems;   /* True if this chord has two stems */
+    private SheetMusic sheetmusic; /* Used to get colors and other options */
 
 
     /** Create a new Chord Symbol from the given list of midi notes.
@@ -266,11 +267,14 @@ public class ChordSymbol implements MusicSymbol {
             else { return stem2; }
         }
 
-    /** Get/Set the width (in pixels) of this symbol. The width is set
+    /** Get the width (in pixels) of this symbol. The width is set
      * in SheetMusic.AlignSymbols() to vertically align symbols.
      */
     public int getWidth() { return width; }
-    public void setWidth(int value) { width = value; }
+    /** Set the width (in pixels) of this symbol. The width is set
+     * in SheetMusic.AlignSymbols() to vertically align symbols.
+     */
+     public void setWidth(int value) { width = value; }
 
     /* Return the minimum width needed to display this chord.
      *

@@ -28,9 +28,21 @@ import com.recording.VideoRecordingActivity;
 
 /**
  * @class ECMLActivity
+ * <br>
  *        This is the launch activity for ECML.
  *        It simply displays the splash screen with buttons leading to the
- *        differents activities.
+ *        different activities :
+ *        <ul>
+ *        	<li>Choose Song (which leads to SheetMusicActivity)</li>
+ *        	<li>Audio Recording</li>
+ *        	<li>Video Recording</li>
+ *        	<li>Calendar</li>
+ *        	<li>Game</li>
+ *        	<li>ECML Messenger</li>
+ *        	<li>Metronome</li>
+ *        	<li>Tuning Fork</li>
+ *        	<li>Youtube</li>
+ *        </ul>
  */
 public class ECMLActivity extends Activity {
 
@@ -42,7 +54,7 @@ public class ECMLActivity extends Activity {
 		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.main);
 
-		// Set Actionbar color
+		// Set Action Bar color
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);

@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /** @class IconArrayAdapter
+ * <br>
  *  The ListAdapter for displaying the list of songs,
  *  and for displaying the list of files in a directory.
  *
@@ -35,9 +36,9 @@ import android.widget.TextView;
  *  Midi files show a NotePair icon.
  */
 class IconArrayAdapter<T> extends ArrayAdapter<T> {
-    private LayoutInflater inflater;
-    private static Bitmap midiIcon;       /* The midi icon */
-    private static Bitmap directoryIcon;  /* The directory icon */
+    private LayoutInflater inflater;		/* The Layout Inflater */
+    private static Bitmap midiIcon;			/* The midi icon */
+    private static Bitmap directoryIcon;	/* The directory icon */
 
     /** Load the NotePair image into memory. */
     public void LoadImages(Context context) {

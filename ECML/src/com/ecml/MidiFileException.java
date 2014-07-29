@@ -16,6 +16,7 @@ package com.ecml;
 
 
 /** @class MidiFileException
+ * <br>
  * A MidiFileException is thrown when an error occurs
  * while parsing the Midi File.  The constructore takes
  * the file offset (in bytes) where the error occurred,

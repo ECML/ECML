@@ -22,8 +22,8 @@ import android.graphics.SweepGradient;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * @class ColorView
+/** @class ColorView
+ * <br>
  *  Display a circle showing various colors to choose from.
  *  On the top left corner, display a preview of the selected color.
  */
@@ -52,8 +52,7 @@ public class ColorView extends View {
 		return selectedColor;
 	}
 
-	/**
-	 * Return the color wheel colors, for the given percent.
+	/** Return the color wheel colors, for the given percent.
 	 * Percent is from 0.0 to 1.0, from center to outer-rim.
 	 * 0.0 is white
 	 * 1.0 is the brightest main color (pure red, pure green, etc)
@@ -76,8 +75,7 @@ public class ColorView extends View {
 		return colors;
 	}
 
-	/**
-	 * Create the color wheel.
+	/** Create the color wheel.
 	 * Create 64 color rings, where each rings displays a rainbow gradient.
 	 */
 	private void initColorRings() {
@@ -94,8 +92,7 @@ public class ColorView extends View {
 	}
 
 
-	/**
-	 * Draw a preview of the selected color in the top-left corner.
+	/** Draw a preview of the selected color in the top-left corner.
 	 * Draw the full color circle, by drawing concentric ovals
 	 * with increasing radius, using the colorRing gradients.
 	 */
@@ -171,8 +168,7 @@ public class ColorView extends View {
 
 
 
-	/**
-	 * When the user clicks on the color wheel, update
+	/** When the user clicks on the color wheel, update
 	 * the selected color, and the preview pane.
 	 */
 	@Override

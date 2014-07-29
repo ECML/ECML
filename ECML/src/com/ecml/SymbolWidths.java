@@ -17,15 +17,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /** @class SymbolWidths
+ * <br>
  * The SymbolWidths class is used to vertically align notes in different
- * tracks that occur at the same time (that have the same starttime).
+ * tracks that occur at the same time (that have the same starttime).<br>
  * This is done by the following:
- * - Store a list of all the start times.
- * - Store the width of symbols for each start time, for each track.
- * - Store the maximum width for each start time, across all tracks.
- * - Get the extra width needed for each track to match the maximum
- *   width for that start time.
- *
+ * <ul>
+ * 	<li>Store a list of all the start times.</li>
+ * 	<li>Store the width of symbols for each start time, for each track.</li>
+ * 	<li>Store the maximum width for each start time, across all tracks.</li>
+ * 	<li>Get the extra width needed for each track to match the maximum
+ *   width for that start time.</li>
+ * </ul>
+ * 
  * See method SheetMusic.AlignSymbols(), which uses this class.
  */
 

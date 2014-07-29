@@ -17,13 +17,14 @@ import java.util.Comparator;
 
 
 /** @class WhiteNote
+ * <br>
  * The WhiteNote class represents a white key note, a non-sharp,
  * non-flat note.  To display midi notes as sheet music, the notes
  * must be converted to white notes and accidentals. 
- *
+ *<br>
  * White notes consist of a letter (A thru G) and an octave (0 thru 10).
  * The octave changes from G to A.  After G2 comes A3.  Middle-C is C4.
- *
+ *<br>
  * The main operations are calculating distances between notes, and comparing notes.
  */ 
 
@@ -74,6 +75,8 @@ public class WhiteNote implements Comparator<WhiteNote> {
     /** Return this note plus the given amount (in white notes).
      * The amount may be positive or negative.  For example,
      * A4 + 2 = C4, and C4 + (-2) = A4.
+     * 
+     * @param amount
      */
     public WhiteNote Add(int amount) {
         int num = octave * 7 + letter;
@@ -87,19 +90,18 @@ public class WhiteNote implements Comparator<WhiteNote> {
     /** Return the midi note number corresponding to this white note.
      * The midi note numbers cover all keys, including sharps/flats,
      * so each octave is 12 notes.  Middle C (C4) is 60.  Some example
-     * numbers for various notes:
+     * numbers for various notes:<br>
      *
-     *  A 2 = 33
-     *  A#2 = 34
-     *  G 2 = 43
-     *  G#2 = 44 
-     *  A 3 = 45
-     *  A 4 = 57
-     *  A#4 = 58
-     *  B 4 = 59
-     *  C 4 = 60
+     *  A 2 = 33<br>
+     *  A#2 = 34<br>
+     *  G 2 = 43<br>
+     *  G#2 = 44<br>
+     *  A 3 = 45<br>
+     *  A 4 = 57<br>
+     *  A#4 = 58<br>
+     *  B 4 = 59<br>
+     *  C 4 = 60<br>
      */
-
     public int getNumber() {
         int offset = 0;
         switch (letter) {
