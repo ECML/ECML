@@ -224,7 +224,7 @@ public class MidiOptions implements Serializable {
             options.useDefaultInstruments = json.getBoolean("useDefaultInstruments");
             options.scrollVert = json.getBoolean("scrollVert");
             options.showPiano = json.getBoolean("showPiano");
-            options.showNoteColors = json.getBoolean("shownoteColors");
+            options.showNoteColors = json.getBoolean("showNoteColors");
             options.showLyrics = json.getBoolean("showLyrics");
             options.delay = json.getInt("delay");
             options.twoStaffs = json.getBoolean("twoStaffs");

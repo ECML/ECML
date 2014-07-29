@@ -223,6 +223,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		options.shade1Color = settings.getInt("shade1Color", options.shade1Color);
 		options.shade2Color = settings.getInt("shade2Color", options.shade2Color);
 		options.showPiano = settings.getBoolean("showPiano", true);
+		options.showNoteColors = settings.getBoolean("showNoteColors", false);
 		String json = settings.getString("" + midiCRC, null);
 		MidiOptions savedOptions = MidiOptions.fromJson(json);
 		if (savedOptions != null) {
@@ -365,6 +366,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			piano.setVisibility(View.VISIBLE);
 		}
 		sheet = new SheetMusic(this);
+		Log.i("colors", "" + options.showNoteColors);
 		sheet.init(midifile, options);
 		sheet.setPlayer(player);
 		layout.addView(sheet);

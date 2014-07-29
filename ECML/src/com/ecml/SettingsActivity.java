@@ -36,6 +36,7 @@ import android.preference.PreferenceScreen;
  *  	<li>Whether to scroll horizontally or vertically</li>
  *  	<li>Whether to display the piano or not</li>
  *  	<li>Whether to display note letters or not</li>
+ *  	<li>Whether to display note colors or not</li>
  *  	<li>Transpose the notes to another key</li>
  *  	<li>Change the key signature or time signature displayed</li>
  *  	<li>Change how notes are combined into chords (the time interval)</li>
