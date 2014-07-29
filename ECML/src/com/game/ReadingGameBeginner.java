@@ -34,20 +34,10 @@ public class ReadingGameBeginner extends ReadingGame {
 
 		// We use by default the instrument n°0 which is the piano
 		Notes = findNotes(Tracks, 0);
-
-		// Launch the game = Play button
-		Button play = (Button) findViewById(R.id.play);
-		play.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				textView = (TextView) findViewById(R.id.affiche);
-				textView.setText("Choose which one is the note number " + compteurTexte);
-				Log.i("note", "" + Notes.get(counter).Pitch());
-
-			}
-		});
+		
+		//Launch the game
+		textView = (TextView) findViewById(R.id.affiche);
+		textView.setText("Choose which one is the note number " + compteurTexte);
 
 		// Change stop button
 		Button stop = (Button) findViewById(R.id.stop);
