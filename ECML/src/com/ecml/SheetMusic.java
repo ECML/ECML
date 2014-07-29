@@ -15,6 +15,7 @@ package com.ecml;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -73,7 +74,7 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
     private float    zoom;            /* The zoom level to draw at (1.0 == 100%) */
     private boolean  scrollVert;      /* Whether to scroll vertically or horizontally */
     private int      showNoteLetters; /* Display the note letters */
-    private int[]    NoteColors;      /* The note colors to use */
+    public static int[]    NoteColors;      /* The note colors to use */
     private int      shade1;          /* The color for shading */
     private int      shade2;          /* The color for shading left-hand piano */
     private Paint    paint;           /* The paint for drawing */
@@ -159,7 +160,11 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
         numtracks = tracks.size();
 
         int lastStart = file.EndTime() + options.shifttime;
-
+        
+        if (options.showNoteColors) {
+        	oneNoteOneColor();
+        }
+        
         /* Create all the music symbols (notes, rests, vertical bars, and
          * clef changes).  The symbols variable contains a list of music 
          * symbols for each track.  The list does not include the left-side 
@@ -928,7 +933,7 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
     }
 
     /** Get the color for a given note number. Not currently used. */
-    public int NoteColor(int number) {
+    public static int NoteColor(int number) {
         return NoteColors[ NoteScale.FromNumber(number) ];
     }
 
@@ -937,6 +942,22 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
 
     /** Get the shade2 color */
     public int getShade2() { return shade2; }
+    
+    /** Set a different color for each note */
+    public static void oneNoteOneColor() {
+    	NoteColors[0] = Color.GREEN;
+    	NoteColors[1] = Color.BLACK;
+    	NoteColors[2] = Color.RED;
+    	NoteColors[3] = Color.BLUE;
+    	NoteColors[4] = Color.MAGENTA;
+    	NoteColors[5] = Color.CYAN;
+    	NoteColors[6] = Color.YELLOW;
+    	NoteColors[7] = -348915;
+    	NoteColors[8] = -2458761;
+    	NoteColors[9] = -459752;
+    	NoteColors[10] = -123485;
+    	NoteColors[11] = -631572;
+    }
 
     /** Get whether to show note letters or not */
     public int getShowNoteLetters() { return showNoteLetters; }
@@ -1020,7 +1041,8 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
 
 
     /** Obtain the drawing canvas and call onDraw() */
-    public void callOnDraw() {
+    @SuppressLint("WrongCall")
+	public void callOnDraw() {
         if (!surfaceReady) {
             return;
         }

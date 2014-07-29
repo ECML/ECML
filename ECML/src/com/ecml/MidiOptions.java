@@ -39,6 +39,7 @@ public class MidiOptions implements Serializable {
     public static final int NoteNameMovableNumber  = 5;
 
     public boolean showPiano;        /* Display the piano */
+    public boolean showNoteColors;   /* Display different colors for each note */
     public boolean[] tracks;         /* Which tracks to display (true = display) */
     public static int[] instruments;        /* Which instruments to use per track */
     public static boolean useDefaultInstruments; /* If true, don't change instruments */
@@ -78,6 +79,7 @@ public class MidiOptions implements Serializable {
      */
     public MidiOptions(MidiFile midifile) {
         showPiano = true;
+        showNoteColors = false;
         int num_tracks = midifile.getTracks().size();
         tracks = new boolean[num_tracks];
         mute = new boolean[num_tracks];
@@ -156,6 +158,7 @@ public class MidiOptions implements Serializable {
             json.put("useDefaultInstruments", useDefaultInstruments);
             json.put("scrollVert", scrollVert);
             json.put("showPiano", showPiano);
+            json.put("showNoteColors", showNoteColors);
             json.put("showLyrics", showLyrics);
             json.put("delay", delay);
             json.put("twoStaffs", twoStaffs);
@@ -221,6 +224,7 @@ public class MidiOptions implements Serializable {
             options.useDefaultInstruments = json.getBoolean("useDefaultInstruments");
             options.scrollVert = json.getBoolean("scrollVert");
             options.showPiano = json.getBoolean("showPiano");
+            options.showNoteColors = json.getBoolean("shownoteColors");
             options.showLyrics = json.getBoolean("showLyrics");
             options.delay = json.getInt("delay");
             options.twoStaffs = json.getBoolean("twoStaffs");
@@ -270,6 +274,7 @@ public class MidiOptions implements Serializable {
         useDefaultInstruments = saved.useDefaultInstruments;
         scrollVert = saved.scrollVert;
         showPiano = saved.showPiano;
+        showNoteColors = saved.showNoteColors;
         showLyrics = saved.showLyrics;
         delay = saved.delay;
         twoStaffs = saved.twoStaffs;
@@ -330,6 +335,7 @@ public class MidiOptions implements Serializable {
         options.useDefaultInstruments = useDefaultInstruments;
         options.scrollVert = scrollVert;
         options.showPiano = showPiano;
+        options.showNoteColors = showNoteColors;
         options.showLyrics = showLyrics;
         options.twoStaffs = twoStaffs;
         options.delay = delay;
