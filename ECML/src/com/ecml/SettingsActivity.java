@@ -62,6 +62,7 @@ public class SettingsActivity extends PreferenceActivity
     private Preference setAllToPiano;             /** Set all instruments to piano */
     private CheckBoxPreference scrollVertically;  /** Scroll vertically/horizontally */
     private CheckBoxPreference showPiano;         /** Show the piano */
+    private CheckBoxPreference showNoteColors;	  /** Display a different color for each note */
     private CheckBoxPreference showMeasures;      /** Show the measure numbers */
     private CheckBoxPreference showLyrics;        /** Show the lyrics */
     private ListPreference delay;				  /** How long to wait before playing the song */
@@ -112,6 +113,7 @@ public class SettingsActivity extends PreferenceActivity
 
         createScrollPrefs(root);
         createShowPianoPrefs(root);
+        createShowNoteColorsPrefs(root);
         createShowLyricsPrefs(root);
         createDelayPrefs(root);
         if (options.tracks.length != 2) {
@@ -228,6 +230,14 @@ public class SettingsActivity extends PreferenceActivity
         showPiano.setTitle(R.string.show_piano);
         showPiano.setChecked(options.showPiano);
         root.addPreference(showPiano);
+    }
+    
+    /** Create the "Show Note colors" preference */
+    private void createShowNoteColorsPrefs(PreferenceScreen root) {
+        showNoteColors = new CheckBoxPreference(this);
+        showNoteColors.setTitle(R.string.show_note_colors);
+        showNoteColors.setChecked(options.showNoteColors);
+        root.addPreference(showNoteColors);
     }
 
     /** Create the "Show Lyrics" preference */
@@ -431,6 +441,7 @@ public class SettingsActivity extends PreferenceActivity
         }
         options.scrollVert = scrollVertically.isChecked();
         options.showPiano = showPiano.isChecked();
+        options.showNoteColors = showNoteColors.isChecked();
         options.showLyrics = showLyrics.isChecked();
         options.delay = Integer.parseInt(delay.getValue());
         if (twoStaffs != null)

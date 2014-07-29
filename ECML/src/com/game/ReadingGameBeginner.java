@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.ecml.MidiNote;
 import com.ecml.MidiTrack;
 import com.ecml.R;
+import com.ecml.R.id;
+import com.ecml.SheetMusic;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -39,6 +41,8 @@ public class ReadingGameBeginner extends ReadingGame {
 		//Launch the game
 		textView = (TextView) findViewById(R.id.affiche);
 		textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + Notes.size());
+		Log.i("color", "" + SheetMusic.NoteColor(2));
+		//SheetMusic.NoteColors[0] = Color.GREEN;
 
 		// Change stop button
 		Button stop = (Button) findViewById(R.id.stop);

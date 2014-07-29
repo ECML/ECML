@@ -16,6 +16,7 @@
     <string name="set_all_to_piano">Set All Instruments to Piano</string>
     <string name="scroll_vertically">Scroll Vertically</string>
     <string name="show_piano">Show the Piano</string>
+    <string name="show_note_colors">Show a different color for each note</string>
     <string name="show_lyrics">Show Lyrics</string>
     <string name="choose_delay">Choose delay</string>
     <string name="show_note_letters">Show Note Letters</string>

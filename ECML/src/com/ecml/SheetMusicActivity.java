@@ -34,6 +34,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
@@ -230,6 +231,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		createSheetMusic(options);
 		
 		metronome = new Metronome(this);
+		
+		
 		
 		
 		ActionBar ab = getActionBar();
