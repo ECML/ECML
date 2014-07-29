@@ -101,6 +101,11 @@ public class MidiNote implements Comparator<MidiNote> {
     	 return String.format(scale[(notenumber + 3) % 12]);
     }
     
+    public String PitchString(){
+    	String[] scale = new String[]{ "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
+    	 return (scale[(notenumber + 3) % 12]);
+    }
+    
     public int Octave(){
     	int i = notenumber+3;
     	return i;
