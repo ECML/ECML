@@ -1,92 +1,73 @@
 package com.ecml;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import java.util.ArrayList;
+
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class ReadingGameBeginner extends Activity {
+public class ReadingGameBeginner extends ReadingGame {
 
-	private LinearLayout layout;
 	View choice;
 	View result;
-	private SheetMusic sheet;
-	private MidiFile midifile; /* The midi file to play */
-	private MidiOptions options; /* The options for sheet music and sound */
-	private MidiPlayer player; /* The play/stop/rewind toolbar */
-	public static int noteplace;
-	private MidiNote note;
-	public static final String MidiTitleID = "MidiTitleID";
-	
+
+	private TextView textView;
+	private int compteurTexte = counter + 1;
+	private ColorDrawable orangeColor;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
+		counter = 0; // note counter
+		Tracks = midifile.getTracks();
 
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
+		// We use by default the instrument n°0 which is the piano
+		Notes = findNotes(Tracks, 0);
 
-		noteplace = 0;
-
-		/*****************
-		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
-		 * GAME BUTTON
-		 **********/
-		layout = new LinearLayout(this);
-		layout.setOrientation(LinearLayout.VERTICAL);
-		choice = getLayoutInflater().inflate(R.layout.choice, layout, false);
-		layout.addView(choice);
-		setContentView(layout);
-
-		// Back to the score button
-		Button score = (Button) findViewById(R.id.back);
-		score.setOnClickListener(new View.OnClickListener() {
+		// Launch the game = Play button
+		Button play = (Button) findViewById(R.id.play);
+		play.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if (ECML.song != null) {
-					ChooseSongActivity.openFile(ECML.song);
+
+				textView = (TextView) findViewById(R.id.affiche);
+				textView.setText("Choose which one is the note number " + compteurTexte);
+				Log.i("note", "" + Notes.get(counter).Pitch());
+
+			}
+		});
+
+		// Change stop button
+		Button stop = (Button) findViewById(R.id.stop);
+		stop.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				counter = 0;
+				compteurTexte = counter + 1;
+				textView.setText("");
+
+				if (player != null) {
+					player.Stop();
 				}
-				else {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
-					startActivity(intent);
-				}
 			}
 		});
 
-		// Help button
-		Button help = (Button) findViewById(R.id.help);
-		help.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				showHelpDialog();
+		// If we reach the end of the midifile, then we stop the player
+		if (counter == Notes.size()) {
+			counter = 0;
+			if (player != null) {
+				player.Stop();
 			}
-		});
-
-		// Change game button
-		Button game = (Button) findViewById(R.id.game);
-		game.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-				startActivity(intent);
-			}
-		});
+			textView.setText("");
+		}
 
 		// La button
 		final Button la = (Button) findViewById(R.id.la);
@@ -94,158 +75,265 @@ public class ReadingGameBeginner extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if (isItALa()) {
-					noteplace = noteplace + 1;
-					la.setBackgroundColor(Color.GREEN);
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("A" == test) {
+					GreenToOrange(la);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(la);
 				}
-				la.setBackgroundColor(Color.RED);
 			}
 		});
 
-		// si button
-		Button si = (Button) findViewById(R.id.si);
+		// La sharp button
+		final Button lad = (Button) findViewById(R.id.lad);
+		lad.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("A#" == test) {
+					GreenToOrange(lad);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(lad);
+				}
+			}
+		});
+
+		// Si button
+		final Button si = (Button) findViewById(R.id.si);
 		si.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				noteplace = noteplace + 1;
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("B" == test) {
+					GreenToOrange(si);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(si);
+				}
 			}
 		});
 
 		// Do button
-		Button donote = (Button) findViewById(R.id.donote);
+		final Button donote = (Button) findViewById(R.id.donote);
 		donote.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				noteplace = noteplace + 1;
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("C" == test) {
+					GreenToOrange(donote);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(donote);
+				}
+			}
+		});
+
+		// Do sharp button
+		final Button dod = (Button) findViewById(R.id.dod);
+		dod.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("C#" == test) {
+					GreenToOrange(dod);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(dod);
+				}
 			}
 		});
 
 		// Ré button
-		Button re = (Button) findViewById(R.id.re);
+		final Button re = (Button) findViewById(R.id.re);
 		re.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				noteplace = noteplace + 1;
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("D" == test) {
+					GreenToOrange(re);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(re);
+				}
+			}
+		});
+
+		// Ré sharp button
+		final Button red = (Button) findViewById(R.id.red);
+		red.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("D#" == test) {
+					GreenToOrange(red);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(red);
+				}
 			}
 		});
 
 		// Mi button
-		Button mi = (Button) findViewById(R.id.mi);
+		final Button mi = (Button) findViewById(R.id.mi);
 		mi.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				noteplace = noteplace + 1;
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("E" == test) {
+					GreenToOrange(mi);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+
+				} else {
+					redToOrange(mi);
+				}
 			}
 		});
 
 		// Fa button
-		Button fa = (Button) findViewById(R.id.fa);
+		final Button fa = (Button) findViewById(R.id.fa);
 		fa.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				noteplace = noteplace + 1;
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("F" == test) {
+					GreenToOrange(fa);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(fa);
+				}
+			}
+		});
+
+		// Fa sharp button
+		final Button fad = (Button) findViewById(R.id.fad);
+		fad.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("F#" == test) {
+					GreenToOrange(fad);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(fad);
+				}
 			}
 		});
 
 		// Sol button
-		Button sol = (Button) findViewById(R.id.sol);
+		final Button sol = (Button) findViewById(R.id.sol);
 		sol.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				noteplace = noteplace + 1;
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("G" == test) {
+					GreenToOrange(sol);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(sol);
+				}
 			}
 		});
 
-		/*****************
-		 * END OF TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE,
-		 * CHANGE GAME BUTTON
-		 **********/
-
-		/********************* TOP VIEW WITH RESULTS AND APPRECIATION ***********************/
-		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
-		layout.addView(result);
-		result.setVisibility(View.GONE);
-		setContentView(layout);
-
-		// Retry button
-		Button retry = (Button) findViewById(R.id.retry);
-		retry.setOnClickListener(new View.OnClickListener() {
+		// Sol sharp button
+		final Button sold = (Button) findViewById(R.id.sold);
+		sold.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ReadingGameBeginner.class);
-				startActivity(intent);
+				String test = Notes.get(counter).PitchString();
+				// Check if it is the expected note
+				if ("G#" == test) {
+					GreenToOrange(sold);
+					counter++;
+					compteurTexte++;
+					textView.setText("Choose which one is the note number " + compteurTexte);
+				} else {
+					redToOrange(sold);
+				}
 			}
 		});
-		/********************* END OF TOP VIEW WITH RESULTS AND APPRECIATION *****************/
 
-		/*********************** BOTTOM VIEW WITH THE SHEET MUSIC ****************************/
-
-		ClefSymbol.LoadImages(this);
-		TimeSigSymbol.LoadImages(this);
-		MidiPlayer.LoadImages(this);
-		
-		// Parse the MidiFile from the raw bytes
-		Uri uri = this.getIntent().getData();
-		String title = this.getIntent().getStringExtra(MidiTitleID);
-		if (title == null) {
-			title = uri.getLastPathSegment();
-		}
-		FileUri file = new FileUri(uri, title);
-		this.setTitle("ECML: " + title);
-		byte[] data;
-		try {
-			data = file.getData(this);
-			midifile = new MidiFile(data, title);
-		} catch (MidiFileException e) {
-			this.finish();
-			return;
-		}
-		
-		options = new MidiOptions(midifile);
-
-		sheet = new SheetMusic(this);
-		sheet.init(midifile, options);
-		sheet.setPlayer(player);
-		layout.addView(sheet);
-
-		layout.requestLayout();
-		sheet.callOnDraw();
-
-		/*********************** END OF BOTTOM VIEW WITH THE SHEET MUSIC ****************************/
+		orangeColor = (ColorDrawable) la.getBackground();
 
 	}
 
-	private void showHelpDialog() {
-		LayoutInflater inflator = LayoutInflater.from(this);
-		final View dialogView = inflator.inflate(R.layout.help_reading_notes, null);
+	private ArrayList<MidiNote> findNotes(ArrayList<MidiTrack> tracks, int instrument) {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("HELP");
-		builder.setView(dialogView);
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface builder, int whichButton) {
-
+		int i = 0;
+		search = true;
+		while (search) {
+			if (instrument == Tracks.get(i).getInstrument()) {
+				search = false;
+			} else {
+				i++;
 			}
-		});
-		AlertDialog dialog = builder.create();
-		dialog.show();
+		}
+		return Tracks.get(i).getNotes();
 	}
 
-	public static boolean isItALa() {
-//		ArrayList<MidiTrack>(0);
-//		
-//		if (.number == 0) {
-//			return true;
-//		}
-		return false;
+	private void redToOrange(Button btn) {
+		// Let's change background's color from red to inital orange color.
+		ColorDrawable[] color = { new ColorDrawable(Color.RED), orangeColor };
+		TransitionDrawable trans = new TransitionDrawable(color);
+		// This will work also on old devices. The latest API says you have to
+		// use setBackground instead.
+		btn.setBackgroundDrawable(trans);
+		trans.startTransition(300);
+	}
 
+	private void GreenToOrange(Button btn) {
+		// Let's change background's color from green to initial orange color.
+		ColorDrawable[] color = { new ColorDrawable(Color.GREEN), orangeColor };
+		TransitionDrawable trans = new TransitionDrawable(color);
+		// This will work also on old devices. The latest API says you have to
+		// use setBackground instead.
+		btn.setBackgroundDrawable(trans);
+		trans.startTransition(300);
 	}
 
 }
