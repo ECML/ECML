@@ -18,9 +18,6 @@ import com.ecml.R;
 import com.ecml.ScrollAnimation;
 import com.ecml.SheetMusic;
 import com.ecml.TimeSigSymbol;
-import com.ecml.R.color;
-import com.ecml.R.id;
-import com.ecml.R.layout;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -42,7 +39,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-/* abstract class wich define the main part of all the speedgame activities */
+/* abstract class which define the main part of all the speedgame activities */
 
 public abstract class ReadingGame extends Activity {
 
@@ -77,15 +74,8 @@ public abstract class ReadingGame extends Activity {
 
 	/*** End of MidiSheet variables ***/
 
-/*** Record and Play Variables ***/
-	
-	private boolean isAudioRecordingAndPlayingMusic = false;
-	private SurfaceView surfaceView;
-	private SurfaceHolder surfaceHolder;
-	
 	protected ScrollAnimation scrollAnimation;
 
-	/*** End of Record and Play Variables ***/
 
 	protected ArrayList<MidiTrack> Tracks;
 	protected ArrayList<MidiNote> Notes;
@@ -324,9 +314,6 @@ public abstract class ReadingGame extends Activity {
 					// If we touch while music is playing, stop the midi player
 					if (player != null && player.playstate == player.playing) {
 						player.Pause();
-						if (isAudioRecordingAndPlayingMusic) {
-							stopAudioRecordingAndPlayingMusic();
-						}
 						sheet.getScrollAnimation().stopMotion();
 					}
 					return result;
@@ -342,14 +329,6 @@ public abstract class ReadingGame extends Activity {
 				}
 			}
 		});
-	}
-	
-	private void stopAudioRecordingAndPlayingMusic() {
-		isAudioRecordingAndPlayingMusic = false;
-		player.Pause();
-		player.player.stop();	// these two lines are here to prevent the player from
-        player.player.reset();	// playing outloud the very last note supposedly played
-		
 	}
 
 	protected void PauseEcoute ()
