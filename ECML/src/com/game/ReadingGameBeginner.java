@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.ecml.MidiNote;
 import com.ecml.MidiTrack;
 import com.ecml.R;
-import com.ecml.R.id;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,6 +23,8 @@ public class ReadingGameBeginner extends ReadingGame {
 	private TextView textView;
 	private int compteurTexte = counter + 1;
 	private ColorDrawable orangeColor;
+	private int numberPoints = 0;
+	private int firstTry = 0;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -37,12 +38,11 @@ public class ReadingGameBeginner extends ReadingGame {
 		
 		//Launch the game
 		textView = (TextView) findViewById(R.id.affiche);
-		textView.setText("Choose which one is the note number " + compteurTexte);
+		textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + Notes.size());
 
 		// Change stop button
 		Button stop = (Button) findViewById(R.id.stop);
 		stop.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				counter = 0;
@@ -70,16 +70,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("A" == test) {
-					GreenToOrange(la);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(la);
-				}
+				testNote("A", la);
 			}
 		});
 
@@ -89,16 +80,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("A#" == test) {
-					GreenToOrange(lad);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(lad);
-				}
+				testNote("A#", lad);
 			}
 		});
 
@@ -108,16 +90,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("B" == test) {
-					GreenToOrange(si);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(si);
-				}
+				testNote("B", si);
 			}
 		});
 
@@ -127,16 +100,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("C" == test) {
-					GreenToOrange(donote);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(donote);
-				}
+				testNote("C", donote);
 			}
 		});
 
@@ -146,16 +110,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("C#" == test) {
-					GreenToOrange(dod);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(dod);
-				}
+				testNote("C#", dod);
 			}
 		});
 
@@ -165,16 +120,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("D" == test) {
-					GreenToOrange(re);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(re);
-				}
+				testNote("D", re);
 			}
 		});
 
@@ -184,16 +130,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("D#" == test) {
-					GreenToOrange(red);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(red);
-				}
+				testNote("D#", red);
 			}
 		});
 
@@ -203,17 +140,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("E" == test) {
-					GreenToOrange(mi);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-
-				} else {
-					redToOrange(mi);
-				}
+				testNote("E", mi);
 			}
 		});
 
@@ -223,16 +150,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("F" == test) {
-					GreenToOrange(fa);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(fa);
-				}
+				testNote("F", fa);
 			}
 		});
 
@@ -242,16 +160,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("F#" == test) {
-					GreenToOrange(fad);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(fad);
-				}
+				testNote("F#", fad);
 			}
 		});
 
@@ -261,16 +170,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("G" == test) {
-					GreenToOrange(sol);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(sol);
-				}
+				testNote("G", sol);
 			}
 		});
 
@@ -280,21 +180,29 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				String test = Notes.get(counter).PitchString();
-				// Check if it is the expected note
-				if ("G#" == test) {
-					GreenToOrange(sold);
-					counter++;
-					compteurTexte++;
-					textView.setText("Choose which one is the note number " + compteurTexte);
-				} else {
-					redToOrange(sold);
-				}
+				testNote("G#", sold);				
 			}
 		});
 
 		orangeColor = (ColorDrawable) la.getBackground();
 
+	}
+	
+	private void testNote (String letter, Button btn){
+		firstTry = firstTry + 1;
+		String test = Notes.get(counter).PitchString();
+		// Check if it is the expected note
+		if (letter == test) {
+			if (firstTry == 1) {numberPoints = numberPoints + 1;}
+			GreenToOrange(btn);
+			firstTry = 0;
+			Log.i("score", "" + numberPoints);
+			counter++;
+			compteurTexte++;
+			textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + Notes.size());
+		} else {
+			redToOrange(btn);
+		}
 	}
 
 	private ArrayList<MidiNote> findNotes(ArrayList<MidiTrack> tracks, int instrument) {
