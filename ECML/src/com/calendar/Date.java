@@ -65,12 +65,18 @@ public class Date {
 	}
 
 	/** Add the number of years you want to the current date
+	 * <br>
+	 * In case the Date was the 29th of February, and the result isn't a leap year, return the 1st of March.
 	 * 
 	 * @param year The number of years to add
 	 * 
 	 */
 	public Date addYear(int year) {
 		this.year += year;
+		if (day == 29 && month == 1 && !isLeapYear()) {
+			day = 1;
+			month = 2;
+		}
 		return this;
 	}
 
