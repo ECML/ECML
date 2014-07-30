@@ -106,6 +106,7 @@
         <item>What was your dream job as a child?</item>
         <item>What was your maternal grandfatherâ€™s first name?</item>
     </string-array>
+    <string name="communication">Communication</string>
 	
 	
 </resources>

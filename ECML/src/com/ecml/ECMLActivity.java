@@ -18,11 +18,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+
 import com.calendar.CalendarActivity;
 import com.game.GameActivity;
+import com.login.Login;
 import com.metronome.MetronomeActivity;
 import com.sideActivities.AudioRecordingActivity;
 import com.sideActivities.TuningForkActivity;
@@ -50,6 +55,7 @@ import com.sideActivities.YoutubeActivity;
 public class ECMLActivity extends Activity {
 
 	final Context context = this;
+	private Menu menu;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -134,6 +140,53 @@ public class ECMLActivity extends Activity {
 				startActivity(goToYoutube);
 			}
 		});
+		
+		// Communication button
+		ImageView communication = (ImageView) findViewById(R.id.communication);
+		communication.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToFacebook = new Intent(getApplicationContext(), FacebookActivity.class);
+				startActivity(goToFacebook);
+			}
+		});
+	}
+
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	/********************************************* ACTION BAR **************************************************/
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.loginactionbar, menu);
+		
+		this.menu = menu;
+		
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId()==R.id.login ) {
+			launchLogin();
+			return true;
+		}
+		
+		return true;
+		
+	}
+
+	private void launchLogin() {
+		Intent i = new Intent(ECMLActivity.this, Login.class);
+		startActivity(i);
+		
+	
+		
 	}
 
 
