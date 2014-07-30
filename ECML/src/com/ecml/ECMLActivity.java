@@ -12,17 +12,24 @@
 
 package com.ecml;
 
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+
 import com.calendar.CalendarActivity;
 import com.game.GameActivity;
+import com.login.Login;
 import com.metronome.MetronomeActivity;
 import com.sideActivities.AudioRecordingActivity;
 import com.sideActivities.TuningForkActivity;
@@ -33,7 +40,7 @@ import com.sideActivities.YoutubeActivity;
  * @class ECMLActivity
  * <br>
  *        This is the launch activity for ECML.
- *        It simply displays the splash screen with buttons leading to the
+ *        It displays the splash screen with buttons leading to the
  *        different activities :
  *        <ul>
  *        	<li>Choose Song (which leads to SheetMusicActivity)</li>
@@ -46,10 +53,21 @@ import com.sideActivities.YoutubeActivity;
  *        	<li>Tuning Fork</li>
  *        	<li>Youtube</li>
  *        </ul>
+ *  
+ *  TODO
+ *	It can also display a sequence screen of activities that are suggested
+ *  to the user or set by the teacher.
  */
 public class ECMLActivity extends Activity {
 
 	final Context context = this;
+	private Menu menu;
+
+	private ArrayList<String> list = new ArrayList<String>(4); /* The list of the activities to do */
+	public static final String PRACTICE_ALONE = "PI";
+	public static final String CHECK_WITH_YOUR_TEACHER = "C";
+	public static final String READING_OF_NOTES = "R";
+	public static final String SPEED_GAME = "S";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +75,16 @@ public class ECMLActivity extends Activity {
 		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.main);
 
+		// Example of a list a teacher could send
+		// TODO : make this automatic using a server
+		// or using a virtual teacher with a pre-programmed schedules
+		list.add(PRACTICE_ALONE);
+		list.add(CHECK_WITH_YOUR_TEACHER);
+		list.add(READING_OF_NOTES);
+		list.add(SPEED_GAME);
+		
+		sequenceOfActivities();
+		
 		// Set Action Bar color
 		ActionBar ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
@@ -134,7 +162,73 @@ public class ECMLActivity extends Activity {
 				startActivity(goToYoutube);
 			}
 		});
+		
+		// Communication button
+		ImageView communication = (ImageView) findViewById(R.id.communication);
+		communication.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToFacebook = new Intent(getApplicationContext(), FacebookActivity.class);
+				startActivity(goToFacebook);
+			}
+		});
 	}
 
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	/********************************************* ACTION BAR **************************************************/
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.loginactionbar, menu);
+		
+		this.menu = menu;
+		
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId()==R.id.login ) {
+			launchLogin();
+			return true;
+		}
+		
+		return true;
+		
+	}
+
+	private void launchLogin() {
+		Intent i = new Intent(ECMLActivity.this, Login.class);
+		startActivity(i);
+		
+	
+		
+	}
+	
+	/** Display the sequence of activities accordingly to the received list */
+	private void sequenceOfActivities() {
+		for (int i = 0 ; i < list.size() ; i++) {
+			addView(list.get(i));
+		}
+	}
+
+	/** Add the view of the activity given in the sequence of activities */
+	private void addView(String task) {
+		if (task == PRACTICE_ALONE) {
+			
+		} else if (task == CHECK_WITH_YOUR_TEACHER) {
+			
+		} else if (task == READING_OF_NOTES) {
+			
+		} else if (task == SPEED_GAME) {
+			
+		}
+	}
 
 }
