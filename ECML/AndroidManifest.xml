@@ -130,7 +130,7 @@
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity android:name="com.login.Login"></activity>
-        
+         <activity android:name="com.login.SignUp"></activity>
         </application>
 
 </manifest>
