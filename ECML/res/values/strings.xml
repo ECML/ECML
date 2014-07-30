@@ -106,6 +106,6 @@
         <item>What was your dream job as a child?</item>
         <item>What was your maternal grandfatherâ€™s first name?</item>
     </string-array>
-	
+	 <string name="clickToSignUp"><u><b><i> Sign Up Here</i></b></u></string>
 	
 </resources>

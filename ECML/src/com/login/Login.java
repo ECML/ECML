@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.ecml.ECMLActivity;
 import com.ecml.R;
@@ -34,7 +36,8 @@ public class Login extends Messenger {
    
     //UsersDAO usersdb = new UsersDAO(this);
    // public   UsersDAO usersdb = new UsersDAO(this);
-   
+    private TextView clikToSignUp ;
+
     
     
     /** Called when the activity is first created. */	
@@ -50,7 +53,8 @@ public class Login extends Messenger {
         Button loginButton = (Button) findViewById(R.id.login);
         cancelButton = (Button) findViewById(R.id.cancel_login);
         usernameText = (EditText) findViewById(R.id.userName);
-        passwordText = (EditText) findViewById(R.id.password);        
+        passwordText = (EditText) findViewById(R.id.password); 
+        clikToSignUp = (TextView) findViewById(R.id.clickToSignUp);
         
        loginButton.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0) 
@@ -89,6 +93,16 @@ public class Login extends Messenger {
         	
         });
         
+   	 clikToSignUp.setOnClickListener(new OnClickListener() {
+   	   	 
+ 		@Override
+ 		public void onClick(View v) {
+ 			
+ 			Intent i = new Intent(Login.this, SignUp.class);
+     		startActivity(i);
+ 			
+ 		}
+ 	});
         
     }
     
