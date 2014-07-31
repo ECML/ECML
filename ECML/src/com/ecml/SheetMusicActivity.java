@@ -358,6 +358,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		if (sheet != null) {
 			layout.removeView(sheet);
 		}
+		
 		if (!options.showPiano) {
 			piano.setVisibility(View.GONE);
 		} else {

@@ -43,6 +43,8 @@ public class ReadingGameBeginner extends ReadingGame {
 		textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + Notes.size());
 		Log.i("color", "" + SheetMusic.NoteColor(2));
 		//SheetMusic.NoteColors[0] = Color.GREEN;
+		
+		
 
 		// Change stop button
 		Button stop = (Button) findViewById(R.id.stop);
