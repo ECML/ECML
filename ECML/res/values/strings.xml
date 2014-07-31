@@ -83,5 +83,33 @@
     <string name="speed_game_help">How to play the SpeedGame</string>
 	<string name="speed_game_reading">\nAt level 1, the game is waiting for you to play the right note. You need to scroll down or up the sheetmusic yourself. You can highlight the note yourself too.\n\nAt level 2, you have to play the note when it is highlight. If you play the good note at the right time you get one point.\nAt the end of the song, you can see how many notes you play right.\n\nLevels 3 and 4 work the same way are level 2 but are harder. </string>
 	
+	<string name="username">Username:</string>
+	<string name="password">Password:</string>
+	<string name="password_again">Password(again):</string>
+	<string name="email">E-mail</string>
+	<string name="sign_up">Sign up</string>
+	<string name="cancel">Cancel</string>
+	<string name="login">Login</string>
+	<string name="user_authenticated_success">User authenticated successfully! </string>
+	<string name="make_sure_username_and_password_correct">Please make sure that
+	your username and password correct</string>
+	<string name="signup_fill_all_fields">Please fill all fields</string>
+	<string name="exit_application">Exit</string>
+	<string name="signup_successfull">Your registration is completed successfully,\n you can login now </string>
+	<string name="signup_username_crashed">Your username have been already taken, please try another username</string>
+	<string name="username_and_password_length_short">Username and password length must be at least 5</string>
+	<string name="signup_type_same_password_in_password_fields">Type same password in password fields</string>
+	<string name="facebook">Facebook</string>
+	  <string-array name="questions_array">
+        <item> What was your childhood nickname? </item>
+        <item>What time of the day were you born?</item>
+        <item>What was your dream job as a child?</item>
+        <item>What was your maternal grandfatherâ€™s first name?</item>
+    </string-array>
+
+	 <string name="clickToSignUp"><u><b><i> Sign Up Here</i></b></u></string>
+
+    <string name="communication">Communication</string>
+	
 	
 </resources>

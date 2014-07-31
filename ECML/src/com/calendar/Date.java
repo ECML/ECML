@@ -25,7 +25,7 @@ public class Date {
 		
 	}
 	
-	/** Create a new date with the parameters you want.<br>
+	/** Create a new date with the given parameters.<br>
 	 * Always create a valid date. If you set month to 14, it will add a year
 	 * to the number of year you've chosen
 	 * 
@@ -64,7 +64,7 @@ public class Date {
 		return ((this.year % 4 == 0 && this.year % 100 != 0) || this.year % 400 == 0);
 	}
 
-	/** Add the number of years you want to the current date
+	/** Add the number of years given to the current date
 	 * <br>
 	 * In case the Date was the 29th of February, and the result isn't a leap year, return the 1st of March.
 	 * 
@@ -80,7 +80,7 @@ public class Date {
 		return this;
 	}
 
-	/** Add the number of months you want to the current date
+	/** Add the number of months given to the current date
 	 * <br>
 	 * Adding a month to the 31st of January will return the 1st of March because
 	 * February doesn't have 31 days.
@@ -116,7 +116,7 @@ public class Date {
 		return this;
 	}
 
-	/** Adds the number of days you want to the current date
+	/** Adds the number of days given to the current date
 	 * 
 	 * @param day The number of days to add
 	 * 
@@ -150,7 +150,7 @@ public class Date {
 		return this;
 	}
 
-	/** Adds the number of hours you want to the current date
+	/** Adds the number of hours given to the current date
 	 * 
 	 * @param hour The number of hours to add
 	 * 
@@ -162,7 +162,7 @@ public class Date {
 		return this;
 	}
 
-	/** Adds the number of minutes you want to the current date
+	/** Adds the number of minutes given to the current date
 	 * 
 	 *  @param minute The number of minutes to add
 	 *  
@@ -175,7 +175,7 @@ public class Date {
 	}
 
 	
-	/** Adds the amout of time you want to the current date starting with the smallest
+	/** Adds the amout of time given to the current date starting with the smallest
 	 * period of time and so on (minute then hour etc..)
 	 * <br>
 	 * So for example, adding a month and a day to the 31st of January will return

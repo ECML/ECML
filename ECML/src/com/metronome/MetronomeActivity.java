@@ -100,12 +100,12 @@ public class MetronomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				metronome.stopMetronome();
-				// Creating the instance of PopupMenu
+				// Create the instance of PopupMenu
 				popup = new PopupMenu(MetronomeActivity.this, timeSignature);
-				// Inflating the Popup using xml file
+				// Inflate the Popup using xml file
 				popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
 				
-				// Registering popup with OnMenuItemClickListener
+				// Register the Popup with OnMenuItemClickListener
 				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 					public boolean onMenuItemClick(MenuItem item) {
 						if (item.getTitle() != "Off") {
@@ -137,13 +137,13 @@ public class MetronomeActivity extends Activity {
 		metronome.stopMetronome();
 	}
 
-	/** Updates the View for the Tempo */
+	/** Update the View for the Tempo */
 	private void updateTempoView() {
 		TextView tempoView = ((TextView) findViewById(R.id.tempo));
 		tempoView.setText("Tempo: " + metronome.getTempo() + " bpm");
 	}
 	
-	/** Updates the View for the Time Signature */
+	/** Update the View for the Time Signature */
 	private void updateTimeSignatureView() {
 		if (accentBeep == 0) {
 			timeSignature.setText("Time Signature: Off");
@@ -153,7 +153,7 @@ public class MetronomeActivity extends Activity {
 		}
 	}
 
-	/** Sets the Slider Listener */
+	/** Set the Slider Listener */
 	private void setSliderListener() {
 		slider = (SeekBar) findViewById(R.id.sliderMetronome);
 		slider.setMax(200 - 1); 						// -1 to avoid reaching 0
@@ -174,21 +174,21 @@ public class MetronomeActivity extends Activity {
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				metronome.setTempo(progress); 	// updates the Variable Tempo of the Metronome
-				updateTempoView(); 				// updates the View
+				metronome.setTempo(progress); 	// update the Variable Tempo of the Metronome
+				updateTempoView(); 				// update the View
 			}
 			
 		});
 	}
 
-	/** Adds 1 to the tempo */
+	/** Add 1 to the tempo */
 	void plus() {
 		metronome.stopMetronome();
 		slider.setProgress(slider.getProgress() + 1); // onProgressChanged updates the Metronome and the View automatically
 		metronome.startMetronome();
 	}
 
-	/** Removes 1 from the tempo */
+	/** Remove 1 from the tempo */
 	void minus() {
 		metronome.stopMetronome();
 		slider.setProgress(slider.getProgress() - 1); // onProgressChanged updates the Metronome and the View automatically

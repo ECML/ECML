@@ -1,4 +1,4 @@
-package com.recording;
+package com.sideActivities;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,11 +21,13 @@ import com.ecml.R;
  * 
  * @author Nicolas and Anaïs
  * <br>
- * This Activity is mainly composed of a Media Recorder that handles Recording and
- * a Media Player that handles Replaying the previously performed Audio Records.<br>
- * <ul>Main functions :
- * 		<li>startAudioRecording()</li>
- * 		<li>stopAudioRecording()</li>
+ * This Activity is mainly composed of :<br>
+ *  - a Media Recorder that handles Recording<br>
+ *  - a Media Player that handles Replaying the previously performed Audio Records.<br>
+ * Main functions :
+ * <ul>
+ * 		<li>startRecording()</li>
+ * 		<li>stopRecording()</li>
  * 		<li>replayAudio()</li>
  * 		<li>pauseAudio()</li>
  * </ul>
@@ -33,7 +35,7 @@ import com.ecml.R;
 public class AudioRecordingActivity extends Activity {
 
 	private long fileName; 			/* File name of last Audio Record */
-	private String pathAudio;		/* Path of last Audio Record */
+	private String path;		/* Path of last Audio Record */
 	private String ext = ".mp4";	/* Extension of Audio Record files */
 
 	private static final String ECMLPath = "ECML/";						/* Path to ECML Folder */
@@ -42,13 +44,13 @@ public class AudioRecordingActivity extends Activity {
 	private int output_format = MediaRecorder.OutputFormat.MPEG_4;		/* Output format (mp4) */
 	private MediaPlayer mediaPlayer = new MediaPlayer();				/* Media Player */
 	
-	private boolean isAudioRecording;	/* Whether or not the Media Recorder is recording */
-	private boolean existAudioRecord;	/* Whether or not an Audio Record already exists */
+	private boolean isRecording;	/* Whether or not the Media Recorder is recording */
+	private boolean existRecord;	/* Whether or not an Audio Record already exists */
 	private boolean isReplayPaused;		/* Whether or not the Media Player is paused */
 	
-	private ImageView startAudioRecording;	/* The Start Button (for the Media Recorder) */
-	private ImageView stopAudioRecording;	/* The Stop Button (for the Media Recorder) */
-	private ImageView replayAudioRecording;	/* The Replay Button (for the Media Player) */
+	private ImageView startRecording;	/* The Start Button (for the Media Recorder) */
+	private ImageView stopRecording;	/* The Stop Button (for the Media Recorder) */
+	private ImageView replayRecording;	/* The Replay Button (for the Media Player) */
 	private ImageView pauseReplay;			/* The Pause Button (for the Media Player) */
 
 	private final Context context = this;	/* The Context of the Activity */
@@ -68,8 +70,8 @@ public class AudioRecordingActivity extends Activity {
 		/* End of Action Bar */
 
 		// Start Audio Recording Button
-		startAudioRecording = (ImageView) findViewById(R.id.startAudioRecording);
-		startAudioRecording.setOnClickListener(new View.OnClickListener() {
+		startRecording = (ImageView) findViewById(R.id.startAudioRecording);
+		startRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -79,8 +81,8 @@ public class AudioRecordingActivity extends Activity {
 		});
 
 		// Stop Audio Recording Button
-		stopAudioRecording = (ImageView) findViewById(R.id.stopAudioRecording);
-		stopAudioRecording.setOnClickListener(new View.OnClickListener() {
+		stopRecording = (ImageView) findViewById(R.id.stopAudioRecording);
+		stopRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -90,8 +92,8 @@ public class AudioRecordingActivity extends Activity {
 		});
 
 		// Play last Record
-		replayAudioRecording = (ImageView) findViewById(R.id.replayAudioRecording);
-		replayAudioRecording.setOnClickListener(new View.OnClickListener() {
+		replayRecording = (ImageView) findViewById(R.id.replayAudioRecording);
+		replayRecording.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -117,12 +119,12 @@ public class AudioRecordingActivity extends Activity {
 	/** If activity pauses while recording, then stop recording */
 	public void onPause() {
 		super.onPause();
-		if (isAudioRecording) {
+		if (isRecording) {
 			stopAudioRecording();
 		}
 	}
 
-	/** Gets the Filename of the next Audio Record, also updates the path */
+	/** Get the Filename of the next Audio Record, also updates the path */
 	private String getFilenameAudio() {
 		String filepath = Environment.getExternalStorageDirectory().getPath();
 		File file = new File(filepath, ECMLPath + AUDIO_RECORDER_FOLDER);
@@ -130,13 +132,13 @@ public class AudioRecordingActivity extends Activity {
 			file.mkdirs();
 		}
 		fileName = System.currentTimeMillis();
-		pathAudio = file.getAbsolutePath();
-		return (pathAudio + "/" + fileName + ext);
+		path = file.getAbsolutePath();
+		return (path + "/" + fileName + ext);
 	}
 
-	/** Starts Audio Recording if not recording yet */
+	/** Start Audio Recording if not recording yet */
 	private void startAudioRecording() {
-		if (!isAudioRecording) {
+		if (!isRecording) {
 			mediaRecorder = new MediaRecorder();
 			
 			mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -150,7 +152,7 @@ public class AudioRecordingActivity extends Activity {
 				Toast.makeText(context, "Start Audio Recording", Toast.LENGTH_SHORT).show();
 				mediaRecorder.prepare();
 				mediaRecorder.start();
-				isAudioRecording = true;
+				isRecording = true;
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -161,37 +163,37 @@ public class AudioRecordingActivity extends Activity {
 		}
 	}
 
-	/** Stops Audio Recording if currently recording */
+	/** Stop Audio Recording if currently recording */
 	private void stopAudioRecording() {
-		if (isAudioRecording) {
+		if (isRecording) {
 			if (null != mediaRecorder) {
 				Toast.makeText(context, "Stop Audio Recording", Toast.LENGTH_SHORT).show();
 				mediaRecorder.stop();
 				mediaRecorder.reset();
 				mediaRecorder.release();
 				mediaRecorder = null;
-				existAudioRecord = true;
-				isAudioRecording = false;
+				existRecord = true;
+				isRecording = false;
 			}
 		} else {
 			Toast.makeText(context, "Not Recording", Toast.LENGTH_SHORT).show();
 		}
 	}
 
-	/** Replays last Audio Record
+	/** Replay last Audio Record
 	 * if not currently recording
 	 * and if there is one to replay
 	 * and if it's not already playing it
 	 */
 	private void replayAudio() {
-		if (!isAudioRecording) {
-			if (existAudioRecord) {
+		if (!isRecording) {
+			if (existRecord) {
 				if (!mediaPlayer.isPlaying()) {
 					if (!isReplayPaused) { 	// if the Media Player is not paused, then load the last Audio Record
 											// because it may have not been done yet
 						mediaPlayer.reset();
 						try {
-							mediaPlayer.setDataSource(pathAudio + "/" + fileName + ext);
+							mediaPlayer.setDataSource(path + "/" + fileName + ext);
 						} catch (IllegalArgumentException e) {
 							e.printStackTrace();
 						} catch (IllegalStateException e) {
@@ -221,7 +223,7 @@ public class AudioRecordingActivity extends Activity {
 		}
 	}
 
-	/** Pauses the Replay if it's currently playing */
+	/** Pause the Replay if it's currently playing */
 	private void pauseAudio() {
 		if (mediaPlayer.isPlaying()) {
 			Toast.makeText(context, "Pausing Audio Replay", Toast.LENGTH_SHORT).show();
@@ -233,7 +235,7 @@ public class AudioRecordingActivity extends Activity {
 		}
 	}
 
-	/** Checks if there are no errors */
+	/** Check if there are no errors */
 	private MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
 		@Override
 		public void onError(MediaRecorder mr, int what, int extra) {
@@ -241,7 +243,7 @@ public class AudioRecordingActivity extends Activity {
 		}
 	};
 
-	/** Listens to the info the Media Recorder could give */
+	/** Listen to the info the Media Recorder could give */
 	private MediaRecorder.OnInfoListener infoListener = new MediaRecorder.OnInfoListener() {
 		@Override
 		public void onInfo(MediaRecorder mr, int what, int extra) {

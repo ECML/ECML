@@ -1,4 +1,4 @@
-package com.ecml;
+package com.sideActivities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -20,6 +20,8 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.ecml.R;
 
 
 /** @class TuningForkActivity

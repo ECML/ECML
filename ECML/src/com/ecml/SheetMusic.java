@@ -163,6 +163,8 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
         
         if (options.showNoteColors) {
         	oneNoteOneColor();
+        } else {
+        	allBlack();
         }
         
         /* Create all the music symbols (notes, rests, vertical bars, and
@@ -957,6 +959,13 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
     	NoteColors[9] = -459752;
     	NoteColors[10] = -123485;
     	NoteColors[11] = -631572;
+    }
+    
+    /** Set all notes to black */
+    public static void allBlack() {
+    	for (int i = 0 ; i < NoteColors.length ; i++) {
+    		NoteColors[i] = Color.BLACK;
+    	}
     }
 
     /** Get whether to show note letters or not */

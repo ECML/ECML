@@ -26,23 +26,26 @@ import android.preference.PreferenceScreen;
 
 
 /** @class SettingsActivity
- *  This activity is created by the "Settings" menu option.
+ * <br>
+ *  This activity is created by the "Settings" menu option.<br>
  *  The user can change settings such as:
- *  - Which tracks to display
- *  - Which tracks to mute
- *  - Which instruments to use during playback
- *  - Whether to scroll horizontally or vertically
- *  - Whether to display the piano or not
- *  - Whether to display note letters or not
- *  - Transpose the notes to another key
- *  - Change the key signature or time signature displayed
- *  - Change how notes are combined into chords (the time interval)
- *  - Change the colors for shading the left/right hands.
- *  - Whether to display measure numbers
- *  - Play selected measures in a loop
- *  - How long to wait before starting to play the music (delay)
- * 
- * When created, pass an Intent parameter containing MidiOptions.
+ *  <ul>
+ *  	<li>Which tracks to display</li>
+ *  	<li>Which tracks to mute</li>
+ *  	<li>Which instruments to use during playback</li>
+ *  	<li>Whether to scroll horizontally or vertically</li>
+ *  	<li>Whether to display the piano or not</li>
+ *  	<li>Whether to display note letters or not</li>
+ *  	<li>Whether to display note colors or not</li>
+ *  	<li>Transpose the notes to another key</li>
+ *  	<li>Change the key signature or time signature displayed</li>
+ *  	<li>Change how notes are combined into chords (the time interval)</li>
+ *  	<li>Change the colors for shading the left/right hands</li>
+ *  	<li>Whether to display measure numbers</li>
+ *  	<li>Play selected measures in a loop</li>
+ *  	<li>How long to wait before starting to play the music (delay)</li>
+ *  </ul>
+ * When created, pass an Intent parameter containing MidiOptions.<br>
  * When destroyed, this activity passes the result MidiOptions to the Intent.
  */
 public class SettingsActivity extends PreferenceActivity 

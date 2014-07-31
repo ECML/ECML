@@ -1,4 +1,4 @@
-package com.ecml;
+package com.sideActivities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.ecml.R;
 
 public class YoutubeActivity extends Activity {
 

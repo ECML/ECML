@@ -15,12 +15,6 @@ package com.ecml;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.game.ReadingGameBeginner;
-import com.game.SpeedGamelvl1;
-import com.game.SpeedGamelvl2;
-import com.game.SpeedGamelvl3;
-import com.game.SpeedGamelvl4;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -36,6 +30,10 @@ import android.os.Bundle;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
+import com.game.ReadingGameBeginner;
+import com.game.SpeedGamelvl1;
+import com.game.SpeedGamelvln;
+
 /** @class ChooseSongActivity
  * <br>
  * The ChooseSongActivity class is a tabbed view for choosing a song to play.<br>
@@ -48,18 +46,17 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
 
 	private Intent intent;
     static ChooseSongActivity globalActivity;
-	public static final String  niveau = "niveau"; /* Should be passed as a parameter ? */
+	public static final String niveau = "niveau"; /* Should be passed as a parameter ? */
     private ActionBar ab;	/* The Action Bar */
 
     @Override
     public void onCreate(Bundle state) {
     	
-    	
         globalActivity = this;
         super.onCreate(state);
         setTheme(android.R.style.Theme_Holo_Light);
         
-        // Set Action Bar color
+        // Set Action Bar color and Title
         ab = getActionBar();
 		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
 		ab.setBackgroundDrawable(colorDrawable);
@@ -88,6 +85,7 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
 
     }
     
+    /** Update Action bar Title when changing Tab */
     @Override
     public void onTabChanged(String tabId) {
     	if("All".equals(tabId)) {
@@ -117,37 +115,31 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
         
         String choice = this.getIntent().getStringExtra(niveau);
         
+
         updateRecentFile(file);
 		if (choice.equals("1")) {
 			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
 			intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
-			startActivity(intent);
 		} else if (choice.equals("2")) {
-			updateRecentFile(file);
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl2.class);
-			intent.putExtra(SpeedGamelvl2.MidiTitleID, file.toString());
-			startActivity(intent);
+			ECML.speedLvl = 2;
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
+			intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
 		} else if (choice.equals("3")) {
-			updateRecentFile(file);
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl3.class);
-			intent.putExtra(SpeedGamelvl3.MidiTitleID, file.toString());
-			startActivity(intent);
+			ECML.speedLvl = 3;
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
+			intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
 		} else if (choice.equals("4")) {
-			updateRecentFile(file);
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl4.class);
-			intent.putExtra(SpeedGamelvl4.MidiTitleID, file.toString());
-			startActivity(intent);
+			ECML.speedLvl = 4;
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
+			intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
 		} else if (choice.equals("chooseSong")) {
-			updateRecentFile(file);
-			Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
 			intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
-			startActivity(intent);
 		} else if (choice.equals("readingBeginner")) {
-			updateRecentFile(file);
-			Intent intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
 			intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
-			startActivity(intent);
         }
+		startActivity(intent);
     }
 
 

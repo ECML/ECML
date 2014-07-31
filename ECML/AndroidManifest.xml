@@ -69,7 +69,7 @@
         </activity>
         <activity android:name="com.game.SpeedGamelvl1" >
         </activity>
-        <activity android:name="com.game.SpeedGamelvl2" >
+        <activity android:name="com.game.SpeedGamelvln" >
         </activity>
         <activity android:name="com.game.SpeedGamelvl3" >
         </activity>
@@ -92,15 +92,15 @@
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity
-            android:name="com.recording.AudioRecordingActivity"
+            android:name="com.sideActivities.AudioRecordingActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity
-            android:name="com.recording.VideoRecordingActivity"
+            android:name="com.sideActivities.VideoRecordingActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity
-            android:name=".TuningForkActivity"
+            android:name="com.sideActivities.TuningForkActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity
@@ -108,7 +108,7 @@
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity
-            android:name=".YoutubeActivity"
+            android:name="com.sideActivities.YoutubeActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity android:name="com.game.ReadingGameModeActivity" >
@@ -125,6 +125,12 @@
         </activity>
         <activity android:name="com.calendar.CalendarDisplayActivity" >
         </activity>
-    </application>
+        <activity 
+            android:name=".FacebookActivity"
+            android:screenOrientation="sensorLandscape" >
+        </activity>
+        <activity android:name="com.login.Login"></activity>
+         <activity android:name="com.login.SignUp"></activity>
+        </application>
 
 </manifest>

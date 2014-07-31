@@ -25,7 +25,7 @@ public class Horloge {
 	private int volumeMax;				/* Maximum Volume of the Device */
 	private int accentBeep;				/* Time Signature */
 
-	/** Creates a new Horloge
+	/** Create a new Horloge
 	 * 
 	 * @param tempo The tempo in bpm
 	 * @param accentBeep The time signature : if n=accentBeep, every n sounds will be different
@@ -34,11 +34,11 @@ public class Horloge {
 	public Horloge(int tempo, int accentBeep, Context context) {
 
 		audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-		// Gets the current volume
+		// Get the current volume
 		volume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
-		// Gets the maximum volume of the device
+		// Get the maximum volume of the device
 		volumeMax = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
-		// Sets the beep according to the current volume (need to be in %)
+		// Set the beep according to the current volume (need to be in %)
 		beep = new ToneGenerator(AudioManager.FLAG_PLAY_SOUND, volume * 100 / volumeMax);
 		timer = new Timer();
 		this.accentBeep = accentBeep;
@@ -83,7 +83,7 @@ public class Horloge {
 		timer.cancel();
 	}
 
-	/** Removes all canceled tasks from the task queue. If there are no
+	/** Remove all canceled tasks from the task queue. If there are no
      * other references on the tasks, then after this call they are free
      * to be garbage collected.
      *

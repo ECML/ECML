@@ -48,6 +48,7 @@ public class MidiOptions implements Serializable {
     public boolean twoStaffs;        /* Combine tracks into two staffs ? */
     public int showNoteLetters;      /* Show the letters (A, A#, etc) next to the notes */
     public boolean showLyrics;       /* Show the lyrics under each note */
+    public int delay;		  		 /* The delay in milliseconds after which the music starts */
     public boolean showMeasures;     /* Show the measure numbers for each staff */
     public int shifttime;            /* Shift note start times by the given amount */
     public int transpose;            /* Shift note key up/down by given amount */
@@ -57,7 +58,6 @@ public class MidiOptions implements Serializable {
     public int combineInterval;      /* Combine notes within given time interval (msec) */
     public int shade1Color;   /* The color to use for shading */
     public int shade2Color;   /* The color to use for shading the left hand piano */
-    public int delay;		  /* The delay in milliseconds after which the music starts */
 
     public boolean[] mute;    /* Which tracks to mute (true = mute) */
     public int  tempo;        /* The tempo, in microseconds per quarter note */
@@ -107,6 +107,7 @@ public class MidiOptions implements Serializable {
         showNoteLetters = NoteNameNone;
         showMeasures = true;
         showLyrics = true;
+        delay = 1000;
         shifttime = 0;
         transpose = 0;
         time = null;
@@ -123,7 +124,6 @@ public class MidiOptions implements Serializable {
         playMeasuresInLoop = false;
         playMeasuresInLoopStart = 0;
         playMeasuresInLoopEnd = lastMeasure;
-        delay = 1000;
     }
 
     /** Convert this MidiOptions object into a JSON string. */
@@ -160,6 +160,7 @@ public class MidiOptions implements Serializable {
             json.put("showPiano", showPiano);
             json.put("showNoteColors", showNoteColors);
             json.put("showLyrics", showLyrics);
+            json.put("delay", delay);
             json.put("twoStaffs", twoStaffs);
             json.put("showNoteLetters", showNoteLetters);
             json.put("transpose", transpose);
@@ -171,7 +172,6 @@ public class MidiOptions implements Serializable {
             json.put("playMeasuresInLoop", playMeasuresInLoop);
             json.put("playMeasuresInLoopStart", playMeasuresInLoopStart);
             json.put("playMeasuresInLoopEnd", playMeasuresInLoopEnd);
-            json.put("delay", delay);
             
             return json.toString();
         }
@@ -226,6 +226,7 @@ public class MidiOptions implements Serializable {
             options.showPiano = json.getBoolean("showPiano");
             options.showNoteColors = json.getBoolean("showNoteColors");
             options.showLyrics = json.getBoolean("showLyrics");
+            options.delay = json.getInt("delay");
             options.twoStaffs = json.getBoolean("twoStaffs");
             options.showNoteLetters = json.getInt("showNoteLetters");
             options.transpose = json.getInt("transpose");
@@ -237,7 +238,6 @@ public class MidiOptions implements Serializable {
             options.playMeasuresInLoop = json.getBoolean("playMeasuresInLoop");
             options.playMeasuresInLoopStart = json.getInt("playMeasuresInLoopStart");
             options.playMeasuresInLoopEnd = json.getInt("playMeasuresInLoopEnd");
-            options.delay = json.getInt("delay");
         }
         catch (Exception e) {
             return null;
@@ -276,6 +276,7 @@ public class MidiOptions implements Serializable {
         showPiano = saved.showPiano;
         showNoteColors = saved.showNoteColors;
         showLyrics = saved.showLyrics;
+        delay = saved.delay;
         twoStaffs = saved.twoStaffs;
         showNoteLetters = saved.showNoteLetters;
         transpose = saved.transpose;
@@ -287,7 +288,6 @@ public class MidiOptions implements Serializable {
         playMeasuresInLoop = saved.playMeasuresInLoop;
         playMeasuresInLoopStart = saved.playMeasuresInLoopStart;
         playMeasuresInLoopEnd = saved.playMeasuresInLoopEnd;
-        delay = saved.delay;
     }
  
 
@@ -338,6 +338,7 @@ public class MidiOptions implements Serializable {
         options.showNoteColors = showNoteColors;
         options.showLyrics = showLyrics;
         options.twoStaffs = twoStaffs;
+        options.delay = delay;
         options.showNoteLetters = showNoteLetters;
         options.transpose = transpose;
         options.key = key;
@@ -354,7 +355,6 @@ public class MidiOptions implements Serializable {
         
         options.shifttime = shifttime;
         options.largeNoteSize = largeNoteSize;
-        options.delay = delay;
         return options; 
     }
 }

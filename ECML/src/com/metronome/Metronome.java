@@ -19,7 +19,7 @@ public class Metronome {
 	private int tempo;			/* The current Tempo */
 	private int accentBeep;		/* The Time Signature, 0 if none */
 
-	/** Creates a Metronome with the default parameters : 60 bpm without any time signature
+	/** Create a Metronome with the default parameters : 60 bpm without any time signature
 	 * @param activity */
 	public Metronome(Activity activity) {
 		this.activity = activity;
@@ -27,7 +27,7 @@ public class Metronome {
 		accentBeep = 0;
 	}
 
-	/** Gets the current Tempo */
+	/** Get the current Tempo */
 	public int getTempo() {
 		return tempo;
 	}
@@ -37,12 +37,12 @@ public class Metronome {
 		this.tempo = tempo;
 	}
 
-	/** Sets the time Signature */
+	/** Set the time Signature */
 	public void setAccentBeep(int accentBeep) {
 		this.accentBeep = accentBeep;
 	}
 
-	/** Starts the Metronome with its current parameters after stopping it if it was already on */ 
+	/** Start the Metronome with its current parameters after stopping it if it was already on */ 
 	public void startMetronome() {
 		stopMetronome();
 		horloge = new Horloge(tempo, accentBeep, activity.getBaseContext());
