@@ -1,5 +1,6 @@
 package com.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.ecml.ECMLActivity;
 import com.ecml.R;
 
 
@@ -34,7 +36,8 @@ public class SignUp extends Messenger  {
 	private EditText passwordText;
 	private EditText eMailText;
 	private EditText passwordAgainText;
-
+	private EditText answerText;
+    private String question;
     
 	private Handler handler = new Handler();
 	
@@ -53,7 +56,8 @@ public class SignUp extends Messenger  {
 	        Button cancelButton = (Button) findViewById(R.id.cancel_signUp);
 	        usernameText = (EditText) findViewById(R.id.userName);
 	        passwordText = (EditText) findViewById(R.id.password);  
-	        passwordAgainText = (EditText) findViewById(R.id.passwordAgain);  
+	        passwordAgainText = (EditText) findViewById(R.id.passwordAgain); 
+	        answerText = (EditText) findViewById(R.id.answer);
 	      //  eMailText = (EditText) findViewById(R.id.email);
 	        Spinner spinner = (Spinner) findViewById(R.id.questions_spinner);
 	        // Create an ArrayAdapter using the string array and a default spinner LAYOUT
@@ -63,7 +67,8 @@ public class SignUp extends Messenger  {
 	        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	        // APPLY the adapter to the spinner
 	        spinner.setAdapter(adapter);
-
+	       question = (String) spinner.getSelectedItem();
+	        
 	        signUpButton.setOnClickListener(new OnClickListener(){
 				public void onClick(View arg0) 
 				
@@ -82,10 +87,12 @@ public class SignUp extends Messenger  {
 						 		  if(!usersdb.checkLoginTaken(usernameText.getText().toString())){
 						 	
 								   //TODO check email address is valid
-						 			User newUser = new User(usernameText.getText().toString(),passwordText.getText().toString());
+						 			User newUser = new User(usernameText.getText().toString(),passwordText.getText().toString(),question,answerText.getText().toString());
 						 			usersdb.open();
 						 			usersdb.add(newUser);
 						 			Toast.makeText(getApplicationContext(),R.string.signup_successfull, Toast.LENGTH_LONG).show();
+						 			Intent i = new Intent(getApplicationContext(), ECMLActivity.class);
+						     		startActivity(i);
 						 			//usersdb.close();
 							      }
 						 	  

@@ -111,11 +111,9 @@
 
     <string name="communication">Communication</string>
 	
-	
-<<<<<<< HEAD
-</resources>
-=======
 	<string name="security_question">Choose a security question</string>
-	<string name="ForgottenPassword">Forgot Your Password ? </string>
+	<string name="ForgottenPassword"><u><b><i>Forgot Your Password ?</i></b></u> </string>
+	<string name="wrong_answer">Your answer is wrong ! </string>
+	
 </resources>
->>>>>>> refs/heads/forgottenpassword
+

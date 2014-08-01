@@ -8,6 +8,8 @@ public class UsersDAO extends DAOBase {
 	  public static final String USER_KEY = "id";
 	  public static final String USER_LOGIN = "login";
 	  public static final String USER_PASSWORD = "password";
+	  public static final String USER_QUESTION = "question";
+	  public static final String USER_ANSWER = "answer";
 	  public static final String USERS_TABLE_NAME = "users";
 	  public static final String USERS_TABLE_CREATE =
 			    "CREATE TABLE " + USERS_TABLE_NAME + " (" +
@@ -28,8 +30,11 @@ public class UsersDAO extends DAOBase {
 	ContentValues value = new ContentValues();
 	value.put(UsersDAO.USER_LOGIN, user.getLogin());
 	value.put(UsersDAO.USER_PASSWORD, user.getPassword());
+	value.put(UsersDAO.USER_QUESTION, user.getQuestion());
+	value.put(UsersDAO.USER_ANSWER, user.getAnswer());
 	mDb.insert(UsersDAO.USERS_TABLE_NAME, null, value);
     mDb.insert(USERS_TABLE_NAME, null,value);
+    
  }
  
  /**delete a user giving his Id
@@ -55,7 +60,9 @@ public class UsersDAO extends DAOBase {
 	 if( c.getCount() == 0 ){ return false;}
 	 else { return true ;}
  }
- /**
+ /** Check if the username is already taken
+  * @param login 
+  * @return true if the username already exists
   * 
   */
  public boolean checkLoginTaken(String login){
@@ -65,4 +72,52 @@ public class UsersDAO extends DAOBase {
 		 return false;}
 	 else { return true ;}
  }
+ /**
+  * 
+  * @param login
+  * @return
+  */
+ public String getQuestion ( String login){
+
+	 Cursor c = mDb.rawQuery("select " + USER_QUESTION + " from " + USERS_TABLE_NAME + " where login =  ?" ,  new String[]{login});
+
+	 if(c.getCount() == 0 ){return null;}
+	 else { 
+	       c.moveToFirst();
+	       return c.getString(0);
+	       }
+	 
+ }
+ 
+ /**
+  * 
+  * @param login
+  * @return
+  */
+ public String getAnswer ( String login){
+
+	 Cursor c = mDb.rawQuery("select " + USER_ANSWER + " from " + USERS_TABLE_NAME + " where login =  ?" ,  new String[]{login});
+
+	 if(c.getCount() == 0 ){return null;}
+	 else { 
+	       c.moveToFirst();
+	       return c.getString(0);
+	       }
+ }
+ /**
+  * Temporary function for test ( must be removed )
+  * @param login
+  * @return
+  */
+ public String getPassword ( String login){
+
+	 Cursor c = mDb.rawQuery("select " + USER_PASSWORD + " from " + USERS_TABLE_NAME + " where login =  ?" ,  new String[]{login});
+
+	 if(c.getCount() == 0 ){return null;}
+	 else { 
+	       c.moveToFirst();
+	       return c.getString(0);
+	       }
+ }
+ 
 }
