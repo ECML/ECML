@@ -15,4 +15,5 @@
        <color name="PowderBlue">#B0E0E6</color>
        <color name="LightSteelBlue">#B0C4DE</color>
        <color name="LightSkyBlue">#87CEFA</color>     
+       <item name="LightBlue" type="color">#2060FF</item>     
 </resources>

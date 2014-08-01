@@ -112,19 +112,12 @@ public abstract class SpeedGamelvl extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.speedgamelvl1);
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
-
 
 		/*****************
 		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
 		 * GAME BUTTON
 		 **********/
-
-
 
 		ClefSymbol.LoadImages(this);
 		TimeSigSymbol.LoadImages(this);
@@ -323,7 +316,7 @@ public abstract class SpeedGamelvl extends Activity {
 			piano.setVisibility(View.VISIBLE);
 		}
 		sheet = new SheetMusic(this);
-		sheet.init(midifile, options);
+		sheet.init(midifile, options, false, 1,2);
 		sheet.setPlayer(player);
 		layout.addView(sheet);
 		piano.SetMidiFile(midifile, options, player);

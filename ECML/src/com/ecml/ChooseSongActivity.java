@@ -54,12 +54,10 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
     	
         globalActivity = this;
         super.onCreate(state);
-        setTheme(android.R.style.Theme_Holo_Light);
         
         // Set Action Bar color and Title
         ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
+		
         setTitle("ECML: Choose Song");
 
        

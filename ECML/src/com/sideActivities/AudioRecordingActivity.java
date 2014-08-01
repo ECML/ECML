@@ -60,14 +60,7 @@ public class AudioRecordingActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.audio_recording);
-
-		/* Action Bar */
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
-		/* End of Action Bar */
 
 		// Start Audio Recording Button
 		startRecording = (ImageView) findViewById(R.id.startAudioRecording);

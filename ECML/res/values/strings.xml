@@ -100,18 +100,10 @@
 	<string name="username_and_password_length_short">Username and password length must be at least 5</string>
 	<string name="signup_type_same_password_in_password_fields">Type same password in password fields</string>
 	<string name="facebook">Facebook</string>
-	<string name="gmail">Gmail</string>
-	  <string-array name="questions_array">
-        <item> What was your childhood nickname? </item>
-        <item>What time of the day were you born?</item>
-        <item>What was your dream job as a child?</item>
-        <item>What was your maternal grandfatherâ€™s first name?</item>
-    </string-array>
-
 	 <string name="clickToSignUp"><u><b><i> Sign Up Here</i></b></u></string>
 
     <string name="communication">Communication</string>
-    
+    <string name="gmail">Gmail</string>
     <!-- Messenger service strings -->
     <string name="add_new_friend">Add new friend</string>
 	<string name="type_friend_username">Please type your friend username</string>
@@ -148,5 +140,16 @@
  	<string name="signup_failed">Sign up failed because of unknown reason</string>
  	<string name="message_erreur">Message erreur</string>
 
+ 	  <string-array name="questions_array">
+        <item> What was your childhood nickname? </item>
+        <item>What time of the day were you born?</item>
+        <item>What was your dream job as a child?</item>
+        <item>What was your maternal grandfatherâ€™s first name?</item>
+    </string-array>
+	
+	<string name="security_question">Choose a security question</string>
+	<string name="ForgottenPassword"><u><b><i>Forgot Your Password ?</i></b></u> </string>
+	<string name="wrong_answer">Your answer is wrong ! </string>
 	
 </resources>
+

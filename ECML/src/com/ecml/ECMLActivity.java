@@ -72,7 +72,6 @@ public class ECMLActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.main);
 
 		// Example of a list a teacher could send
@@ -84,11 +83,6 @@ public class ECMLActivity extends Activity {
 		list.add(SPEED_GAME);
 		
 		sequenceOfActivities();
-		
-		// Set Action Bar color
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
 
 		// Choose song button
 		ImageView chooseSong = (ImageView) findViewById(R.id.choose_song);
