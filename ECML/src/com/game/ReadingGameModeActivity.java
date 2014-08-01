@@ -3,16 +3,12 @@ package com.game;
 import com.ecml.ChooseSongActivity;
 import com.ecml.ECML;
 import com.ecml.R;
-import com.ecml.R.color;
-import com.ecml.R.id;
-import com.ecml.R.layout;
 
-import android.app.ActionBar;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +20,8 @@ public class ReadingGameModeActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.reading_game_mode);
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
-
+		
 		// Back to the score button
 		Button score = (Button) findViewById(R.id.back);
 		score.setOnClickListener(new View.OnClickListener() {

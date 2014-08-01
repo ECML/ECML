@@ -25,7 +25,6 @@ public class HelpActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(android.R.style.Theme_Holo_Light);
         setContentView(R.layout.help);
         WebView view = (WebView) findViewById(R.id.help_webview);
         view.getSettings().setJavaScriptEnabled(false);

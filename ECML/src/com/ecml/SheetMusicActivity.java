@@ -187,7 +187,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	@Override
 	public void onCreate(Bundle state) {
 		super.onCreate(state);
-		setTheme(android.R.style.Theme_Holo_Light);
 
 		ClefSymbol.LoadImages(this);
 		TimeSigSymbol.LoadImages(this);
@@ -233,13 +232,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		createSheetMusic(options);
 		
 		metronome = new Metronome(this);
-		
-		
-		
-		
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
+
 
 		/**********************************************************************************************************/
 		/**********************************************************************************************************/

@@ -71,14 +71,7 @@ public class TuningForkActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.tuning_fork);
-
-		/* Action Bar */
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
-		/* End of Action bar */
 
 		// Set the buttons
 		toggle = (ToggleButton) findViewById(R.id.toggleButton);
