@@ -71,6 +71,22 @@
         android:onClick="onClick"
         android:clickable="true"
     />
+    
+        <TextView 
+         android:id="@+id/forgottenPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:gravity="center"
+        android:paddingTop="50dip"
+        android:textSize="15sp"
+        android:textStyle="italic"
+        android:textColor="@color/LightBlue"
+        android:text="@string/ForgottenPassword"
+        android:onClick="onClick"
+        android:clickable="true"
+    />
+    
 </LinearLayout>
 
 </LinearLayout>
