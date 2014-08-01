@@ -89,6 +89,8 @@ public class ReadingGameBeginner extends ReadingGame {
 				testNote("A#", lad);
 			}
 		});
+		
+		orangeColor = (ColorDrawable) la.getBackground();
 
 		// Si button
 		final Button si = (Button) findViewById(R.id.si);
@@ -189,8 +191,6 @@ public class ReadingGameBeginner extends ReadingGame {
 				testNote("G#", sold);				
 			}
 		});
-
-		orangeColor = (ColorDrawable) la.getBackground();
 
 	}
 	

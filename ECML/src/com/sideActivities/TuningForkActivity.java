@@ -41,10 +41,10 @@ public class TuningForkActivity extends Activity {
 	private TextView freqView;			/* The text view displaying the current frequency */
 	private ToggleButton toggle;		/* The on/off button */
 	private int sineFreq;				/* The current note (to be converted) */
-	private TextView previousOctave;	/* The button to shift down an octave */
-	private TextView nextOctave;		/* The button to shift up an octave */
-	private TextView previousNote;		/* The button to shift down a note */
-	private TextView nextNote;			/* The button to shift up a note */
+	private Button previousOctave;	/* The button to shift down an octave */
+	private Button nextOctave;		/* The button to shift up an octave */
+	private Button previousNote;		/* The button to shift down a note */
+	private Button nextNote;			/* The button to shift up a note */
 	private SeekBar pitchBar;			/* The slide bar to adjust the reference pitch */
 	private TextView octave;			/* The text view displaying the current octave */
 	private TextView note;				/* The text view displaying the current note */
@@ -75,10 +75,10 @@ public class TuningForkActivity extends Activity {
 
 		// Set the buttons
 		toggle = (ToggleButton) findViewById(R.id.toggleButton);
-		previousOctave = (TextView) findViewById(R.id.previousOctave);
-		nextOctave = (TextView) findViewById(R.id.nextOctave);
-		previousNote = (TextView) findViewById(R.id.previousNote);
-		nextNote = (TextView) findViewById(R.id.nextNote);
+		previousOctave = (Button) findViewById(R.id.previousOctave);
+		nextOctave = (Button) findViewById(R.id.nextOctave);
+		previousNote = (Button) findViewById(R.id.previousNote);
+		nextNote = (Button) findViewById(R.id.nextNote);
 		// Set the slide bar
 		pitchBar = (SeekBar) findViewById(R.id.PitchBar);
 		// Set the views to be updated when changing frequency

@@ -187,6 +187,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	@Override
 	public void onCreate(Bundle state) {
 		super.onCreate(state);
+		setTheme(android.R.style.Theme_Holo_Light);
 
 		ClefSymbol.LoadImages(this);
 		TimeSigSymbol.LoadImages(this);

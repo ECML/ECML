@@ -18,10 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:text="Help"
             android:textColor="#ffffff"
             android:textSize="15sp" >
@@ -32,10 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:text="Change game"
             android:textColor="#ffffff"
             android:textSize="15sp" >
@@ -46,10 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:text="Back to the score"
             android:textColor="#ffffff"
             android:textSize="15sp" >
@@ -228,8 +219,6 @@
             android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:text="Sol#/La\u266D"
             android:textColor="#ffffff"
             android:textSize="15sp" />
@@ -250,10 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
             android:layout_marginRight="15dp"
-            android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:text="Stop"
             android:textColor="#ffffff"
             android:textSize="20sp" />

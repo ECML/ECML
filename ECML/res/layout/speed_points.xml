@@ -16,10 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:text="Help"
             android:textColor="#ffffff"
             android:textSize="20sp" />
@@ -29,10 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:text="Change game"
             android:textColor="#ffffff"
             android:textSize="20sp" />
@@ -42,10 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:background="@color/orange"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:text="Back to the score"
             android:textColor="#ffffff"
             android:textSize="20sp" />
@@ -96,9 +87,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@color/orange"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:text="Retry"
         android:textColor="#ffffff"
         android:textSize="20sp" />

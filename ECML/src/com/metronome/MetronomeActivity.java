@@ -2,7 +2,6 @@ package com.metronome;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Button;
 
 import com.ecml.R;
 
@@ -46,11 +46,11 @@ public class MetronomeActivity extends Activity {
 		setContentView(R.layout.metronome);
 
 		/* Buttons */
-		startMetronome = (TextView) findViewById(R.id.startMetronome);
-		stopMetronome = (TextView) findViewById(R.id.stopMetronome);
+		startMetronome = (Button) findViewById(R.id.startMetronome);
+		stopMetronome = (Button) findViewById(R.id.stopMetronome);
 		minus = (ImageView) findViewById(R.id.minusTempo);
 		plus = (ImageView) findViewById(R.id.plusTempo);
-		timeSignature = (TextView) findViewById(R.id.timeSignature);
+		timeSignature = (Button) findViewById(R.id.timeSignature);
 		updateTimeSignatureView();
 		/* End of Buttons */
 		
