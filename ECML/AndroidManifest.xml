@@ -127,12 +127,18 @@
         </activity>
         <activity android:name="com.calendar.CalendarDisplayActivity" >
         </activity>
+
         <activity 
             android:name=".FacebookActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity android:name="com.login.Login"></activity>
          <activity android:name="com.login.SignUp"></activity>
+           <activity android:name="com.login.ForgottenPasswordActivity">
+        </activity>
         </application>
+         
+
+
 
 </manifest>

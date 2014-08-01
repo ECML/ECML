@@ -37,7 +37,7 @@ public class Login extends Messenger {
     //UsersDAO usersdb = new UsersDAO(this);
    // public   UsersDAO usersdb = new UsersDAO(this);
     private TextView clikToSignUp ;
-
+    private TextView forgottenPassword;
     
     
     /** Called when the activity is first created. */	
@@ -55,6 +55,7 @@ public class Login extends Messenger {
         usernameText = (EditText) findViewById(R.id.userName);
         passwordText = (EditText) findViewById(R.id.password); 
         clikToSignUp = (TextView) findViewById(R.id.clickToSignUp);
+        forgottenPassword = (TextView) findViewById(R.id.forgottenPassword);
         
        loginButton.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0) 
@@ -67,7 +68,7 @@ public class Login extends Messenger {
 					if ( usersdb.checkIfExist(user) ) {
 						
 						Toast.makeText(getApplicationContext(),R.string.user_authenticated_success, Toast.LENGTH_LONG).show();
-						Intent i = new Intent(Login.this, ECMLActivity.class);																
+						Intent i = new Intent(getApplicationContext(), ECMLActivity.class);																
 						startActivity(i);
 						
 					}
@@ -86,7 +87,7 @@ public class Login extends Messenger {
 
 			public void onClick(View arg0) 
 			{					
-				
+			
 				finish();
 				
 			}
@@ -103,6 +104,16 @@ public class Login extends Messenger {
  			
  		}
  	});
+   	 
+   	 forgottenPassword.setOnClickListener(new OnClickListener() {
+   		 
+		@Override
+		public void onClick(View v) {
+			Intent i = new Intent(Login.this, ForgottenPasswordActivity.class);
+     		startActivity(i);
+			
+		}
+	});
         
     }
     
