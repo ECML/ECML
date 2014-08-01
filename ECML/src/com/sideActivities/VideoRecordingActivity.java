@@ -59,15 +59,8 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
-
 		setContentView(R.layout.videorecording);
 
-		/** Action Bar */
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
-		/* End of Action Bar */
 		
 		surfaceView = (SurfaceView) findViewById(R.id.surface_camera2);
 		surfaceHolder = surfaceView.getHolder();

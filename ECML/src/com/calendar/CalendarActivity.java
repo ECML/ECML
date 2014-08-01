@@ -27,12 +27,10 @@ public class CalendarActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
+		
 		setContentView(R.layout.calendar);
 
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
+	
 
 		// create the TabHost that will contain the Tabs
 		TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost);

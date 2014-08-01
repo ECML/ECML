@@ -17,14 +17,7 @@ public class FacebookActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.facebook);
-
-		// Set Actionbar color
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources()
-				.getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
 		
 		//Go on Gmail button
 		ImageView gmail = (ImageView) findViewById(R.id.gmail);

@@ -43,14 +43,6 @@ public class MetronomeActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
-		
-		/* Action Bar */
-		actionBar = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		actionBar.setBackgroundDrawable(colorDrawable);
-		/* End of Action bar */
-		
 		setContentView(R.layout.metronome);
 
 		/* Buttons */

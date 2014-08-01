@@ -17,13 +17,7 @@ public class YoutubeActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.youtube);
-
-		// Set Actionbar color
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
 
 		// Go on Youtube button
 		TextView youtube = (TextView) findViewById(R.id.youtubesearch);
