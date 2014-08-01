@@ -366,7 +366,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		}
 		sheet = new SheetMusic(this);
 		Log.i("colors", "" + options.showNoteColors);
-		sheet.init(midifile, options);
+		sheet.init(midifile, options, false, 1, 2);
 		sheet.setPlayer(player);
 		layout.addView(sheet);
 		piano.SetMidiFile(midifile, options, player);

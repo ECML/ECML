@@ -316,7 +316,7 @@ public abstract class SpeedGamelvl extends Activity {
 			piano.setVisibility(View.VISIBLE);
 		}
 		sheet = new SheetMusic(this);
-		sheet.init(midifile, options);
+		sheet.init(midifile, options, false, 1,2);
 		sheet.setPlayer(player);
 		layout.addView(sheet);
 		piano.SetMidiFile(midifile, options, player);

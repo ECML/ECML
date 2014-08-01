@@ -80,7 +80,16 @@ public class MidiTrack {
 
     public int trackNumber() { return tracknum; }
 
-    public ArrayList<MidiNote> getNotes() { return notes; }
+    public ArrayList<MidiNote> getNotes() { 
+    	 	return notes; }
+    
+    //Give an ArrayList of the notes included between the note n°start and the note n°stop
+    public ArrayList<MidiNote> getNotesBetween(int start, int stop) { 
+    	ArrayList<MidiNote> notesCut = new ArrayList<MidiNote>(stop-start+1);
+    	for (int i = start; i <= stop; i++){
+    		notesCut.add(notes.get(i));
+    	}    	
+    	return notesCut; }
 
     public int getInstrument() { return instrument; }
     public void setInstrument(int value) { instrument = value; }
