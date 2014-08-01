@@ -188,6 +188,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	public void onCreate(Bundle state) {
 		super.onCreate(state);
 		setTheme(android.R.style.Theme_Holo_Light);
+		
+		ActionBar ab = getActionBar();
+		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
+		ab.setBackgroundDrawable(colorDrawable);
 
 		ClefSymbol.LoadImages(this);
 		TimeSigSymbol.LoadImages(this);
