@@ -55,6 +55,7 @@ public class Login extends Messenger {
         usernameText = (EditText) findViewById(R.id.userName);
         passwordText = (EditText) findViewById(R.id.password); 
         clikToSignUp = (TextView) findViewById(R.id.clickToSignUp);
+      //  forgotpassword = 
         
        loginButton.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0) 

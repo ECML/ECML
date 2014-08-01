@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ecml.R;
@@ -53,10 +55,21 @@ public class SignUp extends Messenger  {
 	        passwordText = (EditText) findViewById(R.id.password);  
 	        passwordAgainText = (EditText) findViewById(R.id.passwordAgain);  
 	      //  eMailText = (EditText) findViewById(R.id.email);
+	        Spinner spinner = (Spinner) findViewById(R.id.questions_spinner);
+	        // Create an ArrayAdapter using the string array and a default spinner LAYOUT
+	        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+	        R.array.questions_array, android.R.layout.simple_spinner_item);
+	        // Specify the layout to use when THE LIST of choices appears
+	        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	        // APPLY the adapter to the spinner
+	        spinner.setAdapter(adapter);
 
 	        signUpButton.setOnClickListener(new OnClickListener(){
 				public void onClick(View arg0) 
+				
 				{						
+					
+					
 					if (usernameText.length() > 0 &&		
 						passwordText.length() > 0 && 
 						passwordAgainText.length() > 0 			
@@ -93,8 +106,7 @@ public class SignUp extends Messenger  {
 	        cancelButton.setOnClickListener(new OnClickListener(){
 				public void onClick(View arg0) 
 				{					
-					//Intent i = new Intent(getApplicationContext(),ForgottenPasswordActivity.class);
-					//startActivity(i);
+
 					finish();					
 				}	        	
 	        });
