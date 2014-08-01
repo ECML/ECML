@@ -171,6 +171,18 @@ public class ECMLActivity extends Activity {
 				startActivity(goToFacebook);
 			}
 		});
+		
+		
+	//Messebger service button
+		ImageView messenger= (ImageView) findViewById(R.id.messenger);
+		messenger.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v){
+				Intent goToMessenger= new Intent(getApplicationContext(), com.androidim.Login.class);
+				startActivity(goToMessenger);
+			}
+		});
+				
+			
 	}
 
 	/***********************************************************************************************************/
