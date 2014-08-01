@@ -77,7 +77,6 @@ import android.widget.Toast;
 public class MidiPlayer extends LinearLayout {
     static Bitmap rewindImage;			/* The rewind image */
     static Bitmap playImage;			/* The play image */
-    static Bitmap pauseImage;			/* The pause image */
     static Bitmap stopImage;			/* The stop image */
     static Bitmap fastFwdImage;			/* The fast forward image */
     static Bitmap muteOnImage;			/* The mute image */
@@ -170,7 +169,7 @@ public class MidiPlayer extends LinearLayout {
     }
     
     
-    /** Load the play/pause/stop button images
+    /** Load the rewind/play/stop/fastFwd/mute/-/+/rec/play button images
      * 
      * @param context
      */
@@ -181,7 +180,6 @@ public class MidiPlayer extends LinearLayout {
         Resources res = context.getResources();
         rewindImage = BitmapFactory.decodeResource(res, R.drawable.rewind);
         playImage = BitmapFactory.decodeResource(res, R.drawable.play);
-        pauseImage = BitmapFactory.decodeResource(res, R.drawable.pause);
         stopImage = BitmapFactory.decodeResource(res, R.drawable.stop);
         fastFwdImage = BitmapFactory.decodeResource(res, R.drawable.fastforward);
         muteOnImage = BitmapFactory.decodeResource(res, R.drawable.mute_on);
@@ -268,7 +266,7 @@ public class MidiPlayer extends LinearLayout {
      
 
     /** Create the rewind, play, stop, fast forward,mute and piano buttons */
-    void CreateButtons() {
+    private void CreateButtons() {
         this.setOrientation(LinearLayout.HORIZONTAL);
 
         /* Create the rewind button */
