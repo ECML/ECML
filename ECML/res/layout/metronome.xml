@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
     android:gravity="center_horizontal"
+    android:background="@color/blue"
     android:orientation="vertical"
     android:weightSum="100.0" >
 
@@ -11,22 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="30.0"
-        android:src="@drawable/metronomebtn" >
+        android:src="@drawable/metronomebtn"
+        
+         >
     </ImageView>
 
-    <TextView
+    <Button
         android:id="@+id/timeSignature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/orange"
-        android:paddingBottom="3dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="3dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#ffffff" >
-    </TextView>
+        android:textColor="#ffffff"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+   
 
     <TextView
         android:id="@+id/tempo"
@@ -35,8 +32,7 @@
         android:layout_weight="20.0"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#ffffff" />
-
+></TextView>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,9 +51,7 @@
             android:id="@+id/sliderMetronome"
             android:layout_width="250px"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-18dp"
-            android:progressDrawable="@color/orange"
-            android:thumb="@drawable/btn_code_lock_touched" />
+            ></SeekBar>
 
         <ImageView
             android:id="@+id/plusTempo"
@@ -74,29 +68,19 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
-        <TextView
+        <Button
             android:id="@+id/startMetronome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
-            android:background="@color/orange"
-            android:paddingBottom="4dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="4dp"
             android:text="@string/startmetronome"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffff" />
 
-        <TextView
+        <Button
             android:id="@+id/stopMetronome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/orange"
-            android:paddingBottom="4dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="4dp"
             android:text="@string/stopmetronome"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffff" />

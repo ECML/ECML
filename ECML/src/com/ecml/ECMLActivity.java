@@ -21,14 +21,19 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+
 import com.calendar.CalendarActivity;
 import com.game.GameActivity;
+import com.login.Login;
 import com.metronome.MetronomeActivity;
 import com.sideActivities.AudioRecordingActivity;
 import com.sideActivities.TuningForkActivity;
@@ -59,8 +64,10 @@ import com.sideActivities.YoutubeActivity;
 public class ECMLActivity extends Activity {
 
 	final Context context = this;
+	private Menu menu;
 	
 	private ArrayList<String> list = new ArrayList<String>(); /* The list of the activities to do */
+
 	public static final String PRACTICE_ALONE = "PI";
 	public static final String PRACTICE_WITH_ACCOMPANIMENT = "PA";
 	public static final String CHECK_WITH_YOUR_TEACHER = "C";
@@ -95,7 +102,6 @@ public class ECMLActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.main);
 		loadImages(this);
 
@@ -104,7 +110,7 @@ public class ECMLActivity extends Activity {
 		chooseSong.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
+				intent.putExtra(ChooseSongActivity.niveau, "chooseSong");
 				startActivity(intent);
 			}
 		});
@@ -172,6 +178,26 @@ public class ECMLActivity extends Activity {
 			}
 		});
 
+
+		// Communication button
+		ImageView communication = (ImageView) findViewById(R.id.communication);
+		communication.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToFacebook = new Intent(getApplicationContext(), FacebookActivity.class);
+				startActivity(goToFacebook);
+			}
+		});
+
+
+		// Messenger service button
+		ImageView messenger = (ImageView) findViewById(R.id.messenger);
+		messenger.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToMessenger = new Intent(getApplicationContext(), com.androidim.Login.class);
+				startActivity(goToMessenger);
+			}
+		});
+
 		// Example of a list a teacher could send
 		// TODO : make this list automatic using a server
 		// or using a virtual teacher with pre-programmed schedules
@@ -195,12 +221,14 @@ public class ECMLActivity extends Activity {
 
 		// We cannot get the height of a view before it's drawn
 		// so we wait for it to be drawn, and when we see it's drawn
-		// we make the measurements so that we can add the icons at the right sizes
+		// we make the measurements so that we can add the icons at the right
+		// sizes
 		sequenceOfActivities.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
 			@Override
 			public void onGlobalLayout() {
-				// We need to check if the sequence of activities is already displayed or not to avoid
+				// We need to check if the sequence of activities is already
+				// displayed or not to avoid
 				// displaying it an infinite number of times
 				if (!displayed) {
 					displayed = true;
@@ -211,12 +239,51 @@ public class ECMLActivity extends Activity {
 					sequenceOfActivities();
 				}
 			}
-			
+
 		});
 
+
+	}
+
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	/********************************************* ACTION BAR **************************************************/
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.loginactionbar, menu);
+		this.menu = menu;
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.login) {
+			launchLogin();
+			return true;
+		}
+		return true;
+	}
+
+	private void launchLogin() {
+		Intent i = new Intent(ECMLActivity.this, Login.class);
+		startActivity(i);
 	}
 	
-	/** Load the left and right triangle, the play alone, the play accompanied and the reading of notes images */
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+	/****************************************** END OF ACTION BAR **********************************************/
+	/***********************************************************************************************************/
+	/***********************************************************************************************************/
+
+	/** Load the left and right triangle, the play alone, the play accompanied
+	 * and the reading of notes images
+	 */
 	private static void loadImages(Context context) {
 		// If it hasn't been done yet, then playAloneImage should be null
 		if (playAloneImage == null) {
@@ -228,20 +295,20 @@ public class ECMLActivity extends Activity {
 			rightImage = BitmapFactory.decodeResource(res, R.drawable.triangle_right);
 		}
 	}
-	
-	
+
+
 	/** Display the sequence of activities accordingly to the received list */
 	private void sequenceOfActivities() {
 		if (!list.isEmpty()) {
-			sequenceOfActivities.setPadding(leftMargin/3, (stripeHeight - iconHeight) / 2, leftMargin/3, 0);
+			sequenceOfActivities.setPadding(leftMargin / 3, (stripeHeight - iconHeight) / 2, leftMargin / 3, 0);
 			setTriangle(leftImage);
-			for (int i = 0 ; i < list.size() ; i++) {
+			for (int i = 0; i < list.size(); i++) {
 				addButton(list.get(i));
 			}
 			setTriangle(rightImage);
 		}
 	}
-	
+
 
 	/** Add the view of the given activity in the sequence of activities */
 	private void addButton(String task) {
@@ -255,56 +322,60 @@ public class ECMLActivity extends Activity {
 			setButton(readingOfNotesImage, READING_OF_NOTES_BEGINNER);
 		} else if (task == SPEED_GAME) {
 			// TODO
-		}		
+		}
 	}
-	
+
 	/** Set the button according to the given activity */
 	private void setButton(Bitmap image, final String toDo) {
 		ImageButton nextButton = new ImageButton(this);
 		nextButton.setImageBitmap(image);
 		iconWidth = iconHeight * image.getWidth() / image.getHeight();
 		nextButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
 				intent.putExtra(ChooseSongActivity.niveau, toDo);
-				// TODO Tempo ? Speed ? Which track to display and mute ? Need to record ?
+				// TODO Tempo ? Speed ? Which track to display and mute ? Need
+				// to record ?
 				startActivity(intent);
 			}
-			
+
 		});
-		
+
 		nextButton.setScaleType(ImageView.ScaleType.FIT_XY);
 		sequenceOfActivities.addView(nextButton);
 		LinearLayout.LayoutParams params;
-        params = new LinearLayout.LayoutParams(iconWidth, iconHeight);
-        params.width = iconWidth;
-        params.height = iconHeight;
-        params.leftMargin = iconWidth/12;
-        nextButton.setLayoutParams(params);
+		params = new LinearLayout.LayoutParams(iconWidth, iconHeight);
+		params.width = iconWidth;
+		params.height = iconHeight;
+		params.leftMargin = iconWidth / 12;
+		nextButton.setLayoutParams(params);
 	}
 
-	/** Set the right or left triangle if they are needed to show the sequence of activities is scrollable */
+	/** Set the right or left triangle if they are needed to show the sequence of
+	 * activities is scrollable
+	 */
 	private void setTriangle(Bitmap image) {
-		// If there are more than 4 elements to display, then we need the triangles 
+		// If there are more than 4 elements to display, then we need the
+		// triangles
 		if (list.size() > 4) {
 			ImageView triangle = new ImageView(this);
 			triangle.setImageBitmap(image);
 			iconWidth = iconHeight * image.getWidth() / image.getHeight();
 			triangle.setScaleType(ImageView.ScaleType.FIT_XY);
 			sequenceOfActivities.addView(triangle);
-	        LinearLayout.LayoutParams params;
-	        params = new LinearLayout.LayoutParams(iconWidth, iconHeight);
-	        params.width = iconWidth;
-	        params.height = iconHeight;
-	        if (image == leftImage) {
-	        	params.leftMargin = iconWidth/12;
-	        } else {
-	        	params.rightMargin = iconWidth/12;
-	        }
-	        triangle.setLayoutParams(params);
+			LinearLayout.LayoutParams params;
+			params = new LinearLayout.LayoutParams(iconWidth, iconHeight);
+			params.width = iconWidth;
+			params.height = iconHeight;
+			if (image == leftImage) {
+				params.leftMargin = iconWidth / 12;
+			} else {
+				params.rightMargin = iconWidth / 12;
+			}
+			triangle.setLayoutParams(params);
 		}
 	}
-	
+
 }

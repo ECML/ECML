@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.ecml.MidiNote;
 import com.ecml.MidiTrack;
 import com.ecml.R;
-import com.ecml.R.id;
 import com.ecml.SheetMusic;
 
 import android.graphics.Color;
@@ -37,12 +36,12 @@ public class ReadingGameBeginner extends ReadingGame {
 
 		// We use by default the instrument n°0 which is the piano
 		Notes = findNotes(Tracks, 0);
-		
-		//Launch the game
+
+		// Launch the game
 		textView = (TextView) findViewById(R.id.affiche);
 		textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + Notes.size());
 		Log.i("color", "" + SheetMusic.NoteColor(2));
-		//SheetMusic.NoteColors[0] = Color.GREEN;
+		// SheetMusic.NoteColors[0] = Color.GREEN;
 
 		// Change stop button
 		Button stop = (Button) findViewById(R.id.stop);
@@ -87,6 +86,8 @@ public class ReadingGameBeginner extends ReadingGame {
 				testNote("A#", lad);
 			}
 		});
+
+		orangeColor = (ColorDrawable) la.getBackground();
 
 		// Si button
 		final Button si = (Button) findViewById(R.id.si);
@@ -184,20 +185,20 @@ public class ReadingGameBeginner extends ReadingGame {
 
 			@Override
 			public void onClick(View v) {
-				testNote("G#", sold);				
+				testNote("G#", sold);
 			}
 		});
 
-		orangeColor = (ColorDrawable) la.getBackground();
-
 	}
-	
-	private void testNote (String letter, Button btn){
+
+	private void testNote(String letter, Button btn) {
 		firstTry = firstTry + 1;
 		String test = Notes.get(counter).PitchString();
 		// Check if it is the expected note
 		if (letter == test) {
-			if (firstTry == 1) {numberPoints = numberPoints + 1;}
+			if (firstTry == 1) {
+				numberPoints = numberPoints + 1;
+			}
 			GreenToOrange(btn);
 			firstTry = 0;
 			Log.i("score", "" + numberPoints);
@@ -223,8 +224,9 @@ public class ReadingGameBeginner extends ReadingGame {
 		return Tracks.get(i).getNotes();
 	}
 
+
 	private void redToOrange(Button btn) {
-		// Let's change background's color from red to inital orange color.
+		// Let's change background's color from red to initial orange color.
 		ColorDrawable[] color = { new ColorDrawable(Color.RED), orangeColor };
 		TransitionDrawable trans = new TransitionDrawable(color);
 		// This will work also on old devices. The latest API says you have to

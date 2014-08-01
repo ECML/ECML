@@ -38,7 +38,6 @@ public class RecentSongsActivity extends ListActivity {
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
-        setTheme(android.R.style.Theme_Holo_Light);
         getListView();
         // Load the list of songs
         loadFileList();

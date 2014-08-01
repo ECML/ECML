@@ -19,27 +19,23 @@ import com.ecml.ScrollAnimation;
 import com.ecml.SheetMusic;
 import com.ecml.TimeSigSymbol;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-/* abstract class which define the main part of all the speedgame activities */
+/* abstract class which define the main part of all the readinggame activities */
 
 public abstract class ReadingGame extends Activity {
 
@@ -95,13 +91,8 @@ public abstract class ReadingGame extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Holo_Light);
 		setContentView(R.layout.choice);
-		ActionBar ab = getActionBar();
-		ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.orange));
-		ab.setBackgroundDrawable(colorDrawable);
-
-
+		
 		/*****************
 		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
 		 * GAME BUTTON
@@ -141,6 +132,9 @@ public abstract class ReadingGame extends Activity {
 		options.shade1Color = settings.getInt("shade1Color", options.shade1Color);
 		options.shade2Color = settings.getInt("shade2Color", options.shade2Color);
 		options.showPiano = settings.getBoolean("showPiano", true);
+		//options.playMeasuresInLoop = true;
+		//options.playMeasuresInLoopStart = 0;
+		//options.playMeasuresInLoopEnd = 3;
 		options.tracks[0] = true;
 		for (int i = 1 ; i < options.tracks.length ; i++) {
 			options.tracks[i] = false;
@@ -298,7 +292,7 @@ public abstract class ReadingGame extends Activity {
 			piano.setVisibility(View.VISIBLE);
 		}
 		sheet = new SheetMusic(this);
-		sheet.init(midifile, options);
+		sheet.init(midifile, options, true, 1, 2);
 		sheet.setPlayer(player);
 		layout.addView(sheet);
 		piano.SetMidiFile(midifile, options, player);

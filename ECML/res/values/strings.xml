@@ -100,12 +100,56 @@
 	<string name="username_and_password_length_short">Username and password length must be at least 5</string>
 	<string name="signup_type_same_password_in_password_fields">Type same password in password fields</string>
 	<string name="facebook">Facebook</string>
-	  <string-array name="questions_array">
+	 <string name="clickToSignUp"><u><b><i> Sign Up Here</i></b></u></string>
+
+    <string name="communication">Communication</string>
+    <string name="gmail">Gmail</string>
+    <!-- Messenger service strings -->
+    <string name="add_new_friend">Add new friend</string>
+	<string name="type_friend_username">Please type your friend username</string>
+	<string name="new_friend_request_exist">New friend request</string>
+	<string name="approve_selected_friends">Approve Selecteds and Discard Others</string>
+	<string name="not_connected_to_network">There is no available connected network</string>
+	<string name="message_cannot_be_sent">Message was not been able to sent</string>
+	<string name="invitation">FRIEND\'S INVITATION</string>
+	<string name="friendlist">FRIEND LIST</string>
+	<string name="groupList"> GROUP LIST</string>
+	<string name="delete_friend"> Delete Friend</string>
+	<string name="friend_deleted">Your friend has been deleted</string>
+    <string name="messaging">Messaging</string>
+    <string name="local_service_started">App service started</string>
+    <string name="local_service_stopped">App service stopped</string>
+	<string name="local_service_connected">local_service_connected</string>
+	<string name="OK">OK</string>
+	<string name="not_connected_to_service">Not connected to the service and 
+	this is not supposed to happened so please inform this situation to 
+	ahmetmermerkaya@hotmail.com</string>	
+	<string name="add">Add</string>
+	<string name="request_sent">Your request has been sent</string>
+	<string name="no_friend">You have no friend,\n you can add new friends by menu</string>
+	<string name="fill_both_username_and_password">Please fill both username and password</string>
+	<string name="user_offline">This user is offline</string>
+	 <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>   
+    <string name="birthdate">Birthdate</string>   
+    <string-array name="instruments_array">
+        <item>Piano</item>
+        <item>Violin</item>
+        <item>Guitar</item>
+    </string-array>
+ 	<string name="signup_failed">Sign up failed because of unknown reason</string>
+ 	<string name="message_erreur">Message erreur</string>
+
+ 	  <string-array name="questions_array">
         <item> What was your childhood nickname? </item>
         <item>What time of the day were you born?</item>
         <item>What was your dream job as a child?</item>
         <item>What was your maternal grandfatherâ€™s first name?</item>
     </string-array>
 	
+	<string name="security_question">Choose a security question</string>
+	<string name="ForgottenPassword"><u><b><i>Forgot Your Password ?</i></b></u> </string>
+	<string name="wrong_answer">Your answer is wrong ! </string>
 	
 </resources>
+
