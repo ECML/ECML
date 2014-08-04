@@ -12,6 +12,7 @@
 
 package com.ecml;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -21,6 +22,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -65,6 +67,12 @@ public class ECMLActivity extends Activity {
 	final Context context = this;
 	private Menu menu;
 	
+	private static String sdcardPath = "sdcard/";	/* Path to the SD card */
+	private static String ECMLPath = "ECML/";		/* Path to the ECML folder from the sdcard */
+	private static final String AUDIO_RECORDER_FOLDER = "AudioRecords";	/* Audio Records folder name */
+	private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";	/* Video Records folder name */
+	private static final String MUSIC_SHEET_FOLDER = "MusicSheets"; /* Music Sheet folder name */
+	
 	private ArrayList<String> list = new ArrayList<String>(); /* The list of the activities to do */
 
 	public static final String PRACTICE_ALONE = "PI";
@@ -101,6 +109,39 @@ public class ECMLActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// Create the library folder if it doesn't exist
+		File file_library = new File(sdcardPath + ECMLPath);
+		if (!file_library.exists()) {
+			if (!file_library.mkdirs()) {
+				Log.e("TravellerLog :: ", "Problem creating the Library");
+			}
+		}
+
+		// Create the folder containing the music sheets (in the library)
+		File musicSheets = new File(sdcardPath + ECMLPath.concat(MUSIC_SHEET_FOLDER));
+		if (!musicSheets.exists()) {
+			if (!musicSheets.mkdirs()) {
+				Log.e("TravellerLog :: ", "Problem creating the Music sheets folder");
+			}
+		}
+
+		// Create the folder containing the audio records (in the library)
+		File records = new File(sdcardPath + ECMLPath.concat(AUDIO_RECORDER_FOLDER));
+		if (!records.exists()) {
+			if (!records.mkdirs()) {
+				Log.e("TravellerLog :: ", "Problem creating the Audio records folder");
+			}
+		}
+
+		// Create the folder containing the video records
+		File videorecords = new File(sdcardPath + ECMLPath.concat(VIDEO_RECORDER_FOLDER));
+		if (!videorecords.exists()) {
+			if (!videorecords.mkdirs()) {
+				Log.e("TravellerLog :: ", "Problem creating the Video records folder");
+			}
+		}
+		
 		setContentView(R.layout.main);
 		loadImages(this);
 
