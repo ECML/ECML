@@ -41,7 +41,7 @@ public class SpeedGameModeActivity extends Activity {
 					}
 					else {
 						Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-						intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
+						intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 						startActivity(intent);
 					}
 				}
@@ -76,7 +76,8 @@ public class SpeedGameModeActivity extends Activity {
 				public void onClick(View v) {
 					
 					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"1");
+					intent.putExtra(ChooseSongActivity.mode, "speed");
+					intent.putExtra(ChooseSongActivity.mode,"1");
 					startActivity(intent);
 				}
 			});
@@ -88,7 +89,7 @@ public class SpeedGameModeActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"2");
+					intent.putExtra(ChooseSongActivity.mode,"2");
 					startActivity(intent);
 				}
 			});
@@ -100,7 +101,7 @@ public class SpeedGameModeActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"3");
+					intent.putExtra(ChooseSongActivity.mode,"3");
 					startActivity(intent);
 				}
 			});
@@ -112,7 +113,7 @@ public class SpeedGameModeActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"4");
+					intent.putExtra(ChooseSongActivity.mode,"4");
 					startActivity(intent);
 				}
 			});

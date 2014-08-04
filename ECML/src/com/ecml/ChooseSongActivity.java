@@ -31,6 +31,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
 import com.game.ReadingGameBeginner;
+import com.game.ReadingGameNormal;
 import com.game.SpeedGamelvl1;
 import com.game.SpeedGamelvln;
 
@@ -46,8 +47,8 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
 
 	private Intent intent;
     static ChooseSongActivity globalActivity;
-	public static final String niveau = "niveau"; /* Should be passed as a parameter ? */
-    private ActionBar ab;	/* The Action Bar */
+	public static final String mode = "mode";
+	public static final int level = 1;
 
     @Override
     public void onCreate(Bundle state) {
@@ -55,9 +56,6 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
         globalActivity = this;
         super.onCreate(state);
         
-        // Set Action Bar color and Title
-        ab = getActionBar();
-		
         setTitle("ECML: Choose Song");
 
        
@@ -102,7 +100,7 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
     }
 
     /** Open the chosen file in the right activity */ 
-    public void doOpenFile(FileUri file /* need to add a new parameter to choose which activity to start */) {
+    public void doOpenFile(FileUri file) {
         byte[] data = file.getData(this);
         if (data == null || data.length <= 6 || !MidiFile.hasMidiHeader(data)) {
             ChooseSongActivity.showErrorDialog("Error: Unable to open song: " + file.toString(), this);
@@ -110,33 +108,39 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
         }
 
         ECML.song = file;
-        
-        String choice = this.getIntent().getStringExtra(niveau);
-        
-
         updateRecentFile(file);
-		if (choice.equals("1")) {
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
-			intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
-		} else if (choice.equals("2")) {
-			ECML.speedLvl = 2;
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
-			intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
-		} else if (choice.equals("3")) {
-			ECML.speedLvl = 3;
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
-			intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
-		} else if (choice.equals("4")) {
-			ECML.speedLvl = 4;
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
-			intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
-		} else if (choice.equals("chooseSong")) {
+        
+        
+//        String mode = this.getIntent().getStringExtra(this.mode);
+//		if (mode == "speed") {
+//
+//			int lvl = this.getIntent().getIntExtra("level", level);
+//			if (lvl == 1) {
+//				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
+//				intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
+//			} else {
+//				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
+//				intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
+//				intent.putExtra("level", level);
+//			}
+//			
+//		} else if (mode == "reading") {
+//			int lvl = this.getIntent().getIntExtra("level", level);
+//			if (lvl == 1) {
+//				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
+//				intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
+//			}
+//			else {
+//				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameNormal.class);
+//				intent.putExtra(ReadingGameNormal.MidiTitleID, file.toString());
+//			}
+//		} else if (mode == "chooseSong") {
 			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
 			intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
-		} else if (choice.equals("readingBeginner")) {
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
-			intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
-        }
+//	    } else if (mode == "normal") {
+//			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
+//			intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
+//	    }
 		startActivity(intent);
     }
 

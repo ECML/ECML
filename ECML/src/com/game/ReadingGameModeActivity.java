@@ -33,7 +33,7 @@ public class ReadingGameModeActivity extends Activity {
 				}
 				else {
 					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
+					intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 					startActivity(intent);
 				}
 			}
@@ -67,7 +67,7 @@ public class ReadingGameModeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				intent.putExtra(ChooseSongActivity.niveau,"readingBeginner");
+				intent.putExtra(ChooseSongActivity.mode,"readingBeginner");
 				startActivity(intent);
 			}
 		});

@@ -110,7 +110,7 @@ public class ECMLActivity extends Activity {
 		chooseSong.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				intent.putExtra(ChooseSongActivity.niveau, "chooseSong");
+				intent.putExtra(ChooseSongActivity.mode, "chooseSong");
 				startActivity(intent);
 			}
 		});
@@ -335,7 +335,7 @@ public class ECMLActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				intent.putExtra(ChooseSongActivity.niveau, toDo);
+				intent.putExtra(ChooseSongActivity.mode, toDo);
 				// TODO Tempo ? Speed ? Which track to display and mute ? Need
 				// to record ?
 				startActivity(intent);
