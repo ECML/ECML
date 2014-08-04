@@ -30,7 +30,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-
 import com.calendar.CalendarActivity;
 import com.game.GameActivity;
 import com.login.Login;
@@ -75,7 +74,7 @@ public class ECMLActivity extends Activity {
 	public static final String SPEED_GAME = "S";
 	
 	public static final String CHOOSE_SONG = "chooseSong";
-	public static final String READING_OF_NOTES_BEGINNER = "readingBeginner";
+	public static final String READING_OF_NOTES_BEGINNER = "reading";
 	
 	private static Bitmap playAloneImage;			/* The Play Alone image */
 	private static Bitmap playAccompaniedImage;		/* The Play with Accompaniment image */
@@ -109,9 +108,9 @@ public class ECMLActivity extends Activity {
 		chooseSong = (ImageView) findViewById(R.id.choose_song);
 		chooseSong.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				intent.putExtra(ChooseSongActivity.mode, "chooseSong");
-				startActivity(intent);
+				ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+				ECML.intent.putExtra(ChooseSongActivity.mode, "chooseSong");
+				startActivity(ECML.intent);
 			}
 		});
 
@@ -334,11 +333,12 @@ public class ECMLActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				intent.putExtra(ChooseSongActivity.mode, toDo);
+				ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+				ECML.intent.putExtra(ChooseSongActivity.mode, toDo);
+//				ECML.intent.putExtra(ChooseSongActivity.level, 1)
 				// TODO Tempo ? Speed ? Which track to display and mute ? Need
 				// to record ?
-				startActivity(intent);
+				startActivity(ECML.intent);
 			}
 
 		});

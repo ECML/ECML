@@ -23,18 +23,19 @@ public class ReadingGameModeActivity extends Activity {
 		setContentView(R.layout.reading_game_mode);
 		
 		// Back to the score button
-		Button score = (Button) findViewById(R.id.back);
-		score.setOnClickListener(new View.OnClickListener() {
+		Button backToScore = (Button) findViewById(R.id.back);
+		backToScore.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (ECML.song != null) {
+					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 					ChooseSongActivity.openFile(ECML.song);
 				}
 				else {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.mode,"chooseSong");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
+					startActivity(ECML.intent);
 				}
 			}
 		});

@@ -58,8 +58,8 @@ public class GameActivity extends Activity {
 		});
 
 		// Back to the score button
-		Button score = (Button) findViewById(R.id.backscore);
-		score.setOnClickListener(new View.OnClickListener() {
+		Button backToScore = (Button) findViewById(R.id.backscore);
+		backToScore.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -67,9 +67,9 @@ public class GameActivity extends Activity {
 					ChooseSongActivity.openFile(ECML.song);
 				}
 				else {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.mode,"chooseSong");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
+					startActivity(ECML.intent);
 				}
 			}
 		});

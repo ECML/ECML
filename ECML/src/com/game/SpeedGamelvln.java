@@ -29,7 +29,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		int lvl = this.getIntent().getIntExtra("level", 1);
+		int lvl = this.getIntent().getIntExtra("level", 2);
 		if (lvl == 2) {
 			player.getSpeedBar().setProgress(30-30);
 		} else if (lvl == 3) {
@@ -62,7 +62,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 			
       		player.Play();
 			
-      		// Pitch Detetion launching 
+      		// Pitch Detection launching 
 	        pitchPoster = new MicrophonePitchPoster(60);
 	        // Adding the handler
 	        pitchPoster.setHandler(new UIUpdateHandler());
