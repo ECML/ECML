@@ -67,7 +67,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="La"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -81,7 +80,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="La#/Si\u266D"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -95,7 +93,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Si"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -109,7 +106,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Do"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -123,7 +119,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Do#/Ré\u266D"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -137,7 +132,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Ré"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -151,7 +145,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Ré#/Mi\u266D"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -165,7 +158,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Mi"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -179,7 +171,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Fa"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -193,7 +184,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Fa#/Sol\u266D"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -207,7 +197,6 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Sol"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -219,12 +208,12 @@
             android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:text="Sol#/La\u266D"
             android:textColor="#ffffff"
             android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/linearLayout2"
@@ -232,7 +221,6 @@
         android:layout_marginLeft="292dp"
         android:background="@color/blue"
         android:orientation="horizontal" >
-   
 
         <TextView
             android:id="@+id/affiche"
@@ -241,5 +229,18 @@
             android:inputType="textMultiLine"
             android:lines="5" />
     </LinearLayout>
+
+    <Switch
+        android:id="@+id/notation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/linearLayout3"
+        android:layout_marginBottom="14dp"
+        android:layout_marginRight="84dp"
+        android:textOn="A-B-C"
+        android:textOff="Do-Re-Mi"
+        android:background="@color/orange"
+        />
 
 </RelativeLayout>

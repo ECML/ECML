@@ -179,6 +179,7 @@
          
            <activity android:name="com.login.ForgottenPasswordActivity">
         </activity>
+           <activity android:name="ReadingGameNormal"></activity>
         </application>
          
 
