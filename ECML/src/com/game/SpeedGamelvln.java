@@ -24,16 +24,17 @@ public class SpeedGamelvln extends SpeedGamelvl {
 	
 	private TextView textView;
 	private boolean end = false;
+	public static final int level = 1;
 
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		if (ECML.speedLvl == 2) {
+		int lvl = this.getIntent().getIntExtra("level", 2);
+		if (lvl == 2) {
 			player.getSpeedBar().setProgress(30-30);
-		} else if (ECML.speedLvl == 3) {
+		} else if (lvl == 3) {
 			player.getSpeedBar().setProgress(70-30);
-		} else if (ECML.speedLvl == 4) {
+		} else if (lvl == 4) {
 			player.getSpeedBar().setProgress(100-30);
 		}
 		
@@ -61,7 +62,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 			
       		player.Play();
 			
-      		// Pitch Detetion launching 
+      		// Pitch Detection launching 
 	        pitchPoster = new MicrophonePitchPoster(60);
 	        // Adding the handler
 	        pitchPoster.setHandler(new UIUpdateHandler());
@@ -156,10 +157,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 // If we touch while music is playing, stop the midi player 
-                
                     this.PauseEcoute();
-                    scrollAnimation.stopMotion();
-                
                 return result;
 
             case MotionEvent.ACTION_MOVE:

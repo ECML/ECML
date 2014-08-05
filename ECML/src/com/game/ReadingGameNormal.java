@@ -5,7 +5,7 @@ import com.ecml.R;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class ReadingGameNormal extends Activity {
+public class ReadingGameNormal extends ReadingGame {
 
 	/** Called when the activity is first created. */
 	@Override

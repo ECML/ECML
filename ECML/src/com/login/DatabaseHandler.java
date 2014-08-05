@@ -9,13 +9,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 	  public static final String USER_KEY = "id";
 	  public static final String USER_LOGIN = "login";
 	  public static final String USER_PASSWORD = "password";
-	    
+	  public static final String USER_QUESTION = "question";
+	  public static final String USER_ANSWER = "answer";
 	  public static final String USERS_TABLE_NAME = "users";
 	  public static final String USERS_TABLE_CREATE =
 	    "CREATE TABLE " + USERS_TABLE_NAME + " (" +
 	      USER_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 	      USER_LOGIN + " TEXT, " +
-	      USER_PASSWORD + " TEXT);";
+	      USER_PASSWORD + " TEXT, "+
+	      USER_QUESTION + " TEXT, " +
+	      USER_ANSWER + " TEXT );";
 	  public DatabaseHandler(Context context, String name, CursorFactory factory, int version) {
 		    super(context, name, factory, version);
 		  }

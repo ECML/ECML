@@ -65,7 +65,26 @@
         android:password="false"
     /> 
     
-    
+      <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:text="security_question "
+    />
+    <Spinner
+    android:id="@+id/questions_spinner"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+     />
+     
+    <EditText android:id="@+id/answer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:password="false"
+        android:hint="Type your answer here"
+    /> 
+     
     <LinearLayout android:orientation="horizontal"
     			  android:layout_width="fill_parent"
     			  android:layout_height="wrap_content">

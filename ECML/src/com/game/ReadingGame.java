@@ -178,7 +178,7 @@ public abstract class ReadingGame extends Activity {
 					ChooseSongActivity.openFile(ECML.song);
 				} else {
 					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau, "chooseSong");
+					intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 					startActivity(intent);
 				}
 			}

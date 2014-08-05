@@ -4,8 +4,9 @@
     android:versionCode="9"
     android:versionName="2.6" >
 
-    <uses-permission android:name="android.permission.INTRENET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -25,6 +26,7 @@
         android:required="false" />
 
     <application
+        android:allowBackup="true"
         android:name=".ECML"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
@@ -127,12 +129,59 @@
         </activity>
         <activity android:name="com.calendar.CalendarDisplayActivity" >
         </activity>
+
         <activity 
             android:name=".FacebookActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
         <activity android:name="com.login.Login"></activity>
-         <activity android:name="com.login.SignUp"></activity>
+        <activity android:name="com.login.SignUp"></activity>
+        
+        <!-- Messenger Service activities -->
+
+        <activity android:name="com.androidim.FriendList">
+            <intent-filter>
+				<action android:name="android.intent.action.MAIN"></action>
+				<category
+					android:name="android.intent.category.NORMAL">
+				</category>
+			</intent-filter>
+        </activity>
+        <service android:name="com.androidim.services.IMService"></service>
+        <activity android:name="com.androidim.Login">
+            	<intent-filter>
+					<action android:name="android.intent.action.MAIN"></action>
+					<category android:name="android.intent.category.NORMAL">
+					</category>
+				</intent-filter>
+        </activity>  
+        <activity android:name="com.androidim.Profil"></activity>
+        <activity android:name="com.androidim.AddFriend"></activity>
+        <activity android:name="com.androidim.DeleteFriend"></activity>
+        <activity android:name="com.androidim.Messaging">
+           <intent-filter>
+	        <action android:name="android.intent.action.MAIN"></action>
+			<category android:name="android.intent.category.NORMAL"></category>
+			</intent-filter>
+        </activity>
+        
+        <activity android:name="com.androidim.SignUp">
+            <intent-filter>
+	        	<action android:name="android.intent.action.MAIN"></action>
+				<category android:name="android.intent.category.NORMAL"></category>
+			</intent-filter>
+        </activity>
+        
+        <activity android:name="com.androidim.UnApprovedFriendList"></activity>
+
+        
+        
+         
+           <activity android:name="com.login.ForgottenPasswordActivity">
+        </activity>
         </application>
+         
+
+
 
 </manifest>

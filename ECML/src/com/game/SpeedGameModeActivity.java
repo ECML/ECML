@@ -31,20 +31,22 @@ public class SpeedGameModeActivity extends Activity {
 			setContentView(R.layout.speed_game_mode);
 
 			// Back to the score button
-			Button score = (Button) findViewById(R.id.back);
-			score.setOnClickListener(new View.OnClickListener() {
+			Button backToScore = (Button) findViewById(R.id.back);
+			backToScore.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					if (ECML.song != null) {
+						ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 						ChooseSongActivity.openFile(ECML.song);
 					}
 					else {
-						Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-						intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
-						startActivity(intent);
+						ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+						ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
+						startActivity(ECML.intent);
 					}
 				}
+				
 			});
 
 			// Help button
@@ -55,6 +57,7 @@ public class SpeedGameModeActivity extends Activity {
 				public void onClick(View v) {
 					showHelpDialog();
 				}
+				
 			});
 
 			// Change game button
@@ -66,6 +69,7 @@ public class SpeedGameModeActivity extends Activity {
 					Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 					startActivity(intent);
 				}
+				
 			});
 			
 			// lvl1 button
@@ -74,11 +78,12 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"1");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode, "speed");
+					ECML.intent.putExtra("level", 1);
+					startActivity(ECML.intent);
 				}
+				
 			});
 			
 			// lvl2 button
@@ -87,10 +92,12 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"2");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"speed");
+					ECML.intent.putExtra("level", 2);
+					startActivity(ECML.intent);
 				}
+				
 			});
 			
 			// lvl3 button
@@ -99,10 +106,12 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"3");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"speed");
+					ECML.intent.putExtra("level", 3);
+					startActivity(ECML.intent);
 				}
+				
 			});
 			
 			// lvl4 button
@@ -111,10 +120,12 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"4");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"speed");
+					ECML.intent.putExtra("level", 4);
+					startActivity(ECML.intent);
 				}
+				
 			});
 
 		}
