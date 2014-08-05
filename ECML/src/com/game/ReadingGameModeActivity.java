@@ -67,8 +67,7 @@ public class ReadingGameModeActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				intent.putExtra(ChooseSongActivity.mode,"readingBeginner");
+				Intent intent = new Intent(getApplicationContext(), ReadingGameBeginner.class);
 				startActivity(intent);
 			}
 		});

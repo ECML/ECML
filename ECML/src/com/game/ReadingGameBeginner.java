@@ -7,6 +7,7 @@ import com.ecml.MidiTrack;
 import com.ecml.R;
 import com.ecml.SheetMusic;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
@@ -14,59 +15,34 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ReadingGameBeginner extends ReadingGame {
-
-	View choice;
-	View result;
 
 	private TextView textView;
 	private int compteurTexte = counter + 1;
 	private ColorDrawable orangeColor;
 	private int numberPoints = 0;
 	private int firstTry = 0;
-
+	private int numberNote = 46;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		counter = 0; // note counter
 		Tracks = midifile.getTracks();
-
+		
 		// We use by default the instrument n°0 which is the piano
 		Notes = findNotes(Tracks, 0);
 
 		// Launch the game
 		textView = (TextView) findViewById(R.id.affiche);
-		textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + Notes.size());
+		textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + numberNote);
 		Log.i("color", "" + SheetMusic.NoteColor(2));
 		// SheetMusic.NoteColors[0] = Color.GREEN;
-
-		// Change stop button
-		Button stop = (Button) findViewById(R.id.stop);
-		stop.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				counter = 0;
-				compteurTexte = counter + 1;
-				textView.setText("");
-
-				if (player != null) {
-					player.Stop();
-				}
-			}
-		});
-
-		// If we reach the end of the midifile, then we stop the player
-		if (counter == Notes.size()) {
-			counter = 0;
-			if (player != null) {
-				player.Stop();
-			}
-			textView.setText("");
-		}
-
+	
 		// La button
 		final Button la = (Button) findViewById(R.id.la);
 		la.setOnClickListener(new View.OnClickListener() {
@@ -204,9 +180,64 @@ public class ReadingGameBeginner extends ReadingGame {
 			Log.i("score", "" + numberPoints);
 			counter++;
 			compteurTexte++;
-			textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + Notes.size());
+			textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + numberNote);
+			checkEnd();
 		} else {
 			redToOrange(btn);
+		}
+	}
+
+	// If we reach the end of the midifile, then we stop the player
+	private void checkEnd() {
+		TextView percentage = (TextView) findViewById(R.id.percentage);
+		TextView appreciation = (TextView) findViewById(R.id.appreciation);
+		ImageView star = (ImageView) findViewById(R.id.star);
+		TextView score = (TextView) findViewById(R.id.score);
+		TextView next = (TextView) findViewById(R.id.nextLevel);
+		
+		if (counter == numberNote) {
+			ReadingGame.choice.setVisibility(View.GONE);
+			ReadingGame.result.setVisibility(View.VISIBLE);
+			double percentageScore = numberPoints * 100 / numberNote;
+			percentage.setText(String.valueOf(percentageScore) + "%");
+			if (percentageScore >= 90) {
+				percentage.setTextColor(Color.GREEN);
+				appreciation.setText("Congratulations!");
+				if (ReadingGame.level <= 2) {
+					ReadingGame.level = ReadingGame.level + 1;
+					next.setText("Go to the next level");
+					next.setOnClickListener(new View.OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							Intent intent = new Intent(getApplicationContext(), ReadingGameBeginner.class);
+							startActivity(intent);
+						}
+					});
+				} else {
+					next.setText("You finished the game!");
+				}
+
+			} else {
+				percentage.setTextColor(Color.RED);
+				appreciation.setText("Try Again!");
+				star.setVisibility(View.GONE);
+				next.setText("Click here to try again");
+				next.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getApplicationContext(), ReadingGameBeginner.class);
+						startActivity(intent);
+					}
+				});
+			}
+			score.setText(numberPoints + "/" + numberNote);
+
+			if (player != null) {
+				player.Stop();
+			}
+
 		}
 	}
 
@@ -223,7 +254,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		}
 		return Tracks.get(i).getNotes();
 	}
-
 
 	private void redToOrange(Button btn) {
 		// Let's change background's color from red to initial orange color.
