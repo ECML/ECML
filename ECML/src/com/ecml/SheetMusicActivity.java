@@ -144,8 +144,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private String pathVideo;			/* Path of last Video Record */
 	private boolean existVideoRecord;	/* Whether or not an Video Record already exists */
 	private boolean isVideoRecording;	/* Whether or not the Video Media Recorder is recording */
-	private boolean front = true;		/* Whether the front camera or the back camera is used */
+	private boolean front;		/* Whether the front camera or the back camera is used */
 	private String cameraSide;			/* The String telling which camera is used accordingly to 'front' */
+	private static final String FRONT_SIDE = "Front";
+	private static final String BACK_SIDE = "Back";
 
 	private View topLayout;		/* The Layout in which the Camera is displayed (needs to be improved) */
 
@@ -248,6 +250,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		isAudioRecording = false;
 		isVideoRecording = false;
 
+		chooseFrontOrBack();
+		
 		surfaceView = (SurfaceView) findViewById(R.id.surface_camera);
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
@@ -707,7 +711,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	}
 
-	/** When this activity pauses, stop the music */
+	/** When this activity pauses, stop the music and all recordings */
 	@Override
 	protected void onPause() {
 		if (player != null) {
@@ -994,6 +998,29 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 	}
+	
+	/** Set the Front Camera if there is one, otherwise the Back Camera
+	 * and if there isn't either, don't do anything
+	 */
+	private void chooseFrontOrBack() {
+		Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+		int cameraCount = Camera.getNumberOfCameras();
+		int i = 0;
+		boolean chosen = false;
+		while (i < cameraCount || !chosen) {
+			Camera.getCameraInfo(i, cameraInfo);
+			if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+				chosen = true;
+				front = true;
+				cameraSide = FRONT_SIDE;
+			} else if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+				chosen = true;
+				front = false;
+				cameraSide = BACK_SIDE;
+			}
+			i++;
+		}
+	}
 
 	/** Open the front facing camera */
 	private Camera openFrontFacingCamera() {
@@ -1019,19 +1046,18 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	
 	/** Switch the camera from front to back and vice versa */
 	private void switchCamera() {
-		// We should add a test here
-//		if (Camera.getNumberOfCameras() > 1) {
+		if (Camera.getNumberOfCameras() > 1) {
 			front = !front;
 			if (front) {
-				cameraSide = "Front";
+				cameraSide = FRONT_SIDE;
 			}
 			else {
-				cameraSide = "Back";
+				cameraSide = BACK_SIDE;
 			}
 			Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
-//		} else {
-//			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
-//		}
+		} else {
+			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	/************************************* End of Video Recording Functions ***********************************/
