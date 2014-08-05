@@ -15,8 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -39,10 +42,10 @@ public class TuningForkActivity extends Activity {
 
 	// Set up the objects that are on the screen
 	private TextView freqView;			/* The text view displaying the current frequency */
-	private ToggleButton toggle;		/* The on/off button */
+	private Switch switchButton;		/* The on/off button */
 	private int sineFreq;				/* The current note (to be converted) */
-	private Button previousOctave;	/* The button to shift down an octave */
-	private Button nextOctave;		/* The button to shift up an octave */
+	private Button previousOctave;		/* The button to shift down an octave */
+	private Button nextOctave;			/* The button to shift up an octave */
 	private Button previousNote;		/* The button to shift down a note */
 	private Button nextNote;			/* The button to shift up a note */
 	private SeekBar pitchBar;			/* The slide bar to adjust the reference pitch */
@@ -74,7 +77,7 @@ public class TuningForkActivity extends Activity {
 		setContentView(R.layout.tuning_fork);
 
 		// Set the buttons
-		toggle = (ToggleButton) findViewById(R.id.toggleButton);
+		switchButton = (Switch) findViewById(R.id.switchButton);
 		previousOctave = (Button) findViewById(R.id.previousOctave);
 		nextOctave = (Button) findViewById(R.id.nextOctave);
 		previousNote = (Button) findViewById(R.id.previousNote);
@@ -90,10 +93,9 @@ public class TuningForkActivity extends Activity {
 		refNote = (TextView) findViewById(R.id.adjustNote);
 		refPitch = (TextView) findViewById(R.id.textViewAdjRefPitch);
 		
-		
 
 		// Set each onClickListener on the corresponding button
-		toggle.setOnClickListener(toggleListener);
+		switchButton.setOnCheckedChangeListener(switchListener);
 		
 		pitchBar.setOnSeekBarChangeListener(sineFreqBarListener);
 
@@ -177,7 +179,7 @@ public class TuningForkActivity extends Activity {
 		});
 
 		// Initialize the toggle button, the frequency and seek bar to desired values
-		toggle.setChecked(false);
+		switchButton.setChecked(false);
 		sineFreq = 61;
 		pitchBar.setMax(200);
 		pitchBar.setProgress(100);
@@ -205,18 +207,18 @@ public class TuningForkActivity extends Activity {
 	/**
 	 * A call-back for when the user presses the toggle button
 	 */
-	OnClickListener toggleListener = new OnClickListener() {
-		public void onClick(View v) {
+	OnCheckedChangeListener switchListener = new OnCheckedChangeListener() {
 
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			// Kill any existing threads in case the button is being spammed
 			running = false;
 
 			// Check if light is off, if so, turn it on
-			if (toggle.isChecked()) { // Turn on the sound
+			if (switchButton.isChecked()) { // Turn on the sound
 				genTone(convertProgress_Hz(sineFreq));
 				new BeepTask().execute();
 			}
-
 		}
 	};
 	

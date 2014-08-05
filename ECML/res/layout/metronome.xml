@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
     android:background="@color/blue"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:weightSum="100.0" >
 
@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="30.0"
-        android:src="@drawable/metronomebtn"
-        
-         >
+        android:src="@drawable/metronomebtn" >
     </ImageView>
 
     <Button
@@ -21,9 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="#ffffff"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-   
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/tempo"
@@ -32,7 +29,9 @@
         android:layout_weight="20.0"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-></TextView>
+        android:textColor="@color/white" >
+    </TextView>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,8 +49,8 @@
         <SeekBar
             android:id="@+id/sliderMetronome"
             android:layout_width="250px"
-            android:layout_height="wrap_content"
-            ></SeekBar>
+            android:layout_height="wrap_content" >
+        </SeekBar>
 
         <ImageView
             android:id="@+id/plusTempo"
@@ -75,7 +74,7 @@
             android:layout_marginRight="40dp"
             android:text="@string/startmetronome"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff" />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/stopMetronome"
@@ -83,7 +82,7 @@
             android:layout_height="wrap_content"
             android:text="@string/stopmetronome"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>

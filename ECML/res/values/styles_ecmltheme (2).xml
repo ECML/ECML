@@ -70,5 +70,11 @@
   <style name="ToggleECMLTheme" parent="android:Widget.Holo.Light.Button.Toggle">
       <item name="android:background">@drawable/ecmltheme_btn_toggle_holo_light</item>
   </style>
-
+  
+  <!-- style for the switch button to be added when the bug is fixed by Google (cannot override switch button style)
+  <style name="SwitchECMLTheme" parent="android:Widget.Holo.Light.CompoundButton.Switch">
+	  <item name="android:background">@drawable/ecmltheme_switch_inner_holo_light</item>
+  </style>
+  -->
+  
 </resources>
