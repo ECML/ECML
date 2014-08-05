@@ -51,6 +51,7 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 	private static final String FRONT_SIDE = "Front";
 	private static final String BACK_SIDE = "Back";
 	
+	private File file;							/* The file storing the record */
 	private long fileName;						/* File name of last Video Record */
 	private String ext = ".mp4";				/* Extension of Audio and VIDEO Record files */
 	private static String ECMLPath = "ECML/";	/* Path to the ECML folder from the sdcard */
@@ -78,7 +79,6 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 				try {
 					startVideoRecording();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -131,7 +131,7 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 	/** Get the Filename of the next Video Record, also updates the path */
 	private String getFilenameVideo() {
 		String filepath = Environment.getExternalStorageDirectory().getPath();
-		File file = new File(filepath, ECMLPath + VIDEO_RECORDER_FOLDER);
+		file = new File(filepath, ECMLPath + VIDEO_RECORDER_FOLDER);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
@@ -149,26 +149,29 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 				camera = Camera.open();
 			}
 			mediaRecorder = new MediaRecorder(); // Works well
-			camera.stopPreview();
-			camera.unlock();
-			mediaRecorder.setCamera(camera);
+			if (camera != null) {
+				camera.stopPreview();
+				camera.unlock();
+				mediaRecorder.setCamera(camera);
 
-			mediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
-			mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-			mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-
-			if (front == true) {
-				mediaRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
-			} else {
-				mediaRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_BACK, CamcorderProfile.QUALITY_HIGH));
+				mediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
+				mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+				mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+	
+				if (front == true) {
+					mediaRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
+				} else {
+					mediaRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_BACK, CamcorderProfile.QUALITY_HIGH));
+				}
+	
+				mediaRecorder.setOutputFile(getFilenameVideo());
+				mediaRecorder.setVideoFrameRate(10);
+	
+				mediaRecorder.prepare();
+				isRecording = true;
+				mediaRecorder.start();
+				Toast.makeText(context, "Start Video Recording", Toast.LENGTH_SHORT).show();
 			}
-
-			mediaRecorder.setOutputFile(getFilenameVideo());
-			mediaRecorder.setVideoFrameRate(10);
-
-			mediaRecorder.prepare();
-			isRecording = true;
-			mediaRecorder.start();
 		} else {
 			Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
 		}
@@ -180,9 +183,15 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 	 */
 	protected void stopVideoRecording() {
 		if (isRecording) {
-			isRecording = false;
-			existVideoRecord = true;
-			mediaRecorder.stop();
+			try {
+				isRecording = false;
+				existVideoRecord = true;
+				mediaRecorder.stop();
+				Toast.makeText(context, "Stop Video Recording", Toast.LENGTH_SHORT).show();
+			} catch (RuntimeException stopException) {
+				file.delete();
+				Toast.makeText(context, "Video Recording Failed", Toast.LENGTH_SHORT).show();
+			}
 			releaseMediaRecorder();
 			releaseCamera();
 		} else {

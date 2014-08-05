@@ -14,11 +14,11 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/backscore"
+            android:id="@+id/backToScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Back to the score"
+            android:text="@string/back_to_score"
             android:textColor="#ffffff"
             android:textSize="20sp" >
         </Button>
@@ -43,7 +43,7 @@
         </Button>
 
         <Button
-            android:id="@+id/musicalear"
+            android:id="@+id/musicalEar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"

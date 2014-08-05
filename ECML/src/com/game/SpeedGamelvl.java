@@ -28,12 +28,11 @@ import com.ecml.MidiPlayer;
 import com.ecml.MidiTrack;
 import com.ecml.Piano;
 import com.ecml.R;
-import com.ecml.ScrollAnimation;
 import com.ecml.SheetMusic;
 import com.ecml.TimeSigSymbol;
 
 
-/* abstract class which define the main part of all the speedgame activities */
+/* Abstract Class which defines the main part of all the speedgame activities */
 
 public abstract class SpeedGamelvl extends Activity {
 
@@ -67,9 +66,8 @@ public abstract class SpeedGamelvl extends Activity {
 	/*** End of MidiSheet variables ***/
 
 	
-	protected ScrollAnimation scrollAnimation;
-	protected ArrayList<MidiTrack> Tracks;
-	protected ArrayList<MidiNote> Notes;
+	protected ArrayList<MidiTrack> tracks;	/* The Tracks of the song */
+	protected ArrayList<MidiNote> notes;	/* The Notes of the first Track (Track 0) */
 	protected boolean search;
 	View choice;
 	View result;
@@ -205,6 +203,7 @@ public abstract class SpeedGamelvl extends Activity {
 				
 				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(intent);
+				finish();
 			}
 			
 		});
@@ -235,8 +234,6 @@ public abstract class SpeedGamelvl extends Activity {
 //		result.setVisibility(View.GONE);
 //		setContentView(layout);
 		createSheetMusic(options);
-		scrollAnimation = new ScrollAnimation(sheet, options.scrollVert); 	// needed for stopping the music and recording
-		  																	// when touching the score
 	}
 
 	/** Create the SheetMusic view with the given options */
@@ -314,6 +311,7 @@ public abstract class SpeedGamelvl extends Activity {
 	protected void onPause() {
 		if (player != null) {
 			player.Pause();
+			player.unmute();
 		}
 		if ( pitchPoster != null)
 		{

@@ -146,6 +146,7 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
 			intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
 	    }
 		startActivity(intent);
+		finish();
     }
 
 

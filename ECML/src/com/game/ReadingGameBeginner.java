@@ -35,10 +35,10 @@ public class ReadingGameBeginner extends ReadingGame {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		counter = 0; // note counter
-		Tracks = midifile.getTracks();
+		tracks = midifile.getTracks();
 
 		// We use by default the instrument n°0 which is the piano
-		Notes = findNotes(Tracks, 0);
+		notes = findNotes(tracks, 0);
 
 		// Launch the game
 		textView = (TextView) findViewById(R.id.affiche);
@@ -244,7 +244,7 @@ public class ReadingGameBeginner extends ReadingGame {
 
 	private void testNote(String letter, Button btn) {
 		firstTry = firstTry + 1;
-		String test = Notes.get(counter).PitchString();
+		String test = notes.get(counter).PitchString();
 		// Check if it is the expected note
 		if (letter == test) {
 			if (firstTry == 1) {
@@ -321,13 +321,13 @@ public class ReadingGameBeginner extends ReadingGame {
 		int i = 0;
 		search = true;
 		while (search) {
-			if (instrument == Tracks.get(i).getInstrument()) {
+			if (instrument == tracks.get(i).getInstrument()) {
 				search = false;
 			} else {
 				i++;
 			}
 		}
-		return Tracks.get(i).getNotes();
+		return tracks.get(i).getNotes();
 	}
 
 	private void redToOrange(Button btn) {

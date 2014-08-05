@@ -68,6 +68,7 @@ public class SpeedGameModeActivity extends Activity {
 				public void onClick(View v) {
 					Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 					startActivity(intent);
+					finish();
 				}
 				
 			});
@@ -82,6 +83,7 @@ public class SpeedGameModeActivity extends Activity {
 					ECML.intent.putExtra(ChooseSongActivity.mode, "speed");
 					ECML.intent.putExtra("level", 1);
 					startActivity(ECML.intent);
+					finish();
 				}
 				
 			});

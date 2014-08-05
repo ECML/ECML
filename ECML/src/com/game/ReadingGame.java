@@ -68,10 +68,8 @@ public abstract class ReadingGame extends Activity {
 
 	/*** End of MidiSheet variables ***/
 
-	protected ScrollAnimation scrollAnimation;
-
-	protected ArrayList<MidiTrack> Tracks;
-	protected ArrayList<MidiNote> Notes;
+	protected ArrayList<MidiTrack> tracks;	/* The Tracks of the song */
+	protected ArrayList<MidiNote> notes;	/* The Notes of the first Track (Track 0) */
 	protected boolean search;
 	static View choice;
 	static View result;
@@ -96,7 +94,6 @@ public abstract class ReadingGame extends Activity {
 
 		ClefSymbol.LoadImages(this);
 		TimeSigSymbol.LoadImages(this);
-		MidiPlayer.LoadImages(this);
 
 		// Parse the MidiFile from the raw bytes
 		Uri uri;
@@ -169,17 +166,18 @@ public abstract class ReadingGame extends Activity {
 		setContentView(layout);
 
 		// Back to the score button
-		Button scoreB = (Button) findViewById(R.id.back);
-		scoreB.setOnClickListener(new View.OnClickListener() {
+		Button backToScore = (Button) findViewById(R.id.back);
+		backToScore.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (ECML.song != null) {
+					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 					ChooseSongActivity.openFile(ECML.song);
 				} else {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.mode,"chooseSong");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
+					startActivity(ECML.intent);
 				}
 			}
 		});
@@ -192,6 +190,7 @@ public abstract class ReadingGame extends Activity {
 			public void onClick(View v) {
 				showHelpDialog();
 			}
+			
 		});
 
 		// Change game button
@@ -209,6 +208,7 @@ public abstract class ReadingGame extends Activity {
 
 				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(intent);
+				finish();
 			}
 		});
 
@@ -219,27 +219,16 @@ public abstract class ReadingGame extends Activity {
 
 		createSheetMusic(options);
 
-		scrollAnimation = new ScrollAnimation(sheet, options.scrollVert); // needed
-																			// for
-																			// stopping
-																			// the
-																			// music
-																			// and
-																			// recording
-																			// when
-																			// touching
-																			// the
-																			// score
 
 	}
 	
-	/*Make the result view appears*/
+	/** Make the result view appears*/
 	public static void result() {
 		choice.setVisibility(View.GONE);
 		result.setVisibility(View.VISIBLE);
 	}
 
-	/* Create the MidiPlayer and Piano views */
+	/** Create the MidiPlayer and Piano views */
 	void createView() {
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
@@ -249,32 +238,6 @@ public abstract class ReadingGame extends Activity {
 		topLayout = getLayoutInflater().inflate(R.layout.main_top, layout, false);
 		topLayout.setVisibility(View.GONE);
 		layout.addView(topLayout);
-
-		player.getPianoButton().setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				options.showPiano = !options.showPiano;
-				player.SetPiano(piano, options);
-				SharedPreferences.Editor editor = getPreferences(0).edit();
-				editor.putBoolean("showPiano", options.showPiano);
-				String json = options.toJson();
-				if (json != null) {
-					editor.putString("" + midiCRC, json);
-				}
-				editor.commit();
-			}
-		});
-
-		player.getPlayAndRecordButton().setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// startAudioRecordingAndPlayingMusic();
-			}
-		});
-
-		player.getPlayRecordButton().setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// playAudio();
-			}
-		});
 
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
@@ -367,6 +330,7 @@ public abstract class ReadingGame extends Activity {
 	protected void onPause() {
 		if (player != null) {
 			player.Pause();
+			player.unmute();
 		}
 		super.onPause();
 	}

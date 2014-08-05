@@ -158,5 +158,6 @@
     <string name="choose_combine_interval">Choose the Combine Interval</string>
     <string name="choose_start_measure">Choose the start measure</string>
     <string name="choose_end_measure">Choose the End Measure</string>
+    <string name="back_to_score">Back to the Score</string>
 
 </resources>

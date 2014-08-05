@@ -33,8 +33,33 @@ public class GameActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
+		
+		// Start the Speed part of the game
+		Button speed = (Button) findViewById(R.id.speed);
+		speed.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), SpeedGameModeActivity.class);
+				startActivity(intent);
+				finish();
+			}
+			
+		});
 
-		// Start the reading of notes part of the game
+		// Start the Musical Ear game
+		Button musicalEar = (Button) findViewById(R.id.musicalEar);
+		musicalEar.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+//				Intent intent = new Intent(getApplicationContext(), MusicalEarActivity.class);
+//				startActivity(intent);
+			}
+			
+		});
+		
+		// Start the Reading of Notes part of the game
 		Button reading = (Button) findViewById(R.id.reading);
 		reading.setOnClickListener(new View.OnClickListener() {
 
@@ -43,27 +68,30 @@ public class GameActivity extends Activity {
 				Intent intent = new Intent(getApplicationContext(), ReadingGameModeActivity.class);
 				startActivity(intent);
 			}
+			
 		});
 		
-		
-		// Start the speed part of the game
-		Button speed = (Button) findViewById(R.id.speed);
-		speed.setOnClickListener(new View.OnClickListener() {
+		// Start Technique part of the game
+		Button technique = (Button) findViewById(R.id.technique);
+		technique.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), SpeedGameModeActivity.class);
-				startActivity(intent);
+//				Intent intent = new Intent(getApplicationContext(), TechniqueActivity.class);
+//				startActivity(intent);
 			}
+			
 		});
+		
 
 		// Back to the score button
-		Button backToScore = (Button) findViewById(R.id.backscore);
+		Button backToScore = (Button) findViewById(R.id.backToScore);
 		backToScore.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (ECML.song != null) {
+					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 					ChooseSongActivity.openFile(ECML.song);
 				}
 				else {
@@ -72,6 +100,7 @@ public class GameActivity extends Activity {
 					startActivity(ECML.intent);
 				}
 			}
+			
 		});
 	}
 
