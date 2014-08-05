@@ -193,7 +193,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Fa#/Si\u266D"
+            android:text="Fa#/Sol\u266D"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
@@ -232,17 +232,7 @@
         android:layout_marginLeft="292dp"
         android:background="@color/blue"
         android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center"
-            android:text="Stop"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
+   
 
         <TextView
             android:id="@+id/affiche"

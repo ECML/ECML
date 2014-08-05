@@ -66,7 +66,7 @@
     <string name="startmetronome">Start metronome</string>
     <string name="stopmetronome">Stop metronome</string>
     <string name="howtoplay">How to play the game</string>
-    <string name="help_reading">Hear the notes and then find them. The goal is to find the maximum of right notes.</string>
+    <string name="help_reading">Read the notes and then find them. The goal is to find the maximum of right notes.</string>
     <string android:id="@+id/help_speed" name="help_speed" android:layout_width="wrap_content" android:layout_height="wrap_content">Play the notes with the good rythm.</string>
     <string name="shift_down">Shift Down</string>
     <string name="shift_up">Shift Up</string>

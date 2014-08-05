@@ -52,7 +52,7 @@ public abstract class ReadingGame extends Activity {
 	protected int counter = 0;
 	protected int score = 0;
 
-	private int level = 1;
+	public static int level = 1;
 
 	/*** MidiSheet variables ***/
 
@@ -73,8 +73,8 @@ public abstract class ReadingGame extends Activity {
 	protected ArrayList<MidiTrack> Tracks;
 	protected ArrayList<MidiNote> Notes;
 	protected boolean search;
-	View choice;
-	View result;
+	static View choice;
+	static View result;
 	private View topLayout;
 
 	protected MidiFile midifile; /* The midi file to play */
@@ -107,14 +107,14 @@ public abstract class ReadingGame extends Activity {
 			uri = Uri.parse("file:///android_asset/Easy_Songs__Silent_Night.mid");
 			title = this.getIntent().getStringExtra(MidiTitleID);
 			if (title == null) {
-				title = "Easy_Songs__Silent_Night.mid";
+				title = "Silent Night";
 			}
 		}
 		else if (level == 2) {
 			uri = Uri.parse("file:///android_asset/Bach__Invention_No._13.mid");
 			title = this.getIntent().getStringExtra(MidiTitleID);
 			if (title == null) {
-				title = "Bach_Invention_No._13.mid";
+				title = "Bach - Invention n°13";
 			}
 		}
 		else {
@@ -122,7 +122,7 @@ public abstract class ReadingGame extends Activity {
 			uri = Uri.parse("file:///android_asset/Chopin__Nocturne_Op._9_No._1_in_B-flat_minor.mid");
 			title = this.getIntent().getStringExtra(MidiTitleID);
 			if (title == null) {
-				title = "Chopin__Nocturne_Op._9_No._1_in_B-flat_minor.mid";
+				title = "Chopin - Nocturn Op.9 N°1 in B flat minor";
 			}
 		}
 		FileUri file = new FileUri(uri, title);
@@ -212,20 +212,6 @@ public abstract class ReadingGame extends Activity {
 			}
 		});
 
-		// Change stop button
-		Button stop = (Button) findViewById(R.id.stop);
-		stop.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				score = 0;
-				counter = 0;
-				if (player != null) {
-					player.Stop();
-				}
-			}
-		});
-
 		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
 		layout.addView(result);
 		result.setVisibility(View.GONE);
@@ -245,6 +231,12 @@ public abstract class ReadingGame extends Activity {
 																			// the
 																			// score
 
+	}
+	
+	/*Make the result view appears*/
+	public static void result() {
+		choice.setVisibility(View.GONE);
+		result.setVisibility(View.VISIBLE);
 	}
 
 	/* Create the MidiPlayer and Piano views */
@@ -312,9 +304,9 @@ public abstract class ReadingGame extends Activity {
 			piano.setVisibility(View.VISIBLE);
 		}
 		sheet = new SheetMusic(this);
-		sheet.init(midifile, options, false, 1, 2);
-		if (level == 2) {sheet.init(midifile, options, true, 1, 45);}
-		if (level == 3) {sheet.init(midifile, options, true, 1, 45);}
+		sheet.init(midifile, options, false, 0, 2);
+		if (level == 2) {sheet.init(midifile, options, true, 0, 45);}
+		if (level == 3) {sheet.init(midifile, options, true, 0, 45);}
 		sheet.setPlayer(player);
 		layout.addView(sheet);
 		piano.SetMidiFile(midifile, options, player);
