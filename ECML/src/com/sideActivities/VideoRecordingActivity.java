@@ -239,7 +239,6 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 				intentToPlayVideo.setDataAndType(Uri.parse(lastvideo), "video/*");
 				startActivity(intentToPlayVideo);
 				Toast.makeText(context, "Playing Last Video Record", Toast.LENGTH_SHORT).show();
-				this.finish();
 			} else {
 				Toast.makeText(context, "No Recent Video Record", Toast.LENGTH_SHORT).show();
 			}

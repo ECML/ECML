@@ -983,7 +983,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				intentToPlayVideo.setDataAndType(Uri.parse(lastvideo), "video/*");
 				startActivity(intentToPlayVideo);
 				Toast.makeText(context, "Playing Last Video Record", Toast.LENGTH_SHORT).show();
-				this.finish();
 			} else {
 				Toast.makeText(context, "No Recent Video Record", Toast.LENGTH_SHORT).show();
 			}
