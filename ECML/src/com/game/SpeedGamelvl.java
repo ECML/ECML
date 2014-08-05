@@ -168,6 +168,7 @@ public abstract class SpeedGamelvl extends Activity {
 					ECML.intent.putExtra(ChooseSongActivity.mode, "chooseSong");
 					startActivity(ECML.intent);
 				}
+				finish();
 			}
 			
 		});

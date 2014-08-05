@@ -45,6 +45,7 @@ public class SpeedGameModeActivity extends Activity {
 						ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 						startActivity(ECML.intent);
 					}
+					finish();
 				}
 				
 			});
@@ -83,7 +84,6 @@ public class SpeedGameModeActivity extends Activity {
 					ECML.intent.putExtra(ChooseSongActivity.mode, "speed");
 					ECML.intent.putExtra("level", 1);
 					startActivity(ECML.intent);
-					finish();
 				}
 				
 			});

@@ -55,6 +55,7 @@ public class GameActivity extends Activity {
 			public void onClick(View v) {
 //				Intent intent = new Intent(getApplicationContext(), MusicalEarActivity.class);
 //				startActivity(intent);
+//				finish();
 			}
 			
 		});
@@ -67,6 +68,7 @@ public class GameActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ReadingGameModeActivity.class);
 				startActivity(intent);
+				finish();
 			}
 			
 		});
@@ -79,6 +81,7 @@ public class GameActivity extends Activity {
 			public void onClick(View v) {
 //				Intent intent = new Intent(getApplicationContext(), TechniqueActivity.class);
 //				startActivity(intent);
+//				finish();
 			}
 			
 		});
@@ -99,6 +102,7 @@ public class GameActivity extends Activity {
 					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 					startActivity(ECML.intent);
 				}
+				finish();
 			}
 			
 		});
