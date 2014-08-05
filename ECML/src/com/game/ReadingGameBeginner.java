@@ -15,7 +15,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class ReadingGameBeginner extends ReadingGame {
@@ -26,14 +29,14 @@ public class ReadingGameBeginner extends ReadingGame {
 	private int numberPoints = 0;
 	private int firstTry = 0;
 	private int numberNote = 46;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		counter = 0; // note counter
 		Tracks = midifile.getTracks();
-		
+
 		// We use by default the instrument n°0 which is the piano
 		Notes = findNotes(Tracks, 0);
 
@@ -42,19 +45,101 @@ public class ReadingGameBeginner extends ReadingGame {
 		textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + numberNote);
 		Log.i("color", "" + SheetMusic.NoteColor(2));
 		// SheetMusic.NoteColors[0] = Color.GREEN;
-	
-		// La button
+
+		// All the buttons
 		final Button la = (Button) findViewById(R.id.la);
+		final Button lad = (Button) findViewById(R.id.lad);
+		final Button si = (Button) findViewById(R.id.si);
+		final Button donote = (Button) findViewById(R.id.donote);
+		final Button dod = (Button) findViewById(R.id.dod);
+		final Button re = (Button) findViewById(R.id.re);
+		final Button red = (Button) findViewById(R.id.red);
+		final Button mi = (Button) findViewById(R.id.mi);
+		final Button fa = (Button) findViewById(R.id.fa);
+		final Button fad = (Button) findViewById(R.id.fad);
+		final Button sol = (Button) findViewById(R.id.sol);
+		final Button sold = (Button) findViewById(R.id.sold);
+
+		Switch notation = (Switch) findViewById(R.id.notation);
+		notation.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			 
+			   @Override
+			   public void onCheckedChanged(CompoundButton buttonView,
+			     boolean isChecked) {
+			 
+			    if(isChecked){
+			    	la.setText("A");
+					lad.setText("A#/B\u266D");
+					si.setText("B");
+					donote.setText("C");
+					dod.setText("C#/D\u266D");
+					re.setText("D");
+					red.setText("D#/E\u266D");
+					mi.setText("E");
+					fa.setText("F");
+					fad.setText("F#/G\u266D");
+					sol.setText("G");
+					sold.setText("G#/A\u266D");
+			    }else{
+			    	la.setText("la");
+					lad.setText("la#/si\u266D");
+					si.setText("si");
+					donote.setText("do");
+					dod.setText("do#/re\u266D");
+					re.setText("re");
+					red.setText("re#/mi\u266D");
+					mi.setText("mi");
+					fa.setText("fa");
+					fad.setText("fa#/sol\u266D");
+					sol.setText("sol");
+					sold.setText("sol#/la\u266D");
+			    }
+			 
+			   }
+			  });
+			   
+			  //check the current state before we display the screen
+			  if(notation.isChecked()){
+				  la.setText("A");
+					lad.setText("A#/B\u266D");
+					si.setText("B");
+					donote.setText("C");
+					dod.setText("C#/D\u266D");
+					re.setText("D");
+					red.setText("D#/E\u266D");
+					mi.setText("E");
+					fa.setText("F");
+					fad.setText("F#/G\u266D");
+					sol.setText("G");
+					sold.setText("G#/A\u266D");
+			  }
+			  else {
+				  la.setText("la");
+					lad.setText("la#/si\u266D");
+					si.setText("si");
+					donote.setText("do");
+					dod.setText("do#/re\u266D");
+					re.setText("re");
+					red.setText("re#/mi\u266D");
+					mi.setText("mi");
+					fa.setText("fa");
+					fad.setText("fa#/sol\u266D");
+					sol.setText("sol");
+					sold.setText("sol#/la\u266D");
+			  }
+
+
+		// La button
 		la.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+
 				testNote("A", la);
 			}
 		});
 
 		// La sharp button
-		final Button lad = (Button) findViewById(R.id.lad);
 		lad.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -66,7 +151,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		orangeColor = (ColorDrawable) la.getBackground();
 
 		// Si button
-		final Button si = (Button) findViewById(R.id.si);
 		si.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -76,7 +160,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		});
 
 		// Do button
-		final Button donote = (Button) findViewById(R.id.donote);
 		donote.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -86,7 +169,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		});
 
 		// Do sharp button
-		final Button dod = (Button) findViewById(R.id.dod);
 		dod.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -96,7 +178,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		});
 
 		// Ré button
-		final Button re = (Button) findViewById(R.id.re);
 		re.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -106,7 +187,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		});
 
 		// Ré sharp button
-		final Button red = (Button) findViewById(R.id.red);
 		red.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -116,7 +196,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		});
 
 		// Mi button
-		final Button mi = (Button) findViewById(R.id.mi);
 		mi.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -126,7 +205,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		});
 
 		// Fa button
-		final Button fa = (Button) findViewById(R.id.fa);
 		fa.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -136,7 +214,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		});
 
 		// Fa sharp button
-		final Button fad = (Button) findViewById(R.id.fad);
 		fad.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -146,7 +223,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		});
 
 		// Sol button
-		final Button sol = (Button) findViewById(R.id.sol);
 		sol.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -156,7 +232,6 @@ public class ReadingGameBeginner extends ReadingGame {
 		});
 
 		// Sol sharp button
-		final Button sold = (Button) findViewById(R.id.sold);
 		sold.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -194,7 +269,7 @@ public class ReadingGameBeginner extends ReadingGame {
 		ImageView star = (ImageView) findViewById(R.id.star);
 		TextView score = (TextView) findViewById(R.id.score);
 		TextView next = (TextView) findViewById(R.id.nextLevel);
-		
+
 		if (counter == numberNote) {
 			ReadingGame.choice.setVisibility(View.GONE);
 			ReadingGame.result.setVisibility(View.VISIBLE);
