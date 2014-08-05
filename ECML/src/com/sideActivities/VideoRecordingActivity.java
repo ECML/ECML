@@ -46,8 +46,10 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 	private String path;				/* Path of last Video Record */
 	private boolean existVideoRecord;	/* Whether or not an Video Record already exists */
 	private boolean isRecording;		/* Whether or not the Video Media Recorder is recording */
-	private boolean front = true;		/* Whether the front camera or the back camera is used */
+	private boolean front;				/* Whether the front camera or the back camera is used */
 	private String cameraSide;			/* The String telling which camera is used accordingly to 'front' */
+	private static final String FRONT_SIDE = "Front";
+	private static final String BACK_SIDE = "Back";
 	
 	private long fileName;						/* File name of last Video Record */
 	private String ext = ".mp4";				/* Extension of Audio and VIDEO Record files */
@@ -61,6 +63,7 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.videorecording);
 
+		chooseFrontOrBack();
 		
 		surfaceView = (SurfaceView) findViewById(R.id.surface_camera2);
 		surfaceHolder = surfaceView.getHolder();
@@ -114,6 +117,15 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 			}
 			
 		});
+	}
+	
+	/** When this activity pauses, stop recording */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if (isRecording) {
+			stopVideoRecording();
+		}
 	}
 
 	/** Get the Filename of the next Video Record, also updates the path */
@@ -241,7 +253,31 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 	}
+	
+	/** Set the Front Camera if there is one, otherwise the Back Camera
+	 * and if there isn't either, don't do anything
+	 */
+	private void chooseFrontOrBack() {
+		Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+		int cameraCount = Camera.getNumberOfCameras();
+		int i = 0;
+		boolean chosen = false;
+		while (i < cameraCount || !chosen) {
+			Camera.getCameraInfo(i, cameraInfo);
+			if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+				chosen = true;
+				front = true;
+				cameraSide = FRONT_SIDE;
+			} else if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+				chosen = true;
+				front = false;
+				cameraSide = BACK_SIDE;
+			}
+			i++;
+		}
+	}
 
+	/** Open the front facing camera */
 	private Camera openFrontFacingCamera() {
 		int cameraCount = 0;
 		Camera cam = null;
@@ -264,19 +300,18 @@ public class VideoRecordingActivity extends Activity implements SurfaceHolder.Ca
 	
 	/** Switch the camera from front to back and vice versa */
 	private void switchCamera() {
-		// We should add a test here
-//		if (Camera.getNumberOfCameras() > 1) {
+		if (Camera.getNumberOfCameras() > 1) {
 			front = !front;
 			if (front) {
-				cameraSide = "Front";
+				cameraSide = FRONT_SIDE;
 			}
 			else {
-				cameraSide = "Back";
+				cameraSide = BACK_SIDE;
 			}
 			Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
-//		} else {
-//			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
-//		}
+		} else {
+			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
+		}
 	}
 
 }
