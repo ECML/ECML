@@ -17,7 +17,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +32,7 @@ import com.game.ReadingGameBeginner;
 import com.game.ReadingGameNormal;
 import com.game.SpeedGamelvl1;
 import com.game.SpeedGamelvln;
+import com.sideActivities.BaseTabActivity;
 
 /** @class ChooseSongActivity
  * <br>
@@ -42,7 +42,7 @@ import com.game.SpeedGamelvln;
  * - Recent (RecentSongsActivity) : Display of list of recently opened songs<br>
  * - Browse (FileBrowserActivity) : Let the user browse the filesystem for songs
  */
-public class ChooseSongActivity extends TabActivity implements OnTabChangeListener {
+public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeListener {
 
 	private Intent intent;
     static ChooseSongActivity globalActivity;

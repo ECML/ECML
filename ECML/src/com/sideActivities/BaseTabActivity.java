@@ -1,6 +1,6 @@
 package com.sideActivities;
 
-import android.app.Activity;
+import android.app.TabActivity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +14,7 @@ import com.ecml.R;
 import com.game.GameActivity;
 import com.metronome.MetronomeActivity;
 
-public class BaseActivity extends Activity {
+public class BaseTabActivity extends TabActivity {
 	
 	/** When the menu button is pressed, initialize the menu. */
 	@Override
@@ -38,7 +38,6 @@ public class BaseActivity extends Activity {
 			return true;
 		case R.id.chooseSongActivity:
 			Intent chooseSongActivity = new Intent(getApplicationContext(), ChooseSongActivity.class);
-			chooseSongActivity.putExtra(ChooseSongActivity.mode, "chooseSong");
 			startActivity(chooseSongActivity);
 			finish();
 			return true;

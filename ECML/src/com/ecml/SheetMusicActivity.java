@@ -66,7 +66,14 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.calendar.CalendarActivity;
+import com.game.GameActivity;
 import com.metronome.Metronome;
+import com.metronome.MetronomeActivity;
+import com.sideActivities.AudioRecordingActivity;
+import com.sideActivities.TuningForkActivity;
+import com.sideActivities.VideoRecordingActivity;
+import com.sideActivities.YoutubeActivity;
 
 /***************************************************************************************************************/
 /***************************************************************************************************************/
@@ -512,6 +519,62 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		case R.id.pauseReplayAudioRecording:
 			pauseAudio();
 			return true;
+		case R.id.mainScreen:
+			Intent mainScreen = new Intent(getApplicationContext(), ECMLActivity.class);
+			// Go to the main screen and kill any other living activities
+			mainScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(mainScreen);
+			return true;
+		case R.id.chooseSongActivity:
+			Intent chooseSongActivity = new Intent(getApplicationContext(), ChooseSongActivity.class);
+			startActivity(chooseSongActivity);
+			finish();
+			return true;
+		case R.id.calendarActivity:
+			Intent calendarActivity = new Intent(getApplicationContext(), CalendarActivity.class);
+			startActivity(calendarActivity);
+			finish();
+			return true;
+		case R.id.audioActivity:
+			Intent audioActivity = new Intent(getApplicationContext(), AudioRecordingActivity.class);
+			startActivity(audioActivity);
+			finish();
+			return true;
+		case R.id.videoActivity:
+			Intent videoActivity = new Intent(getApplicationContext(), VideoRecordingActivity.class);
+			startActivity(videoActivity);
+			finish();
+			return true;
+		case R.id.gameActivity:
+			Intent gameActivity = new Intent(getApplicationContext(), GameActivity.class);
+			startActivity(gameActivity);
+			finish();
+			return true;
+		case R.id.messengerActivity:
+			Intent messengerActivity = new Intent(getApplicationContext(), com.androidim.Login.class);
+			startActivity(messengerActivity);
+			finish();
+			return true;
+		case R.id.youtubeActivity:
+			Intent youtubeActivity = new Intent(getApplicationContext(), YoutubeActivity.class);
+			startActivity(youtubeActivity);
+			finish();
+			return true;
+		case R.id.metronomeActivity:
+			Intent metronomeActivity = new Intent(getApplicationContext(), MetronomeActivity.class);
+			startActivity(metronomeActivity);
+			finish();
+			return true;
+		case R.id.tuningForkActivity:
+			Intent tuningForkActivity = new Intent(getApplicationContext(), TuningForkActivity.class);
+			startActivity(tuningForkActivity);
+			finish();
+			return true;
+		case R.id.communicationActivity:
+			Intent communicationActivity = new Intent(getApplicationContext(), FacebookActivity.class);
+			startActivity(communicationActivity);
+			finish();
+			return true;	
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -1080,9 +1143,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		int action = event.getAction();
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_MENU:
-			if (action == KeyEvent.ACTION_UP && menu != null && menu.findItem(R.id.settings) != null) {
+			if (action == KeyEvent.ACTION_UP && menu != null && menu.findItem(R.id.mainDropDownMenu) != null) {
 				// Open the overflow menu as if we pressed the onscreen settings button
-				menu.performIdentifierAction(R.id.settings, 0);
+				menu.performIdentifierAction(R.id.mainDropDownMenu, 0);
 				return true;
 			}
 			return true;

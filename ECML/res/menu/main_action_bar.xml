@@ -11,7 +11,7 @@
                 android:id="@+id/mainScreen"
                 android:icon="@drawable/ic_menu_selectall_holo_light"
                 android:title="@string/main_menu"/>
-             <item
+            <item
                 android:id="@+id/chooseSongActivity"
                 android:icon="@drawable/ic_menu_search"
                 android:title="@string/choose_song"/>
