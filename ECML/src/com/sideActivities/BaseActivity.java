@@ -1,6 +1,5 @@
 package com.sideActivities;
 
-import android.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
@@ -11,6 +10,7 @@ import com.calendar.CalendarActivity;
 import com.ecml.ChooseSongActivity;
 import com.ecml.ECMLActivity;
 import com.ecml.FacebookActivity;
+import com.ecml.R;
 import com.game.GameActivity;
 import com.metronome.MetronomeActivity;
 
