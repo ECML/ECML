@@ -11,7 +11,7 @@ import android.widget.TabHost.TabSpec;
 import com.ecml.R;
 import com.sideActivities.BaseTabActivity;
 
-public class CalendarActivity extends  BaseTabActivity {
+public class CalendarActivity extends BaseTabActivity {
 
 	public static final String[] EVENT_PROJECTION = new String[] { Calendars._ID, // 0
 			Calendars.ACCOUNT_NAME, // 1

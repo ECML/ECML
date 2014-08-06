@@ -20,7 +20,7 @@
             android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="Help"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" >
         </Button>
 
@@ -31,7 +31,7 @@
             android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="Change game"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" >
         </Button>
 
@@ -39,12 +39,24 @@
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="Back to the score"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" >
         </Button>
+        <!-- 
+        <Button
+            android:id="@+id/playReading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="Play"
+            android:textColor="@color/white"
+            android:textSize="15sp" >
+        </Button>
+        -->    
     </LinearLayout>
 
     <LinearLayout
@@ -54,6 +66,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="121dp"
+        android:layout_marginTop="30dp"
         android:background="@color/blue"
         android:orientation="horizontal" >
 
@@ -67,7 +80,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -80,7 +93,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -93,7 +106,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -106,7 +119,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -119,7 +132,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -132,7 +145,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -145,7 +158,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -158,7 +171,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -171,7 +184,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -184,7 +197,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -197,7 +210,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -208,7 +221,7 @@
             android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
     </LinearLayout>
 

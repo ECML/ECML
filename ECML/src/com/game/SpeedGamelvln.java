@@ -94,7 +94,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 				}
 
 
-				Double time = player.getprevPulseTime();
+				Double time = player.getPrevPulseTime();
 				while (notes.get(counter).getStartTime() + notes.get(counter).getDuration() < time) {
 					counter++;
 					point = true;
@@ -104,10 +104,10 @@ public class SpeedGamelvln extends SpeedGamelvl {
 
 				if (test.equals(noteNames[keyDisplay.ordinal()][data.note % 12])) {
 
-					int début = notes.get(counter).getStartTime();
+					int debut = notes.get(counter).getStartTime();
 					int fin = notes.get(counter).getEndTime();
 
-					if (player.getprevPulseTime() > début && player.getprevPulseTime() < fin) {
+					if (player.getPrevPulseTime() > debut && player.getPrevPulseTime() < fin) {
 						if (point) {
 							score++;
 							point = false;

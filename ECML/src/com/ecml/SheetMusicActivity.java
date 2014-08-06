@@ -323,8 +323,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
 		params.gravity = Gravity.CENTER_HORIZONTAL;
 
-		layout.addView(piano, params);
 		layout.addView(player);
+		layout.addView(piano, params);
 		setContentView(layout);
 		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.orange));
 		player.SetPiano(piano, options);

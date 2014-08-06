@@ -7,8 +7,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -84,12 +87,11 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	protected MicrophonePitchPoster pitchPoster;
 
 	/*** End of PitchDetection variables ***/
-
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.speedgamelvl1);
 
 		/*****************
 		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
@@ -129,6 +131,10 @@ public abstract class SpeedGamelvl extends BaseActivity {
 		options.shade1Color = settings.getInt("shade1Color", options.shade1Color);
 		options.shade2Color = settings.getInt("shade2Color", options.shade2Color);
 		options.showPiano = settings.getBoolean("showPiano", true);
+		options.tracks[0] = true;
+		for (int i = 1; i < options.tracks.length; i++) {
+			options.tracks[i] = false;
+		}
 		String json = settings.getString("" + midiCRC, null);
 		MidiOptions savedOptions = MidiOptions.fromJson(json);
 		if (savedOptions != null) {
@@ -137,21 +143,35 @@ public abstract class SpeedGamelvl extends BaseActivity {
 
 		/* Set the MidiPlayer and Piano */
 		layout = new LinearLayout(this);
+		layout.setOrientation(LinearLayout.VERTICAL);
+		View speedGameView = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
+		layout.addView(speedGameView);
 		player = new MidiPlayer(this);
 		piano = new Piano(this);
 		player.SetPiano(piano, options);
 		layout.addView(player);
-		layout.addView(piano);
+		player.setVisibility(View.GONE);
+		
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
+		layout.addView(piano,params);
+		params.gravity = Gravity.CENTER_HORIZONTAL;
 		setContentView(layout);
 		layout.requestLayout();
 		
 		player.mute();
 
-		layout = new LinearLayout(this);
-		layout.setOrientation(LinearLayout.VERTICAL);
-		choice = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
-		layout.addView(choice);
-		setContentView(layout);
+//		layout = new LinearLayout(this);
+//		
+//		layout.setOrientation(LinearLayout.VERTICAL);
+//		choice = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
+//		layout.addView(choice);
+//		setContentView(layout);
 
 		// Back to the score button
 		Button backToScore = (Button) findViewById(R.id.back);

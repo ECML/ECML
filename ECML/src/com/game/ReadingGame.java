@@ -62,7 +62,6 @@ public abstract class ReadingGame extends BaseActivity {
 	protected Thread playingthread;
 	protected SheetMusic sheet; /* The sheet music */
 	protected LinearLayout layout; /* THe layout */
-	protected Piano piano; /* The piano at the top */
 	protected long midiCRC; /* CRC of the midi bytes */
 
 	/*** End of MidiSheet variables ***/
@@ -233,26 +232,13 @@ public abstract class ReadingGame extends BaseActivity {
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		player = new MidiPlayer(this);
-		piano = new Piano(this);
 
 		topLayout = getLayoutInflater().inflate(R.layout.main_top, layout, false);
 		topLayout.setVisibility(View.GONE);
 		layout.addView(topLayout);
-
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		int width = size.x;
-		int height = size.y;
-
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
-		params.gravity = Gravity.CENTER_HORIZONTAL;
-
-		layout.addView(piano, params);
 		layout.addView(player);
 		setContentView(layout);
 		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.orange));
-		player.SetPiano(piano, options);
 		layout.requestLayout();
 	}
 
@@ -261,19 +247,12 @@ public abstract class ReadingGame extends BaseActivity {
 		if (sheet != null) {
 			layout.removeView(sheet);
 		}
-		if (!options.showPiano) {
-			piano.setVisibility(View.GONE);
-		} else {
-			piano.setVisibility(View.VISIBLE);
-		}
 		sheet = new SheetMusic(this);
 		sheet.init(midifile, options, false, 0, 2);
 		if (level == 2) {sheet.init(midifile, options, true, 0, 45);}
 		if (level == 3) {sheet.init(midifile, options, true, 0, 45);}
 		sheet.setPlayer(player);
 		layout.addView(sheet);
-		piano.SetMidiFile(midifile, options, player);
-		piano.SetShadeColors(options.shade1Color, options.shade2Color);
 		player.SetMidiFile(midifile, options, sheet);
 		layout.requestLayout();
 		sheet.callOnDraw();
@@ -317,7 +296,6 @@ public abstract class ReadingGame extends BaseActivity {
 		super.onResume();
 		layout.requestLayout();
 		player.invalidate();
-		piano.invalidate();
 		if (sheet != null) {
 			sheet.invalidate();
 		}

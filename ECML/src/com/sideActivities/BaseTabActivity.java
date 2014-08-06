@@ -2,9 +2,13 @@ package com.sideActivities;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.calendar.CalendarActivity;
 import com.ecml.ChooseSongActivity;
@@ -14,7 +18,9 @@ import com.ecml.R;
 import com.game.GameActivity;
 import com.metronome.MetronomeActivity;
 
-public class BaseTabActivity extends TabActivity {
+public class BaseTabActivity extends TabActivity implements KeyListener {
+	
+	protected Menu menu;
 	
 	/** When the menu button is pressed, initialize the menu. */
 	@Override
@@ -23,6 +29,7 @@ public class BaseTabActivity extends TabActivity {
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_action_bar, menu);
+		this.menu = menu;
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -89,5 +96,56 @@ public class BaseTabActivity extends TabActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	@Override
+	public int getInputType() {
+		return 0;
+	}
+
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		int action = event.getAction();
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_MENU:
+			if (action == KeyEvent.ACTION_UP && menu != null && menu.findItem(R.id.mainDropDownMenu) != null) {
+				// Open the overflow menu as if we pressed the onscreen settings button
+				menu.performIdentifierAction(R.id.mainDropDownMenu, 0);
+				return true;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean onKeyOther(View view, Editable text, KeyEvent event) {
+		return false;
+	}
+
+	@Override
+	public void clearMetaKeyState(View view, Editable content, int states) {
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		int action = event.getAction();
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (action == KeyEvent.ACTION_DOWN) { // That case needs to be added because there's now a keyListener
+				this.finish();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean onKeyDown(View view, Editable text, int keyCode, KeyEvent event) {
+		return false;
+	}
+
+	@Override
+	public boolean onKeyUp(View view, Editable text, int keyCode, KeyEvent event) {
+		return false;
 	}
 }

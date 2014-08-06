@@ -2,9 +2,11 @@ package com.game;
 
 import java.util.ArrayList;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.ecml.MidiNote;
 import com.ecml.MidiTrack;
 import com.ecml.R;
+import com.ecml.SheetMusic;
 
 /* First implementation of the SpeeGame
  * Wait for the users to play the right note */
@@ -23,9 +26,12 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 	// TODO Unused variables to delete or to use
 	private boolean pause = true;
 	private String test;
+	private Double currentPulseTime;
+	private Double prevPulseTime;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().getDecorView().setBackgroundColor(Color.BLACK);
 
 		counter = 0;	// note counter
 
@@ -40,9 +46,9 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 
 			@Override
 			public void onClick(View v) {
-
-				Double start = player.getprevPulseTime();
-
+				currentPulseTime = 0.0 + notes.get(0).getDuration();
+				prevPulseTime = 0.0;
+				
 				textView = (TextView) findViewById(R.id.affiche);
 				textView.setText("Play the note n°" + compteurTexte);
 
@@ -52,6 +58,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 				pitchPoster.setHandler(new UIUpdateHandler());
 				pitchPoster.start();
 
+				reshadeNotes();
 			}
 		});
 
@@ -108,6 +115,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 
 				// Check if it is the expected note
 				if (test.equals(noteNames[keyDisplay.ordinal()][data.note % 12])) {
+					advanceOneNote();
 					counter++;
 					compteurTexte++;
 					textView.setText("Play the note n°" + compteurTexte);
@@ -134,4 +142,26 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 		}
 		return tracks.get(i).getNotes();
 	}
+	
+	public void advanceOneNote() {
+	   	 if (midifile == null || sheet == null) {
+	            return;
+	        }
+	        /* Remove any highlighted notes */
+	        sheet.ShadeNotes(-10, player.getCurrentPulseTime().intValue(), SheetMusic.DontScroll);
+	        piano.ShadeNotes(-10, player.getCurrentPulseTime().intValue());
+	        player.setCurrentPulseTime(currentPulseTime);
+	        prevPulseTime = currentPulseTime;
+	        player.setPrevPulseTime(prevPulseTime);
+	        currentPulseTime = 0.0 + notes.get(counter).getStartTime() + notes.get(counter).getDuration();
+	        if (currentPulseTime <= midifile.getTotalPulses()) {
+	        	player.setCurrentPulseTime(currentPulseTime);
+	        }
+	        reshadeNotes();
+	   }
+		
+		public void reshadeNotes() {
+			sheet.ShadeNotes(currentPulseTime.intValue(), prevPulseTime.intValue(), SheetMusic.ImmediateScroll);
+	        piano.ShadeNotes(currentPulseTime.intValue(), prevPulseTime.intValue());
+		}
 }
