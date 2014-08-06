@@ -1,10 +1,7 @@
 package com.sideActivities;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.ColorDrawable;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -13,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -22,7 +18,6 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.ecml.R;
 
@@ -38,7 +33,7 @@ import com.ecml.R;
  * 124 corresponds to C10
  *
  */
-public class TuningForkActivity extends Activity {
+public class TuningForkActivity extends BaseActivity {
 
 	// Set up the objects that are on the screen
 	private TextView freqView;			/* The text view displaying the current frequency */

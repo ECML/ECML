@@ -3,7 +3,6 @@ package com.game;
 import java.util.ArrayList;
 import java.util.zip.CRC32;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,11 +29,12 @@ import com.ecml.Piano;
 import com.ecml.R;
 import com.ecml.SheetMusic;
 import com.ecml.TimeSigSymbol;
+import com.sideActivities.BaseActivity;
 
 
 /* Abstract Class which defines the main part of all the speedgame activities */
 
-public abstract class SpeedGamelvl extends Activity {
+public abstract class SpeedGamelvl extends BaseActivity {
 
 
     protected enum KeyDisplay {

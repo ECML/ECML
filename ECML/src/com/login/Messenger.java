@@ -1,8 +1,8 @@
 package com.login;
 
-import android.app.Activity;
+import com.sideActivities.BaseActivity;
 
-public class Messenger extends Activity{
+public class Messenger extends BaseActivity{
  
 	 public UsersDAO usersdb = new UsersDAO(this) ;
 	 

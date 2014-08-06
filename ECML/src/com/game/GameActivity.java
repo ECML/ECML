@@ -1,19 +1,14 @@
 package com.game;
 
-import com.ecml.ChooseSongActivity;
-import com.ecml.ECML;
-import com.ecml.R;
-import com.ecml.R.color;
-import com.ecml.R.id;
-import com.ecml.R.layout;
-
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.ecml.ChooseSongActivity;
+import com.ecml.ECML;
+import com.ecml.R;
+import com.sideActivities.BaseActivity;
 
 /** @class GameActivity
  * <br>
@@ -26,7 +21,7 @@ import android.widget.Button;
  * </ul>
  * From this point, you can also choose to go back to the score.
  */
-public class GameActivity extends Activity {
+public class GameActivity extends BaseActivity {
 
 	/** Called when the activity is first created. */
 	@Override

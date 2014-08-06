@@ -3,23 +3,6 @@ package com.game;
 import java.util.ArrayList;
 import java.util.zip.CRC32;
 
-import com.ecml.ChooseSongActivity;
-import com.ecml.ClefSymbol;
-import com.ecml.ECML;
-import com.ecml.FileUri;
-import com.ecml.MidiFile;
-import com.ecml.MidiFileException;
-import com.ecml.MidiNote;
-import com.ecml.MidiOptions;
-import com.ecml.MidiPlayer;
-import com.ecml.MidiTrack;
-import com.ecml.Piano;
-import com.ecml.R;
-import com.ecml.ScrollAnimation;
-import com.ecml.SheetMusic;
-import com.ecml.TimeSigSymbol;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,9 +19,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.ecml.ChooseSongActivity;
+import com.ecml.ClefSymbol;
+import com.ecml.ECML;
+import com.ecml.FileUri;
+import com.ecml.MidiFile;
+import com.ecml.MidiFileException;
+import com.ecml.MidiNote;
+import com.ecml.MidiOptions;
+import com.ecml.MidiPlayer;
+import com.ecml.MidiTrack;
+import com.ecml.Piano;
+import com.ecml.R;
+import com.ecml.SheetMusic;
+import com.ecml.TimeSigSymbol;
+import com.sideActivities.BaseActivity;
+
 /* abstract class which define the main part of all the readinggame activities */
 
-public abstract class ReadingGame extends Activity {
+public abstract class ReadingGame extends BaseActivity {
 
 	protected enum KeyDisplay {
 		DISPLAY_FLAT, DISPLAY_SHARP,

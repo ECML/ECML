@@ -2,11 +2,6 @@ package com.game;
 
 import java.util.ArrayList;
 
-import com.ecml.MidiNote;
-import com.ecml.MidiTrack;
-import com.ecml.R;
-import com.ecml.SheetMusic;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +15,11 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.ecml.MidiNote;
+import com.ecml.MidiTrack;
+import com.ecml.R;
+import com.ecml.SheetMusic;
 
 public class ReadingGameBeginner extends ReadingGame {
 

@@ -31,8 +31,9 @@ public class BaseActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.mainScreen:
 			Intent mainScreen = new Intent(getApplicationContext(), ECMLActivity.class);
+			// Go to the main screen and kill any other living activities
+			mainScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(mainScreen);
-			finish();
 			return true;
 		case R.id.chooseSongActivity:
 			Intent chooseSongActivity = new Intent(getApplicationContext(), ChooseSongActivity.class);

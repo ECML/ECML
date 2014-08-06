@@ -1,11 +1,5 @@
 package com.game;
 
-import com.ecml.ChooseSongActivity;
-import com.ecml.ECML;
-import com.ecml.R;
-
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
-public class ReadingGameModeActivity extends Activity {
+import com.ecml.ChooseSongActivity;
+import com.ecml.ECML;
+import com.ecml.R;
+import com.sideActivities.BaseActivity;
+
+public class ReadingGameModeActivity extends BaseActivity {
 
 	/** Called when the activity is first created. */
 	@Override

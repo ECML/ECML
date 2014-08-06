@@ -2,10 +2,8 @@ package com.calendar;
 
 
 
-import android.app.ActionBar;
 import android.app.TabActivity;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.CalendarContract.Calendars;
 import android.widget.TabHost;

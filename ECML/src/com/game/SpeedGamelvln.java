@@ -10,11 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ecml.ECML;
 import com.ecml.MidiNote;
 import com.ecml.MidiTrack;
 import com.ecml.R;
-import com.ecml.R.id;
 
 /* Second implementation of the SpeedGame
  * The Player reads the sheet music at either a very slow, slow or real speed

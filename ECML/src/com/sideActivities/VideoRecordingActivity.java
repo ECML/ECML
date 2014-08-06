@@ -3,11 +3,8 @@ package com.sideActivities;
 import java.io.File;
 import java.io.IOException;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
@@ -36,7 +33,7 @@ import com.ecml.R;
  * 		<li>pauseAudio()</li>
  * </ul>
  */
-public class VideoRecordingActivity extends Activity implements SurfaceHolder.Callback {
+public class VideoRecordingActivity extends BaseActivity implements SurfaceHolder.Callback {
 
 	private SurfaceView surfaceView;			/* The Surface View needed for the Camera */
 	private SurfaceHolder surfaceHolder;		/* The Surface Holder needed for the Camera */

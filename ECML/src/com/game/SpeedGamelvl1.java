@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.ecml.MidiNote;
 import com.ecml.MidiTrack;
 import com.ecml.R;
-import com.ecml.R.id;
 
 /* First implementation of the SpeeGame
  * Wait for the users to play the right note */
