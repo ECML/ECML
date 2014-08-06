@@ -9,7 +9,7 @@
         <menu>
             <item
                 android:id="@+id/mainScreen"
-                android:icon="@drawable/ic_menu_selectall_holo_dark"
+                android:icon="@drawable/ic_menu_selectall_holo_light"
                 android:title="@string/main_menu"/>
              <item
                 android:id="@+id/chooseSongActivity"
@@ -21,15 +21,15 @@
                 android:title="@string/calendar_str"/>
             <item
                 android:id="@+id/audioActivity"
-                android:icon="@drawable/audio"
+                android:icon="@drawable/ic_lockscreen_search_normal"
                 android:title="@string/audio"/>
             <item
                 android:id="@+id/videoActivity"
-                android:icon="@drawable/video"
+                android:icon="@drawable/ic_action_video"
                 android:title="@string/video"/>
             <item
                 android:id="@+id/gameActivity"
-                android:icon="@drawable/ic_game"
+                android:icon="@drawable/ic_action_gamepad"
                 android:title="@string/game_str"/>
             <item
                 android:id="@+id/messengerActivity"
@@ -37,7 +37,7 @@
                 android:title="@string/messenger"/>
             <item
                 android:id="@+id/youtubeActivity"
-                android:icon="@drawable/youtube"
+                android:icon="@drawable/logo_youtube"
                 android:title="@string/youtube"/>
             <item
                 android:id="@+id/metronomeActivity"
