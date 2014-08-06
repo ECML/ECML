@@ -16,7 +16,7 @@ import com.metronome.MetronomeActivity;
 
 public class BaseActivity extends Activity {
 	
-	/** When the menu button is pressed, initialize the menus. */
+	/** When the menu button is pressed, initialize the menu. */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -26,6 +26,7 @@ public class BaseActivity extends Activity {
 		return super.onCreateOptionsMenu(menu);
 	}
 	
+	/** When menu has dropped down, handle click on corresponding items */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
