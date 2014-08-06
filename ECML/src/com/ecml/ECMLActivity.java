@@ -154,6 +154,15 @@ public class ECMLActivity extends Activity {
 				startActivity(ECML.intent);
 			}
 		});
+		
+		// Calendar button
+		ImageView calendar = (ImageView) findViewById(R.id.calendar);
+		calendar.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
+				startActivity(goToCalendar);
+			}
+		});
 
 		// Audio Recording button
 		ImageView audioRecording = (ImageView) findViewById(R.id.audiorecording);
@@ -173,15 +182,6 @@ public class ECMLActivity extends Activity {
 			}
 		});
 
-		// Calendar button
-		ImageView calendar = (ImageView) findViewById(R.id.calendar);
-		calendar.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
-				startActivity(goToCalendar);
-			}
-		});
-
 		// Game button
 		ImageView game = (ImageView) findViewById(R.id.game);
 		game.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +190,25 @@ public class ECMLActivity extends Activity {
 				startActivity(goToGame);
 			}
 		});
+		
+		// Messenger service button
+		ImageView messenger = (ImageView) findViewById(R.id.messenger);
+		messenger.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToMessenger = new Intent(getApplicationContext(), com.androidim.Login.class);
+				startActivity(goToMessenger);
+			}
+		});
 
+		// Youtube button
+		ImageView youtube = (ImageView) findViewById(R.id.youtube);
+		youtube.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToYoutube = new Intent(getApplicationContext(), YoutubeActivity.class);
+				startActivity(goToYoutube);
+			}
+		});
+		
 		// Metronome button
 		ImageView metronome = (ImageView) findViewById(R.id.metronome);
 		metronome.setOnClickListener(new View.OnClickListener() {
@@ -209,32 +227,12 @@ public class ECMLActivity extends Activity {
 			}
 		});
 
-		// Youtube button
-		ImageView youtube = (ImageView) findViewById(R.id.youtube);
-		youtube.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent goToYoutube = new Intent(getApplicationContext(), YoutubeActivity.class);
-				startActivity(goToYoutube);
-			}
-		});
-
-
 		// Communication button
 		ImageView communication = (ImageView) findViewById(R.id.communication);
 		communication.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToFacebook = new Intent(getApplicationContext(), FacebookActivity.class);
 				startActivity(goToFacebook);
-			}
-		});
-
-
-		// Messenger service button
-		ImageView messenger = (ImageView) findViewById(R.id.messenger);
-		messenger.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent goToMessenger = new Intent(getApplicationContext(), com.androidim.Login.class);
-				startActivity(goToMessenger);
 			}
 		});
 
