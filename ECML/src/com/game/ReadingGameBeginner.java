@@ -341,18 +341,18 @@ public class ReadingGameBeginner extends ReadingGame {
 			return;
 		}
 		/* Remove any highlighted notes */
-		player.setCurrentPulseTime(currentPulseTime);
+		sheet.ShadeNotes(-10, player.getCurrentPulseTime().intValue(), SheetMusic.DontScroll);
 		prevPulseTime = currentPulseTime;
-		player.setPrevPulseTime(prevPulseTime);
 		currentPulseTime += notes.get(counter).getDuration();
 		if (currentPulseTime <= midifile.getTotalPulses()) {
 			player.setCurrentPulseTime(currentPulseTime);
 		}
+		player.setCurrentPulseTime(currentPulseTime);
+		player.setPrevPulseTime(prevPulseTime);
 		reshadeNotes();
 	}
 
 	public void reshadeNotes() {
-		sheet.ShadeNotes(-10, player.getCurrentPulseTime().intValue(), SheetMusic.DontScroll);
 		sheet.ShadeNotes(currentPulseTime.intValue(), prevPulseTime.intValue(), SheetMusic.ImmediateScroll);
 	}
 

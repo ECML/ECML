@@ -16,6 +16,8 @@ package com.ecml;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 
 
 /** @class MidiTrack
@@ -83,7 +85,7 @@ public class MidiTrack {
     public ArrayList<MidiNote> getNotes() { 
     	 	return notes; }
     
-    //Give an ArrayList of the notes included between the note n°start and the note n°stop
+    /** Give an ArrayList of the notes included between the note n°start and the note n°stop */
     public ArrayList<MidiNote> getNotesBetween(int start, int stop) { 
     	ArrayList<MidiNote> notesCut = new ArrayList<MidiNote>(stop-start+1);
     	for (int i = start; i <= stop; i++){

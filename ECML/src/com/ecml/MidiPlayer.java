@@ -180,7 +180,6 @@ public class MidiPlayer extends LinearLayout {
     	this.prevPulseTime = prevPulseTime;
     }
     
-    
     /** Load the rewind/play/stop/fastFwd/mute/-/+/rec/play button images
      * 
      * @param context

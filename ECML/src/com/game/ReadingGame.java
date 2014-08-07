@@ -61,6 +61,7 @@ public abstract class ReadingGame extends BaseActivity {
 
 	protected Thread playingthread;
 	protected SheetMusic sheet; /* The sheet music */
+	protected Piano piano; 		/* The piano */
 	protected LinearLayout layout; /* THe layout */
 	protected long midiCRC; /* CRC of the midi bytes */
 
@@ -232,12 +233,14 @@ public abstract class ReadingGame extends BaseActivity {
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		player = new MidiPlayer(this);
+		piano = new Piano(this);
 
 		topLayout = getLayoutInflater().inflate(R.layout.main_top, layout, false);
 		topLayout.setVisibility(View.GONE);
 		layout.addView(topLayout);
 		layout.addView(player);
 		setContentView(layout);
+		player.SetPiano(piano, options);
 		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.orange));
 		layout.requestLayout();
 	}
@@ -253,6 +256,8 @@ public abstract class ReadingGame extends BaseActivity {
 		if (level == 3) {sheet.init(midifile, options, true, 0, 45);}
 		sheet.setPlayer(player);
 		layout.addView(sheet);
+		piano.SetMidiFile(midifile, options, player);
+		piano.SetShadeColors(options.shade1Color, options.shade2Color);
 		player.SetMidiFile(midifile, options, sheet);
 		layout.requestLayout();
 		sheet.callOnDraw();

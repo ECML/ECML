@@ -22,10 +22,6 @@ import com.ecml.SheetMusic;
 public class SpeedGamelvl1 extends SpeedGamelvl {
 
 	private TextView textView;
-	private int compteurTexte = counter + 1;
-	// TODO Unused variables to delete or to use
-	private boolean pause = true;
-	private String test;
 	private Double currentPulseTime;
 	private Double prevPulseTime;
 
@@ -33,7 +29,6 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 		super.onCreate(savedInstanceState);
 		getWindow().getDecorView().setBackgroundColor(Color.BLACK);
 
-		counter = 0;	// note counter
 
 		tracks = midifile.getTracks();
 
@@ -46,12 +41,16 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 
 			@Override
 			public void onClick(View v) {
-				currentPulseTime = 0.0 + notes.get(0).getDuration();
+				counter = 0;	// note counter
+				currentPulseTime = 0.0; // + notes.get(0).getDuration();
 				prevPulseTime = 0.0;
-				
-				textView = (TextView) findViewById(R.id.affiche);
-				textView.setText("Play the note n°" + compteurTexte);
 
+				sheet.ShadeNotes(-10, player.getCurrentPulseTime().intValue(), SheetMusic.DontScroll);
+				piano.ShadeNotes(-10, player.getCurrentPulseTime().intValue());
+
+				textView = (TextView) findViewById(R.id.affiche);
+				// Humans start counting at 1, not 0
+				textView.setText("Play the note n°" + (counter + 1)); 
 
 				// Pitch Detection launching
 				pitchPoster = new MicrophonePitchPoster(60);
@@ -69,7 +68,6 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 			@Override
 			public void onClick(View v) {
 				counter = 0;
-				compteurTexte = counter + 1;
 				textView.setText("");
 
 				if (player != null) {
@@ -117,8 +115,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 				if (test.equals(noteNames[keyDisplay.ordinal()][data.note % 12])) {
 					advanceOneNote();
 					counter++;
-					compteurTexte++;
-					textView.setText("Play the note n°" + compteurTexte);
+					textView.setText("Play the note n°" + (counter + 1));
 				}
 
 			} else {
@@ -142,26 +139,29 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 		}
 		return tracks.get(i).getNotes();
 	}
-	
+
 	public void advanceOneNote() {
-	   	 if (midifile == null || sheet == null) {
-	            return;
-	        }
-	        /* Remove any highlighted notes */
-	        sheet.ShadeNotes(-10, player.getCurrentPulseTime().intValue(), SheetMusic.DontScroll);
-	        piano.ShadeNotes(-10, player.getCurrentPulseTime().intValue());
-	        player.setCurrentPulseTime(currentPulseTime);
-	        prevPulseTime = currentPulseTime;
-	        player.setPrevPulseTime(prevPulseTime);
-	        currentPulseTime = 0.0 + notes.get(counter).getStartTime() + notes.get(counter).getDuration();
-	        if (currentPulseTime <= midifile.getTotalPulses()) {
-	        	player.setCurrentPulseTime(currentPulseTime);
-	        }
-	        reshadeNotes();
-	   }
-		
-		public void reshadeNotes() {
-			sheet.ShadeNotes(currentPulseTime.intValue(), prevPulseTime.intValue(), SheetMusic.ImmediateScroll);
-	        piano.ShadeNotes(currentPulseTime.intValue(), prevPulseTime.intValue());
+		if (midifile == null || sheet == null) {
+			return;
 		}
+		/* Remove any highlighted notes */
+		sheet.ShadeNotes(-10, player.getCurrentPulseTime().intValue(), SheetMusic.DontScroll);
+		piano.ShadeNotes(-10, player.getCurrentPulseTime().intValue());
+
+		prevPulseTime = currentPulseTime;
+		// currentPulseTime += notes.get(counter).getDuration(); WORKS TOO
+		currentPulseTime = 0.0 + notes.get(counter).getStartTime() + notes.get(counter).getDuration();
+		Log.i("silence", "" + notes.get(counter).getNumber());
+		if (currentPulseTime <= midifile.getTotalPulses()) {
+			player.setCurrentPulseTime(currentPulseTime);
+		}
+		player.setCurrentPulseTime(currentPulseTime);
+		player.setPrevPulseTime(prevPulseTime);
+		reshadeNotes();
+	}
+
+	public void reshadeNotes() {
+		sheet.ShadeNotes(currentPulseTime.intValue(), prevPulseTime.intValue(), SheetMusic.ImmediateScroll);
+		piano.ShadeNotes(currentPulseTime.intValue(), prevPulseTime.intValue());
+	}
 }
