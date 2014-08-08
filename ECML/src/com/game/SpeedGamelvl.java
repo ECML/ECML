@@ -72,8 +72,8 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	protected ArrayList<MidiTrack> tracks;	/* The Tracks of the song */
 	protected ArrayList<MidiNote> notes;	/* The Notes of the first Track (Track 0) */
 	protected boolean search;
-	View choice;
-	View result;
+	static View speedGameView;
+	static View result;
 
 
 	protected MidiFile midifile; /* The midi file to play */
@@ -144,7 +144,7 @@ public abstract class SpeedGamelvl extends BaseActivity {
 		/* Set the MidiPlayer and Piano */
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
-		View speedGameView = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
+		speedGameView = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
 		layout.addView(speedGameView);
 		player = new MidiPlayer(this);
 		piano = new Piano(this);
@@ -250,10 +250,10 @@ public abstract class SpeedGamelvl extends BaseActivity {
 			
 		});
 
-//		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
-//		layout.addView(result);
-//		result.setVisibility(View.GONE);
-//		setContentView(layout);
+		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
+		layout.addView(result);
+		result.setVisibility(View.GONE);
+		setContentView(layout);
 		createSheetMusic(options);
 	}
 

@@ -22,13 +22,14 @@ import com.ecml.SheetMusic;
 public class SpeedGamelvl1 extends SpeedGamelvl {
 
 	private TextView textView;
+	private TextView score;
 	private Double currentPulseTime;
 	private Double prevPulseTime;
+	private boolean firstTry = true;
+	private int numberPoints = 0;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getWindow().getDecorView().setBackgroundColor(Color.BLACK);
-
 
 		tracks = midifile.getTracks();
 
@@ -51,6 +52,9 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 				textView = (TextView) findViewById(R.id.affiche);
 				// Humans start counting at 1, not 0
 				textView.setText("Play the note n°" + (counter + 1)); 
+				
+				TextView score = (TextView) findViewById(R.id.score);
+				score.setText(numberPoints + "/" + notes.size());
 
 				// Pitch Detection launching
 				pitchPoster = new MicrophonePitchPoster(60);
@@ -89,7 +93,6 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 			// If we reach the end of the midifile, then we stop the player and
 			// the pitch detection
 			if (counter == notes.size()) {
-				counter = 0;
 				if (player != null) {
 					player.Stop();
 				}
@@ -97,8 +100,11 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 					pitchPoster.stopSampling();
 				}
 				pitchPoster = null;
-				textView.setText("");
+				SpeedGamelvl.speedGameView.setVisibility(View.GONE);
+				SpeedGamelvl.result.setVisibility(View.VISIBLE);			
 			}
+			
+			
 
 
 			// If the data is non null and loud enough, we test it
@@ -113,14 +119,16 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 
 				// Check if it is the expected note
 				if (test.equals(noteNames[keyDisplay.ordinal()][data.note % 12])) {
+					if (firstTry == true) {numberPoints++;}					
 					advanceOneNote();
 					counter++;
+					firstTry = true;
 					textView.setText("Play the note n°" + (counter + 1));
+					score.setText( numberPoints + "/" + notes.size() );
 				}
 
 			} else {
-				// No valid data to display.
-
+				firstTry = false;
 			}
 
 		}
