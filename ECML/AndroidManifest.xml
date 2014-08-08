@@ -179,6 +179,10 @@
          
            <activity android:name="com.login.ForgottenPasswordActivity">
         </activity>
+        <activity android:name="com.ecml.StudentActivities"></activity>
+           
+           
+          
         </application>
          
 
