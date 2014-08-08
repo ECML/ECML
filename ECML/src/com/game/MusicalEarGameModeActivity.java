@@ -9,22 +9,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.ecml.ChooseSongActivity;
 import com.ecml.ECML;
 import com.ecml.R;
 import com.sideActivities.BaseActivity;
 
-public class SpeedGameModeActivity extends BaseActivity {
-	
-TextView rules;
+public class MusicalEarGameModeActivity extends BaseActivity {
 
 	/** Called when the activity is first created. */
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.speed_game_mode);
+			setContentView(R.layout.musical_ear_game_mode);
 			
 			
 
@@ -72,67 +69,13 @@ TextView rules;
 				
 			});
 			
-			// lvl1 button
-			Button lvl1 = (Button) findViewById(R.id.lvl1);
-			lvl1.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					ECML.intent.putExtra(ChooseSongActivity.mode, "speed");
-					ECML.intent.putExtra("level", 1);
-					startActivity(ECML.intent);
-				}
-				
-			});
 			
-			// lvl2 button
-			Button lvl2 = (Button) findViewById(R.id.lvl2);
-			lvl2.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					ECML.intent.putExtra(ChooseSongActivity.mode,"speed");
-					ECML.intent.putExtra("level", 2);
-					startActivity(ECML.intent);
-				}
-				
-			});
-			
-			// lvl3 button
-			Button lvl3 = (Button) findViewById(R.id.lvl3);
-			lvl3.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					ECML.intent.putExtra(ChooseSongActivity.mode,"speed");
-					ECML.intent.putExtra("level", 3);
-					startActivity(ECML.intent);
-				}
-				
-			});
-			
-			// lvl4 button
-			Button lvl4 = (Button) findViewById(R.id.lvl4);
-			lvl4.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					ECML.intent.putExtra(ChooseSongActivity.mode,"speed");
-					ECML.intent.putExtra("level", 4);
-					startActivity(ECML.intent);
-				}
-				
-			});
 
 		}
 
 		private void showHelpDialog() {
 			LayoutInflater inflator = LayoutInflater.from(this);
-			final View dialogView = inflator.inflate(R.layout.help_speed, null);
+			final View dialogView = inflator.inflate(R.layout.musical_ear_help, null);
 		
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("HELP");
