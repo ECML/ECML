@@ -144,8 +144,15 @@ public abstract class SpeedGamelvl extends BaseActivity {
 		/* Set the MidiPlayer and Piano */
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
+		
 		speedGameView = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
 		layout.addView(speedGameView);
+		
+		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
+		layout.addView(result);
+		result.setVisibility(View.GONE);
+		
+		
 		player = new MidiPlayer(this);
 		piano = new Piano(this);
 		player.SetPiano(piano, options);
@@ -250,9 +257,7 @@ public abstract class SpeedGamelvl extends BaseActivity {
 			
 		});
 
-		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
-		layout.addView(result);
-		result.setVisibility(View.GONE);
+		
 		setContentView(layout);
 		createSheetMusic(options);
 	}
