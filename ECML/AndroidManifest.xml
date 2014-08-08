@@ -197,6 +197,7 @@
         <activity android:name="com.login.ForgottenPasswordActivity" >
         </activity>
         <activity android:name="com.game.MusicalEarGameModeActivity"></activity>
+        <activity android:name="com.game.TechniqueActivity"></activity>
     </application>
 
 </manifest>
