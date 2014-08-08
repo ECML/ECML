@@ -3,10 +3,7 @@ package com.sideActivities;
 import java.io.File;
 import java.io.IOException;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -32,7 +29,7 @@ import com.ecml.R;
  * 		<li>pauseAudio()</li>
  * </ul>
  */
-public class AudioRecordingActivity extends Activity {
+public class AudioRecordingActivity extends BaseActivity {
 
 	private long fileName; 			/* File name of last Audio Record */
 	private String path;		/* Path of last Audio Record */

@@ -2,18 +2,16 @@ package com.calendar;
 
 
 
-import android.app.ActionBar;
-import android.app.TabActivity;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.CalendarContract.Calendars;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 import com.ecml.R;
+import com.sideActivities.BaseTabActivity;
 
-public class CalendarActivity extends TabActivity {
+public class CalendarActivity extends BaseTabActivity {
 
 	public static final String[] EVENT_PROJECTION = new String[] { Calendars._ID, // 0
 			Calendars.ACCOUNT_NAME, // 1

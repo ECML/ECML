@@ -255,11 +255,12 @@ public class SettingsActivity extends PreferenceActivity
     	int selected = options.delay/1000 - 1;
     	delay = new ListPreference(this);
     	delay.setOnPreferenceChangeListener(this);
-    	delay.setTitle(R.string.choose_delay);
+    	delay.setTitle(R.string.delay);
     	delay.setEntries(R.array.delay_entries);
     	delay.setEntryValues(R.array.delay_values);
     	delay.setValueIndex(selected);
     	delay.setSummary(delay.getEntry());
+    	delay.setDialogTitle(R.string.choose_delay);
     	root.addPreference(delay);
     }
 
@@ -272,6 +273,7 @@ public class SettingsActivity extends PreferenceActivity
         showNoteLetters.setEntryValues(R.array.show_note_letter_values);
         showNoteLetters.setValueIndex(options.showNoteLetters);
         showNoteLetters.setSummary(showNoteLetters.getEntry());
+        showNoteLetters.setDialogTitle(R.string.choose_notation);
         root.addPreference(showNoteLetters);
     }
 
@@ -303,6 +305,7 @@ public class SettingsActivity extends PreferenceActivity
         transpose.setEntryValues(R.array.transpose_values);
         transpose.setValueIndex(transposeIndex);
         transpose.setSummary(transpose.getEntry());
+        transpose.setDialogTitle(R.string.choose_transpose);
         root.addPreference(transpose);
     }
 
@@ -315,6 +318,7 @@ public class SettingsActivity extends PreferenceActivity
         key.setEntryValues(R.array.key_signature_values);
         key.setValueIndex(options.key + 1);
         key.setSummary(key.getEntry());
+        key.setDialogTitle(R.string.choose_key);
         root.addPreference(key);
     }
 
@@ -334,6 +338,7 @@ public class SettingsActivity extends PreferenceActivity
         time.setEntryValues(values);
         time.setValueIndex(selected);
         time.setSummary(time.getEntry());
+        time.setDialogTitle(R.string.choose_time_signature);
         root.addPreference(time);
     }
 
@@ -351,6 +356,7 @@ public class SettingsActivity extends PreferenceActivity
         combineInterval.setEntryValues(R.array.combine_interval_values);
         combineInterval.setValueIndex(selected);
         combineInterval.setSummary(combineInterval.getEntry() );
+        combineInterval.setDialogTitle(R.string.choose_combine_interval);
         root.addPreference(combineInterval);
     }
 
@@ -401,6 +407,7 @@ public class SettingsActivity extends PreferenceActivity
         loopStart.setEntryValues(values);
         loopStart.setValueIndex(options.playMeasuresInLoopStart);
         loopStart.setSummary(loopStart.getEntry() );
+        loopStart.setDialogTitle(R.string.choose_start_measure);
         root.addPreference(loopStart);
 
         loopEnd = new ListPreference(this);
@@ -410,6 +417,7 @@ public class SettingsActivity extends PreferenceActivity
         loopEnd.setEntryValues(values);
         loopEnd.setValueIndex(options.playMeasuresInLoopEnd);
         loopEnd.setSummary(loopEnd.getEntry() );
+        loopEnd.setDialogTitle(R.string.choose_end_measure);
         root.addPreference(loopEnd);
     }
 

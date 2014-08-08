@@ -20,7 +20,7 @@
             android:layout_alignBottom="@+id/letterNote"
             android:layout_alignParentRight="true"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/letterNote"
@@ -29,7 +29,7 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/numberOctave"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="48sp" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_toLeftOf="@id/letterNote"
             android:text="@string/note"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="48sp" />
     </RelativeLayout>
 
@@ -58,7 +58,7 @@
             android:layout_alignParentLeft="true"
             android:text="@string/frequence"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="22sp" />
 
         <TextView
@@ -72,7 +72,7 @@
             android:maxWidth="80dp"
             android:minWidth="80dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="22sp" />
 
         <TextView
@@ -84,7 +84,7 @@
             android:layout_toRightOf="@id/numberFrequence"
             android:text="@string/hertz"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="22sp" />
     </RelativeLayout>
 
@@ -111,7 +111,7 @@
                 android:layout_marginTop="40dp"
                 android:text="@string/adjust_octave"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#ffffff"
+                android:textColor="@color/white"
                 android:textSize="28sp" />
 
             <LinearLayout
@@ -127,7 +127,7 @@
                     android:layout_marginRight="20dp"
                     android:text="@string/shift_down"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/nextOctave"
@@ -136,7 +136,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="@string/shift_up"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
 
@@ -156,7 +156,7 @@
                 android:layout_marginTop="40dp"
                 android:text="@string/adjust_note"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#ffffff"
+                android:textColor="@color/white"
                 android:textSize="28sp" />
 
             <LinearLayout
@@ -172,7 +172,7 @@
                     android:layout_marginRight="20dp"
                     android:text="@string/shift_down"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/nextNote"
@@ -181,7 +181,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="@string/shift_up"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -195,7 +195,7 @@
         android:layout_marginTop="50dp"
         android:text="@string/adjust_ref_pitch"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         android:textSize="24sp" />
 
     <SeekBar
@@ -212,14 +212,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal" >
 
-        <ToggleButton
-            android:id="@+id/toggleButton"
+        <Switch
+            android:id="@+id/switchButton"
             android:layout_width="150dip"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:hapticFeedbackEnabled="true"
+            android:background="@color/darkOrange"
             android:textSize="18sp"
-            android:typeface="sans" />
+            android:thumbTextPadding="25dp" />
     </RelativeLayout>
 
     <Button
@@ -230,8 +230,7 @@
         android:layout_marginRight="20dp"
         android:text="Help"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-         />
+        android:textColor="@color/white"
+        android:textSize="24sp" />
 
 </LinearLayout>

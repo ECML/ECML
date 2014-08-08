@@ -1,6 +1,7 @@
 package com.ecml;
 
 import android.app.Application;
+import android.content.Intent;
 
 /** @class ECML
  * <br>
@@ -11,7 +12,6 @@ public class ECML extends Application {
 
 		public static FileUri song;	/* This variable stores the latest chosen song so that
 									 * the user can go back to score whenever the user wants */
-		public static int speedLvl;	/* This variable is used to set the player's speed bar at the right
-									 * speed when opening SpeedGamelvln activity */
+		public static Intent intent;	/* This variable is used to go to back the score from the games */
 
 }

@@ -15,6 +15,7 @@ package com.ecml;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -28,6 +29,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -77,7 +79,6 @@ import android.widget.Toast;
 public class MidiPlayer extends LinearLayout {
     static Bitmap rewindImage;			/* The rewind image */
     static Bitmap playImage;			/* The play image */
-    static Bitmap pauseImage;			/* The pause image */
     static Bitmap stopImage;			/* The stop image */
     static Bitmap fastFwdImage;			/* The fast forward image */
     static Bitmap muteOnImage;			/* The mute image */
@@ -105,11 +106,11 @@ public class MidiPlayer extends LinearLayout {
     private int volume;			 		/* Used to set the volume to zero and to remember it after muting */
     private AudioManager audioManager;	/* AudioManager used to mute and unmute music volume */
     public int playstate;				/* The playing state of the Midi Player */
-    private final int stopped   = 1;	/* Currently stopped */
+    public final int stopped   = 1;	/* Currently stopped */
     public final int playing   = 2;		/* Currently playing music */
-    private final int paused    = 3;	/* Currently paused */
-    private final int initStop  = 4;	/* Transitioning from playing to stop */
-    private final int initPause = 5;	/* Transitioning from playing to pause */
+    public final int paused    = 3;	/* Currently paused */
+    public final int initStop  = 4;	/* Transitioning from playing to stop */
+    public final int initPause = 5;	/* Transitioning from playing to pause */
 
     private final String tempSoundFile = "playing.mid"; /* The filename to play sound from */
 
@@ -160,17 +161,26 @@ public class MidiPlayer extends LinearLayout {
     }
 
     /** Get the current pulse time */
-    public Double getcurrentPulseTime() {
+    public Double getCurrentPulseTime() {
     	return currentPulseTime;
     }
     
+    /** Set the current pulse time */
+    public void setCurrentPulseTime(Double currentPulseTime) {
+    	this.currentPulseTime = currentPulseTime;
+    }
+    
     /** Get the previous pulse time */
-    public Double getprevPulseTime() {
+    public Double getPrevPulseTime() {
     	return prevPulseTime;
     }
     
+    /** Set the previous pulse time */
+    public void setPrevPulseTime(Double prevPulseTime) {
+    	this.prevPulseTime = prevPulseTime;
+    }
     
-    /** Load the play/pause/stop button images
+    /** Load the rewind/play/stop/fastFwd/mute/-/+/rec/play button images
      * 
      * @param context
      */
@@ -181,7 +191,6 @@ public class MidiPlayer extends LinearLayout {
         Resources res = context.getResources();
         rewindImage = BitmapFactory.decodeResource(res, R.drawable.rewind);
         playImage = BitmapFactory.decodeResource(res, R.drawable.play);
-        pauseImage = BitmapFactory.decodeResource(res, R.drawable.pause);
         stopImage = BitmapFactory.decodeResource(res, R.drawable.stop);
         fastFwdImage = BitmapFactory.decodeResource(res, R.drawable.fastforward);
         muteOnImage = BitmapFactory.decodeResource(res, R.drawable.mute_on);
@@ -268,7 +277,7 @@ public class MidiPlayer extends LinearLayout {
      
 
     /** Create the rewind, play, stop, fast forward,mute and piano buttons */
-    void CreateButtons() {
+    private void CreateButtons() {
         this.setOrientation(LinearLayout.HORIZONTAL);
 
         /* Create the rewind button */
@@ -808,7 +817,7 @@ public class MidiPlayer extends LinearLayout {
      *  So to fast forward, just increase the currentPulseTime,
      *  and re-shade the sheet music.
      */
-    private void FastForward() {
+    public void FastForward() {
         if (midifile == null || sheet == null) {
             return;
         }
@@ -823,12 +832,49 @@ public class MidiPlayer extends LinearLayout {
    
         prevPulseTime = currentPulseTime; 
         currentPulseTime += midifile.getTime().getMeasure();
+        Log.i("currentPulseTime", "" + currentPulseTime);
         if (currentPulseTime > midifile.getTotalPulses()) {
             currentPulseTime -= midifile.getTime().getMeasure();
         }
         sheet.ShadeNotes((int)currentPulseTime, (int)prevPulseTime, SheetMusic.ImmediateScroll);
         piano.ShadeNotes((int)currentPulseTime, (int)prevPulseTime);
     }
+    
+    public void advanceOneNote() {
+    	 if (midifile == null || sheet == null) {
+             return;
+         }
+         if (playstate != paused && playstate != stopped) {
+             return;
+         }
+         playstate = paused;
+         /* Remove any highlighted notes */
+         sheet.ShadeNotes(-10, (int)currentPulseTime, SheetMusic.DontScroll);
+         piano.ShadeNotes(-10, (int)currentPulseTime);
+         prevPulseTime = currentPulseTime;
+         ArrayList<MidiTrack> tracks = midifile.getTracks();
+         ArrayList<MidiNote> notes = findNotes(tracks,0);
+         currentPulseTime += midifile.getTime().getMeasure();
+         if (currentPulseTime > midifile.getTotalPulses()) {
+             currentPulseTime -= midifile.getTime().getMeasure();
+         }
+         sheet.ShadeNotes((int)currentPulseTime, (int)prevPulseTime, SheetMusic.ImmediateScroll);
+         piano.ShadeNotes((int)currentPulseTime, (int)prevPulseTime);
+    }
+    
+    private ArrayList<MidiNote> findNotes(ArrayList<MidiTrack> tracks, int instrument) {
+
+		int i = 0;
+		boolean search = true;
+		while (search) {
+			if (instrument == tracks.get(i).getInstrument()) {
+				search = false;
+			} else {
+				i++;
+			}
+		}
+		return tracks.get(i).getNotes();
+	}
     
     /** Set the speed bar back to 100% */
     private void backTo100() {

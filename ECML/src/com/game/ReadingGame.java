@@ -3,6 +3,22 @@ package com.game;
 import java.util.ArrayList;
 import java.util.zip.CRC32;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Point;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+
 import com.ecml.ChooseSongActivity;
 import com.ecml.ClefSymbol;
 import com.ecml.ECML;
@@ -15,71 +31,48 @@ import com.ecml.MidiPlayer;
 import com.ecml.MidiTrack;
 import com.ecml.Piano;
 import com.ecml.R;
-import com.ecml.ScrollAnimation;
 import com.ecml.SheetMusic;
 import com.ecml.TimeSigSymbol;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Point;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import com.sideActivities.BaseActivity;
 
 /* abstract class which define the main part of all the readinggame activities */
 
-public abstract class ReadingGame extends Activity {
+public abstract class ReadingGame extends BaseActivity {
 
+	protected enum KeyDisplay {
+		DISPLAY_FLAT, DISPLAY_SHARP,
+	}
 
-    protected enum KeyDisplay {
-        DISPLAY_FLAT,
-        DISPLAY_SHARP,
-    }
-    protected KeyDisplay keyDisplay = KeyDisplay.DISPLAY_SHARP;
-    protected static final String noteNames[][] = {
-        { "A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab" },
-        { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" },
-    };
-	
+	protected KeyDisplay keyDisplay = KeyDisplay.DISPLAY_SHARP;
+	protected static final String noteNames[][] = { { "A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab" },
+			{ "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" }, };
+
 	protected boolean point = true;
 	protected int counter = 0;
 	protected int score = 0;
-	
-	
+
+	public static int level = 1;
 
 	/*** MidiSheet variables ***/
 
 	public static final String MidiTitleID = "MidiTitleID";
 
 	public static final int settingsRequestCode = 1;
-	
+
 	protected Thread playingthread;
 	protected SheetMusic sheet; /* The sheet music */
+	protected Piano piano; 		/* The piano */
 	protected LinearLayout layout; /* THe layout */
-	protected Piano piano; /* The piano at the top */
 	protected long midiCRC; /* CRC of the midi bytes */
 
 	/*** End of MidiSheet variables ***/
 
-	protected ScrollAnimation scrollAnimation;
-
-
-	protected ArrayList<MidiTrack> Tracks;
-	protected ArrayList<MidiNote> Notes;
+	protected ArrayList<MidiTrack> tracks;	/* The Tracks of the song */
+	protected ArrayList<MidiNote> notes;	/* The Notes of the first Track (Track 0) */
 	protected boolean search;
-	View choice;
-	View result;
+	static View choice;
+	static View result;
 	private View topLayout;
-
 
 	protected MidiFile midifile; /* The midi file to play */
 	protected MidiOptions options; /* The options for sheet music and sound */
@@ -92,7 +85,7 @@ public abstract class ReadingGame extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.choice);
-		
+
 		/*****************
 		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
 		 * GAME BUTTON
@@ -100,13 +93,33 @@ public abstract class ReadingGame extends Activity {
 
 		ClefSymbol.LoadImages(this);
 		TimeSigSymbol.LoadImages(this);
-		MidiPlayer.LoadImages(this);
 
 		// Parse the MidiFile from the raw bytes
-		Uri uri = this.getIntent().getData();
-		String title = this.getIntent().getStringExtra(MidiTitleID);
-		if (title == null) {
-			title = uri.getLastPathSegment();
+		Uri uri;
+		String title;
+		Log.i("level", "" + level);
+		if (level == 1) {
+			Log.i("levelboucle1", "" + level);
+			uri = Uri.parse("file:///android_asset/Easy_Songs__Silent_Night.mid");
+			title = this.getIntent().getStringExtra(MidiTitleID);
+			if (title == null) {
+				title = "Silent Night";
+			}
+		}
+		else if (level == 2) {
+			uri = Uri.parse("file:///android_asset/Bach__Invention_No._13.mid");
+			title = this.getIntent().getStringExtra(MidiTitleID);
+			if (title == null) {
+				title = "Bach - Invention n°13";
+			}
+		}
+		else {
+			Log.i("levelboucle1", "" + level);
+			uri = Uri.parse("file:///android_asset/Chopin__Nocturne_Op._9_No._1_in_B-flat_minor.mid");
+			title = this.getIntent().getStringExtra(MidiTitleID);
+			if (title == null) {
+				title = "Chopin - Nocturn Op.9 N°1 in B flat minor";
+			}
 		}
 		FileUri file = new FileUri(uri, title);
 		this.setTitle("ECML: " + title);
@@ -132,11 +145,8 @@ public abstract class ReadingGame extends Activity {
 		options.shade1Color = settings.getInt("shade1Color", options.shade1Color);
 		options.shade2Color = settings.getInt("shade2Color", options.shade2Color);
 		options.showPiano = settings.getBoolean("showPiano", true);
-		//options.playMeasuresInLoop = true;
-		//options.playMeasuresInLoopStart = 0;
-		//options.playMeasuresInLoopEnd = 3;
 		options.tracks[0] = true;
-		for (int i = 1 ; i < options.tracks.length ; i++) {
+		for (int i = 1; i < options.tracks.length; i++) {
 			options.tracks[i] = false;
 		}
 		String json = settings.getString("" + midiCRC, null);
@@ -155,19 +165,20 @@ public abstract class ReadingGame extends Activity {
 		setContentView(layout);
 
 		// Back to the score button
-		Button scoreB = (Button) findViewById(R.id.back);
-		scoreB.setOnClickListener(new View.OnClickListener() {
+		Button backToScore = (Button) findViewById(R.id.back);
+		backToScore.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (ECML.song != null) {
+					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 					ChooseSongActivity.openFile(ECML.song);
+				} else {
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
+					startActivity(ECML.intent);
 				}
-				else {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
-					startActivity(intent);
-				}
+				finish();
 			}
 		});
 
@@ -179,6 +190,7 @@ public abstract class ReadingGame extends Activity {
 			public void onClick(View v) {
 				showHelpDialog();
 			}
+			
 		});
 
 		// Change game button
@@ -187,31 +199,16 @@ public abstract class ReadingGame extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				
+
 				score = 0;
 				counter = 0;
-				if ( player != null )
-				{
+				if (player != null) {
 					player.Stop();
 				}
-								
+
 				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(intent);
-			}
-		});
-
-		// Change stop button
-		Button stop = (Button) findViewById(R.id.stop);
-		stop.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				score = 0;
-				counter = 0;
-				if ( player != null )
-				{
-					player.Stop();
-				}
+				finish();
 			}
 		});
 
@@ -222,12 +219,16 @@ public abstract class ReadingGame extends Activity {
 
 		createSheetMusic(options);
 
-		scrollAnimation = new ScrollAnimation(sheet, options.scrollVert); 	// needed for stopping the music and recording
-		  																	// when touching the score
 
 	}
+	
+	/** Make the result view appears*/
+	public static void result() {
+		choice.setVisibility(View.GONE);
+		result.setVisibility(View.VISIBLE);
+	}
 
-	/* Create the MidiPlayer and Piano views */
+	/** Create the MidiPlayer and Piano views */
 	void createView() {
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
@@ -237,47 +238,10 @@ public abstract class ReadingGame extends Activity {
 		topLayout = getLayoutInflater().inflate(R.layout.main_top, layout, false);
 		topLayout.setVisibility(View.GONE);
 		layout.addView(topLayout);
-
-		player.getPianoButton().setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				options.showPiano = !options.showPiano;
-				player.SetPiano(piano, options);
-				SharedPreferences.Editor editor = getPreferences(0).edit();
-				editor.putBoolean("showPiano", options.showPiano);
-				String json = options.toJson();
-				if (json != null) {
-					editor.putString("" + midiCRC, json);
-				}
-				editor.commit();
-			}
-		});
-
-		player.getPlayAndRecordButton().setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-//				startAudioRecordingAndPlayingMusic();
-			}
-		});
-
-		player.getPlayRecordButton().setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-//				playAudio();
-			}
-		});
-
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		int width = size.x;
-		int height = size.y;
-
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
-		params.gravity = Gravity.CENTER_HORIZONTAL;
-
-		layout.addView(piano, params);
 		layout.addView(player);
 		setContentView(layout);
-		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.orange));
 		player.SetPiano(piano, options);
+		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.orange));
 		layout.requestLayout();
 	}
 
@@ -286,13 +250,10 @@ public abstract class ReadingGame extends Activity {
 		if (sheet != null) {
 			layout.removeView(sheet);
 		}
-		if (!options.showPiano) {
-			piano.setVisibility(View.GONE);
-		} else {
-			piano.setVisibility(View.VISIBLE);
-		}
 		sheet = new SheetMusic(this);
-		sheet.init(midifile, options, true, 1, 2);
+		sheet.init(midifile, options, false, 0, 2);
+		if (level == 2) {sheet.init(midifile, options, true, 0, 45);}
+		if (level == 3) {sheet.init(midifile, options, true, 0, 45);}
 		sheet.setPlayer(player);
 		layout.addView(sheet);
 		piano.SetMidiFile(midifile, options, player);
@@ -329,8 +290,7 @@ public abstract class ReadingGame extends Activity {
 		});
 	}
 
-	protected void PauseEcoute ()
-	{
+	protected void PauseEcoute() {
 		point = false;
 		player.Pause();
 	}
@@ -341,7 +301,6 @@ public abstract class ReadingGame extends Activity {
 		super.onResume();
 		layout.requestLayout();
 		player.invalidate();
-		piano.invalidate();
 		if (sheet != null) {
 			sheet.invalidate();
 		}
@@ -354,11 +313,11 @@ public abstract class ReadingGame extends Activity {
 	protected void onPause() {
 		if (player != null) {
 			player.Pause();
+			player.unmute();
 		}
 		super.onPause();
 	}
 
-	
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
 		final View dialogView = inflator.inflate(R.layout.help_reading_notes, null);
@@ -374,6 +333,5 @@ public abstract class ReadingGame extends Activity {
 		AlertDialog dialog = builder.create();
 		dialog.show();
 	}
-	
-}
 
+}

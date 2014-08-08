@@ -34,7 +34,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
@@ -67,7 +66,14 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.calendar.CalendarActivity;
+import com.game.GameActivity;
 import com.metronome.Metronome;
+import com.metronome.MetronomeActivity;
+import com.sideActivities.AudioRecordingActivity;
+import com.sideActivities.TuningForkActivity;
+import com.sideActivities.VideoRecordingActivity;
+import com.sideActivities.YoutubeActivity;
 
 /***************************************************************************************************************/
 /***************************************************************************************************************/
@@ -136,6 +142,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/***************************************** Video Recording Variables **************************************/
 
 	private long videoFileName;					/* File name of last Video Record */
+	private File videoFile;						/* The file storing the Video Record */
 	private SurfaceView surfaceView;			/* The Surface View needed for the Camera */
 	private SurfaceHolder surfaceHolder;		/* The Surface Holder needed for the Camera */
 	private MediaRecorder videoMediaRecorder;	/* Video Media Recorder */
@@ -144,8 +151,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private String pathVideo;			/* Path of last Video Record */
 	private boolean existVideoRecord;	/* Whether or not an Video Record already exists */
 	private boolean isVideoRecording;	/* Whether or not the Video Media Recorder is recording */
-	private boolean front = true;		/* Whether the front camera or the back camera is used */
+	private boolean front;		/* Whether the front camera or the back camera is used */
 	private String cameraSide;			/* The String telling which camera is used accordingly to 'front' */
+	private static final String FRONT_SIDE = "Front";
+	private static final String BACK_SIDE = "Back";
 
 	private View topLayout;		/* The Layout in which the Camera is displayed (needs to be improved) */
 
@@ -153,7 +162,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	/****************************************** File Variables ************************************************/
 
-	private static String sdcardPath = "sdcard/";	/* Path to the SD card */
 	private static String ECMLPath = "ECML/";		/* Path to the ECML folder from the sdcard */
 	private static final String MUSIC_SHEET_FOLDER = "MusicSheets"; /* Music Sheet folder name */
 
@@ -246,41 +254,11 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		/**********************************************************************************************************/
 		/**********************************************************************************************************/
 
-		// Create the library folder if it doesn't exist
-		File file_library = new File(sdcardPath + ECMLPath);
-		if (!file_library.exists()) {
-			if (!file_library.mkdirs()) {
-				Log.e("TravellerLog :: ", "Problem creating the Library");
-			}
-		}
-
-		// Create the folder containing the music sheets (in the library)
-		File musicSheets = new File(sdcardPath + ECMLPath.concat(MUSIC_SHEET_FOLDER));
-		if (!musicSheets.exists()) {
-			if (!musicSheets.mkdirs()) {
-				Log.e("TravellerLog :: ", "Problem creating the Music sheets folder");
-			}
-		}
-
-		// Create the folder containing the audio records (in the library)
-		File records = new File(sdcardPath + ECMLPath.concat(AUDIO_RECORDER_FOLDER));
-		if (!records.exists()) {
-			if (!records.mkdirs()) {
-				Log.e("TravellerLog :: ", "Problem creating the Audio records folder");
-			}
-		}
-
-		// Create the folder containing the video records
-		File videorecords = new File(sdcardPath + ECMLPath.concat(VIDEO_RECORDER_FOLDER));
-		if (!videorecords.exists()) {
-			if (!videorecords.mkdirs()) {
-				Log.e("TravellerLog :: ", "Problem creating the Video records folder");
-			}
-		}
-
 		isAudioRecording = false;
 		isVideoRecording = false;
 
+		chooseFrontOrBack();
+		
 		surfaceView = (SurfaceView) findViewById(R.id.surface_camera);
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
@@ -345,8 +323,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
 		params.gravity = Gravity.CENTER_HORIZONTAL;
 
-		layout.addView(piano, params);
 		layout.addView(player);
+		layout.addView(piano, params);
 		setContentView(layout);
 		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.orange));
 		player.SetPiano(piano, options);
@@ -365,7 +343,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			piano.setVisibility(View.VISIBLE);
 		}
 		sheet = new SheetMusic(this);
-		Log.i("colors", "" + options.showNoteColors);
 		sheet.init(midifile, options, false, 1, 2);
 		sheet.setPlayer(player);
 		layout.addView(sheet);
@@ -542,6 +519,62 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		case R.id.pauseReplayAudioRecording:
 			pauseAudio();
 			return true;
+		case R.id.mainScreen:
+			Intent mainScreen = new Intent(getApplicationContext(), ECMLActivity.class);
+			// Go to the main screen and kill any other living activities
+			mainScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(mainScreen);
+			return true;
+		case R.id.chooseSongActivity:
+			Intent chooseSongActivity = new Intent(getApplicationContext(), ChooseSongActivity.class);
+			startActivity(chooseSongActivity);
+			finish();
+			return true;
+		case R.id.calendarActivity:
+			Intent calendarActivity = new Intent(getApplicationContext(), CalendarActivity.class);
+			startActivity(calendarActivity);
+			finish();
+			return true;
+		case R.id.audioActivity:
+			Intent audioActivity = new Intent(getApplicationContext(), AudioRecordingActivity.class);
+			startActivity(audioActivity);
+			finish();
+			return true;
+		case R.id.videoActivity:
+			Intent videoActivity = new Intent(getApplicationContext(), VideoRecordingActivity.class);
+			startActivity(videoActivity);
+			finish();
+			return true;
+		case R.id.gameActivity:
+			Intent gameActivity = new Intent(getApplicationContext(), GameActivity.class);
+			startActivity(gameActivity);
+			finish();
+			return true;
+		case R.id.messengerActivity:
+			Intent messengerActivity = new Intent(getApplicationContext(), com.androidim.Login.class);
+			startActivity(messengerActivity);
+			finish();
+			return true;
+		case R.id.youtubeActivity:
+			Intent youtubeActivity = new Intent(getApplicationContext(), YoutubeActivity.class);
+			startActivity(youtubeActivity);
+			finish();
+			return true;
+		case R.id.metronomeActivity:
+			Intent metronomeActivity = new Intent(getApplicationContext(), MetronomeActivity.class);
+			startActivity(metronomeActivity);
+			finish();
+			return true;
+		case R.id.tuningForkActivity:
+			Intent tuningForkActivity = new Intent(getApplicationContext(), TuningForkActivity.class);
+			startActivity(tuningForkActivity);
+			finish();
+			return true;
+		case R.id.communicationActivity:
+			Intent communicationActivity = new Intent(getApplicationContext(), FacebookActivity.class);
+			startActivity(communicationActivity);
+			finish();
+			return true;	
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -741,7 +774,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 
 	}
 
-	/** When this activity pauses, stop the music */
+	/** When this activity pauses, stop the music and all recordings */
 	@Override
 	protected void onPause() {
 		if (player != null) {
@@ -905,12 +938,12 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/** Get the Filename of the next Video Record, also updates the path */
 	private String getFilenameVideo() {
 		String filepath = Environment.getExternalStorageDirectory().getPath();
-		File file = new File(filepath, ECMLPath + VIDEO_RECORDER_FOLDER);
-		if (!file.exists()) {
-			file.mkdirs();
+		videoFile = new File(filepath, ECMLPath + VIDEO_RECORDER_FOLDER);
+		if (!videoFile.exists()) {
+			videoFile.mkdirs();
 		}
 		videoFileName = System.currentTimeMillis();
-		pathVideo = file.getAbsolutePath();
+		pathVideo = videoFile.getAbsolutePath();
 		return (pathVideo + "/" + videoFileName + ext);
 	}
 
@@ -923,26 +956,28 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				camera = Camera.open();
 			}
 			videoMediaRecorder = new MediaRecorder(); // Works well
-			camera.stopPreview();
-			camera.unlock();
-			videoMediaRecorder.setCamera(camera);
-	
-			videoMediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
-			videoMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-			videoMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-	
-			if (front) {
-				videoMediaRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
-			} else {
-				videoMediaRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_BACK, CamcorderProfile.QUALITY_HIGH));
+			if (camera != null) {
+				camera.stopPreview();
+				camera.unlock();
+				videoMediaRecorder.setCamera(camera);
+		
+				videoMediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
+				videoMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+				videoMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+		
+				if (front) {
+					videoMediaRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
+				} else {
+					videoMediaRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_BACK, CamcorderProfile.QUALITY_HIGH));
+				}
+		
+				videoMediaRecorder.setOutputFile(getFilenameVideo());
+				videoMediaRecorder.setVideoFrameRate(10);
+		
+				videoMediaRecorder.prepare();
+				isVideoRecording = true;
+				videoMediaRecorder.start();
 			}
-	
-			videoMediaRecorder.setOutputFile(getFilenameVideo());
-			videoMediaRecorder.setVideoFrameRate(10);
-	
-			videoMediaRecorder.prepare();
-			isVideoRecording = true;
-			videoMediaRecorder.start();
 		} else {
 			Toast.makeText(context, "Stop Recording first", Toast.LENGTH_SHORT).show();
 		}
@@ -954,8 +989,13 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	 */
 	private void stopVideoRecording() {
 		if (isVideoRecording) {
-			existVideoRecord = true;
-			videoMediaRecorder.stop();
+			try {
+				existVideoRecord = true;
+				videoMediaRecorder.stop();
+			} catch (RuntimeException stopException) {
+				videoFile.delete();
+				Toast.makeText(context, "Video Recording Failed", Toast.LENGTH_SHORT).show();
+			}
 			releaseMediaRecorder();
 			releaseCamera();
 			isVideoRecording = false;
@@ -1005,7 +1045,6 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				intentToPlayVideo.setDataAndType(Uri.parse(lastvideo), "video/*");
 				startActivity(intentToPlayVideo);
 				Toast.makeText(context, "Playing Last Video Record", Toast.LENGTH_SHORT).show();
-				this.finish();
 			} else {
 				Toast.makeText(context, "No Recent Video Record", Toast.LENGTH_SHORT).show();
 			}
@@ -1027,6 +1066,29 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	/** Necessary function for the camera */
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
+	}
+	
+	/** Set the Front Camera if there is one, otherwise the Back Camera
+	 * and if there isn't either, don't do anything
+	 */
+	private void chooseFrontOrBack() {
+		Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+		int cameraCount = Camera.getNumberOfCameras();
+		int i = 0;
+		boolean chosen = false;
+		while (i < cameraCount || !chosen) {
+			Camera.getCameraInfo(i, cameraInfo);
+			if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+				chosen = true;
+				front = true;
+				cameraSide = FRONT_SIDE;
+			} else if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+				chosen = true;
+				front = false;
+				cameraSide = BACK_SIDE;
+			}
+			i++;
+		}
 	}
 
 	/** Open the front facing camera */
@@ -1053,19 +1115,18 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	
 	/** Switch the camera from front to back and vice versa */
 	private void switchCamera() {
-		// We should add a test here
-//		if (Camera.getNumberOfCameras() > 1) {
+		if (Camera.getNumberOfCameras() > 1) {
 			front = !front;
 			if (front) {
-				cameraSide = "Front";
+				cameraSide = FRONT_SIDE;
 			}
 			else {
-				cameraSide = "Back";
+				cameraSide = BACK_SIDE;
 			}
 			Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
-//		} else {
-//			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
-//		}
+		} else {
+			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	/************************************* End of Video Recording Functions ***********************************/
@@ -1082,9 +1143,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		int action = event.getAction();
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_MENU:
-			if (action == KeyEvent.ACTION_UP && menu != null && menu.findItem(R.id.settings) != null) {
+			if (action == KeyEvent.ACTION_UP && menu != null && menu.findItem(R.id.mainDropDownMenu) != null) {
 				// Open the overflow menu as if we pressed the onscreen settings button
-				menu.performIdentifierAction(R.id.settings, 0);
+				menu.performIdentifierAction(R.id.mainDropDownMenu, 0);
 				return true;
 			}
 			return true;

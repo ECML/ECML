@@ -10,7 +10,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.text.format.Time;
-import android.util.Log;
 
 /**
  * @class CalendarPreferencesActivity The user can change settings for the
