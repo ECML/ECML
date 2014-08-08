@@ -9,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ecml.MidiNote;
@@ -27,9 +28,17 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 	private Double prevPulseTime;
 	private boolean firstTry = true;
 	private int numberPoints = 0;
+	TextView percentage;
+	TextView appreciation;
+	ImageView star;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		percentage = (TextView) findViewById(R.id.percentage);
+		appreciation = (TextView) findViewById(R.id.appreciation);
+		star = (ImageView) findViewById(R.id.star);
+		score = (TextView) findViewById(R.id.score);
 
 		tracks = midifile.getTracks();
 
@@ -42,7 +51,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 
 			@Override
 			public void onClick(View v) {
-				counter = 0;	// note counter
+				counter = 0; // note counter
 				currentPulseTime = 0.0; // + notes.get(0).getDuration();
 				prevPulseTime = 0.0;
 
@@ -51,8 +60,8 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 
 				textView = (TextView) findViewById(R.id.affiche);
 				// Humans start counting at 1, not 0
-				textView.setText("Play the note n°" + (counter + 1)); 
-				
+				textView.setText("Play the note n°" + (counter + 1));
+
 				TextView score = (TextView) findViewById(R.id.score);
 				score.setText(numberPoints + "/" + notes.size());
 
@@ -93,6 +102,19 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 			// If we reach the end of the midifile, then we stop the player and
 			// the pitch detection
 			if (counter == notes.size()) {
+				counter = 0;
+				SpeedGamelvl.speedGameView.setVisibility(View.GONE);
+				SpeedGamelvl.result.setVisibility(View.VISIBLE);
+				double percentageScore = numberPoints * 100 / notes.size();
+				percentage.setText(String.valueOf(percentageScore) + "%");
+				if (percentageScore >= 90) {
+					percentage.setTextColor(Color.GREEN);
+					appreciation.setText("Congratulations!");
+				} else {
+					percentage.setTextColor(Color.RED);
+					appreciation.setText("Try again!");
+					star.setVisibility(View.GONE);
+				}
 				if (player != null) {
 					player.Stop();
 				}
@@ -100,12 +122,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 					pitchPoster.stopSampling();
 				}
 				pitchPoster = null;
-				SpeedGamelvl.speedGameView.setVisibility(View.GONE);
-				SpeedGamelvl.result.setVisibility(View.VISIBLE);			
 			}
-			
-			
-
 
 			// If the data is non null and loud enough, we test it
 			if (data != null && data.decibel > -20) {
@@ -119,12 +136,15 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 
 				// Check if it is the expected note
 				if (test.equals(noteNames[keyDisplay.ordinal()][data.note % 12])) {
-					if (firstTry == true) {numberPoints++;}					
+					if (firstTry == true) {
+						numberPoints++;
+						score.setText(numberPoints + "/" + notes.size());
+					}
 					advanceOneNote();
 					counter++;
 					firstTry = true;
 					textView.setText("Play the note n°" + (counter + 1));
-					score.setText( numberPoints + "/" + notes.size() );
+					
 				}
 
 			} else {
