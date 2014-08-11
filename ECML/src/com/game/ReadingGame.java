@@ -35,7 +35,7 @@ import com.ecml.SheetMusic;
 import com.ecml.TimeSigSymbol;
 import com.sideActivities.BaseActivity;
 
-/* abstract class which define the main part of all the readinggame activities */
+/* abstract class which define the main part of all the Reading of notes Game activities */
 
 public abstract class ReadingGame extends BaseActivity {
 
@@ -44,14 +44,15 @@ public abstract class ReadingGame extends BaseActivity {
 	}
 
 	protected KeyDisplay keyDisplay = KeyDisplay.DISPLAY_SHARP;
+	//Name of the notes (english notation)
 	protected static final String noteNames[][] = { { "A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab" },
 			{ "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" }, };
 
-	protected boolean point = true;
-	protected int counter = 0;
-	protected int score = 0;
+	protected boolean point = true;			//If true, the player plays the note at the right time 
+	protected int counter = 0;				//Number of notes that the player try to find
+	protected int score = 0;				//Score of the the player
 
-	public static int level = 1;
+	public static int level = 1;			//3 levels : beginner, intermediate and advanced
 
 	/*** MidiSheet variables ***/
 
@@ -62,23 +63,21 @@ public abstract class ReadingGame extends BaseActivity {
 	protected Thread playingthread;
 	protected SheetMusic sheet; /* The sheet music */
 	protected Piano piano; 		/* The piano */
-	protected LinearLayout layout; /* THe layout */
+	protected LinearLayout layout; /* The layout */
 	protected long midiCRC; /* CRC of the midi bytes */
 
 	/*** End of MidiSheet variables ***/
 
 	protected ArrayList<MidiTrack> tracks;	/* The Tracks of the song */
 	protected ArrayList<MidiNote> notes;	/* The Notes of the first Track (Track 0) */
-	protected boolean search;
-	static View choice;
-	static View result;
+	static View choice;						/* Top view where the player can choose a note */
+	static View result;						/*Top view that appears when the player finish a song */
 	private View topLayout;
 
-	protected MidiFile midifile; /* The midi file to play */
-	protected MidiOptions options; /* The options for sheet music and sound */
-	protected MidiPlayer player; /* The play/stop/rewind toolbar */
-	public static int noteplace;
-	protected MidiNote note;
+	protected MidiFile midifile; 			/* The midi file to play */
+	protected MidiOptions options; 			/* The options for sheet music and sound */
+	protected MidiPlayer player; 			/* The play/stop/rewind toolbar */
+	public boolean search;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -95,6 +94,7 @@ public abstract class ReadingGame extends BaseActivity {
 		TimeSigSymbol.LoadImages(this);
 
 		// Parse the MidiFile from the raw bytes
+		//There is one song for each level
 		Uri uri;
 		String title;
 		Log.i("level", "" + level);
@@ -158,6 +158,7 @@ public abstract class ReadingGame extends BaseActivity {
 
 		player.mute();
 
+		/*Define a layout */
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		choice = getLayoutInflater().inflate(R.layout.choice, layout, false);
@@ -170,6 +171,7 @@ public abstract class ReadingGame extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
+				//If a song as already be chosen, it will open this one, if not, it will ask the player to choose a new one
 				if (ECML.song != null) {
 					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 					ChooseSongActivity.openFile(ECML.song);
@@ -212,11 +214,13 @@ public abstract class ReadingGame extends BaseActivity {
 			}
 		});
 
+		//Add the result view to the layout but not visible at that time
 		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
 		layout.addView(result);
 		result.setVisibility(View.GONE);
 		setContentView(layout);
-
+		
+		//Create the sheet music
 		createSheetMusic(options);
 
 
@@ -252,6 +256,7 @@ public abstract class ReadingGame extends BaseActivity {
 		}
 		sheet = new SheetMusic(this);
 		sheet.init(midifile, options, false, 0, 2);
+		//for levels 2 and 3, the songs are cut
 		if (level == 2) {sheet.init(midifile, options, true, 0, 45);}
 		if (level == 3) {sheet.init(midifile, options, true, 0, 45);}
 		sheet.setPlayer(player);
@@ -321,7 +326,6 @@ public abstract class ReadingGame extends BaseActivity {
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
 		final View dialogView = inflator.inflate(R.layout.help_reading_notes, null);
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("HELP");
 		builder.setView(dialogView);
