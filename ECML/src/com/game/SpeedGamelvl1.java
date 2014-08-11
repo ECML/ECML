@@ -1,7 +1,5 @@
 package com.game;
 
-import java.util.ArrayList;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,8 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ecml.MidiNote;
-import com.ecml.MidiTrack;
 import com.ecml.R;
 import com.ecml.SheetMusic;
 
@@ -22,15 +18,13 @@ import com.ecml.SheetMusic;
 
 public class SpeedGamelvl1 extends SpeedGamelvl {
 
-	private TextView textView;
-	private TextView score;
-	private Double currentPulseTime;
-	private Double prevPulseTime;
-	private boolean firstTry = true;
-	private int numberPoints = 0;
-	TextView percentage;
-	TextView appreciation;
-	ImageView star;
+	private TextView textView;			/* The text displaying which note to play */
+	private TextView score;				/* The score */
+	private Double currentPulseTime;	/* The current pulse time */ 
+	private Double prevPulseTime;		/* The previous pulse time */
+	private boolean firstTry = true;	/* The test whether the user played the right note on the first try */
+	private int numberPoints = 0;		/* The number of points the user has got */
+	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -154,20 +148,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 		}
 	}
 
-	private ArrayList<MidiNote> findNotes(ArrayList<MidiTrack> tracks, int instrument) {
-
-		int i = 0;
-		search = true;
-		while (search) {
-			if (instrument == tracks.get(i).getInstrument()) {
-				search = false;
-			} else {
-				i++;
-			}
-		}
-		return tracks.get(i).getNotes();
-	}
-
+	/** Shade the next note to play each time a note is played */
 	public void advanceOneNote() {
 		if (midifile == null || sheet == null) {
 			return;
@@ -188,6 +169,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 		reshadeNotes();
 	}
 
+	/** Reshade the current notes to play */
 	public void reshadeNotes() {
 		sheet.ShadeNotes(currentPulseTime.intValue(), prevPulseTime.intValue(), SheetMusic.ImmediateScroll);
 		piano.ShadeNotes(currentPulseTime.intValue(), prevPulseTime.intValue());

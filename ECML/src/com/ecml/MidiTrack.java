@@ -16,8 +16,6 @@ package com.ecml;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
 
 
 /** @class MidiTrack

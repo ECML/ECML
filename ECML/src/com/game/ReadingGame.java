@@ -7,12 +7,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -163,7 +160,7 @@ public abstract class ReadingGame extends BaseActivity {
 
 		player.mute();
 
-		/*Define a layout */
+		/* Define a layout */
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		choice = getLayoutInflater().inflate(R.layout.choice, layout, false);
@@ -238,7 +235,7 @@ public abstract class ReadingGame extends BaseActivity {
 	}
 
 	/** Create the MidiPlayer and Piano views */
-	//Even if there is no piano, it is necessary to create the view of the piano anyway
+	// Even if there is no piano, it is necessary to create the view of the piano anyway
 	void createView() {
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
@@ -329,6 +326,7 @@ public abstract class ReadingGame extends BaseActivity {
 		super.onPause();
 	}
 
+	/** Create the Help Alert Dialog */
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
 		final View dialogView = inflator.inflate(R.layout.help_reading_notes, null);

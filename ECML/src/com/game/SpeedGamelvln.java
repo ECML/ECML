@@ -1,7 +1,5 @@
 package com.game;
 
-import java.util.ArrayList;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ecml.MidiNote;
-import com.ecml.MidiTrack;
 import com.ecml.R;
 
 /* Second implementation of the SpeedGame
@@ -104,10 +100,10 @@ public class SpeedGamelvln extends SpeedGamelvl {
 
 				if (test.equals(noteNames[keyDisplay.ordinal()][data.note % 12])) {
 
-					int debut = notes.get(counter).getStartTime();
-					int fin = notes.get(counter).getEndTime();
+					int start = notes.get(counter).getStartTime();
+					int end = notes.get(counter).getEndTime();
 
-					if (player.getPrevPulseTime() > debut && player.getPrevPulseTime() < fin) {
+					if (player.getPrevPulseTime() > start && player.getPrevPulseTime() < end) {
 						if (point) {
 							score++;
 							point = false;
@@ -123,21 +119,6 @@ public class SpeedGamelvln extends SpeedGamelvl {
 			}
 		}
 	}
-
-	private ArrayList<MidiNote> findNotes(ArrayList<MidiTrack> tracks, int instrument) {
-
-		int i = 0;
-		search = true;
-		while (search) {
-			if (instrument == tracks.get(i).getInstrument()) {
-				search = false;
-			} else {
-				i++;
-			}
-		}
-		return tracks.get(i).getNotes();
-	}
-
 
 	public boolean onTouchEvent(MotionEvent event) {
 		int action = event.getAction() & MotionEvent.ACTION_MASK;
