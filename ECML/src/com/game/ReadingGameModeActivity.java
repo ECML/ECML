@@ -15,6 +15,8 @@ import com.sideActivities.BaseActivity;
 
 public class ReadingGameModeActivity extends BaseActivity {
 
+	//To choose between the beginner mode and the normal mode.
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

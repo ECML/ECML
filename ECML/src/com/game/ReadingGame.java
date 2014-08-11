@@ -233,6 +233,7 @@ public abstract class ReadingGame extends BaseActivity {
 	}
 
 	/** Create the MidiPlayer and Piano views */
+	//Even if there is no piano, it is necessary to create the view of the piano anyway
 	void createView() {
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);

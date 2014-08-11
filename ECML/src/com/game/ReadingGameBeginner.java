@@ -23,13 +23,13 @@ import com.ecml.SheetMusic;
 
 public class ReadingGameBeginner extends ReadingGame {
 
-	private TextView textView;
-	private int compteurTexte = counter + 1;
-	private ColorDrawable orangeColor;
-	private int numberPoints = 0;
-	private int firstTry = 0;
-	private int numberNote = 46;
-	private Double currentPulseTime = 0.0;
+	private TextView textView;					//Display which note must be played and the score
+	private int compteurTexte = counter + 1;	//Number of the note that must be played
+	private ColorDrawable orangeColor;			//Background color of the choice of note buttons
+	private int numberPoints = 0;				//Number of points
+	private int firstTry = 0;					//Incremented each time the player try to find a note
+	private int numberNote = 46;				//Number of notes in the sheet music
+	private Double currentPulseTime = 0.0;		
 	private Double prevPulseTime = 0.0;
 
 	/** Called when the activity is first created. */
@@ -41,21 +41,11 @@ public class ReadingGameBeginner extends ReadingGame {
 		// We use by default the instrument n°0 which is the piano
 		notes = findNotes(tracks, 0);
 
+		//Display textView
 		displayText();
+		//Create the buttons to choose the right note
 		createButtons();
 
-		//
-		// Button play = (Button) findViewById(R.id.playReading);
-		// play.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// // Launch the game
-		// reshadeNotes();
-		// createButtons();
-		// displayText();
-		// }
-		// });
 	}
 
 	private void displayText() {
@@ -68,21 +58,22 @@ public class ReadingGameBeginner extends ReadingGame {
 
 	private void createButtons() {
 		// All the buttons
-		final Button la = (Button) findViewById(R.id.la);
-		final Button lad = (Button) findViewById(R.id.lad);
-		final Button si = (Button) findViewById(R.id.si);
-		final Button donote = (Button) findViewById(R.id.donote);
-		final Button dod = (Button) findViewById(R.id.dod);
-		final Button re = (Button) findViewById(R.id.re);
-		final Button red = (Button) findViewById(R.id.red);
-		final Button mi = (Button) findViewById(R.id.mi);
-		final Button fa = (Button) findViewById(R.id.fa);
-		final Button fad = (Button) findViewById(R.id.fad);
-		final Button sol = (Button) findViewById(R.id.sol);
-		final Button sold = (Button) findViewById(R.id.sold);
+		final Button la = (Button) findViewById(R.id.la);			//A button
+		final Button lad = (Button) findViewById(R.id.lad); 		//A sharp button
+		final Button si = (Button) findViewById(R.id.si);			//B button
+		final Button donote = (Button) findViewById(R.id.donote);	//C button
+		final Button dod = (Button) findViewById(R.id.dod);			//C sharp button
+		final Button re = (Button) findViewById(R.id.re);			//D button
+		final Button red = (Button) findViewById(R.id.red);			//D sharp button
+		final Button mi = (Button) findViewById(R.id.mi);			//E button
+		final Button fa = (Button) findViewById(R.id.fa);			//F button
+		final Button fad = (Button) findViewById(R.id.fad);			//F sharp button
+		final Button sol = (Button) findViewById(R.id.sol);			//G button
+		final Button sold = (Button) findViewById(R.id.sold);		//G sharp button
 
 		orangeColor = (ColorDrawable) la.getBackground();
 
+		//Switch button to change the note notation from english to classic or reverse
 		Switch notation = (Switch) findViewById(R.id.notation);
 		notation.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -261,23 +252,28 @@ public class ReadingGameBeginner extends ReadingGame {
 
 	}
 
+	//Test if the note chosen if the right one
 	private void testNote(String letter, Button btn) {
 		firstTry = firstTry + 1;
 		String test = notes.get(counter).PitchString();
 		// Check if it is the expected note
 		if (letter == test) {
 			if (firstTry == 1) {
+				//If the note is right and it is the first try, then the player has one more point
 				numberPoints = numberPoints + 1;
 			}
+			//the button becomes green and then go back to orange
 			GreenToOrange(btn);
 			firstTry = 0;
-			Log.i("score", "" + numberPoints);
+			//Log.i("score", "" + numberPoints);
+			//The player goes to the next note
 			advanceOneNote();
 			counter++;
 			compteurTexte++;
 			textView.setText("Choose which one is the note number " + compteurTexte + "         " + "Score : " + numberPoints + "/" + numberNote);
 			checkEnd();
 		} else {
+			//if the note is not the good one, the button becomes red and then go back to orange
 			redToOrange(btn);
 		}
 	}
@@ -291,10 +287,12 @@ public class ReadingGameBeginner extends ReadingGame {
 		TextView next = (TextView) findViewById(R.id.nextLevel);
 
 		if (counter == numberNote) {
+			//Display the result view
 			ReadingGame.choice.setVisibility(View.GONE);
 			ReadingGame.result.setVisibility(View.VISIBLE);
 			double percentageScore = numberPoints * 100 / numberNote;
 			percentage.setText(String.valueOf(percentageScore) + "%");
+			//If the percentage of right answer is superior to 90%, then the player can go to the next level
 			if (percentageScore >= 90) {
 				percentage.setTextColor(Color.GREEN);
 				appreciation.setText("Congratulations!");
@@ -310,6 +308,7 @@ public class ReadingGameBeginner extends ReadingGame {
 						}
 					});
 				} else {
+					//if the player was already at the 2nd level, he finishes the game
 					next.setText("You finished the game!");
 				}
 
@@ -352,10 +351,12 @@ public class ReadingGameBeginner extends ReadingGame {
 		reshadeNotes();
 	}
 
+	//Highlight the current note
 	public void reshadeNotes() {
 		sheet.ShadeNotes(currentPulseTime.intValue(), prevPulseTime.intValue(), SheetMusic.ImmediateScroll);
 	}
 
+	//Found the notes and put them in an array
 	private ArrayList<MidiNote> findNotes(ArrayList<MidiTrack> tracks, int instrument) {
 
 		int i = 0;
