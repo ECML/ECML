@@ -7,5 +7,12 @@
         android:title="@string/login">
     </item>
     
+    <item 
+        android:id="@+id/studentActivity"
+        android:icon="@drawable/scorebtn"
+        android:showAsAction="always"
+        android:title="@string/login">
+    </item>       
+    
 
 </menu>

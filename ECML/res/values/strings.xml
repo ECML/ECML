@@ -148,10 +148,28 @@
         <item>What was your dream job as a child?</item>
         <item>What was your maternal grandfatherâ€™s first name?</item>
     </string-array>
+	
+	<string name="security_question">Choose a security question</string>
+	<string name="ForgottenPassword"><u><b><i>Forgot Your Password ?</i></b></u> </string>
+	<string name="wrong_answer">Your answer is wrong ! </string>
+	
+	<!-- XML Form -->
+	<string name="studentName">Student name</string>
+	<string name="firstActivity">First Activity</string>
+	<string-array name="activity_array">
+        <item> Play instrument alone</item>
+        <item> Reading notes</item>
+        <item> Check with the teacher</item>
+        <item> Play instrument with the piano </item>
+        <item> Work difficult parts</item>
+    </string-array>
+	<string name="time">Duration of the activity</string>
+	<string name="tempo">Tempo</string>
+	<string name="songs_list">List of the songs</string>
+	<string name="game_level">Game level</string>	
 
-    <string name="security_question">Choose a security question</string>
-    <string name="ForgottenPassword"><u><b><i>Forgot Your Password ?</i></b></u></string>
-    <string name="wrong_answer">Your answer is wrong ! </string>
+
+
     <string name="delay">Delay</string>
     <string name="choose_notation">Choose the Notation</string>
     <string name="choose_transpose">Choose the Transposition</string>
