@@ -304,7 +304,19 @@ public class ECMLActivity extends Activity {
 			launchLogin();
 			return true;
 		}
+
+		else if (item.getItemId()== R.id.studentActivity){
+			launchStudentActivity();
+			return true;
+		}
+		
 		return true;
+	}
+
+	private void launchStudentActivity() {
+		Intent i = new Intent(ECMLActivity.this, StudentActivities.class);
+		startActivity(i);
+		
 	}
 
 	private void launchLogin() {

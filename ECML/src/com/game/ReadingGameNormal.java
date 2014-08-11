@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import com.ecml.R;
 
+/*Not created yet. The player is supposed to say the right note at the right time. It should use voice recognition.*/
+
 public class ReadingGameNormal extends ReadingGame {
 
 	/** Called when the activity is first created. */

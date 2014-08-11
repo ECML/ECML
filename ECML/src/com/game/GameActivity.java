@@ -48,9 +48,9 @@ public class GameActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(getApplicationContext(), MusicalEarActivity.class);
-//				startActivity(intent);
-//				finish();
+				Intent intent = new Intent(getApplicationContext(), MusicalEarGameModeActivity.class);
+				startActivity(intent);
+				finish();
 			}
 			
 		});
@@ -74,9 +74,9 @@ public class GameActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(getApplicationContext(), TechniqueActivity.class);
-//				startActivity(intent);
-//				finish();
+				Intent intent = new Intent(getApplicationContext(), TechniqueActivity.class);
+				startActivity(intent);
+				finish();
 			}
 			
 		});

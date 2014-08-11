@@ -142,6 +142,7 @@ public class Login extends Messenger {
 	    		
 	    		startActivity(i);
 	    		return true;
+	    		
 	    	case EXIT_APP_ID:
 	    		cancelButton.performClick();
 	    		return true;

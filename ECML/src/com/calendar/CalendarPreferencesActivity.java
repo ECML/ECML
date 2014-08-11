@@ -18,6 +18,8 @@ import android.text.format.Time;
  *        the guests can see the list of attendees - If they want a reminder -
  *        Which alarm method they choose - Number of minutes prior to the event
  *        that the reminder should fire - Default location
+ *        
+ * @author Anaïs
  */
 
 public class CalendarPreferencesActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {

@@ -9,6 +9,8 @@ package com.calendar;
  *	Bissextile years are recognized by the following rules : either (a multiple of 4 but not of 100) or (a multiple of 400) 
  *
  */
+
+//This class should be used to implemente the rehearsal programs
 public class Date {
 	private int year;
 	private int month;

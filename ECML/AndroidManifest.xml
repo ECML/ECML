@@ -170,6 +170,11 @@
         </activity>
         <activity android:name="com.androidim.Profil" >
         </activity>
+        <activity android:name="com.ecml.StudentActivities"></activity>
+           
+           
+          
+         
         <activity android:name="com.androidim.AddFriend" >
         </activity>
         <activity android:name="com.androidim.DeleteFriend" >
@@ -196,6 +201,8 @@
         </activity>
         <activity android:name="com.login.ForgottenPasswordActivity" >
         </activity>
+        <activity android:name="com.game.MusicalEarGameModeActivity"></activity>
+        <activity android:name="com.game.TechniqueActivity"></activity>
     </application>
 
 </manifest>

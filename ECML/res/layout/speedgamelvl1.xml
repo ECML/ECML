@@ -48,6 +48,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -80,12 +81,20 @@
 
         <TextView
             android:id="@+id/affiche"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content" 
-		    android:inputType="textMultiLine"
-		    android:lines="5" />
-		 
-
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:lines="5"></TextView>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/linearLayout1"
+        android:layout_alignLeft="@+id/linearLayout2"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="42dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

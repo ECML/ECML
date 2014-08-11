@@ -1,6 +1,8 @@
 package com.game;
 
 import android.app.AlertDialog;
+
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,12 @@ import com.ecml.ChooseSongActivity;
 import com.ecml.ECML;
 import com.ecml.R;
 import com.sideActivities.BaseActivity;
+
+/**
+ * @class ReadingGameModeActivity : To choose between the beginner mode and the normal mode
+ *        
+ * @author Anaïs
+ */
 
 public class ReadingGameModeActivity extends BaseActivity {
 
