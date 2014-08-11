@@ -143,7 +143,5 @@ public class SpeedGameModeActivity extends BaseActivity {
 			dialog.show();
 		}
 		
-
-
 }
 

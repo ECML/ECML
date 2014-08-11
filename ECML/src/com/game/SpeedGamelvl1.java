@@ -109,7 +109,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 				// Octave String
 				// test.equals(noteNames[keyDisplay.ordinal()][data.note])
 
-				String test = notes.get(counter).Pitch();
+				String test = notes.get(counter).pitch();
 
 				// Check if it is the expected note
 				if (test.equals(noteNames[keyDisplay.ordinal()][data.note % 12])) {

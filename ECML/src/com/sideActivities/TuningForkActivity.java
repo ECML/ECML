@@ -61,7 +61,7 @@ public class TuningForkActivity extends BaseActivity {
 	private double sample[] = new double[targetSamples * 2];
 	private byte generatedSnd[] = new byte[2 * 2 * targetSamples];
 
-	/* The array of the notes */
+	/** The array of the notes */
 	private String[] notes = { "G\u266F/ A\u266D", "A", "A\u266F/ B\u266D", "B", "C", "C\u266F/ D\u266D", "D", "D\u266F/ E\u266D", "E", "F",
 			"F\u266F/ G\u266D", "G" };
 
@@ -148,7 +148,6 @@ public class TuningForkActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				sineFreq = ((sineFreq - 4) % 12) + 52;
-				Log.i("Freq", "" + sineFreq);
 				updateView();
 			}
 		});
@@ -159,7 +158,6 @@ public class TuningForkActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				sineFreq = ((int) Math.floor((sineFreq - 4.0) / 12) + 1) * 12 + 1;
-				Log.i("Freq", "" + sineFreq);
 				updateView();
 			}
 		});
@@ -173,7 +171,7 @@ public class TuningForkActivity extends BaseActivity {
 			}
 		});
 
-		// Initialize the toggle button, the frequency and seek bar to desired values
+		// Initialize the switch button, the frequency and seek bar to desired values
 		switchButton.setChecked(false);
 		sineFreq = 61;
 		pitchBar.setMax(200);
@@ -200,7 +198,7 @@ public class TuningForkActivity extends BaseActivity {
 
 
 	/**
-	 * A call-back for when the user presses the toggle button
+	 * A call-back for when the user presses the switch button
 	 */
 	OnCheckedChangeListener switchListener = new OnCheckedChangeListener() {
 
@@ -218,7 +216,7 @@ public class TuningForkActivity extends BaseActivity {
 	};
 	
 	/**
-	 * A call-back for when the user change the sine Frequency
+	 * A call-back for when the user change the Sine Frequency
 	 */
 	OnSeekBarChangeListener sineFreqBarListener = new OnSeekBarChangeListener() {
 
@@ -257,13 +255,11 @@ public class TuningForkActivity extends BaseActivity {
 		@SuppressWarnings("unused")
 		protected void onPostExecute(Void... voids) {
 			// Turn the light off when done
-
 		}
 
 		@SuppressWarnings("unused")
 		protected void onCancelled(Void... voids) {
 			// Turn the light off when done
-
 		}
 
 		@Override

@@ -263,9 +263,9 @@ public class ReadingGameBeginner extends ReadingGame {
 
 	private void testNote(String letter, Button btn) {
 		firstTry = firstTry + 1;
-		String test = notes.get(counter).PitchString();
+		String test = notes.get(counter).pitch();
 		// Check if it is the expected note
-		if (letter == test) {
+		if (letter.equals(test)) {
 			if (firstTry == 1) {
 				numberPoints = numberPoints + 1;
 			}

@@ -100,7 +100,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 					point = true;
 				}
 
-				String test = notes.get(counter).Pitch();
+				String test = notes.get(counter).pitch();
 
 				if (test.equals(noteNames[keyDisplay.ordinal()][data.note % 12])) {
 
