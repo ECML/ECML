@@ -154,6 +154,8 @@ public class SheetMusic extends SurfaceView implements SurfaceHolder.Callback, S
 	 * signature - For each track, create a list of MusicSymbols (notes, rests,
 	 * bars, etc) - Vertically align the music symbols in all the tracks -
 	 * Partition the music notes into horizontal staffs
+	 * The boolean cut is true if the song is cut. Start and stop indicate the number 
+	 * of the notes between which the song is cut. 
 	 */
 	public void init(MidiFile file, MidiOptions options, boolean cut, int start, int stop) {
 		if (options == null) {
