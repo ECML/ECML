@@ -35,7 +35,12 @@ import com.ecml.SheetMusic;
 import com.ecml.TimeSigSymbol;
 import com.sideActivities.BaseActivity;
 
-/* abstract class which define the main part of all the Reading of notes Game activities */
+/**
+ * @class ReadingGame :abstract class which define the main part of all the Reading of notes Game activities.
+ *        
+ * @author Anaïs
+ */
+
 
 public abstract class ReadingGame extends BaseActivity {
 

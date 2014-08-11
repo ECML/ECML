@@ -15,6 +15,12 @@ import android.widget.ListView;
 
 import com.ecml.R;
 
+/**
+ * @class CalendarAddEventsActivity : Add event to the user's calendar. 
+ *        
+ * @author Anaïs
+ */
+
 public class CalendarAddEventsActivity extends Activity {
 
 	@Override
@@ -27,6 +33,7 @@ public class CalendarAddEventsActivity extends Activity {
 		registerClickCallback();
 	}
 
+	//Add an action when one item of the list view is chosen
 	private void registerClickCallback() {
 		ListView list = (ListView) findViewById(R.id.listView1);
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -45,6 +52,7 @@ public class CalendarAddEventsActivity extends Activity {
 
 	}
 
+	//Create the list view
 	private void populateListView() {
 		// Create list of items
 		String[] myItems = { "Add a meeting with my music teacher", "Add a concert" };
@@ -61,8 +69,10 @@ public class CalendarAddEventsActivity extends Activity {
 	
 	private void addTeacherMeeting() {
 
+		//Insert an event in the calendar
 		Intent intent = new Intent(Intent.ACTION_INSERT);
 		intent.setType("vnd.android.cursor.item/event");
+		//Pre-fill the event properties
 		intent.putExtra(Events.TITLE, "Meeting with Music Teacher");
 		intent.putExtra(Events.EVENT_LOCATION, "Music School");
 
@@ -78,10 +88,12 @@ public class CalendarAddEventsActivity extends Activity {
 
 	}
 		private void addConcert() {
+			//Insert an event in the calendar
 			Intent intent = new Intent(Intent.ACTION_INSERT);
 			intent.setType("vnd.android.cursor.item/event");
 			intent.putExtra(Events.TITLE, "Music concert");
 
+			//Pre-fill the event properties
 			GregorianCalendar calDate = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
 			intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, calDate.getTimeInMillis());
 			intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, calDate.getTimeInMillis() + 30 * 60 * 1000);

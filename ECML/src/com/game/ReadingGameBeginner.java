@@ -2,6 +2,8 @@ package com.game;
 
 import java.util.ArrayList;
 
+
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +22,12 @@ import com.ecml.MidiNote;
 import com.ecml.MidiTrack;
 import com.ecml.R;
 import com.ecml.SheetMusic;
+
+/**
+ * @class ReadingGameBeginnerActivity 
+ *        
+ * @author Anaïs & Nicolas
+ */
 
 public class ReadingGameBeginner extends ReadingGame {
 
