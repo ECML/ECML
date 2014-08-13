@@ -1,8 +1,5 @@
 package com.ecml;
 
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -3,25 +3,22 @@ package com.game;
 import java.util.ArrayList;
 import java.util.zip.CRC32;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ecml.ChooseSongActivity;
 import com.ecml.ClefSymbol;
@@ -35,17 +32,14 @@ import com.ecml.MidiPlayer;
 import com.ecml.MidiTrack;
 import com.ecml.Piano;
 import com.ecml.R;
-import com.ecml.ScrollAnimation;
 import com.ecml.SheetMusic;
 import com.ecml.TimeSigSymbol;
-import com.ecml.R.color;
-import com.ecml.R.id;
-import com.ecml.R.layout;
+import com.sideActivities.BaseActivity;
 
 
-/* abstract class wich define the main part of all the speedgame activities */
+/* Abstract Class which defines the main part of all the speedgame activities */
 
-public abstract class SpeedGamelvl extends Activity {
+public abstract class SpeedGamelvl extends BaseActivity {
 
 
     protected enum KeyDisplay {
@@ -58,61 +52,46 @@ public abstract class SpeedGamelvl extends Activity {
         { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" },
     };
 	
-	protected boolean point = true;
-	protected int counter = 0;
-	protected int score = 0;
-	
-	
+	protected boolean point = true;		/* The boolean telling whether to give a point or not */
+	protected int counter = 0;			/* The counter telling where we are on the track */
+	protected int score = 0;			/* The score of the user */
+	protected TextView percentage;		/* The view to display the percentage of right notes */
+	protected TextView appreciation;	/* The view to display the appreciation */
+	protected ImageView star;			/* The star image */
 
 	/*** MidiSheet variables ***/
 
 	public static final String MidiTitleID = "MidiTitleID";
-
 	public static final int settingsRequestCode = 1;
 	
-	protected Thread playingthread;
-	protected SheetMusic sheet; /* The sheet music */
-	protected LinearLayout layout; /* THe layout */
-	protected Piano piano; /* The piano at the top */
-	protected long midiCRC; /* CRC of the midi bytes */
+	protected SheetMusic sheet; 	/* The sheet music */
+	protected LinearLayout layout; 	/* THe layout */
+	protected Piano piano;		 	/* The piano still needs to be added because of the player */
+	protected long midiCRC; 		/* CRC of the midi bytes */
 
 	/*** End of MidiSheet variables ***/
-
-/*** Record and Play Variables ***/
 	
-	private boolean isAudioRecordingAndPlayingMusic = false;
-	private SurfaceView surfaceView;
-	private SurfaceHolder surfaceHolder;
-	
-	protected ScrollAnimation scrollAnimation;
-
-	/*** End of Record and Play Variables ***/
-
-	protected ArrayList<MidiTrack> Tracks;
-	protected ArrayList<MidiNote> Notes;
+	protected ArrayList<MidiTrack> tracks;	/* The Tracks of the song */
+	protected ArrayList<MidiNote> notes;	/* The Notes of the first Track (Track 0) */
 	protected boolean search;
-	View choice;
-	View result;
-	private View topLayout;
+	public static View speedGameView;
+	public static View result;
 
-
-	protected MidiFile midifile; /* The midi file to play */
-	protected MidiOptions options; /* The options for sheet music and sound */
-	protected MidiPlayer player; /* The play/stop/rewind toolbar */
-	public static int noteplace;
-	protected MidiNote note;
+	protected MidiFile midifile; 	/* The midi file to play */
+	protected MidiOptions options; 	/* The options for sheet music and sound */
+	protected MidiPlayer player; 	/* The play/stop/rewind toolbar */
+	protected MidiNote note;		/* The current note */
 
 	/*** PitchDetection variables ***/
 
-	protected MicrophonePitchPoster pitchPoster;
+	protected MicrophonePitchPoster pitchPoster;	/* The pitch detector */
 
 	/*** End of PitchDetection variables ***/
-
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.speedgamelvl1);
 
 		/*****************
 		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
@@ -121,7 +100,6 @@ public abstract class SpeedGamelvl extends Activity {
 
 		ClefSymbol.LoadImages(this);
 		TimeSigSymbol.LoadImages(this);
-		MidiPlayer.LoadImages(this);
 
 		// Parse the MidiFile from the raw bytes
 		Uri uri = this.getIntent().getData();
@@ -153,36 +131,66 @@ public abstract class SpeedGamelvl extends Activity {
 		options.shade1Color = settings.getInt("shade1Color", options.shade1Color);
 		options.shade2Color = settings.getInt("shade2Color", options.shade2Color);
 		options.showPiano = settings.getBoolean("showPiano", true);
+		options.tracks[0] = true;
+		for (int i = 1; i < options.tracks.length; i++) {
+			options.tracks[i] = false;
+		}
 		String json = settings.getString("" + midiCRC, null);
 		MidiOptions savedOptions = MidiOptions.fromJson(json);
 		if (savedOptions != null) {
 			options.merge(savedOptions);
 		}
-		createView();
 
-		player.mute();
-
+		/* Set the MidiPlayer and Piano */
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
-		choice = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
-		layout.addView(choice);
+		
+		speedGameView = getLayoutInflater().inflate(R.layout.game_speed_level1, layout, false);
+		layout.addView(speedGameView);
+		
+		result = getLayoutInflater().inflate(R.layout.game_reading_results, layout, false);
+		layout.addView(result);
+		result.setVisibility(View.GONE);
+		
+		
+		player = new MidiPlayer(this);
+		piano = new Piano(this);
+		player.SetPiano(piano, options);
+		layout.addView(player);
+		player.setVisibility(View.GONE);
+		
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
+		layout.addView(piano,params);
+		params.gravity = Gravity.CENTER_HORIZONTAL;
 		setContentView(layout);
+		layout.requestLayout();
+		
+		player.mute();
 
 		// Back to the score button
-		Button scoreB = (Button) findViewById(R.id.back);
-		scoreB.setOnClickListener(new View.OnClickListener() {
+		Button backToScore = (Button) findViewById(R.id.back);
+		backToScore.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (ECML.song != null) {
+					ECML.intent.putExtra(ChooseSongActivity.mode, "chooseSong");
 					ChooseSongActivity.openFile(ECML.song);
 				}
 				else {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode, "chooseSong");
+					startActivity(ECML.intent);
 				}
+				finish();
 			}
+			
 		});
 
 		// Help button
@@ -193,6 +201,7 @@ public abstract class SpeedGamelvl extends Activity {
 			public void onClick(View v) {
 				showHelpDialog();
 			}
+			
 		});
 
 		// Change game button
@@ -201,7 +210,6 @@ public abstract class SpeedGamelvl extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				
 				score = 0;
 				counter = 0;
 				if ( player != null )
@@ -216,10 +224,12 @@ public abstract class SpeedGamelvl extends Activity {
 				
 				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(intent);
+				finish();
 			}
+			
 		});
 
-		// Change stop button
+		// Stop button
 		Button stop = (Button) findViewById(R.id.stop);
 		stop.setOnClickListener(new View.OnClickListener() {
 
@@ -237,83 +247,17 @@ public abstract class SpeedGamelvl extends Activity {
 				}
 		        pitchPoster = null;
 			}
+			
 		});
-
-		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
-		layout.addView(result);
-		result.setVisibility(View.GONE);
+		
 		setContentView(layout);
-
 		createSheetMusic(options);
-
-		scrollAnimation = new ScrollAnimation(sheet, options.scrollVert); 	// needed for stopping the music and recording
-		  																	// when touching the score
-
-	}
-
-	/* Create the MidiPlayer and Piano views */
-	void createView() {
-		layout = new LinearLayout(this);
-		layout.setOrientation(LinearLayout.VERTICAL);
-		player = new MidiPlayer(this);
-		piano = new Piano(this);
-
-		topLayout = getLayoutInflater().inflate(R.layout.main_top, layout, false);
-		topLayout.setVisibility(View.GONE);
-		layout.addView(topLayout);
-
-		player.getPianoButton().setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				options.showPiano = !options.showPiano;
-				player.SetPiano(piano, options);
-				SharedPreferences.Editor editor = getPreferences(0).edit();
-				editor.putBoolean("showPiano", options.showPiano);
-				String json = options.toJson();
-				if (json != null) {
-					editor.putString("" + midiCRC, json);
-				}
-				editor.commit();
-			}
-		});
-
-		player.getPlayAndRecordButton().setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-//				startAudioRecordingAndPlayingMusic();
-			}
-		});
-
-		player.getPlayRecordButton().setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-//				playAudio();
-			}
-		});
-
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		int width = size.x;
-		int height = size.y;
-
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
-		params.gravity = Gravity.CENTER_HORIZONTAL;
-
-		layout.addView(piano, params);
-		layout.addView(player);
-		setContentView(layout);
-		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.orange));
-		player.SetPiano(piano, options);
-		layout.requestLayout();
 	}
 
 	/** Create the SheetMusic view with the given options */
 	private void createSheetMusic(MidiOptions options) {
 		if (sheet != null) {
 			layout.removeView(sheet);
-		}
-		if (!options.showPiano) {
-			piano.setVisibility(View.GONE);
-		} else {
-			piano.setVisibility(View.VISIBLE);
 		}
 		sheet = new SheetMusic(this);
 		sheet.init(midifile, options, false, 1,2);
@@ -336,9 +280,6 @@ public abstract class SpeedGamelvl extends Activity {
 					// If we touch while music is playing, stop the midi player
 					if (player != null && player.playstate == player.playing) {
 						player.Pause();
-						if (isAudioRecordingAndPlayingMusic) {
-							stopAudioRecordingAndPlayingMusic();
-						}
 						sheet.getScrollAnimation().stopMotion();
 					}
 					return result;
@@ -355,24 +296,32 @@ public abstract class SpeedGamelvl extends Activity {
 			}
 		});
 	}
-	
-	private void stopAudioRecordingAndPlayingMusic() {
-		isAudioRecordingAndPlayingMusic = false;
-		player.Pause();
-		player.player.stop();	// these two lines are here to prevent the player from
-        player.player.reset();	// playing outloud the very last note supposedly played
-		
-	}
 
-	protected void PauseEcoute ()
-	{
+	/** Pause the MidiPlayer and Stop listening to the pitch */ 
+	protected void PauseEcoute() {
 		point = false;
-		player.Pause();
+		if (player != null) {
+			player.Pause();
+		}
 		if ( pitchPoster != null)
 		{
 			pitchPoster.stopSampling();
 		}
 		pitchPoster = null;
+	}
+	
+	/** Find the notes of the first Track */
+	protected ArrayList<MidiNote> findNotes(ArrayList<MidiTrack> tracks, int instrument) {
+		int i = 0;
+		search = true;
+		while (search) {
+			if (instrument == tracks.get(i).getInstrument()) {
+				search = false;
+			} else {
+				i++;
+			}
+		}
+		return tracks.get(i).getNotes();
 	}
 
 	/** When this activity resumes, redraw all the views */
@@ -394,6 +343,7 @@ public abstract class SpeedGamelvl extends Activity {
 	protected void onPause() {
 		if (player != null) {
 			player.Pause();
+			player.unmute();
 		}
 		if ( pitchPoster != null)
 		{
@@ -403,10 +353,10 @@ public abstract class SpeedGamelvl extends Activity {
 		super.onPause();
 	}
 
-	
+	/** Create the Help Alert Dialog */
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
-		final View dialogView = inflator.inflate(R.layout.speed_game_help, null);
+		final View dialogView = inflator.inflate(R.layout.help_speed_detailed, null);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("HELP");

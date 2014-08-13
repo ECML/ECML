@@ -12,6 +12,7 @@
 
 package com.ecml;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -21,6 +22,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +31,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 
 import com.calendar.CalendarActivity;
 import com.game.GameActivity;
@@ -64,7 +65,12 @@ import com.sideActivities.YoutubeActivity;
 public class ECMLActivity extends Activity {
 
 	final Context context = this;
-	private Menu menu;
+	
+	private static String sdcardPath = "sdcard/";	/* Path to the SD card */
+	private static String ECMLPath = "ECML/";		/* Path to the ECML folder from the sdcard */
+	private static final String AUDIO_RECORDER_FOLDER = "AudioRecords";	/* Audio Records folder name */
+	private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";	/* Video Records folder name */
+	private static final String MUSIC_SHEET_FOLDER = "MusicSheets"; /* Music Sheet folder name */
 	
 	private ArrayList<String> list = new ArrayList<String>(); /* The list of the activities to do */
 
@@ -75,7 +81,7 @@ public class ECMLActivity extends Activity {
 	public static final String SPEED_GAME = "S";
 	
 	public static final String CHOOSE_SONG = "chooseSong";
-	public static final String READING_OF_NOTES_BEGINNER = "readingBeginner";
+	public static final String READING_OF_NOTES_BEGINNER = "reading";
 	
 	private static Bitmap playAloneImage;			/* The Play Alone image */
 	private static Bitmap playAccompaniedImage;		/* The Play with Accompaniment image */
@@ -102,6 +108,39 @@ public class ECMLActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// Create the library folder if it doesn't exist
+		File file_library = new File(sdcardPath + ECMLPath);
+		if (!file_library.exists()) {
+			if (!file_library.mkdirs()) {
+				Log.e("TravellerLog :: ", "Problem creating the Library");
+			}
+		}
+
+		// Create the folder containing the music sheets (in the library)
+		File musicSheets = new File(sdcardPath + ECMLPath.concat(MUSIC_SHEET_FOLDER));
+		if (!musicSheets.exists()) {
+			if (!musicSheets.mkdirs()) {
+				Log.e("TravellerLog :: ", "Problem creating the Music sheets folder");
+			}
+		}
+
+		// Create the folder containing the audio records (in the library)
+		File records = new File(sdcardPath + ECMLPath.concat(AUDIO_RECORDER_FOLDER));
+		if (!records.exists()) {
+			if (!records.mkdirs()) {
+				Log.e("TravellerLog :: ", "Problem creating the Audio records folder");
+			}
+		}
+
+		// Create the folder containing the video records
+		File videorecords = new File(sdcardPath + ECMLPath.concat(VIDEO_RECORDER_FOLDER));
+		if (!videorecords.exists()) {
+			if (!videorecords.mkdirs()) {
+				Log.e("TravellerLog :: ", "Problem creating the Video records folder");
+			}
+		}
+		
 		setContentView(R.layout.main);
 		loadImages(this);
 
@@ -109,9 +148,18 @@ public class ECMLActivity extends Activity {
 		chooseSong = (ImageView) findViewById(R.id.choose_song);
 		chooseSong.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				intent.putExtra(ChooseSongActivity.niveau, "chooseSong");
-				startActivity(intent);
+				ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+				ECML.intent.putExtra(ChooseSongActivity.mode, "chooseSong");
+				startActivity(ECML.intent);
+			}
+		});
+		
+		// Calendar button
+		ImageView calendar = (ImageView) findViewById(R.id.calendar);
+		calendar.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
+				startActivity(goToCalendar);
 			}
 		});
 
@@ -133,15 +181,6 @@ public class ECMLActivity extends Activity {
 			}
 		});
 
-		// Calendar button
-		ImageView calendar = (ImageView) findViewById(R.id.calendar);
-		calendar.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
-				startActivity(goToCalendar);
-			}
-		});
-
 		// Game button
 		ImageView game = (ImageView) findViewById(R.id.game);
 		game.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +189,25 @@ public class ECMLActivity extends Activity {
 				startActivity(goToGame);
 			}
 		});
+		
+		// Messenger service button
+		ImageView messenger = (ImageView) findViewById(R.id.messenger);
+		messenger.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToMessenger = new Intent(getApplicationContext(), com.androidim.Login.class);
+				startActivity(goToMessenger);
+			}
+		});
 
+		// Youtube button
+		ImageView youtube = (ImageView) findViewById(R.id.youtube);
+		youtube.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToYoutube = new Intent(getApplicationContext(), YoutubeActivity.class);
+				startActivity(goToYoutube);
+			}
+		});
+		
 		// Metronome button
 		ImageView metronome = (ImageView) findViewById(R.id.metronome);
 		metronome.setOnClickListener(new View.OnClickListener() {
@@ -169,32 +226,12 @@ public class ECMLActivity extends Activity {
 			}
 		});
 
-		// Youtube button
-		ImageView youtube = (ImageView) findViewById(R.id.youtube);
-		youtube.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent goToYoutube = new Intent(getApplicationContext(), YoutubeActivity.class);
-				startActivity(goToYoutube);
-			}
-		});
-
-
 		// Communication button
 		ImageView communication = (ImageView) findViewById(R.id.communication);
 		communication.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToFacebook = new Intent(getApplicationContext(), FacebookActivity.class);
 				startActivity(goToFacebook);
-			}
-		});
-
-
-		// Messenger service button
-		ImageView messenger = (ImageView) findViewById(R.id.messenger);
-		messenger.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent goToMessenger = new Intent(getApplicationContext(), com.androidim.Login.class);
-				startActivity(goToMessenger);
 			}
 		});
 
@@ -256,7 +293,6 @@ public class ECMLActivity extends Activity {
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.loginactionbar, menu);
-		this.menu = menu;
 		return true;
 	}
 
@@ -266,9 +302,23 @@ public class ECMLActivity extends Activity {
 			launchLogin();
 			return true;
 		}
+
+		else if (item.getItemId()== R.id.studentActivity){
+			launchStudentActivity();
+			return true;
+		}
+		
 		return true;
 	}
 
+	/** Launch the Student Activity */
+	private void launchStudentActivity() {
+		Intent i = new Intent(ECMLActivity.this, StudentActivities.class);
+		startActivity(i);
+		
+	}
+
+	/** Launch the Login Activity */ 
 	private void launchLogin() {
 		Intent i = new Intent(ECMLActivity.this, Login.class);
 		startActivity(i);
@@ -334,11 +384,12 @@ public class ECMLActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				intent.putExtra(ChooseSongActivity.niveau, toDo);
+				ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+				ECML.intent.putExtra(ChooseSongActivity.mode, toDo);
+//				ECML.intent.putExtra(ChooseSongActivity.level, 1)
 				// TODO Tempo ? Speed ? Which track to display and mute ? Need
 				// to record ?
-				startActivity(intent);
+				startActivity(ECML.intent);
 			}
 
 		});

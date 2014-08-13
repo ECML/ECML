@@ -1,19 +1,19 @@
 package com.metronome;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.widget.Button;
 
 import com.ecml.R;
+import com.sideActivities.BaseActivity;
 
 /** @class MetronomeActivity
  * 
@@ -25,7 +25,7 @@ import com.ecml.R;
  * The default values are 60 bpm and no time signature.</p>
  * Its volume depend on ring volume and not music volume.
  */
-public class MetronomeActivity extends Activity {
+public class MetronomeActivity extends BaseActivity {
 
 	private Metronome metronome;		/* Metronome Controller */
 	private SeekBar slider;				/* Slider that sets the tempo */

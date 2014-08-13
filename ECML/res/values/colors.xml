@@ -9,6 +9,7 @@
        
        <item name="darkslateblue" type ="color">#483D8B</item>
        <color name="Orange_DarkOrange">#FF8C00</color>
+       <color name="darkOrange">#D06402</color>
        <color name="Red_OrangeRed">#FF4500</color>
            
            

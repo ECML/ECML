@@ -20,7 +20,7 @@
             android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="Help"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" >
         </Button>
 
@@ -31,7 +31,7 @@
             android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="Change game"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" >
         </Button>
 
@@ -39,12 +39,24 @@
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="Back to the score"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" >
         </Button>
+        <!-- 
+        <Button
+            android:id="@+id/playReading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="Play"
+            android:textColor="@color/white"
+            android:textSize="15sp" >
+        </Button>
+        -->    
     </LinearLayout>
 
     <LinearLayout
@@ -54,6 +66,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="121dp"
+        android:layout_marginTop="30dp"
         android:background="@color/blue"
         android:orientation="horizontal" >
 
@@ -67,8 +80,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="La"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -81,8 +93,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="La#/Si\u266D"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -95,8 +106,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Si"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -109,8 +119,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Do"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -123,8 +132,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Do#/Ré\u266D"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -137,8 +145,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Ré"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -151,8 +158,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Ré#/Mi\u266D"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -165,8 +171,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Mi"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -179,8 +184,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Fa"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -193,8 +197,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Fa#/Si\u266D"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -207,8 +210,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Sol"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -219,12 +221,12 @@
             android:layout_marginRight="5dp"
             android:background="@color/orange"
             android:gravity="center"
-            android:text="Sol#/La\u266D"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/linearLayout2"
@@ -233,17 +235,6 @@
         android:background="@color/blue"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center"
-            android:text="Stop"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-
         <TextView
             android:id="@+id/affiche"
             android:layout_width="fill_parent"
@@ -251,5 +242,18 @@
             android:inputType="textMultiLine"
             android:lines="5" />
     </LinearLayout>
+
+    <Switch
+        android:id="@+id/notation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/linearLayout3"
+        android:layout_marginBottom="14dp"
+        android:layout_marginRight="84dp"
+        android:textOn="A-B-C"
+        android:textOff="Do-Re-Mi"
+        android:background="@color/orange"
+        />
 
 </RelativeLayout>

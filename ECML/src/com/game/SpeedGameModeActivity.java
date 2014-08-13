@@ -2,49 +2,50 @@ package com.game;
 
 
 
-import com.ecml.ChooseSongActivity;
-import com.ecml.ECML;
-import com.ecml.R;
-import com.ecml.R.color;
-import com.ecml.R.id;
-import com.ecml.R.layout;
-
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class SpeedGameModeActivity extends Activity {
+import com.ecml.ChooseSongActivity;
+import com.ecml.ECML;
+import com.ecml.R;
+import com.sideActivities.BaseActivity;
+
+public class SpeedGameModeActivity extends BaseActivity {
 	
-
+TextView rules;
 
 	/** Called when the activity is first created. */
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.speed_game_mode);
+			setContentView(R.layout.game_speed_mode);
+			
+			
 
 			// Back to the score button
-			Button score = (Button) findViewById(R.id.back);
-			score.setOnClickListener(new View.OnClickListener() {
+			Button backToScore = (Button) findViewById(R.id.back);
+			backToScore.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					if (ECML.song != null) {
+						ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 						ChooseSongActivity.openFile(ECML.song);
 					}
 					else {
-						Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-						intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
-						startActivity(intent);
+						ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+						ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
+						startActivity(ECML.intent);
 					}
+					finish();
 				}
+				
 			});
 
 			// Help button
@@ -55,6 +56,7 @@ public class SpeedGameModeActivity extends Activity {
 				public void onClick(View v) {
 					showHelpDialog();
 				}
+				
 			});
 
 			// Change game button
@@ -65,7 +67,9 @@ public class SpeedGameModeActivity extends Activity {
 				public void onClick(View v) {
 					Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 					startActivity(intent);
+					finish();
 				}
+				
 			});
 			
 			// lvl1 button
@@ -74,11 +78,12 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"1");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode, "speed");
+					ECML.intent.putExtra("level", 1);
+					startActivity(ECML.intent);
 				}
+				
 			});
 			
 			// lvl2 button
@@ -87,10 +92,12 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"2");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"speed");
+					ECML.intent.putExtra("level", 2);
+					startActivity(ECML.intent);
 				}
+				
 			});
 			
 			// lvl3 button
@@ -99,10 +106,12 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"3");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"speed");
+					ECML.intent.putExtra("level", 3);
+					startActivity(ECML.intent);
 				}
+				
 			});
 			
 			// lvl4 button
@@ -111,18 +120,21 @@ public class SpeedGameModeActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"4");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"speed");
+					ECML.intent.putExtra("level", 4);
+					startActivity(ECML.intent);
 				}
+				
 			});
 
 		}
 
+		/** Create the Help Alert Dialog */
 		private void showHelpDialog() {
 			LayoutInflater inflator = LayoutInflater.from(this);
 			final View dialogView = inflator.inflate(R.layout.help_speed, null);
-
+		
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("HELP");
 			builder.setView(dialogView);
@@ -135,7 +147,5 @@ public class SpeedGameModeActivity extends Activity {
 			dialog.show();
 		}
 		
-
-
 }
 

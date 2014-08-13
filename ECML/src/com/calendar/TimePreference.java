@@ -7,7 +7,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
 
-//Create a Preference with a TimePicker (for the calendar settings)
+/**
+ * @class CalendarRehearsalProgramActivity : Create a preference with a TimePicker (for the calendar settings). 
+ *        
+ * @author Anaïs
+ */
+
 public class TimePreference extends DialogPreference {
 
 	private int lastHour = 0;

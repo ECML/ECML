@@ -2,19 +2,24 @@ package com.calendar;
 
 
 
-import android.app.ActionBar;
-import android.app.TabActivity;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.CalendarContract.Calendars;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 import com.ecml.R;
+import com.sideActivities.BaseTabActivity;
 
-public class CalendarActivity extends TabActivity {
+/**
+ * @class CalendarActivity : 4 tabs of the calendar activity. 
+ *        
+ * @author Anaïs
+ */
 
+public class CalendarActivity extends BaseTabActivity {
+
+	//Array with the properties of the calendar
 	public static final String[] EVENT_PROJECTION = new String[] { Calendars._ID, // 0
 			Calendars.ACCOUNT_NAME, // 1
 			Calendars.CALENDAR_DISPLAY_NAME // 2
@@ -28,7 +33,7 @@ public class CalendarActivity extends TabActivity {
 
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.calendar);
+		setContentView(R.layout.calendar_tabs);
 
 	
 
@@ -40,7 +45,7 @@ public class CalendarActivity extends TabActivity {
 		TabSpec tab3 = tabHost.newTabSpec("Third Tab");
 		TabSpec tab4 = tabHost.newTabSpec("Fourth Tab");
 
-		// Set the Tab name and Activity
+		// Set the Tabs name and Activity
 		// that will be opened when particular Tab will be selected
 		Intent intentCalendar;
 		intentCalendar = new Intent().setClass(this, CalendarDisplayActivity.class);

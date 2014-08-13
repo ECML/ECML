@@ -15,24 +15,24 @@ package com.ecml;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
 import com.game.ReadingGameBeginner;
+import com.game.ReadingGameNormal;
 import com.game.SpeedGamelvl1;
 import com.game.SpeedGamelvln;
+import com.sideActivities.BaseTabActivity;
 
 /** @class ChooseSongActivity
  * <br>
@@ -42,12 +42,12 @@ import com.game.SpeedGamelvln;
  * - Recent (RecentSongsActivity) : Display of list of recently opened songs<br>
  * - Browse (FileBrowserActivity) : Let the user browse the filesystem for songs
  */
-public class ChooseSongActivity extends TabActivity implements OnTabChangeListener {
+public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeListener {
 
 	private Intent intent;
     static ChooseSongActivity globalActivity;
-	public static final String niveau = "niveau"; /* Should be passed as a parameter ? */
-    private ActionBar ab;	/* The Action Bar */
+	public static final String mode = "mode";
+	public static final int level = 1;
 
     @Override
     public void onCreate(Bundle state) {
@@ -55,11 +55,8 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
         globalActivity = this;
         super.onCreate(state);
         
-        // Set Action Bar color and Title
-        ab = getActionBar();
-		
+        // Set the Action Bar Title of the Activity (corresponding to the first Tab)
         setTitle("ECML: Choose Song");
-
        
         Bitmap allFilesIcon = BitmapFactory.decodeResource(this.getResources(), R.drawable.allfilesicon);
         Bitmap recentFilesIcon = BitmapFactory.decodeResource(this.getResources(), R.drawable.recentfilesicon);
@@ -102,7 +99,7 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
     }
 
     /** Open the chosen file in the right activity */ 
-    public void doOpenFile(FileUri file /* need to add a new parameter to choose which activity to start */) {
+    public void doOpenFile(FileUri file) {
         byte[] data = file.getData(this);
         if (data == null || data.length <= 6 || !MidiFile.hasMidiHeader(data)) {
             ChooseSongActivity.showErrorDialog("Error: Unable to open song: " + file.toString(), this);
@@ -110,34 +107,43 @@ public class ChooseSongActivity extends TabActivity implements OnTabChangeListen
         }
 
         ECML.song = file;
-        
-        String choice = this.getIntent().getStringExtra(niveau);
-        
-
         updateRecentFile(file);
-		if (choice.equals("1")) {
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
-			intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
-		} else if (choice.equals("2")) {
-			ECML.speedLvl = 2;
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
-			intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
-		} else if (choice.equals("3")) {
-			ECML.speedLvl = 3;
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
-			intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
-		} else if (choice.equals("4")) {
-			ECML.speedLvl = 4;
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
-			intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
-		} else if (choice.equals("chooseSong")) {
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
-			intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
-		} else if (choice.equals("readingBeginner")) {
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
-			intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
+
+        String mode = "";
+        // Get the mode for which we are opening a file
+        if (ECML.intent != null) {
+        	mode = ECML.intent.getStringExtra(ChooseSongActivity.mode);
         }
+        Log.i("MODE" , "" + mode);
+        // Get the level of the mode (speed/reading of notes) if there is one 
+        int lvl = this.getIntent().getIntExtra("level", level);
+
+        if (mode.equals("speed")) {
+			if (lvl == 1) {
+				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
+				intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
+			} else {
+				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
+				intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
+				intent.putExtra("level", lvl);
+			}
+			
+		} else if (mode.equals("reading")) {
+			if (lvl == 1) {
+				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
+				intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
+			}
+			else {
+				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameNormal.class);
+				intent.putExtra(ReadingGameNormal.MidiTitleID, file.toString());
+			}
+			
+		} else if (mode.equals("chooseSong")) {
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
+		}
+        
 		startActivity(intent);
+		finish();
     }
 
 

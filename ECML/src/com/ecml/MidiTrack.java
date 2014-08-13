@@ -83,7 +83,7 @@ public class MidiTrack {
     public ArrayList<MidiNote> getNotes() { 
     	 	return notes; }
     
-    //Give an ArrayList of the notes included between the note n°start and the note n°stop
+    /** Give an ArrayList of the notes included between the note n°start and the note n°stop */
     public ArrayList<MidiNote> getNotesBetween(int start, int stop) { 
     	ArrayList<MidiNote> notesCut = new ArrayList<MidiNote>(stop-start+1);
     	for (int i = start; i <= stop; i++){
@@ -106,7 +106,7 @@ public class MidiTrack {
 
     /** Add a MidiNote to this track.  This is called for each NoteOn event */
     public void AddNote(MidiNote m) {
-        notes.add(m);
+    	notes.add(m);
     }
 
     /** A NoteOff event occured.  Find the MidiNote of the corresponding
@@ -115,11 +115,13 @@ public class MidiTrack {
     public void NoteOff(int channel, int notenumber, int endtime) {
         for (int i = notes.size()-1; i >= 0; i--) {
             MidiNote note = notes.get(i);
+            
             if (note.getChannel() == channel && note.getNumber() == notenumber &&
                 note.getDuration() == 0) {
                 note.NoteOff(endtime);
                 return;
             }
+            note.setDuration(10);
         }
     }
 

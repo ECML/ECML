@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.ecml.ECMLActivity;
 import com.ecml.R;
 
@@ -143,6 +142,7 @@ public class Login extends Messenger {
 	    		
 	    		startActivity(i);
 	    		return true;
+	    		
 	    	case EXIT_APP_ID:
 	    		cancelButton.performClick();
 	    		return true;

@@ -1,11 +1,5 @@
 package com.game;
 
-import com.ecml.ChooseSongActivity;
-import com.ecml.ECML;
-import com.ecml.R;
-
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,28 +8,41 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
-public class ReadingGameModeActivity extends Activity {
+import com.ecml.ChooseSongActivity;
+import com.ecml.ECML;
+import com.ecml.R;
+import com.sideActivities.BaseActivity;
+
+/**
+ * @class ReadingGameModeActivity : To choose between the beginner mode and the normal mode
+ *        
+ * @author Anaïs
+ */
+
+public class ReadingGameModeActivity extends BaseActivity {
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.reading_game_mode);
+		setContentView(R.layout.game_reading_mode);
 		
 		// Back to the score button
-		Button score = (Button) findViewById(R.id.back);
-		score.setOnClickListener(new View.OnClickListener() {
+		Button backToScore = (Button) findViewById(R.id.back);
+		backToScore.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (ECML.song != null) {
+					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
 					ChooseSongActivity.openFile(ECML.song);
 				}
 				else {
-					Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-					intent.putExtra(ChooseSongActivity.niveau,"chooseSong");
-					startActivity(intent);
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode,"chooseSong");
+					startActivity(ECML.intent);
 				}
+				finish();
 			}
 		});
 
@@ -57,6 +64,7 @@ public class ReadingGameModeActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(intent);
+				finish();
 			}
 		});
 
@@ -66,9 +74,9 @@ public class ReadingGameModeActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				intent.putExtra(ChooseSongActivity.niveau,"readingBeginner");
+				Intent intent = new Intent(getApplicationContext(), ReadingGameBeginner.class);
 				startActivity(intent);
+				finish();
 			}
 		});
 
@@ -80,10 +88,12 @@ public class ReadingGameModeActivity extends Activity {
 			public void onClick(View v) {
 					Intent intent = new Intent(getApplicationContext(), ReadingGameNormal.class);
 					startActivity(intent);
+					finish();
 			}
 		});
 	}
 
+	/** Create the Help Alert Dialog */
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
 		final View dialogView = inflator.inflate(R.layout.help_reading_notes, null);

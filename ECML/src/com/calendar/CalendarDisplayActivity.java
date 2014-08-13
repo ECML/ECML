@@ -13,8 +13,15 @@ import android.widget.Button;
 
 import com.ecml.R;
 
+/**
+ * @class CalendarRehearsalProgramActivity : Display the user calendar, for instance its google agenda. 
+ *        
+ * @author Anaïs
+ */
+
 public class CalendarDisplayActivity extends Activity {
 
+	//Create an array with all the calendar properties
 	public static final String[] EVENT_PROJECTION = new String[] { Calendars._ID, // 0
 			Calendars.ACCOUNT_NAME, // 1
 			Calendars.CALENDAR_DISPLAY_NAME // 2
@@ -36,6 +43,7 @@ public class CalendarDisplayActivity extends Activity {
 			public void onClick(View v) {
 				// A date-time specified in milliseconds since the epoch.
 				long startMillis = 0;
+				//Create the calendar by asking the user which calendar should be used
 				Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
 
 				builder.appendPath("time");

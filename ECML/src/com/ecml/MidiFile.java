@@ -482,6 +482,8 @@ public class MidiFile {
                 tracks.add(track);
             }
         }
+        
+        
 
         /* Get the length of the song in pulses */
         for (MidiTrack track : tracks) {
