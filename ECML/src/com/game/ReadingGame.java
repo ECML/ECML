@@ -88,7 +88,7 @@ public abstract class ReadingGame extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.choice);
+		setContentView(R.layout.game_reading_choice);
 
 		/*****************
 		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
@@ -166,7 +166,7 @@ public abstract class ReadingGame extends BaseActivity {
 		/*Define a layout */
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
-		choice = getLayoutInflater().inflate(R.layout.choice, layout, false);
+		choice = getLayoutInflater().inflate(R.layout.game_reading_choice, layout, false);
 		layout.addView(choice);
 		setContentView(layout);
 
@@ -220,7 +220,7 @@ public abstract class ReadingGame extends BaseActivity {
 		});
 
 		//Add the result view to the layout but not visible at that time
-		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
+		result = getLayoutInflater().inflate(R.layout.game_reading_results, layout, false);
 		layout.addView(result);
 		result.setVisibility(View.GONE);
 		setContentView(layout);

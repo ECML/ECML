@@ -21,7 +21,7 @@ public class TechniqueActivity extends BaseActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.technique_game);
+			setContentView(R.layout.game_technique);
 			
 			
 
@@ -75,7 +75,7 @@ public class TechniqueActivity extends BaseActivity {
 
 		private void showHelpDialog() {
 			LayoutInflater inflator = LayoutInflater.from(this);
-			final View dialogView = inflator.inflate(R.layout.technique_help, null);
+			final View dialogView = inflator.inflate(R.layout.help_technique, null);
 		
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("HELP");

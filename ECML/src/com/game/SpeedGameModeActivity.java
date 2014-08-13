@@ -24,7 +24,7 @@ TextView rules;
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.speed_game_mode);
+			setContentView(R.layout.game_speed_mode);
 			
 			
 

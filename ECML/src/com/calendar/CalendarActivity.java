@@ -33,7 +33,7 @@ public class CalendarActivity extends BaseTabActivity {
 
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.calendar);
+		setContentView(R.layout.calendar_tabs);
 
 	
 

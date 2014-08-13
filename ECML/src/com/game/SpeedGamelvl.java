@@ -145,10 +145,10 @@ public abstract class SpeedGamelvl extends BaseActivity {
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		
-		speedGameView = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
+		speedGameView = getLayoutInflater().inflate(R.layout.game_speed_level1, layout, false);
 		layout.addView(speedGameView);
 		
-		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
+		result = getLayoutInflater().inflate(R.layout.game_reading_results, layout, false);
 		layout.addView(result);
 		result.setVisibility(View.GONE);
 		
@@ -172,13 +172,6 @@ public abstract class SpeedGamelvl extends BaseActivity {
 		layout.requestLayout();
 		
 		player.mute();
-
-//		layout = new LinearLayout(this);
-//		
-//		layout.setOrientation(LinearLayout.VERTICAL);
-//		choice = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
-//		layout.addView(choice);
-//		setContentView(layout);
 
 		// Back to the score button
 		Button backToScore = (Button) findViewById(R.id.back);
@@ -236,7 +229,7 @@ public abstract class SpeedGamelvl extends BaseActivity {
 			
 		});
 
-		// Change stop button
+		// Stop button
 		Button stop = (Button) findViewById(R.id.stop);
 		stop.setOnClickListener(new View.OnClickListener() {
 
@@ -350,7 +343,7 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
-		final View dialogView = inflator.inflate(R.layout.speed_game_help, null);
+		final View dialogView = inflator.inflate(R.layout.help_speed_detailed, null);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("HELP");
