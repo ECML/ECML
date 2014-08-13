@@ -2,14 +2,11 @@ package com.game;
 
 import java.util.ArrayList;
 
-
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -263,9 +260,9 @@ public class ReadingGameBeginner extends ReadingGame {
 	//Test if the note chosen if the right one
 	private void testNote(String letter, Button btn) {
 		firstTry = firstTry + 1;
-		String test = notes.get(counter).PitchString();
+		String test = notes.get(counter).pitch();
 		// Check if it is the expected note
-		if (letter == test) {
+		if (letter.equals(test)) {
 			if (firstTry == 1) {
 				//If the note is right and it is the first try, then the player has one more point
 				numberPoints = numberPoints + 1;

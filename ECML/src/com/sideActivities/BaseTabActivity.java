@@ -18,6 +18,12 @@ import com.ecml.R;
 import com.game.GameActivity;
 import com.metronome.MetronomeActivity;
 
+/** @class BaseTabActivity
+ * <br>
+ * This Class is the base of every activity that IS a tabActivity.
+ * It was created to factor code for the action bar. It simply adds a drop-down menu
+ * allowing the user to move from any activity to any other.
+ */
 public class BaseTabActivity extends TabActivity implements KeyListener {
 	
 	protected Menu menu;

@@ -1,8 +1,6 @@
 package com.game;
 
 import android.app.AlertDialog;
-
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -95,6 +93,7 @@ public class ReadingGameModeActivity extends BaseActivity {
 		});
 	}
 
+	/** Create the Help Alert Dialog */
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
 		final View dialogView = inflator.inflate(R.layout.help_reading_notes, null);

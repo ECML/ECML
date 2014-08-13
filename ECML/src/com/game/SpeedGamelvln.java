@@ -13,8 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ecml.MidiNote;
-import com.ecml.MidiTrack;
 import com.ecml.R;
 
 /* Second implementation of the SpeedGame
@@ -128,15 +126,14 @@ public class SpeedGamelvln extends SpeedGamelvl {
 					point = true;
 				}
 
-				String test = notes.get(counter).Pitch();
+				String test = notes.get(counter).pitch();
 
 				if (test.equals(noteNames[keyDisplay.ordinal()][data.note % 12])) {
-					
-					int debut = notes.get(counter).getStartTime();
-					int fin = notes.get(counter).getEndTime();
 
-					if (player.getPrevPulseTime() > debut && player.getPrevPulseTime() < fin) {
+					int start = notes.get(counter).getStartTime();
+					int end = notes.get(counter).getEndTime();
 
+					if (player.getPrevPulseTime() > start && player.getPrevPulseTime() < end) {
 						if (point) {
 							point = false;
 							if (firstTry == true) {
@@ -153,20 +150,6 @@ public class SpeedGamelvln extends SpeedGamelvl {
 			} else {
 			}
 		}
-	}
-
-	private ArrayList<MidiNote> findNotes(ArrayList<MidiTrack> tracks, int instrument) {
-
-		int i = 0;
-		search = true;
-		while (search) {
-			if (instrument == tracks.get(i).getInstrument()) {
-				search = false;
-			} else {
-				i++;
-			}
-		}
-		return tracks.get(i).getNotes();
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {

@@ -65,7 +65,6 @@ import com.sideActivities.YoutubeActivity;
 public class ECMLActivity extends Activity {
 
 	final Context context = this;
-	private Menu menu;
 	
 	private static String sdcardPath = "sdcard/";	/* Path to the SD card */
 	private static String ECMLPath = "ECML/";		/* Path to the ECML folder from the sdcard */
@@ -294,7 +293,6 @@ public class ECMLActivity extends Activity {
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.loginactionbar, menu);
-		this.menu = menu;
 		return true;
 	}
 
@@ -313,12 +311,14 @@ public class ECMLActivity extends Activity {
 		return true;
 	}
 
+	/** Launch the Student Activity */
 	private void launchStudentActivity() {
 		Intent i = new Intent(ECMLActivity.this, StudentActivities.class);
 		startActivity(i);
 		
 	}
 
+	/** Launch the Login Activity */ 
 	private void launchLogin() {
 		Intent i = new Intent(ECMLActivity.this, Login.class);
 		startActivity(i);

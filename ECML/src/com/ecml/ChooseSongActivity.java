@@ -55,8 +55,8 @@ public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeLi
         globalActivity = this;
         super.onCreate(state);
         
+        // Set the Action Bar Title of the Activity (corresponding to the first Tab)
         setTitle("ECML: Choose Song");
-
        
         Bitmap allFilesIcon = BitmapFactory.decodeResource(this.getResources(), R.drawable.allfilesicon);
         Bitmap recentFilesIcon = BitmapFactory.decodeResource(this.getResources(), R.drawable.recentfilesicon);
@@ -96,7 +96,6 @@ public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeLi
 
     public static void openFile(FileUri file) {
         globalActivity.doOpenFile(file);
-        Log.i("test", "on passe par ici");
     }
 
     /** Open the chosen file in the right activity */ 
@@ -109,15 +108,15 @@ public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeLi
 
         ECML.song = file;
         updateRecentFile(file);
-        
-        
-        String mode = getIntent().getStringExtra(ChooseSongActivity.mode);
+
+        String mode = "";
+        // Get the mode for which we are opening a file
         if (ECML.intent != null) {
         	mode = ECML.intent.getStringExtra(ChooseSongActivity.mode);
         }
+        Log.i("MODE" , "" + mode);
+        // Get the level of the mode (speed/reading of notes) if there is one 
         int lvl = this.getIntent().getIntExtra("level", level);
-
-        Log.i("test", "on passe par ici avec " + mode);
 
         if (mode.equals("speed")) {
 			if (lvl == 1) {
@@ -138,13 +137,11 @@ public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeLi
 				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameNormal.class);
 				intent.putExtra(ReadingGameNormal.MidiTitleID, file.toString());
 			}
+			
 		} else if (mode.equals("chooseSong")) {
 			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
-			intent.putExtra(SheetMusicActivity.MidiTitleID, file.toString());
-	    } else if (mode.equals("normal")) {
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
-			intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
-	    }
+		}
+        
 		startActivity(intent);
 		finish();
     }

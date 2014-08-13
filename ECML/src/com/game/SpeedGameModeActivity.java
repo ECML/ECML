@@ -130,6 +130,7 @@ TextView rules;
 
 		}
 
+		/** Create the Help Alert Dialog */
 		private void showHelpDialog() {
 			LayoutInflater inflator = LayoutInflater.from(this);
 			final View dialogView = inflator.inflate(R.layout.help_speed, null);
@@ -146,7 +147,5 @@ TextView rules;
 			dialog.show();
 		}
 		
-
-
 }
 
