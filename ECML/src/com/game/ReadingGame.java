@@ -258,10 +258,10 @@ public abstract class ReadingGame extends BaseActivity {
 			layout.removeView(sheet);
 		}
 		sheet = new SheetMusic(this);
-		sheet.init(midifile, options, false, 0, 2);
+		sheet.init(midifile, options, true, 0, 29);
 		//for levels 2 and 3, the songs are cut
-		if (level == 2) {sheet.init(midifile, options, true, 0, 45);}
-		if (level == 3) {sheet.init(midifile, options, true, 0, 45);}
+		if (level == 2) {sheet.init(midifile, options, true, 0, 29);}
+		if (level == 3) {sheet.init(midifile, options, true, 0, 29);}
 		sheet.setPlayer(player);
 		layout.addView(sheet);
 		piano.SetMidiFile(midifile, options, player);

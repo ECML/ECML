@@ -33,7 +33,7 @@ public class ReadingGameBeginner extends ReadingGame {
 	private ColorDrawable orangeColor;			//Background color of the choice of note buttons
 	private int numberPoints = 0;				//Number of points
 	private int firstTry = 0;					//Incremented each time the player try to find a note
-	private int numberNote = 46;				//Number of notes in the sheet music
+	private int numberNote = 30;				//Number of notes in the sheet music
 	private Double currentPulseTime = 0.0;		
 	private Double prevPulseTime = 0.0;
 
@@ -347,7 +347,8 @@ public class ReadingGameBeginner extends ReadingGame {
 		/* Remove any highlighted notes */
 		sheet.ShadeNotes(-10, player.getCurrentPulseTime().intValue(), SheetMusic.DontScroll);
 		prevPulseTime = currentPulseTime;
-		currentPulseTime += notes.get(counter).getDuration();
+//		currentPulseTime += notes.get(counter).getDuration();
+	    currentPulseTime = 0.0 + notes.get(counter).getStartTime() + notes.get(counter).getDuration();
 		if (currentPulseTime <= midifile.getTotalPulses()) {
 			player.setCurrentPulseTime(currentPulseTime);
 		}
