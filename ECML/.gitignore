@@ -27,3 +27,6 @@ proguard/
 
 # Generated
 .apt_generated
+
+# Class path
+.classpath
