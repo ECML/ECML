@@ -3,6 +3,7 @@ package com.game;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +17,6 @@ import com.ecml.R;
 
 public class SpeedGamelvln extends SpeedGamelvl {
 
-	private TextView textView;
 	private boolean end = false;
 	public static final int level = 1;
 
@@ -32,13 +32,13 @@ public class SpeedGamelvln extends SpeedGamelvl {
 			player.getSpeedBar().setProgress(100 - 30);
 		}
 
-		// Extracting the tracks
+		// Extract the tracks
 		tracks = midifile.getTracks();
 
 		counter = 0;
 		// Extracting the notes from the Track file
-		// We use by default the intrument n°0 wich is the piano
-		notes = findNotes(tracks, 0);
+		// We use by default the instrument n°0 which is the piano
+		findNotes();
 
 		// Launch the game = Play button
 		Button play = (Button) findViewById(R.id.play);
@@ -49,9 +49,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 				point = true;
 
 				// If the game has been finished, set the score to 0
-				if (end) {
-					score = 0;
-				}
+				score = 0;
 
 				player.Play();
 
@@ -62,8 +60,8 @@ public class SpeedGamelvln extends SpeedGamelvl {
 				pitchPoster.start();
 
 				// Displaying score
-				textView = (TextView) findViewById(R.id.affiche);
-				textView.setText("Score :" + score + "/" + notes.size());
+				playNoteDisplay = (TextView) findViewById(R.id.affiche);
+				playNoteDisplay.setText("Score :" + score + "/" + notes.size());
 			}
 		});
 	}
@@ -93,6 +91,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 				Double time = player.getPrevPulseTime();
 				while (notes.get(counter).getStartTime() + notes.get(counter).getDuration() < time) {
 					counter++;
+					Log.i("COUNTER", "" + counter);
 					point = true;
 				}
 
@@ -108,7 +107,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 							score++;
 							point = false;
 						}
-						textView.setText("Score :" + score + "/" + notes.size());
+						playNoteDisplay.setText("Score :" + score + "/" + notes.size());
 					}
 
 				}
@@ -126,7 +125,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
 			// If we touch while music is playing, stop the midi player
-			this.PauseEcoute();
+			this.pauseListening();
 			return result;
 
 		case MotionEvent.ACTION_MOVE:

@@ -217,7 +217,7 @@ public abstract class ReadingGame extends BaseActivity {
 		});
 
 		//Add the result view to the layout but not visible at that time
-		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
+		result = getLayoutInflater().inflate(R.layout.game_points, layout, false);
 		layout.addView(result);
 		result.setVisibility(View.GONE);
 		setContentView(layout);

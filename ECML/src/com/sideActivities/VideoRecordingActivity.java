@@ -59,7 +59,7 @@ public class VideoRecordingActivity extends BaseActivity implements SurfaceHolde
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.videorecording);
+		setContentView(R.layout.video_recording);
 
 		chooseFrontOrBack();
 		

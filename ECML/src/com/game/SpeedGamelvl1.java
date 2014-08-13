@@ -18,12 +18,10 @@ import com.ecml.SheetMusic;
 
 public class SpeedGamelvl1 extends SpeedGamelvl {
 
-	private TextView textView;			/* The text displaying which note to play */
-	private TextView score;				/* The score */
+	
 	private Double currentPulseTime;	/* The current pulse time */ 
 	private Double prevPulseTime;		/* The previous pulse time */
-	private boolean firstTry = true;	/* The test whether the user played the right note on the first try */
-	private int numberPoints = 0;		/* The number of points the user has got */
+	private boolean firstTry;			/* The test whether the user played the right note on the first try */
 	
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,12 +30,12 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 		percentage = (TextView) findViewById(R.id.percentage);
 		appreciation = (TextView) findViewById(R.id.appreciation);
 		star = (ImageView) findViewById(R.id.star);
-		score = (TextView) findViewById(R.id.score);
+		scoreDisplay = (TextView) findViewById(R.id.score);
 
 		tracks = midifile.getTracks();
 
 		// We use by default the instrument n°0 which is the piano
-		notes = findNotes(tracks, 0);
+		findNotes();
 
 		// Launch the game = Play button
 		Button play = (Button) findViewById(R.id.play);
@@ -46,21 +44,23 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 			@Override
 			public void onClick(View v) {
 				counter = 0; // note counter
+				score = 0; // The number of points has to be set back to 0 otherwise the user could cheat
+				firstTry = true;
 				currentPulseTime = 0.0; // + notes.get(0).getDuration();
 				prevPulseTime = 0.0;
 
 				sheet.ShadeNotes(-10, player.getCurrentPulseTime().intValue(), SheetMusic.DontScroll);
 				piano.ShadeNotes(-10, player.getCurrentPulseTime().intValue());
 
-				textView = (TextView) findViewById(R.id.affiche);
+				playNoteDisplay = (TextView) findViewById(R.id.playNoteDisplay);
 				// Humans start counting at 1, not 0
-				textView.setText("Play the note n°" + (counter + 1));
+				playNoteDisplay.setText("Play the note n°" + (counter + 1));
 
 				TextView score = (TextView) findViewById(R.id.score);
-				score.setText(numberPoints + "/" + notes.size());
+				score.setText(score + "/" + notes.size());
 
 				// Pitch Detection launching
-				pitchPoster = new MicrophonePitchPoster(60);
+				pitchPoster = new MicrophonePitchPoster(10);
 				pitchPoster.setHandler(new UIUpdateHandler());
 				pitchPoster.start();
 
@@ -75,7 +75,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 			@Override
 			public void onClick(View v) {
 				counter = 0;
-				textView.setText("");
+				playNoteDisplay.setText("");
 
 				if (player != null) {
 					player.Stop();
@@ -92,14 +92,17 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 	private final class UIUpdateHandler extends Handler {
 		public void handleMessage(Message msg) {
 			final MicrophonePitchPoster.PitchData data = (MicrophonePitchPoster.PitchData) msg.obj;
+			
+			Log.i("COUNTER 2" , "" + counter);
 
 			// If we reach the end of the midifile, then we stop the player and
 			// the pitch detection
 			if (counter == notes.size()) {
+				Log.i("HELLO","here");
 				counter = 0;
 				SpeedGamelvl.speedGameView.setVisibility(View.GONE);
 				SpeedGamelvl.result.setVisibility(View.VISIBLE);
-				double percentageScore = numberPoints * 100 / notes.size();
+				double percentageScore = score * 100 / notes.size();
 				percentage.setText(String.valueOf(percentageScore) + "%");
 				if (percentageScore >= 90) {
 					percentage.setTextColor(Color.GREEN);
@@ -131,14 +134,13 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 				// Check if it is the expected note
 				if (test.equals(noteNames[keyDisplay.ordinal()][data.note % 12])) {
 					if (firstTry == true) {
-						numberPoints++;
-						score.setText(numberPoints + "/" + notes.size());
+						score++;
+						scoreDisplay.setText(score + "/" + notes.size());
 					}
 					advanceOneNote();
 					counter++;
 					firstTry = true;
-					textView.setText("Play the note n°" + (counter + 1));
-					
+					playNoteDisplay.setText("Play the note n°" + (counter + 1));
 				}
 
 			} else {
@@ -160,7 +162,6 @@ public class SpeedGamelvl1 extends SpeedGamelvl {
 		prevPulseTime = currentPulseTime;
 		// currentPulseTime += notes.get(counter).getDuration(); WORKS TOO
 		currentPulseTime = 0.0 + notes.get(counter).getStartTime() + notes.get(counter).getDuration();
-		Log.i("silence", "" + notes.get(counter).getNumber());
 		if (currentPulseTime <= midifile.getTotalPulses()) {
 			player.setCurrentPulseTime(currentPulseTime);
 		}

@@ -37,7 +37,12 @@ import com.ecml.TimeSigSymbol;
 import com.sideActivities.BaseActivity;
 
 
-/* Abstract Class which defines the main part of all the speedgame activities */
+/* Abstract Class which defines the main part of all the speedgame activities
+ * This game doesn't work properly yet,
+ * bugs known so far :
+ * - If several conscutives notes are the same, then when the first note is played,
+ * the following can be counted as correct to even though they were not intended
+ * - The counter doesn't work right for speedGamelvln (lvl > 1)  */
 
 public abstract class SpeedGamelvl extends BaseActivity {
 
@@ -52,9 +57,11 @@ public abstract class SpeedGamelvl extends BaseActivity {
         { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" },
     };
 	
-	protected boolean point = true;		/* The boolean telling whether to give a point or not */
-	protected int counter = 0;			/* The counter telling where we are on the track */
-	protected int score = 0;			/* The score of the user */
+	protected boolean point = true;		/* The boolean telling whether a point has been given yet or not */
+	protected int counter;				/* The counter telling where we are on the track */
+	protected int score;				/* The score of the user */
+	protected TextView scoreDisplay;	/* The score of the user display */
+	protected TextView playNoteDisplay;	/* The text displaying which note to play */
 	protected TextView percentage;		/* The view to display the percentage of right notes */
 	protected TextView appreciation;	/* The view to display the appreciation */
 	protected ImageView star;			/* The star image */
@@ -73,7 +80,6 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	
 	protected ArrayList<MidiTrack> tracks;	/* The Tracks of the song */
 	protected ArrayList<MidiNote> notes;	/* The Notes of the first Track (Track 0) */
-	protected boolean search;
 	public static View speedGameView;
 	public static View result;
 
@@ -145,10 +151,10 @@ public abstract class SpeedGamelvl extends BaseActivity {
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		
-		speedGameView = getLayoutInflater().inflate(R.layout.speedgamelvl1, layout, false);
+		speedGameView = getLayoutInflater().inflate(R.layout.speed_game, layout, false);
 		layout.addView(speedGameView);
 		
-		result = getLayoutInflater().inflate(R.layout.reading_game_points, layout, false);
+		result = getLayoutInflater().inflate(R.layout.game_points, layout, false);
 		layout.addView(result);
 		result.setVisibility(View.GONE);
 		
@@ -298,7 +304,7 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	}
 
 	/** Pause the MidiPlayer and Stop listening to the pitch */ 
-	protected void PauseEcoute() {
+	protected void pauseListening() {
 		point = false;
 		if (player != null) {
 			player.Pause();
@@ -311,17 +317,8 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	}
 	
 	/** Find the notes of the first Track */
-	protected ArrayList<MidiNote> findNotes(ArrayList<MidiTrack> tracks, int instrument) {
-		int i = 0;
-		search = true;
-		while (search) {
-			if (instrument == tracks.get(i).getInstrument()) {
-				search = false;
-			} else {
-				i++;
-			}
-		}
-		return tracks.get(i).getNotes();
+	protected void findNotes() {
+		notes = tracks.get(0).getNotes();
 	}
 
 	/** When this activity resumes, redraw all the views */

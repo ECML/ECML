@@ -80,7 +80,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/affiche"
+            android:id="@+id/playNoteDisplay"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
