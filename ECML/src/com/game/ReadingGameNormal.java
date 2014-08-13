@@ -12,7 +12,7 @@ public class ReadingGameNormal extends ReadingGame {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.reading_game_normal);
+	    setContentView(R.layout.game_reading_levels);
 	    
 	    
 	}

@@ -65,7 +65,7 @@
     </item>
     <item
         android:id="@+id/metronome"
-        android:actionLayout="@layout/ab_metronome"
+        android:actionLayout="@layout/action_bar_metronome"
         android:icon="@drawable/metronome"
         android:showAsAction="always|collapseActionView"
         android:title="Metronome">

@@ -63,6 +63,8 @@ public class CalendarPreferencesActivity extends PreferenceActivity implements P
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+//		preferred_time.hour = 17;
+//		preferred_time.minute = 0;
 		createView();
 	}
 
@@ -233,7 +235,10 @@ public class CalendarPreferencesActivity extends PreferenceActivity implements P
 		location_string = location.getText();
 		minutePriorEvent = StringToInt(minutesPriorAlarm.getValue());
 		alarmMethod_string = alarmMethod.getValue();
-		preferred_time.hour = time.hour;
+		preferred_time = new Time();
+		preferred_time.hour 
+		=
+		time.hour;
 		preferred_time.minute = time.minute;
 	}
 

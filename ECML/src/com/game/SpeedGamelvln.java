@@ -1,5 +1,8 @@
 package com.game;
 
+import java.util.ArrayList;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,6 +10,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ecml.R;
@@ -19,10 +23,20 @@ public class SpeedGamelvln extends SpeedGamelvl {
 
 	private boolean end = false;
 	public static final int level = 1;
-
+	private boolean firstTry = true;
+	TextView percentage;
+	TextView appreciation;
+	ImageView star;
+	TextView scoreGame;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		percentage = (TextView) findViewById(R.id.percentage);
+		appreciation = (TextView) findViewById(R.id.appreciation);
+		star = (ImageView) findViewById(R.id.star);
+		scoreGame = (TextView) findViewById(R.id.score);
+
 		int lvl = this.getIntent().getIntExtra("level", 2);
 		if (lvl == 2) {
 			player.getSpeedBar().setProgress(30 - 30);
@@ -76,7 +90,22 @@ public class SpeedGamelvln extends SpeedGamelvl {
 				// and the pitch detection
 				if (counter == notes.size()) {
 					end = true;
+					Log.i("result", "" + "bouh");
 					counter = 0;
+					SpeedGamelvl.speedGameView.setVisibility(View.GONE);
+					SpeedGamelvl.result.setVisibility(View.VISIBLE);
+					double percentageScore = score * 100 / notes.size();
+					percentage.setText(String.valueOf(percentageScore) + "%");
+					if (percentageScore >= 90) {
+						percentage.setTextColor(Color.GREEN);
+						appreciation.setText("Congratulations!");
+					} else {
+						percentage.setTextColor(Color.RED);
+						appreciation.setText("Try again!");
+						star.setVisibility(View.GONE);
+					}
+					
+
 					if (player != null) {
 						player.Stop();
 					}
@@ -87,11 +116,9 @@ public class SpeedGamelvln extends SpeedGamelvl {
 
 				}
 
-
 				Double time = player.getPrevPulseTime();
 				while (notes.get(counter).getStartTime() + notes.get(counter).getDuration() < time) {
 					counter++;
-					Log.i("COUNTER", "" + counter);
 					point = true;
 				}
 
@@ -104,17 +131,19 @@ public class SpeedGamelvln extends SpeedGamelvl {
 
 					if (player.getPrevPulseTime() > start && player.getPrevPulseTime() < end) {
 						if (point) {
-							score++;
 							point = false;
+							if (firstTry == true) {
+								score++;
+							}
+							firstTry = true;
 						}
 						playNoteDisplay.setText("Score :" + score + "/" + notes.size());
+					} else {
+						firstTry = false;
 					}
 
 				}
-
 			} else {
-				// No valid data to display.
-
 			}
 		}
 	}

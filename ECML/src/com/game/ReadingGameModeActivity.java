@@ -25,7 +25,7 @@ public class ReadingGameModeActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.reading_game_mode);
+		setContentView(R.layout.game_reading_mode);
 		
 		// Back to the score button
 		Button backToScore = (Button) findViewById(R.id.back);

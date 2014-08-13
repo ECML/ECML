@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT sequenceOfactivity (activity*)>
+
+<!ELEMENT activity (duration, tempo, songsList, gameLevel)>
+<!ATTLIST activity type (PI|S|R|C|PA|W) #REQUIRED>
+
+<!ELEMENT duration (#PCDATA)>
+<!ELEMENT tempo (#PCDATA)>
+
+
+<!ELEMENT songsList (song1, song2,song3)>
+<!ELEMENT song1 (#PCDATA)>
+<!ELEMENT song2 (#PCDATA)>
+<!ELEMENT song3 (#PCDATA)>
+
+<!ELEMENT gameLevel (#PCDATA)>
+

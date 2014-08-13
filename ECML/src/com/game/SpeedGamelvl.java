@@ -235,7 +235,7 @@ public abstract class SpeedGamelvl extends BaseActivity {
 			
 		});
 
-		// Change stop button
+		// Stop button
 		Button stop = (Button) findViewById(R.id.stop);
 		stop.setOnClickListener(new View.OnClickListener() {
 
@@ -353,7 +353,7 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	/** Create the Help Alert Dialog */
 	private void showHelpDialog() {
 		LayoutInflater inflator = LayoutInflater.from(this);
-		final View dialogView = inflator.inflate(R.layout.speed_game_help, null);
+		final View dialogView = inflator.inflate(R.layout.help_speed_detailed, null);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("HELP");

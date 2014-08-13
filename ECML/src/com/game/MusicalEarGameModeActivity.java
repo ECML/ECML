@@ -21,7 +21,7 @@ public class MusicalEarGameModeActivity extends BaseActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.musical_ear_game_mode);
+			setContentView(R.layout.game_musical_ear_mode);
 			
 			
 
@@ -75,7 +75,7 @@ public class MusicalEarGameModeActivity extends BaseActivity {
 
 		private void showHelpDialog() {
 			LayoutInflater inflator = LayoutInflater.from(this);
-			final View dialogView = inflator.inflate(R.layout.musical_ear_help, null);
+			final View dialogView = inflator.inflate(R.layout.help_musical_ear, null);
 		
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("HELP");

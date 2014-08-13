@@ -85,7 +85,7 @@ public abstract class ReadingGame extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.choice);
+		setContentView(R.layout.game_reading_choice);
 
 		/*****************
 		 * TOP VIEW WITH THE CHOICE OF NOTES AND THE HELP, BACK TO SCORE, CHANGE
@@ -163,7 +163,7 @@ public abstract class ReadingGame extends BaseActivity {
 		/* Define a layout */
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
-		choice = getLayoutInflater().inflate(R.layout.choice, layout, false);
+		choice = getLayoutInflater().inflate(R.layout.game_reading_choice, layout, false);
 		layout.addView(choice);
 		setContentView(layout);
 
@@ -258,10 +258,10 @@ public abstract class ReadingGame extends BaseActivity {
 			layout.removeView(sheet);
 		}
 		sheet = new SheetMusic(this);
-		sheet.init(midifile, options, false, 0, 2);
+		sheet.init(midifile, options, true, 0, 29);
 		//for levels 2 and 3, the songs are cut
-		if (level == 2) {sheet.init(midifile, options, true, 0, 45);}
-		if (level == 3) {sheet.init(midifile, options, true, 0, 45);}
+		if (level == 2) {sheet.init(midifile, options, true, 0, 29);}
+		if (level == 3) {sheet.init(midifile, options, true, 0, 29);}
 		sheet.setPlayer(player);
 		layout.addView(sheet);
 		piano.SetMidiFile(midifile, options, player);
