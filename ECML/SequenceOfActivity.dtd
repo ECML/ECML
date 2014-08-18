@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!ELEMENT sequenceOfactivity (activity*)>
+<!ELEMENT sequenceOfActivity (activity*)>
+<!--PRACTICE_ALONE = "PI"
+	PRACTICE_WITH_ACCOMPANIMENT = "PA"
+	CHECK_WITH_YOUR_TEACHER = "C"
+	READING_OF_NOTES = "R"
+	SPEED_GAME = "S" -->
+	
 
 <!ELEMENT activity (duration, tempo, songsList, gameLevel)>
-<!ATTLIST activity type (PI|S|R|C|PA|W) #REQUIRED>
+<!ATTLIST activity type (PI|S|R|C|PA) #REQUIRED>
 
 <!ELEMENT duration (#PCDATA)>
 <!ELEMENT tempo (#PCDATA)>

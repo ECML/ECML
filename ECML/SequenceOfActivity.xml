@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE sequenceOfactivity SYSTEM "SequenceOfActivity.dtd" >
-<sequenceOfactivity>
+<!DOCTYPE sequenceOfActivity SYSTEM "SequenceOfActivity.dtd" >
+<sequenceOfActivity>
     <activity type="PA">
         <duration>60</duration>
         <tempo>250</tempo>
@@ -34,4 +34,4 @@
 		<gameLevel>2</gameLevel>
     </activity>
     
-</sequenceOfactivity>
+</sequenceOfActivity>

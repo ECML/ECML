@@ -195,6 +195,65 @@ switch($action)
 		}	
 	break;
 	
+	case "deleteFriend":
+		$userId = authenticateUser($db, $username, $password);
+		if ($userId != NULL)
+		{
+			
+			if (isset($_REQUEST['friendUserName']))			
+			{				
+				 $friendUserName = $_REQUEST['friendUserName'];
+				 
+				 $sql = "select Id from users 
+				 				 where username='".$friendUserName."' 
+				 				 limit 1";
+				 if ($result = $db->query($sql))
+				 {
+				 		if ($row = $db->fetchObject($result))
+				 		{
+				 			 $requestId = $row->Id;
+				 			 
+				 			 if ($row->Id != $userId)
+				 			 {
+				 			 		 $sql = "delete from friends 
+				 			 		 			where providerId ='".$userId."' &  requestId ='".$requestId."'
+				 			 		 			limit 1 ";
+							 
+									 if ($db->query($sql))
+									 {
+									 		$out = SUCCESSFUL;
+									 }
+									 else
+									 {
+									 		$out = FAILED;
+									 }
+							}
+							else
+							{
+								$out = FAILED;  // user add itself as a friend
+							} 		 				 				  		 
+				 		}
+				 		else
+				 		{
+				 			$out = FAILED;			 			
+				 		}
+				 }				 				 
+				 else
+				 {
+				 		$out = FAILED;
+				 }				
+			}
+			else
+			{
+					$out = FAILED;
+			} 			
+		}
+		else
+		{
+			$out = FAILED;
+		}	
+	break;
+	
 	case "sendMessage":
 	if ($userId = authenticateUser($db, $username, $password)) 
 		{	
