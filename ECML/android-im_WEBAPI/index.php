@@ -253,6 +253,31 @@ switch($action)
 			$out = FAILED;
 		}	
 	break;
+	case "fillInProfil":
+		$userId = authenticateUser($db, $username, $password);
+		if ($userId != NULL)
+		{	if (isset($_REQUEST['FirstName']))
+			{  	 $FirstName = $_REQUEST['FirstName'];
+				 $LastName = $_REQUEST['LastName'];
+				 $Birthdate = $_REQUEST['Birthdate'];
+				 $Gender = $_REQUEST['Gender'];
+				 $Instrument = $_REQUEST['Instrument'];
+					 $Usname = $_REQUEST['username'];
+			 $sqlto ="select Id from  users where username ='".$username."' ";
+		
+			if ($resultto = $db->query($sqlto)){			
+						
+	$rowto = $db->fetchObject($resultto);
+$sqlPF = "UPDATE users SET `FirstName`='".$FirstName."',`LastName`='".$LastName."',`Birthdate`='".$Birthdate."',  `Gender`='".$Gender."', `Instrument`='".$Instrument."' WHERE Id='".$rowto->Id."' ";
+$db->query($sqlPF);
+			}			
+			}
+		}
+		else{$out = FAILED;}	
+		break;
+	
+
+
 	
 	case "sendMessage":
 	if ($userId = authenticateUser($db, $username, $password)) 
@@ -438,7 +463,6 @@ echo $out;
 
 
 
-///////////////////////////////////////////////////////////////
 function authenticateUser($db, $username, $password)
 {
 	
