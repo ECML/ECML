@@ -6,7 +6,7 @@
       
 
         <TextView 
-        android:layout_width="300dip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/username"
          android:textSize="15sp"
@@ -21,8 +21,8 @@
         android:layout_width="250dip"
         android:singleLine="true"
         android:password="false"
-            android:paddingBottom="40dip"
-    />
+      
+     />
 
      <LinearLayout    android:layout_width="wrap_content"
                		 android:layout_height="wrap_content"
@@ -83,6 +83,7 @@
     />
     
 <DatePicker 
+    android:id="@+id/birthDate"
 	android:layout_width="fill_parent"
     android:layout_height="wrap_content"
 	android:calendarViewShown="false"
@@ -105,7 +106,7 @@
         
     />
 <RadioGroup
-	android:id="@+id/group"
+	android:id="@+id/gender"
 	android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -132,7 +133,8 @@
 
          <LinearLayout    android:layout_width="wrap_content"
                		 android:layout_height="wrap_content"
-                     android:orientation="horizontal">
+                     android:orientation="horizontal"
+                     android:paddingBottom="40dip">
         <TextView 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -143,7 +145,7 @@
         android:textColor="@color/Red_OrangeRed"
          android:paddingRight="15dip"
     />
-       <EditText android:id="@+id/lastName"
+       <EditText android:id="@+id/email"
     	android:layout_width="250dip"
         android:layout_height="wrap_content"
         android:singleLine="true"
@@ -166,6 +168,14 @@
 <Spinner
     android:id="@+id/instruments_spinner"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+     />
     </LinearLayout>
+    
+       <Button android:id="@+id/finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/finish"
+        android:layout_gravity="center"
+         />
 </LinearLayout>
