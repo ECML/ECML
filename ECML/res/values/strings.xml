@@ -180,5 +180,13 @@
     <string name="choose_end_measure">Choose the End Measure</string>
     <string name="back_to_score">Back to the Score</string>
     <string name ="main_menu">Main Menu</string>
+    
+   <string name="invitation">FRIEND\'S INVITATION</string>
+   <string name="friendlist">FRIEND LIST</string>
+   <string name="groupList"> GROUP LIST</string>
+
+   <string name="finish"> FINISH!</string>
+   <string name="emailNotValid">Email address is not valid </string>
+   <string name="ProfilCompleted"> Profil completed successfully</string>
 
 </resources>
