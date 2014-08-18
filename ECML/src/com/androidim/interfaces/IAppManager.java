@@ -20,5 +20,7 @@ public interface IAppManager {
 			String discardedFriendNames);
 //C'est moi 
 	public String deleteFriendRequest(String friendUsername);
+	public String fillInProfil(String username , String password,String fName,String lName, int gender,Date birth,String instrument);
+
 	
 }
