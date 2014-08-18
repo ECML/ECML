@@ -379,7 +379,21 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		
 		return result;
 	}
-
+	
+		public String fillInProfil(String username ,String password ,String fName,String lName, int gender,Date birth,String instrument){
+		String params= "&username=" + username +
+				"&password=" + password +
+				"&action=" + "fillInProfil"+
+				"&FirstName=" + fName +
+				"&LastName=" + lName +
+				"&Birthdate=" + birth +
+				"&Gender=" + gender +
+				"&Instrument=" + instrument +
+				"&";
+		String result = socketOperator.sendHttpRequest(params);	 ;
+		return result;
+	}
+	
 	public String addNewFriendRequest(String friendUsername) 
 	{
 		String params = "username=" + this.username +
