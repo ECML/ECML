@@ -67,7 +67,7 @@ public class Login extends Messenger {
 					if ( usersdb.checkIfExist(user) ) {
 						
 						Toast.makeText(getApplicationContext(),R.string.user_authenticated_success, Toast.LENGTH_LONG).show();
-						Intent i = new Intent(getApplicationContext(), ECMLActivity.class);																
+						Intent i = new Intent(getApplicationContext(), UserActivity.class);																
 						startActivity(i);
 						
 					}
