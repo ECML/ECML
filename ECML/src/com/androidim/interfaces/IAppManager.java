@@ -1,6 +1,7 @@
 package com.androidim.interfaces;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Date;
 
 
 public interface IAppManager {

@@ -5,14 +5,19 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.androidim.interfaces.IAppManager;
+import com.androidim.services.IMService;
 import com.ecml.R;
 
 
-package com.androidim;
+//package com.androidim;
 
-//import java.sql.Date;
+
+
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -23,8 +28,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import at.vcity.androidim.interfaces.IAppManager;
-import at.vcity.androidim.services.IMService;
+
 
 public class Profil extends Activity {
 	
