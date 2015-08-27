@@ -1,8 +1,5 @@
 package com.game;
 
-import java.util.ArrayList;
-import java.util.zip.CRC32;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +21,7 @@ import com.ecml.ChooseSongActivity;
 import com.ecml.ClefSymbol;
 import com.ecml.ECML;
 import com.ecml.FileUri;
+import com.ecml.MicrophoneReader;
 import com.ecml.MidiFile;
 import com.ecml.MidiFileException;
 import com.ecml.MidiNote;
@@ -36,6 +34,8 @@ import com.ecml.SheetMusic;
 import com.ecml.TimeSigSymbol;
 import com.sideActivities.BaseActivity;
 
+import java.util.ArrayList;
+import java.util.zip.CRC32;
 
 /* Abstract Class which defines the main part of all the speedgame activities
  * This game doesn't work properly yet,
@@ -60,10 +60,10 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	protected boolean point = true;		/* The boolean telling whether a point has been given yet or not */
 	protected int counter;				/* The counter telling where we are on the track */
 	protected int score;				/* The score of the user */
-	protected TextView scoreDisplay;	/* The score of the user display */
-	protected TextView playNoteDisplay;	/* The text displaying which note to play */
-	protected TextView percentage;		/* The view to display the percentage of right notes */
-	protected TextView appreciation;	/* The view to display the appreciation */
+	public TextView scoreDisplay;	/* The score of the user display */
+	public TextView playNoteDisplay;	/* The text displaying which note to play */
+	public TextView percentage;		/* The view to display the percentage of right notes */
+	public TextView appreciation;	/* The view to display the appreciation */
 	protected ImageView star;			/* The star image */
 
 	/*** MidiSheet variables ***/
@@ -91,9 +91,10 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	/*** PitchDetection variables ***/
 
 	protected MicrophonePitchPoster pitchPoster;	/* The pitch detector */
+	protected MicrophoneReader micReader;			/* The microphone reader */
 
 	/*** End of PitchDetection variables ***/
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -222,12 +223,16 @@ public abstract class SpeedGamelvl extends BaseActivity {
 				{
 					player.Stop();
 				}
-				if ( pitchPoster != null )
+				/*if ( pitchPoster != null )
 				{
 			        pitchPoster.stopSampling();
 				}
-		        pitchPoster = null;
-				
+		        pitchPoster = null;*/
+                if (micReader != null) {
+                    micReader.stopRecorder();
+                }
+                micReader = null;
+
 				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(intent);
 				finish();
@@ -247,11 +252,15 @@ public abstract class SpeedGamelvl extends BaseActivity {
 				{
 					player.Stop();
 				}
-				if ( pitchPoster != null )
+				/*if ( pitchPoster != null )
 				{
 			        pitchPoster.stopSampling();
 				}
-		        pitchPoster = null;
+		        pitchPoster = null;*/
+                if (micReader != null) {
+                    micReader.stopRecorder();
+                }
+                micReader = null;
 			}
 			
 		});
@@ -309,11 +318,15 @@ public abstract class SpeedGamelvl extends BaseActivity {
 		if (player != null) {
 			player.Pause();
 		}
-		if ( pitchPoster != null)
+		/*if ( pitchPoster != null)
 		{
 			pitchPoster.stopSampling();
 		}
-		pitchPoster = null;
+		pitchPoster = null;*/
+        if (micReader != null) {
+            micReader.stopRecorder();
+        }
+        micReader = null;
 	}
 	
 	/** Find the notes of the first Track */
@@ -342,11 +355,15 @@ public abstract class SpeedGamelvl extends BaseActivity {
 			player.Pause();
 			player.unmute();
 		}
-		if ( pitchPoster != null)
+		/*if ( pitchPoster != null)
 		{
 			pitchPoster.stopSampling();
 		}
-        pitchPoster = null;
+        pitchPoster = null;*/
+        if (micReader != null) {
+            micReader.stopRecorder();
+        }
+        micReader = null;
 		super.onPause();
 	}
 
@@ -368,6 +385,3 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	}
 	
 }
-
-
-

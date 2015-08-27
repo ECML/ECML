@@ -443,9 +443,9 @@ public class Stem {
     @Override
     public String toString() {
         return String.format("Stem duration=%1$s direction=%2$s top=%3$s bottom=%4$s end=%5$s" +
-                             " overlap=%6$s side=%7$s width_to_pair=%8$s receiver_in_pair=%9$s",
-                             duration, direction, top.toString(), bottom.toString(),
-                             end.toString(), notesoverlap, side, width_to_pair, receiver_in_pair);
+                        " overlap=%6$s side=%7$s width_to_pair=%8$s receiver_in_pair=%9$s",
+                duration, direction, top.toString(), bottom.toString(),
+                end.toString(), notesoverlap, side, width_to_pair, receiver_in_pair);
     }
 
 } 

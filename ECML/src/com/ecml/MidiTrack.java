@@ -14,8 +14,10 @@
 
 package com.ecml;
 
-import java.util.ArrayList;
+import com.ScoreFollowerLibrary.nl.metaphoric.scorefollower.lib.feature.FrameVector;
 
+import java.util.ArrayList;
+import java.util.Vector;
 
 
 /** @class MidiTrack
@@ -33,6 +35,7 @@ import java.util.ArrayList;
 public class MidiTrack {
     private int tracknum;                 /* The track number */
     private ArrayList<MidiNote> notes;    /* List of Midi notes */
+    private Vector<FrameVector> chromaVectors; /* List of chroma vector for each note */
     private int instrument;               /* Instrument for this track */
     private ArrayList<MidiEvent> lyrics;  /* The lyrics in this track */
 
@@ -40,6 +43,7 @@ public class MidiTrack {
     public MidiTrack(int tracknum) {
         this.tracknum = tracknum;
         notes = new ArrayList<MidiNote>(20);
+        chromaVectors = new Vector<FrameVector>(20);
         instrument = 0;
     } 
 
@@ -49,6 +53,7 @@ public class MidiTrack {
     public MidiTrack(ArrayList<MidiEvent> events, int tracknum) {
         this.tracknum = tracknum;
         notes = new ArrayList<MidiNote>(events.size());
+        chromaVectors = new Vector<FrameVector>(events.size());
         instrument = 0;
  
         for (MidiEvent mevent : events) {
@@ -82,8 +87,16 @@ public class MidiTrack {
 
     public ArrayList<MidiNote> getNotes() { 
     	 	return notes; }
+
+    /**
+     * Return all the chroma vector of the track
+     * @return A vector of chroma vector
+     */
+    public Vector<FrameVector> getChromaVectors() {
+        return this.chromaVectors;
+    }
     
-    /** Give an ArrayList of the notes included between the note n°start and the note n°stop */
+    /** Give an ArrayList of the notes included between the note nstart and the note nstop */
     public ArrayList<MidiNote> getNotesBetween(int start, int stop) { 
     	ArrayList<MidiNote> notesCut = new ArrayList<MidiNote>(stop-start+1);
     	for (int i = start; i <= stop; i++){
@@ -107,6 +120,7 @@ public class MidiTrack {
     /** Add a MidiNote to this track.  This is called for each NoteOn event */
     public void AddNote(MidiNote m) {
     	notes.add(m);
+        chromaVectors.add(m.getChromaVector());
     }
 
     /** A NoteOff event occured.  Find the MidiNote of the corresponding

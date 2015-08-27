@@ -215,8 +215,8 @@ public class AccidSymbol implements MusicSymbol {
     
     public String toString() {
         return String.format(
-          "AccidSymbol accid={0} whitenote={1} clef={2} width={3}",
-          accid, whitenote, clef, width);
+                "AccidSymbol accid={0} whitenote={1} clef={2} width={3}",
+                accid, whitenote, clef, width);
     }
 
 }

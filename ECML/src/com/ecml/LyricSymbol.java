@@ -60,7 +60,7 @@ public class LyricSymbol {
     @Override
     public String toString() {
         return String.format("Lyric start={0} x={1} text={2}",
-                             starttime, x, text);
+                starttime, x, text);
     }
 
 }

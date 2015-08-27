@@ -16,7 +16,7 @@ import com.ecml.R;
 /**
  * @class CalendarRehearsalProgramActivity : Display the user calendar, for instance its google agenda. 
  *        
- * @author Anaïs
+ * @author Anas
  */
 
 public class CalendarDisplayActivity extends Activity {

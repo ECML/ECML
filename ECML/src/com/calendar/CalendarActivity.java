@@ -14,7 +14,7 @@ import com.sideActivities.BaseTabActivity;
 /**
  * @class CalendarActivity : 4 tabs of the calendar activity. 
  *        
- * @author Anaïs
+ * @author Anas
  */
 
 public class CalendarActivity extends BaseTabActivity {

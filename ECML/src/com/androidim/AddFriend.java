@@ -24,7 +24,6 @@ import com.androidim.services.IMService;
 import com.ecml.R;
 
 
-
 // TODO: Add javadoc
 public class AddFriend extends Activity implements OnClickListener {
 

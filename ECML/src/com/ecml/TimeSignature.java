@@ -161,10 +161,9 @@ public class TimeSignature implements Serializable {
     }
 
     @Override
-    public 
-    String toString() {
+    public String toString() {
         return String.format("TimeSignature=%1$s/%2$s quarter=%3$s tempo=%4$s",
-                             numerator, denominator, quarternote, tempo);
+                numerator, denominator, quarternote, tempo);
     }
     
 }

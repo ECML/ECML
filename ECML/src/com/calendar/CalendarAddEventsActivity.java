@@ -1,8 +1,5 @@
 package com.calendar;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +12,13 @@ import android.widget.ListView;
 
 import com.ecml.R;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  * @class CalendarAddEventsActivity : Add event to the user's calendar. 
  *        
- * @author Anaïs
+ * @author Anas
  */
 
 public class CalendarAddEventsActivity extends Activity {

@@ -15,8 +15,7 @@ import com.ecml.ECMLActivity;
 import com.ecml.R;
 
 
-
-public class SignUp extends Messenger  {
+public class SignUp extends Messenger {
 	
 	private static final int FILL_ALL_FIELDS = 0;
 	protected static final int TYPE_SAME_PASSWORD_IN_PASSWORD_FIELDS = 1;
@@ -62,7 +61,7 @@ public class SignUp extends Messenger  {
 	        Spinner spinner = (Spinner) findViewById(R.id.questions_spinner);
 	        // Create an ArrayAdapter using the string array and a default spinner LAYOUT
 	        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-	        R.array.questions_array, android.R.layout.simple_spinner_item);
+                    R.array.questions_array, android.R.layout.simple_spinner_item);
 	        // Specify the layout to use when THE LIST of choices appears
 	        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	        // APPLY the adapter to the spinner
@@ -90,22 +89,26 @@ public class SignUp extends Messenger  {
 						 			User newUser = new User(usernameText.getText().toString(),passwordText.getText().toString(),question,answerText.getText().toString());
 						 			usersdb.open();
 						 			usersdb.add(newUser);
-						 			Toast.makeText(getApplicationContext(),R.string.signup_successfull, Toast.LENGTH_LONG).show();
+						 			Toast.makeText(getApplicationContext(), R.string.signup_successfull, Toast.LENGTH_LONG).show();
 						 			Intent i = new Intent(getApplicationContext(), ECMLActivity.class);
 						     		startActivity(i);
 						 			//usersdb.close();
 							      }
 						 	  
-						 		  else{Toast.makeText(getApplicationContext(),R.string.signup_username_crashed, Toast.LENGTH_LONG).show();}
+						 		  else{
+                                      Toast.makeText(getApplicationContext(), R.string.signup_username_crashed, Toast.LENGTH_LONG).show();}
 						}
-						     else{Toast.makeText(getApplicationContext(),R.string.username_and_password_length_short, Toast.LENGTH_LONG).show();}
+						     else{
+                                  Toast.makeText(getApplicationContext(), R.string.username_and_password_length_short, Toast.LENGTH_LONG).show();}
 						}
 					
-						else{Toast.makeText(getApplicationContext(),R.string.signup_type_same_password_in_password_fields, Toast.LENGTH_LONG).show();}
+						else{
+                            Toast.makeText(getApplicationContext(), R.string.signup_type_same_password_in_password_fields, Toast.LENGTH_LONG).show();}
 					    
 				   }
 					
-				   else{Toast.makeText(getApplicationContext(),R.string.signup_fill_all_fields, Toast.LENGTH_LONG).show();}
+				   else{
+                        Toast.makeText(getApplicationContext(), R.string.signup_fill_all_fields, Toast.LENGTH_LONG).show();}
 				}
 					       	
 	        });

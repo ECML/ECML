@@ -44,7 +44,7 @@ public class ScrollAnimation {
     private float    flingVelocity;  /* Initial fling velocity (pixels/sec) */
     private float    velocityX;      /* Velocity of move (pixels/sec) */
     private float    velocityY;      /* Velocity of move (pixels/sec) */
-    private Handler  scrollTimer;    /* Timer for doing 'fling' scrolling */
+    private Handler scrollTimer;    /* Timer for doing 'fling' scrolling */
 
 
     /** Create a new ScrollAnimation

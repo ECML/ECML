@@ -1,7 +1,5 @@
 package com.game;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,10 +18,12 @@ import com.ecml.MidiTrack;
 import com.ecml.R;
 import com.ecml.SheetMusic;
 
+import java.util.ArrayList;
+
 /**
  * @class ReadingGameBeginnerActivity 
  *        
- * @author Anaïs & Nicolas
+ * @author Anas & Nicolas
  */
 
 public class ReadingGameBeginner extends ReadingGame {
@@ -34,7 +34,7 @@ public class ReadingGameBeginner extends ReadingGame {
 	private int numberPoints = 0;				//Number of points
 	private int firstTry = 0;					//Incremented each time the player try to find a note
 	private int numberNote = 30;				//Number of notes in the sheet music
-	private Double currentPulseTime = 0.0;		
+	private Double currentPulseTime = 0.0;
 	private Double prevPulseTime = 0.0;
 
 	/** Called when the activity is first created. */
@@ -43,7 +43,7 @@ public class ReadingGameBeginner extends ReadingGame {
 		super.onCreate(savedInstanceState);
 		counter = 0; // note counter
 		tracks = midifile.getTracks();
-		// We use by default the instrument n°0 which is the piano
+		// We use by default the instrument n0 which is the piano
 		notes = findNotes(tracks, 0);
 
 		//Display textView
@@ -192,7 +192,7 @@ public class ReadingGameBeginner extends ReadingGame {
 			}
 		});
 
-		// Ré button
+		// R button
 		re.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -201,7 +201,7 @@ public class ReadingGameBeginner extends ReadingGame {
 			}
 		});
 
-		// Ré sharp button
+		// R sharp button
 		red.setOnClickListener(new View.OnClickListener() {
 
 			@Override

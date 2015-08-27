@@ -65,8 +65,8 @@ public class BlankSymbol implements MusicSymbol {
     public void Draw(Canvas canvas, Paint paint, int ytop) {}
 
     public String toString() {
-        return String.format("BlankSymbol starttime=%1$s width=%2$s", 
-                             starttime, width);
+        return String.format("BlankSymbol starttime=%1$s width=%2$s",
+                starttime, width);
     }
 }
 

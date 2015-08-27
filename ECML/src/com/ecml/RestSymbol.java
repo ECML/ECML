@@ -164,7 +164,7 @@ public class RestSymbol implements MusicSymbol {
 
     public String toString() {
         return String.format("RestSymbol starttime=%1$s duration=%2$s width=%3$s",
-                             starttime, duration, width);
+                starttime, duration, width);
     }
 
 }

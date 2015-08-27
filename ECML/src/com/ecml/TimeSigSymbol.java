@@ -126,7 +126,7 @@ public class TimeSigSymbol implements MusicSymbol {
 
     public String toString() {
         return String.format("TimeSigSymbol numerator=%1$s denominator=%2$s",
-                             numerator, denominator);
+                numerator, denominator);
     }
 }
 

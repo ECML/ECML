@@ -14,12 +14,9 @@ import android.widget.Toast;
 
 import com.ecml.ECMLActivity;
 import com.ecml.R;
-import com.ecml.UserActivity;
 
 
-
-
-public class Login extends Messenger {	
+public class Login extends Messenger {
 
     protected static final int NOT_CONNECTED_TO_SERVICE = 0;
 	protected static final int FILL_BOTH_USERNAME_AND_PASSWORD = 1;
@@ -67,17 +64,17 @@ public class Login extends Messenger {
 
 					if ( usersdb.checkIfExist(user) ) {
 						
-						Toast.makeText(getApplicationContext(),R.string.user_authenticated_success, Toast.LENGTH_LONG).show();
-						Intent i = new Intent(getApplicationContext(), UserActivity.class);																
+						Toast.makeText(getApplicationContext(), R.string.user_authenticated_success, Toast.LENGTH_LONG).show();
+						Intent i = new Intent(getApplicationContext(), ECMLActivity.class);
 						startActivity(i);
 						
 					}
 				
 				else{
-					Toast.makeText(getApplicationContext(),R.string.make_sure_username_and_password_correct, Toast.LENGTH_LONG).show();}
+					Toast.makeText(getApplicationContext(), R.string.make_sure_username_and_password_correct, Toast.LENGTH_LONG).show();}
 				}
 			 
-				else{ Toast.makeText(getApplicationContext(),R.string.signup_fill_all_fields, Toast.LENGTH_LONG).show();}
+				else{ Toast.makeText(getApplicationContext(), R.string.signup_fill_all_fields, Toast.LENGTH_LONG).show();}
 				//usersdb.close();
 			}       	
 		

@@ -18,11 +18,6 @@ package com.ecml;
 /******************************************** IMPORTS FOR ADD-UPS **********************************************/
 /***************************************************************************************************************/
 /***************************************************************************************************************/
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.zip.CRC32;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -74,6 +69,12 @@ import com.sideActivities.AudioRecordingActivity;
 import com.sideActivities.TuningForkActivity;
 import com.sideActivities.VideoRecordingActivity;
 import com.sideActivities.YoutubeActivity;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.zip.CRC32;
 
 /***************************************************************************************************************/
 /***************************************************************************************************************/
@@ -179,6 +180,11 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	private Menu menu;						/* Actually the Action Bar and NOT the overflowing menu */
 	private VolumeListener volumeListener;	/* The Volume Listener to handle volume changes */
 
+	/************************************** Countdown Variables ***********************************************/
+
+	private int number;
+	private Countdown countdown;
+
 	/**********************************************************************************************************/
 	/**********************************************************************************************************/
 	/************************************ END OF VARIABLES FOR ADD-UPS ****************************************/
@@ -221,6 +227,8 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			this.finish();
 			return;
 		}
+
+		number = this.getIntent().getIntExtra("number",-1);
 
 		// Initialize the settings (MidiOptions).
 		// If previous settings have been saved, use those
@@ -400,6 +408,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		/***********************************************************************************************************/
 		/***********************************************************************************************************/
 
+		// Create a back button in the top left corner
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.actionbar, menu);
@@ -472,111 +483,114 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.song_settings:
-			changeSettings();
-			return true;
-		case R.id.save_images:
-			showSaveImagesDialog();
-			return true;
-		case R.id.help:
-			showHelp();
-			return true;
-		case R.id.youtube:
-			showYoutube();
-			return true;
-		case R.id.video:
-			surfaceView.setVisibility(View.VISIBLE);
-			topLayout.setVisibility(View.VISIBLE);
-			return true;
-		case R.id.startVideoRecording:
-			surfaceView.setVisibility(View.VISIBLE);
-			try {
-				startVideoRecording();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return true;
-		case R.id.stopVideoRecording:
-			stopVideoRecording();
-			surfaceView.setVisibility(View.GONE);
-			topLayout.setVisibility(View.GONE);
-			return true;
-		case R.id.replayVideoRecording:
-			replayVideoRecording();
-			return true;
-		case R.id.switchCamera:
-			switchCamera();
-			return true;
-		case R.id.startAudioRecording:
-			startAudioRecording();
-			return true;
-		case R.id.stopAudioRecording:
-			stopAudioRecording();
-			return true;
-		case R.id.replayAudioRecording:
-			playAudio();
-			return true;
-		case R.id.pauseReplayAudioRecording:
-			pauseAudio();
-			return true;
-		case R.id.mainScreen:
-			Intent mainScreen = new Intent(getApplicationContext(), ECMLActivity.class);
-			// Go to the main screen and kill any other living activities
-			mainScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(mainScreen);
-			return true;
-		case R.id.chooseSongActivity:
-			Intent chooseSongActivity = new Intent(getApplicationContext(), ChooseSongActivity.class);
-			startActivity(chooseSongActivity);
-			finish();
-			return true;
-		case R.id.calendarActivity:
-			Intent calendarActivity = new Intent(getApplicationContext(), CalendarActivity.class);
-			startActivity(calendarActivity);
-			finish();
-			return true;
-		case R.id.audioActivity:
-			Intent audioActivity = new Intent(getApplicationContext(), AudioRecordingActivity.class);
-			startActivity(audioActivity);
-			finish();
-			return true;
-		case R.id.videoActivity:
-			Intent videoActivity = new Intent(getApplicationContext(), VideoRecordingActivity.class);
-			startActivity(videoActivity);
-			finish();
-			return true;
-		case R.id.gameActivity:
-			Intent gameActivity = new Intent(getApplicationContext(), GameActivity.class);
-			startActivity(gameActivity);
-			finish();
-			return true;
-		case R.id.messengerActivity:
-			Intent messengerActivity = new Intent(getApplicationContext(), com.androidim.Login.class);
-			startActivity(messengerActivity);
-			finish();
-			return true;
-		case R.id.youtubeActivity:
-			Intent youtubeActivity = new Intent(getApplicationContext(), YoutubeActivity.class);
-			startActivity(youtubeActivity);
-			finish();
-			return true;
-		case R.id.metronomeActivity:
-			Intent metronomeActivity = new Intent(getApplicationContext(), MetronomeActivity.class);
-			startActivity(metronomeActivity);
-			finish();
-			return true;
-		case R.id.tuningForkActivity:
-			Intent tuningForkActivity = new Intent(getApplicationContext(), TuningForkActivity.class);
-			startActivity(tuningForkActivity);
-			finish();
-			return true;
-		case R.id.communicationActivity:
-			Intent communicationActivity = new Intent(getApplicationContext(), FacebookActivity.class);
-			startActivity(communicationActivity);
-			finish();
-			return true;	
-		default:
-			return super.onOptionsItemSelected(item);
+			case android.R.id.home:
+				finish();
+				return true;
+			case R.id.song_settings:
+				changeSettings();
+				return true;
+			case R.id.save_images:
+				showSaveImagesDialog();
+				return true;
+			case R.id.help:
+				showHelp();
+				return true;
+			case R.id.youtube:
+				showYoutube();
+				return true;
+			case R.id.video:
+				surfaceView.setVisibility(View.VISIBLE);
+				topLayout.setVisibility(View.VISIBLE);
+				return true;
+			case R.id.startVideoRecording:
+				surfaceView.setVisibility(View.VISIBLE);
+				try {
+					startVideoRecording();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return true;
+			case R.id.stopVideoRecording:
+				stopVideoRecording();
+				surfaceView.setVisibility(View.GONE);
+				topLayout.setVisibility(View.GONE);
+				return true;
+			case R.id.replayVideoRecording:
+				replayVideoRecording();
+				return true;
+			case R.id.switchCamera:
+				switchCamera();
+				return true;
+			case R.id.startAudioRecording:
+				startAudioRecording();
+				return true;
+			case R.id.stopAudioRecording:
+				stopAudioRecording();
+				return true;
+			case R.id.replayAudioRecording:
+				playAudio();
+				return true;
+			case R.id.pauseReplayAudioRecording:
+				pauseAudio();
+				return true;
+			case R.id.mainScreen:
+				Intent mainScreen = new Intent(getApplicationContext(), ECMLActivity.class);
+				// Go to the main screen and kill any other living activities
+				mainScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(mainScreen);
+				return true;
+			case R.id.chooseSongActivity:
+				Intent chooseSongActivity = new Intent(getApplicationContext(), ChooseSongActivity.class);
+				startActivity(chooseSongActivity);
+				finish();
+				return true;
+			case R.id.calendarActivity:
+				Intent calendarActivity = new Intent(getApplicationContext(), CalendarActivity.class);
+				startActivity(calendarActivity);
+				finish();
+				return true;
+			case R.id.audioActivity:
+				Intent audioActivity = new Intent(getApplicationContext(), AudioRecordingActivity.class);
+				startActivity(audioActivity);
+				finish();
+				return true;
+			case R.id.videoActivity:
+				Intent videoActivity = new Intent(getApplicationContext(), VideoRecordingActivity.class);
+				startActivity(videoActivity);
+				finish();
+				return true;
+			case R.id.gameActivity:
+				Intent gameActivity = new Intent(getApplicationContext(), GameActivity.class);
+				startActivity(gameActivity);
+				finish();
+				return true;
+			case R.id.messengerActivity:
+				Intent messengerActivity = new Intent(getApplicationContext(), com.androidim.Login.class);
+				startActivity(messengerActivity);
+				finish();
+				return true;
+			case R.id.youtubeActivity:
+				Intent youtubeActivity = new Intent(getApplicationContext(), YoutubeActivity.class);
+				startActivity(youtubeActivity);
+				finish();
+				return true;
+			case R.id.metronomeActivity:
+				Intent metronomeActivity = new Intent(getApplicationContext(), MetronomeActivity.class);
+				startActivity(metronomeActivity);
+				finish();
+				return true;
+			case R.id.tuningForkActivity:
+				Intent tuningForkActivity = new Intent(getApplicationContext(), TuningForkActivity.class);
+				startActivity(tuningForkActivity);
+				finish();
+				return true;
+			case R.id.communicationActivity:
+				Intent communicationActivity = new Intent(getApplicationContext(), FacebookActivity.class);
+				startActivity(communicationActivity);
+				finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 
@@ -644,7 +658,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				stream.close();
 
 				// Inform the media scanner about the file
-				MediaScannerConnection.scanFile(this, new String[] { file.toString() }, null, null);
+				MediaScannerConnection.scanFile(this, new String[]{file.toString()}, null, null);
 			}
 		} catch (IOException e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -771,7 +785,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			sheet.invalidate();
 		}
 		layout.requestLayout();
-
+		if (ReadWriteXMLFile.readActivityByNumber(number, getApplicationContext()) != null) {
+			countdown = new Countdown(ReadWriteXMLFile.readActivityByNumber(number, getApplicationContext()).getCountdown(), 1000, number, getApplicationContext());
+			countdown.start();
+		}
 	}
 
 	/** When this activity pauses, stop the music and all recordings */
@@ -791,13 +808,28 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		if (isVideoRecording) {
 			stopVideoRecording();
 		}
+
+		if (countdown != null) {
+			countdown.cancel();
+			countdown = null;
+		}
 		
 		mediaPlayer.stop();
 		metronome.stopMetronome();
 		getApplicationContext().getContentResolver().unregisterContentObserver(volumeListener);
 	}
 
-	/**********************************************************************************************************/
+	@Override
+	protected void onStop() {
+		if (countdown != null) {
+			countdown.cancel();
+			countdown = null;
+		}
+		super.onStop();
+	}
+
+
+		/**********************************************************************************************************/
 	/**********************************************************************************************************/
 	/**********************************************************************************************************/
 	/************************************** FUNCTIONS FOR ADD-UPS *********************************************/
@@ -1123,9 +1155,9 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 			else {
 				cameraSide = BACK_SIDE;
 			}
-			Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera", Toast.LENGTH_SHORT).show();
 		} else {
-			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -1166,6 +1198,10 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		int action = event.getAction();
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (countdown != null) {
+				countdown.cancel();
+				countdown = null;
+			}
 			if (action == KeyEvent.ACTION_DOWN) { // That case needs to be added because there's now a keyListener
 				this.finish();
 				return true;

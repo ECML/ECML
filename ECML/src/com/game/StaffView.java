@@ -128,9 +128,9 @@ public class StaffView extends View {
             noteOffsetX = (0.85f * ovalWidth) / 2.0f;
             noteOffsetY = (0.3f * ovalHeight) / 2.0f;
 
-            Bitmap ovalTemplate = Bitmap.createBitmap((int)ovalWidth,
-                                                      (int)ovalWidth,
-                                                      Bitmap.Config.ALPHA_8);
+            Bitmap ovalTemplate = Bitmap.createBitmap((int) ovalWidth,
+                    (int) ovalWidth,
+                    Bitmap.Config.ALPHA_8);
             Canvas c = new Canvas(ovalTemplate);
 
             Matrix tiltMatrix = new Matrix();
@@ -166,11 +166,11 @@ public class StaffView extends View {
                 String accidental = "";
                 switch (notename.charAt(1)) {
                     case '#':
-                        accidental = "♯";
+                        accidental = "?";
                         accidentalOffsetY = 0.5f * noteBitmap.getHeight();
                         break;
                     case 'b':
-                        accidental = "♭";
+                        accidental = "?";
                         accidentalOffsetY = 0.3f * noteBitmap.getHeight();
                         break;
                 }

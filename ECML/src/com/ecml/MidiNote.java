@@ -14,7 +14,13 @@
 
 package com.ecml;
 
+import android.util.Log;
+
+import com.ScoreFollowerLibrary.nl.metaphoric.scorefollower.lib.feature.FrameVector;
+import com.ScoreFollowerLibrary.nl.metaphoric.scorefollower.lib.feature.FrameVectorFactory;
+
 import java.util.Comparator;
+import java.util.HashMap;
 
 
 /** @class MidiNote
@@ -39,6 +45,10 @@ public class MidiNote implements Comparator<MidiNote> {
     private int channel;     /* The channel */
     private int notenumber;  /* The note, from 0 to 127. Middle C is 60 */
     private int duration ;   /* The duration, in pulses */
+    private FrameVector chroma; /* The chroma vector of the note */
+    private final static HashMap<String, FrameVector> noteChroma = new HashMap<String, FrameVector>();
+
+    // FRAMEVECTOR for each note (constance)
     
 
     /** Create a new MidiNote.  This is called when a NoteOn event is
@@ -49,10 +59,85 @@ public class MidiNote implements Comparator<MidiNote> {
 		this.channel = channel;
 		this.notenumber = notenumber;
 		this.duration = duration;
+
+        if (noteChroma.isEmpty()) {
+            Log.d("Midinote", "Verification");
+            initialize();
+        }
+        // For each note, define the chroma vector associate
+        switch ((this.notenumber + 3) % 12) {
+            case 0:
+                this.chroma = noteChroma.get("A");
+                break;
+            case 1:
+                this.chroma = noteChroma.get("A#");
+                break;
+            case 2:
+                this.chroma = noteChroma.get("B");
+                break;
+            case 3:
+                this.chroma = noteChroma.get("C");
+                break;
+            case 4:
+                this.chroma = noteChroma.get("C#");
+                break;
+            case 5:
+                this.chroma = noteChroma.get("D");
+                break;
+            case 6:
+                this.chroma = noteChroma.get("D#");
+                break;
+            case 7:
+                this.chroma = noteChroma.get("E");
+                break;
+            case 8:
+                this.chroma = noteChroma.get("F");
+                break;
+            case 9:
+                this.chroma = noteChroma.get("F#");
+                break;
+            case 10:
+                this.chroma = noteChroma.get("G");
+                break;
+            case 11:
+                this.chroma = noteChroma.get("G#");
+                break;
+            default:
+                break;
+        }
 	}
 
+    private void initialize() {
+        // First try (not perfect chroma)
+        /*noteChroma.put("A", FrameVectorFactory.getVector(new double[] {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("A#", FrameVectorFactory.getVector(new double[] {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("B", FrameVectorFactory.getVector(new double[] {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("C", FrameVectorFactory.getVector(new double[] {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("C#", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("D", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("D#", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}));
+        noteChroma.put("E", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0}));
+        noteChroma.put("F", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}));
+        noteChroma.put("F#", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}));
+        noteChroma.put("G", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}));
+        noteChroma.put("G#", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}));*/
 
-	public int getStartTime() {
+        // For trumpet
+        noteChroma.put("A", FrameVectorFactory.getVector(new double[] {0.9, 0, 0.1, 0.3, 0.1, 0.3, 0.5, 0, 0.2, 0.6, 0, 0.1}));
+        noteChroma.put("A#", FrameVectorFactory.getVector(new double[] {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("B", FrameVectorFactory.getVector(new double[] {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("C", FrameVectorFactory.getVector(new double[] {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("C#", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("D", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0}));
+        noteChroma.put("D#", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}));
+        noteChroma.put("E", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0}));
+        noteChroma.put("F", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}));
+        noteChroma.put("F#", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}));
+        noteChroma.put("G", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}));
+        noteChroma.put("G#", FrameVectorFactory.getVector(new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}));
+    }
+
+    public int getStartTime() {
 		return starttime;
 	}
 
@@ -88,6 +173,12 @@ public class MidiNote implements Comparator<MidiNote> {
 		duration = value;
 	}
 
+    /**
+     * Get the chroma vector from the note
+     * @return The chroma vector
+     */
+    public FrameVector getChromaVector() { return this.chroma; }
+
 	/** A NoteOff event occurs for this note at the given time.
 	 * Calculate the note duration based on the noteoff event.
 	 */
@@ -115,7 +206,7 @@ public class MidiNote implements Comparator<MidiNote> {
 	public String toString() {
 		String[] scale = new String[] { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
 		return String.format("MidiNote channel=%1$s number=%2$s %3$s start=%4$s duration=%5$s", channel, notenumber, scale[(notenumber + 3) % 12],
-				starttime, duration);
+                starttime, duration);
 
 	}
 

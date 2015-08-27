@@ -12,6 +12,19 @@ public class MicrophonePitchPoster extends Thread {
     // do the real pitch detection.
     static final int kDebugMs = -1;
 
+    private static final double kPitchA = 440.0; // Hz.
+    private int sampleCount;
+    private DyWaPitchTrack pitchTracker;
+    private AudioRecord audiorecorder;
+    private Handler handler;   // This is the handler we post NoteCents to.
+    enum SamplingState {
+        RUNNING,
+        STOP_REQUESTED,
+        STOPPED;
+    }
+    private SamplingState state;
+    private final Object stateLock;
+
     public static final class PitchData {
         public PitchData(double f, int n, double c, double d) {
             frequency = f;
@@ -134,7 +147,7 @@ public class MicrophonePitchPoster extends Thread {
         final double base = kPitchA / 8; // The A just below our C string (55Hz)
         final double d = Math.exp(Math.log(2) / 1200);
         final double cent_above_base = Math.log(frequency / base) / Math.log(d);
-        final int scale_above_C = (int)Math.round(cent_above_base / 100.0) - 3;
+        final int scale_above_C = (int) Math.round(cent_above_base / 100.0) - 3;
         if (scale_above_C < 0) {
             return null;
         }
@@ -146,17 +159,4 @@ public class MicrophonePitchPoster extends Thread {
         final double vu_db = 20 * (Math.log(maxValue / 32768.0) / Math.log(10));
         return new PitchData(frequency, rounded, cent, vu_db);
     }
-
-    private static final double kPitchA = 440.0; // Hz.
-    private int sampleCount;
-    private DyWaPitchTrack pitchTracker;
-    private AudioRecord audiorecorder;
-    private Handler handler;   // This is the handler we post NoteCents to.
-    enum SamplingState {
-        RUNNING,
-        STOP_REQUESTED,
-        STOPPED;
-    }
-    private SamplingState state;
-    private final Object stateLock;
 }

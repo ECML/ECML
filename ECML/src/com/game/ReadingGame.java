@@ -1,8 +1,5 @@
 package com.game;
 
-import java.util.ArrayList;
-import java.util.zip.CRC32;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.ecml.ChooseSongActivity;
 import com.ecml.ClefSymbol;
+import com.ecml.Countdown;
 import com.ecml.ECML;
 import com.ecml.FileUri;
 import com.ecml.MidiFile;
@@ -28,14 +27,18 @@ import com.ecml.MidiPlayer;
 import com.ecml.MidiTrack;
 import com.ecml.Piano;
 import com.ecml.R;
+import com.ecml.ReadWriteXMLFile;
 import com.ecml.SheetMusic;
 import com.ecml.TimeSigSymbol;
 import com.sideActivities.BaseActivity;
 
+import java.util.ArrayList;
+import java.util.zip.CRC32;
+
 /**
  * @class ReadingGame :abstract class which define the main part of all the Reading of notes Game activities.
  *        
- * @author Anaïs
+ * @author Anas
  */
 
 
@@ -55,6 +58,11 @@ public abstract class ReadingGame extends BaseActivity {
 	protected int score = 0;				//Score of the the player
 
 	public static int level = 1;			//3 levels : beginner, intermediate and advanced
+
+	protected int number;	//The number of the current activity
+	protected Countdown countdown;	//A countdown for the current activity
+
+
 
 	/*** MidiSheet variables ***/
 
@@ -112,7 +120,7 @@ public abstract class ReadingGame extends BaseActivity {
 			uri = Uri.parse("file:///android_asset/Bach__Invention_No._13.mid");
 			title = this.getIntent().getStringExtra(MidiTitleID);
 			if (title == null) {
-				title = "Bach - Invention n°13";
+				title = "Bach -Invention n13";
 			}
 		}
 		else {
@@ -120,9 +128,11 @@ public abstract class ReadingGame extends BaseActivity {
 			uri = Uri.parse("file:///android_asset/Chopin__Nocturne_Op._9_No._1_in_B-flat_minor.mid");
 			title = this.getIntent().getStringExtra(MidiTitleID);
 			if (title == null) {
-				title = "Chopin - Nocturn Op.9 N°1 in B flat minor";
+				title = "Chopin - Nocturn Op.9 N1 in B flat minor";
 			}
 		}
+		number = this.getIntent().getIntExtra("number",0);
+
 		FileUri file = new FileUri(uri, title);
 		this.setTitle("ECML: " + title);
 		byte[] data;
@@ -194,7 +204,7 @@ public abstract class ReadingGame extends BaseActivity {
 			public void onClick(View v) {
 				showHelpDialog();
 			}
-			
+
 		});
 
 		// Change game button
@@ -221,7 +231,7 @@ public abstract class ReadingGame extends BaseActivity {
 		layout.addView(result);
 		result.setVisibility(View.GONE);
 		setContentView(layout);
-		
+
 		//Create the sheet music
 		createSheetMusic(options);
 
@@ -277,22 +287,22 @@ public abstract class ReadingGame extends BaseActivity {
 				int action = event.getAction() & MotionEvent.ACTION_MASK;
 				boolean result = sheet.getScrollAnimation().onTouchEvent(event);
 				switch (action) {
-				case MotionEvent.ACTION_DOWN:
-					// If we touch while music is playing, stop the midi player
-					if (player != null && player.playstate == player.playing) {
-						player.Pause();
-						sheet.getScrollAnimation().stopMotion();
-					}
-					return result;
+					case MotionEvent.ACTION_DOWN:
+						// If we touch while music is playing, stop the midi player
+						if (player != null && player.playstate == player.playing) {
+							player.Pause();
+							sheet.getScrollAnimation().stopMotion();
+						}
+						return result;
 
-				case MotionEvent.ACTION_MOVE:
-					return result;
+					case MotionEvent.ACTION_MOVE:
+						return result;
 
-				case MotionEvent.ACTION_UP:
-					return result;
+					case MotionEvent.ACTION_UP:
+						return result;
 
-				default:
-					return false;
+					default:
+						return false;
 				}
 			}
 		});
@@ -306,6 +316,7 @@ public abstract class ReadingGame extends BaseActivity {
 	/** When this activity resumes, redraw all the views */
 	@Override
 	protected void onResume() {
+		Log.d("ReadingGame:onResume", "call");
 		super.onResume();
 		layout.requestLayout();
 		player.invalidate();
@@ -313,17 +324,48 @@ public abstract class ReadingGame extends BaseActivity {
 			sheet.invalidate();
 		}
 		layout.requestLayout();
-
+		countdown = new Countdown(ReadWriteXMLFile.readActivityByNumber(number,getApplicationContext()).getCountdown(),1000,number,this.getApplicationContext());
+		countdown.start();
 	}
 
 	/** When this activity pauses, stop the music */
 	@Override
 	protected void onPause() {
+		Log.d("ReadingGame:onPause", "call");
 		if (player != null) {
 			player.Pause();
 			player.unmute();
 		}
+		if (countdown != null) {
+			Log.d("ReadingGame:onPause", "stop");
+			countdown.cancel();
+			countdown = null;
+		}
 		super.onPause();
+	}
+
+	@Override
+	protected void onStop() {
+		Log.d("ReadingGame:onStop", "call");
+		if (countdown != null) {
+			Log.d("ReadingGame:onStop", "stop");
+			countdown.cancel();
+			countdown = null;
+		}
+		super.onStop();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (countdown != null) {
+				Log.d("ReadingGame:BackButton", "stop");
+				countdown.cancel();
+				countdown = null;
+				finish();
+			}
+		}
+		return true;
 	}
 
 	/** Create the Help Alert Dialog */
@@ -341,5 +383,7 @@ public abstract class ReadingGame extends BaseActivity {
 		AlertDialog dialog = builder.create();
 		dialog.show();
 	}
+
+
 
 }

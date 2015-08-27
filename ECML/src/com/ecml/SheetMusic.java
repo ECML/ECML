@@ -12,9 +12,6 @@
 
 package com.ecml;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -27,6 +24,9 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 /** @class BoxedInt **/
 class BoxedInt {

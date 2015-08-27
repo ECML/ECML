@@ -113,17 +113,17 @@ public class SignUp extends Activity {
 		
 												public void run() {
                                                     if (SERVER_RES_RES_SIGN_UP_SUCCESFULL.equals(result)) {
-                                                        Toast.makeText(getApplicationContext(),R.string.signup_successfull, Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getApplicationContext(), R.string.signup_successfull, Toast.LENGTH_LONG).show();
                                                         //showDialog(SIGN_UP_SUCCESSFULL);
                                                     }
                                                     else if (SERVER_RES_SIGN_UP_USERNAME_CRASHED.equals(result)){
-                                                        Toast.makeText(getApplicationContext(),R.string.signup_username_crashed, Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getApplicationContext(), R.string.signup_username_crashed, Toast.LENGTH_LONG).show();
                                                         //showDialog(SIGN_UP_USERNAME_CRASHED);
                                                     }
                                                     else  //if (result.equals(SERVER_RES_SIGN_UP_FAILED)) 
                                                     {
                                                     
-                                                        Toast.makeText(getApplicationContext(),R.string.signup_failed, Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getApplicationContext(), R.string.signup_failed, Toast.LENGTH_LONG).show();
                                                         //showDialog(SIGN_UP_FAILED);
                                                     }            
                                                 }
@@ -135,18 +135,18 @@ public class SignUp extends Activity {
 									thread.start();
 							}
 							else{
-								Toast.makeText(getApplicationContext(),R.string.username_and_password_length_short, Toast.LENGTH_LONG).show();
+								Toast.makeText(getApplicationContext(), R.string.username_and_password_length_short, Toast.LENGTH_LONG).show();
 								//showDialog(USERNAME_AND_PASSWORD_LENGTH_SHORT);
 							}							
 						}
 						else {
-							Toast.makeText(getApplicationContext(),R.string.signup_type_same_password_in_password_fields, Toast.LENGTH_LONG).show();
+							Toast.makeText(getApplicationContext(), R.string.signup_type_same_password_in_password_fields, Toast.LENGTH_LONG).show();
 							//showDialog(TYPE_SAME_PASSWORD_IN_PASSWORD_FIELDS);
 						}
 						
 					}
 					else {
-						Toast.makeText(getApplicationContext(),R.string.signup_fill_all_fields, Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(), R.string.signup_fill_all_fields, Toast.LENGTH_LONG).show();
 						//showDialog(FILL_ALL_FIELDS);
 						
 					}				

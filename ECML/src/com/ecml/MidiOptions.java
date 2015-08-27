@@ -13,13 +13,13 @@
 
 package com.ecml;
 
-import java.io.Serializable;
+import android.graphics.Color;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.graphics.Color;
+import java.io.Serializable;
 
 /** @class MidiOptions
  * <br>

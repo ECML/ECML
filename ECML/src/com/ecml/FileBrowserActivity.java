@@ -12,10 +12,6 @@
 
 package com.ecml;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-
 import android.app.ListActivity;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -25,6 +21,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class FileBrowserActivity extends ListActivity {

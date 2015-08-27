@@ -140,7 +140,7 @@ public class ClefSymbol implements MusicSymbol {
 
     public String toString() {
         return String.format("ClefSymbol clef=%1$s small=%2$s width=%3$s",
-                             clef, smallsize, width);
+                clef, smallsize, width);
     }
 }
 

@@ -12,9 +12,6 @@
 
 package com.ecml;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,6 +22,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
@@ -33,6 +31,9 @@ import com.game.ReadingGameNormal;
 import com.game.SpeedGamelvl1;
 import com.game.SpeedGamelvln;
 import com.sideActivities.BaseTabActivity;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /** @class ChooseSongActivity
  * <br>
@@ -47,6 +48,7 @@ public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeLi
 	private Intent intent;
     static ChooseSongActivity globalActivity;
 	public static final String mode = "mode";
+    public static final String number = "number";
 	public static final int level = 1;
 
     @Override
@@ -78,6 +80,8 @@ public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeLi
         
         tabHost.setOnTabChangedListener(this);
 
+        // Avoid keyboard appears on start
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
     
     /** Update Action bar Title when changing Tab */
@@ -114,7 +118,11 @@ public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeLi
         if (ECML.intent != null) {
         	mode = ECML.intent.getStringExtra(ChooseSongActivity.mode);
         }
-        Log.i("MODE" , "" + mode);
+        Log.d("MODE", "" + mode);
+
+        // Get the number of the current activity
+        int number = this.getIntent().getIntExtra("number",-1);
+
         // Get the level of the mode (speed/reading of notes) if there is one 
         int lvl = this.getIntent().getIntExtra("level", level);
 
@@ -122,28 +130,48 @@ public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeLi
 			if (lvl == 1) {
 				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvl1.class);
 				intent.putExtra(SpeedGamelvl1.MidiTitleID, file.toString());
+                intent.putExtra("number",number);
+                startActivity(intent);
+                finish();
 			} else {
 				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SpeedGamelvln.class);
 				intent.putExtra(SpeedGamelvln.MidiTitleID, file.toString());
 				intent.putExtra("level", lvl);
+                intent.putExtra("number",number);
+                startActivity(intent);
+                finish();
 			}
 			
-		} else if (mode.equals("reading")) {
+		}
+        else if (mode.equals("reading")) {
 			if (lvl == 1) {
 				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameBeginner.class);
 				intent.putExtra(ReadingGameBeginner.MidiTitleID, file.toString());
-			}
+                intent.putExtra("number",number);
+                startActivity(intent);
+                finish();
+            }
 			else {
 				intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, ReadingGameNormal.class);
 				intent.putExtra(ReadingGameNormal.MidiTitleID, file.toString());
+                intent.putExtra("number",number);
+                startActivity(intent);
+                finish();
 			}
 			
-		} else if (mode.equals("chooseSong")) {
-			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
 		}
-        
-		startActivity(intent);
-		finish();
+        else if (mode.equals("chooseSong")) {
+			intent = new Intent(Intent.ACTION_VIEW, file.getUri(), this, SheetMusicActivity.class);
+            intent.putExtra("number",number);
+            startActivity(intent);
+            finish();
+		}
+        else if (mode.equals("studentActivities")) {
+            intent = new Intent();
+            intent.putExtra("song", file.toString());
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+        }
     }
 
 
@@ -182,7 +210,7 @@ public class ChooseSongActivity extends BaseTabActivity implements OnTabChangeLi
                 if (i >= 10) {
                     break; // only store the 10 most recent files
                 }
-                JSONObject file = prevRecentFiles.getJSONObject(i); 
+                JSONObject file = prevRecentFiles.getJSONObject(i);
                 if (!FileUri.equalJson(recentFileJson, file)) {
                     recentFiles.put(file);
                 }

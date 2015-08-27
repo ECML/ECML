@@ -12,8 +12,6 @@
 
 package com.ecml;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -24,6 +22,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.util.ArrayList;
 
 
 /** @class Piano
@@ -60,8 +60,8 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
     private int showNoteLetters;          /* Display the letter for each piano note */
     private Paint paint;                  /* The paint options for drawing */
     private boolean surfaceReady;         /* True if we can draw on the surface */
-    private Bitmap  bufferBitmap;         /* The bitmap for double-buffering */
-    private Canvas  bufferCanvas;         /* The canvas for double-buffering */
+    private Bitmap bufferBitmap;         /* The bitmap for double-buffering */
+    private Canvas bufferCanvas;         /* The canvas for double-buffering */
     private MidiPlayer player;            /* Used to pause the player */
 
     /** Create a new Piano. */
@@ -634,7 +634,7 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
             int nextStart = NextStartTime(i);
             int nextStartTrack = NextStartTimeSameTrack(i);
             end = Math.max(end, nextStartTrack);
-            end = Math.min(end, start + maxShadeDuration-1);
+            end = Math.min(end, start + maxShadeDuration - 1);
                 
             /* If we've past the previous and current times, we're done. */
             if ((start > prevPulseTime) && (start > currentPulseTime)) {

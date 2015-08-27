@@ -466,13 +466,13 @@ public class MidiFile {
         if (!id.equals("MThd")) {
             throw new MidiFileException("Doesn't start with MThd", 0);
         }
-        len = file.ReadInt(); 
+        len = file.ReadInt(); // Specification of file (6 bytes)
         if (len !=  6) {
             throw new MidiFileException("Bad MThd header", 4);
         }
-        trackmode = (short) file.ReadShort();
-        int num_tracks = file.ReadShort();
-        quarternote = file.ReadShort(); 
+        trackmode = (short) file.ReadShort(); // 2 bytes for each kind of trackmode (1:one ; 2:more, in the same time ; 3:more, one by one)
+        int num_tracks = file.ReadShort(); // 2 bytes : number of track
+        quarternote = file.ReadShort(); // number division of the black note 2 bytes
 
         allevents = new ArrayList<ArrayList<MidiEvent>>();
         for (int tracknum = 0; tracknum < num_tracks; tracknum++) {
@@ -650,7 +650,7 @@ public class MidiFile {
                     }
                     else {
                         mevent.Numerator = ((byte)mevent.Value[0]);
-                        mevent.Denominator = ((byte)Math.pow(2, mevent.Value[1]));
+                        mevent.Denominator = ((byte) Math.pow(2, mevent.Value[1]));
                     }
                 }
                 else if (mevent.Metaevent == MetaEventTempo) {
@@ -780,7 +780,7 @@ public class MidiFile {
      *  Return true on success, and false on error.
      */
     private static void
-    WriteEvents(FileOutputStream file, ArrayList<ArrayList<MidiEvent>> allevents, 
+    WriteEvents(FileOutputStream file, ArrayList<ArrayList<MidiEvent>> allevents,
                   int trackmode, int quarter) throws IOException {
 
         byte[] buf = new byte[16384];
@@ -884,9 +884,9 @@ public class MidiFile {
 
 
     /** Clone the list of MidiEvents */
-    private static ArrayList<ArrayList<MidiEvent>> 
+    private static ArrayList<ArrayList<MidiEvent>>
     CloneMidiEvents(ArrayList<ArrayList<MidiEvent>> origlist) {
-        ArrayList<ArrayList<MidiEvent>> newlist = 
+        ArrayList<ArrayList<MidiEvent>> newlist =
            new ArrayList<ArrayList<MidiEvent>>(origlist.size());
         for (int tracknum = 0; tracknum < origlist.size(); tracknum++) {
             ArrayList<MidiEvent> origevents = origlist.get(tracknum);
@@ -937,8 +937,7 @@ public class MidiFile {
      *  For other events, change the delta-time to 0 if they occur
      *  before the pause time.  Return the modified Midi Events.
      */
-    private static 
-    ArrayList<ArrayList<MidiEvent>> StartAtPauseTime(ArrayList<ArrayList<MidiEvent>> list, int pauseTime) {
+    private static ArrayList<ArrayList<MidiEvent>> StartAtPauseTime(ArrayList<ArrayList<MidiEvent>> list, int pauseTime) {
         ArrayList<ArrayList<MidiEvent>> newlist = new ArrayList<ArrayList<MidiEvent>>(list.size());
         for (int tracknum = 0; tracknum < list.size(); tracknum++) {
             ArrayList<MidiEvent> events = list.get(tracknum);
@@ -986,7 +985,7 @@ public class MidiFile {
         Write(destfile, options);
     }
 
-    public void Write(FileOutputStream destfile, MidiOptions options) 
+    public void Write(FileOutputStream destfile, MidiOptions options)
       throws IOException {
         ArrayList<ArrayList<MidiEvent>> newevents = allevents;
         if (options != null) {
@@ -1222,7 +1221,7 @@ public class MidiFile {
      * reasonably close to this note.
      */
     private static void
-    FindHighLowNotes(ArrayList<MidiNote> notes, int measurelen, int startindex, 
+    FindHighLowNotes(ArrayList<MidiNote> notes, int measurelen, int startindex,
                      int starttime, int endtime, PairInt pair) {
 
         int i = startindex;
@@ -1378,8 +1377,8 @@ public class MidiFile {
             }
         }
 
-        Collections.sort(top.getNotes(), track.getNotes().get(0) );
-        Collections.sort(bottom.getNotes(), track.getNotes().get(0) );
+        Collections.sort(top.getNotes(), track.getNotes().get(0));
+        Collections.sort(bottom.getNotes(), track.getNotes().get(0));
 
         return result;
     }
@@ -1625,7 +1624,7 @@ public class MidiFile {
     /** Split the given track into multiple tracks, separating each
      * channel into a separate track.
      */
-    private static ArrayList<MidiTrack> 
+    private static ArrayList<MidiTrack>
     SplitChannels(MidiTrack origtrack, ArrayList<MidiEvent> events) {
 
         /* Find the instrument used for each channel */
@@ -1653,7 +1652,7 @@ public class MidiFile {
                 result.add(track);
             }
         }
-        ArrayList<MidiEvent> lyrics = origtrack.getLyrics(); 
+        ArrayList<MidiEvent> lyrics = origtrack.getLyrics();
         if (lyrics != null) {
             for (MidiEvent lyricEvent : lyrics) {
                 for (MidiTrack track : result) {

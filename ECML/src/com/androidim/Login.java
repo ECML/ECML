@@ -1,8 +1,6 @@
 package com.androidim;
 
 
-import java.io.UnsupportedEncodingException;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -27,8 +25,10 @@ import com.androidim.interfaces.IAppManager;
 import com.androidim.services.IMService;
 import com.ecml.R;
 
+import java.io.UnsupportedEncodingException;
 
-public class Login extends Activity {	
+
+public class Login extends Activity {
 
     protected static final int NOT_CONNECTED_TO_SERVICE = 0;
 	protected static final int FILL_BOTH_USERNAME_AND_PASSWORD = 1;
@@ -52,11 +52,11 @@ public class Login extends Activity {
             // interact with the service.  Because we have bound to a explicit
             // service that we know is running in our own process, we can
             // cast its IBinder to a concrete class and directly access it.
-            imService = ((IMService.IMBinder)service).getService();  
+            imService = ((IMService.IMBinder)service).getService();
             
             if (imService.isUserAuthenticated() == true)
             {
-            	Intent i = new Intent(Login.this, FriendList.class);																
+            	Intent i = new Intent(Login.this, FriendList.class);
 				startActivity(i);
 				Login.this.finish();
             }
@@ -83,7 +83,7 @@ public class Login extends Activity {
         /*
          * Start and bind the  imService 
          **/
-    	startService(new Intent(Login.this,  IMService.class));			
+    	startService(new Intent(Login.this,  IMService.class));
 	
                
         setContentView(R.layout.login_screen);
@@ -92,20 +92,20 @@ public class Login extends Activity {
         Button loginButton = (Button) findViewById(R.id.login);
         cancelButton = (Button) findViewById(R.id.cancel_login);
         usernameText = (EditText) findViewById(R.id.userName);
-        passwordText = (EditText) findViewById(R.id.password); 
+        passwordText = (EditText) findViewById(R.id.password);
         clikToSignUp = (TextView) findViewById(R.id.clickToSignUp);
         
         loginButton.setOnClickListener(new OnClickListener(){
-			public void onClick(View arg0) 
+			public void onClick(View arg0)
 			{					
 				if (imService == null) {
-					Toast.makeText(getApplicationContext(),R.string.not_connected_to_service, Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), R.string.not_connected_to_service, Toast.LENGTH_LONG).show();
 					//showDialog(NOT_CONNECTED_TO_SERVICE);
 					return;
 				}
 				else if (imService.isNetworkConnected() == false)
 				{
-					Toast.makeText(getApplicationContext(),R.string.not_connected_to_network, Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), R.string.not_connected_to_network, Toast.LENGTH_LONG).show();
 					//showDialog(NOT_CONNECTED_TO_NETWORK);
 					
 				}
@@ -131,7 +131,7 @@ public class Login extends Activity {
 								 */
 								handler.post(new Runnable(){
 									public void run() {	
-										Toast.makeText(getApplicationContext(),R.string.make_sure_username_and_password_correct, Toast.LENGTH_LONG).show();
+										Toast.makeText(getApplicationContext(), R.string.make_sure_username_and_password_correct, Toast.LENGTH_LONG).show();
 
 										//showDialog(MAKE_SURE_USERNAME_AND_PASSWORD_CORRECT);
 									}									
@@ -146,7 +146,7 @@ public class Login extends Activity {
 								 */		
 								handler.post(new Runnable(){
 									public void run() {										
-										Intent i = new Intent(Login.this, FriendList.class);												
+										Intent i = new Intent(Login.this, FriendList.class);
 										//i.putExtra(FRIEND_LIST, result);						
 										startActivity(i);	
 										Login.this.finish();
@@ -164,7 +164,7 @@ public class Login extends Activity {
 					/*
 					 * Username or Password is not filled, alert the user
 					 */
-					Toast.makeText(getApplicationContext(),R.string.fill_both_username_and_password, Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), R.string.fill_both_username_and_password, Toast.LENGTH_LONG).show();
 					//showDialog(FILL_BOTH_USERNAME_AND_PASSWORD);
 				}				
 			}       	
@@ -183,7 +183,7 @@ public class Login extends Activity {
         
         cancelButton.setOnClickListener(new OnClickListener(){
 
-			public void onClick(View arg0) 
+			public void onClick(View arg0)
 			{					
 				imService.exit();
 				finish();
@@ -196,13 +196,13 @@ public class Login extends Activity {
     }
     
     @Override
-    protected Dialog onCreateDialog(int id) 
+    protected Dialog onCreateDialog(int id)
     {    	
     	int message = -1;    	
     	switch (id) 
     	{
     		case NOT_CONNECTED_TO_SERVICE:
-    			message = R.string.not_connected_to_service;			
+    			message = R.string.not_connected_to_service;
     			break;
     		case FILL_BOTH_USERNAME_AND_PASSWORD:
     			message = R.string.fill_both_username_and_password;
@@ -223,7 +223,7 @@ public class Login extends Activity {
     	}
     	else 
     	{
-    		return new AlertDialog.Builder(Login.this)       
+    		return new AlertDialog.Builder(Login.this)
     		.setMessage(message)
     		.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int whichButton) {
@@ -250,7 +250,7 @@ public class Login extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {		
+	public boolean onCreateOptionsMenu(Menu menu) {
 		boolean result = super.onCreateOptionsMenu(menu);
 		
 		 menu.add(0, SIGN_UP_ID, 0, R.string.sign_up);

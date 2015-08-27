@@ -160,8 +160,7 @@ public class WhiteNote implements Comparator<WhiteNote> {
 
     /** Return the String <letter><octave> for this note. */
     @Override
-    public 
-    String toString() {
+    public String toString() {
         String[] s = { "A", "B", "C", "D", "E", "F", "G" };
         return s[letter] + octave;
     }

@@ -1,7 +1,5 @@
 package com.game;
 
-import java.util.ArrayList;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,7 +49,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 
 		counter = 0;
 		// Extracting the notes from the Track file
-		// We use by default the instrument n°0 which is the piano
+		// We use by default the instrument n?0 which is the piano
 		findNotes();
 
 		// Launch the game = Play button
@@ -104,7 +102,7 @@ public class SpeedGamelvln extends SpeedGamelvl {
 						appreciation.setText("Try again!");
 						star.setVisibility(View.GONE);
 					}
-					
+
 
 					if (player != null) {
 						player.Stop();

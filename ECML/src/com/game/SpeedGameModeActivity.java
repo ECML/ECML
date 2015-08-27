@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.ecml.ChooseSongActivity;
 import com.ecml.ECML;
+import com.ecml.ECMLActivity;
 import com.ecml.R;
 import com.sideActivities.BaseActivity;
 
@@ -25,8 +26,6 @@ TextView rules;
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.game_speed_mode);
-			
-			
 
 			// Back to the score button
 			Button backToScore = (Button) findViewById(R.id.back);
@@ -65,7 +64,7 @@ TextView rules;
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+					Intent intent = new Intent(getApplicationContext(), ECMLActivity.class);
 					startActivity(intent);
 					finish();
 				}

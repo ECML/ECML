@@ -12,11 +12,6 @@
 
 package com.ecml;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-
 import android.app.ListActivity;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -36,6 +31,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 /** @class ScanMidiFiles
@@ -141,8 +141,6 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
 }
 
 
-
-
 /** @class AllSongsActivity
  * <br>
  * The AllSongsActivity class is used to display a list of
@@ -151,7 +149,7 @@ class ScanMidiFiles extends AsyncTask<Integer, Integer, ArrayList<FileUri> > {
  * also by searching for midi files in the internal/external 
  * device storage.<br>
  *
- * When a song is chosen, this calls the SheetMusicAcitivty, passing
+ * When a song is chosen, this calls the SheetMusicActivity, passing
  * the raw midi byte[] data as a parameter in the Intent.
  */ 
 public class AllSongsActivity extends ListActivity implements TextWatcher {

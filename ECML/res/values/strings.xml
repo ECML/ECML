@@ -155,7 +155,7 @@
 	
 	<!-- XML Form -->
 	<string name="studentName">Student name</string>
-	<string name="firstActivity">First Activity</string>
+	<string name="chooseActivity">Choose an Activity</string>
 	<string-array name="activity_array">
         <item> Play instrument alone</item>
         <item> Reading notes</item>
@@ -163,8 +163,19 @@
         <item> Play instrument with the piano </item>
         <item> Work difficult parts</item>
     </string-array>
+    <string-array name="duration_array">
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+    </string-array>
+    <string name="select">Select one activity</string>
 	<string name="time">Duration of the activity</string>
-	<string name="tempo">Tempo</string>
+	<string name="tempo">Default Tempo</string>
 	<string name="songs_list">List of the songs</string>
 	<string name="game_level">Game level</string>	
 

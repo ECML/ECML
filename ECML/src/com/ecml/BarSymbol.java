@@ -73,8 +73,8 @@ public class BarSymbol implements MusicSymbol {
     }
 
     public String toString() {
-        return String.format("BarSymbol starttime=%1$s width=%2$s", 
-                             starttime, width);
+        return String.format("BarSymbol starttime=%1$s width=%2$s",
+                starttime, width);
     }
 }
 

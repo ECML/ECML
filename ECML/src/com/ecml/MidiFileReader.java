@@ -16,7 +16,6 @@ package com.ecml;
 import java.io.UnsupportedEncodingException;
 
 
-
 /** @class MidiFileReader
  * <br>
  * The MidiFileReader is used to read low-level binary data from a file.

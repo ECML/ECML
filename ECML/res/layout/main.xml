@@ -285,10 +285,10 @@
                     android:id="@+id/communication"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/communicationbtn" />
+                    android:src="@drawable/communicationbtn"/>
 
                 <TextView
-                    android:id="@+id/communication"
+                    android:id="@+id/communication_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/communication" />

@@ -12,12 +12,12 @@
 
 package com.ecml;
 
-import java.util.ArrayList;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+
+import java.util.ArrayList;
 
 
 /** @class ChordSymbol
@@ -288,7 +288,7 @@ public class ChordSymbol implements MusicSymbol {
      */
     public int getMinWidth() {
         /* The width needed for the note circles */
-        int result = 2*SheetMusic.NoteHeight + SheetMusic.NoteHeight*3/4;
+        int result = 2* SheetMusic.NoteHeight + SheetMusic.NoteHeight*3/4;
 
         if (accidsymbols.length > 0) {
             result += accidsymbols[0].getMinWidth();
@@ -985,14 +985,14 @@ public class ChordSymbol implements MusicSymbol {
 
     @Override
     public String toString() {
-        String result = String.format("ChordSymbol clef=%1$s start=%2$s end=%3$s width=%4$s hastwostems=%5$s ", 
-                                      clef, getStartTime(), getEndTime(), getWidth(), hastwostems);
+        String result = String.format("ChordSymbol clef=%1$s start=%2$s end=%3$s width=%4$s hastwostems=%5$s ",
+                clef, getStartTime(), getEndTime(), getWidth(), hastwostems);
         for (AccidSymbol symbol : accidsymbols) {
             result += symbol.toString() + " ";
         }
         for (NoteData note : notedata) {
             result += String.format("Note whitenote=%1$s duration=%2$s leftside=%3$s ",
-                                    note.whitenote, note.duration, note.leftside);
+                    note.whitenote, note.duration, note.leftside);
         }
         if (stem1 != null) {
             result += stem1.toString() + " ";

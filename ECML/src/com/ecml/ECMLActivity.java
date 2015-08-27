@@ -12,11 +12,10 @@
 
 package com.ecml;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -40,6 +39,9 @@ import com.sideActivities.AudioRecordingActivity;
 import com.sideActivities.TuningForkActivity;
 import com.sideActivities.VideoRecordingActivity;
 import com.sideActivities.YoutubeActivity;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * @class ECMLActivity
@@ -71,22 +73,22 @@ public class ECMLActivity extends Activity {
 	private static final String AUDIO_RECORDER_FOLDER = "AudioRecords";	/* Audio Records folder name */
 	private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";	/* Video Records folder name */
 	private static final String MUSIC_SHEET_FOLDER = "MusicSheets"; /* Music Sheet folder name */
-	
-	private ArrayList<String> list = new ArrayList<String>(); /* The list of the activities to do */
+
+	//static ArrayList<ActivityParameters> listActivities = new ArrayList<ActivityParameters>();
+	static Integer nbActivities = 0;
 
 	public static final String PRACTICE_ALONE = "PI";
 	public static final String PRACTICE_WITH_ACCOMPANIMENT = "PA";
 	public static final String CHECK_WITH_YOUR_TEACHER = "C";
 	public static final String READING_OF_NOTES = "R";
 	public static final String SPEED_GAME = "S";
-	
 	public static final String CHOOSE_SONG = "chooseSong";
 	public static final String READING_OF_NOTES_BEGINNER = "reading";
 	
 	private static Bitmap playAloneImage;			/* The Play Alone image */
 	private static Bitmap playAccompaniedImage;		/* The Play with Accompaniment image */
 	private static Bitmap readingOfNotesImage;		/* The Reading of Notes image */
-	private static Bitmap checkWithTeacherImage;	/* TODO The Check with your Teacher image */
+	private static Bitmap checkWithTeacherImage;	/* The Check with your Teacher image */
 	private static Bitmap leftImage;				/* The left triangle for scrolling image */
 	private static Bitmap rightImage;				/* The right triangle for scrolling image */
 	
@@ -108,7 +110,7 @@ public class ECMLActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		// Create the library folder if it doesn't exist
 		File file_library = new File(sdcardPath + ECMLPath);
 		if (!file_library.exists()) {
@@ -235,22 +237,6 @@ public class ECMLActivity extends Activity {
 			}
 		});
 
-		// Example of a list a teacher could send
-		// TODO : make this list automatic using a server
-		// or using a virtual teacher with pre-programmed schedules
-		list.add(PRACTICE_ALONE);
-		list.add(CHECK_WITH_YOUR_TEACHER);
-		list.add(PRACTICE_WITH_ACCOMPANIMENT);
-		list.add(READING_OF_NOTES);
-		list.add(READING_OF_NOTES);
-		list.add(PRACTICE_WITH_ACCOMPANIMENT);
-		list.add(PRACTICE_WITH_ACCOMPANIMENT);
-		list.add(READING_OF_NOTES);
-		list.add(READING_OF_NOTES);
-		list.add(PRACTICE_WITH_ACCOMPANIMENT);
-		list.add(READING_OF_NOTES);
-		list.add(PRACTICE_WITH_ACCOMPANIMENT);
-
 		// Get the Linear Layout used for the sequence of activities
 		sequenceOfActivities = (LinearLayout) findViewById(R.id.seqOfActivities);
 		// Get the icon choose song as a reference for alignment
@@ -290,6 +276,10 @@ public class ECMLActivity extends Activity {
 	/***********************************************************************************************************/
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Create a back button in the top left corner
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.loginactionbar, menu);
@@ -301,13 +291,27 @@ public class ECMLActivity extends Activity {
 		if (item.getItemId() == R.id.login) {
 			launchLogin();
 			return true;
-		}
-
-		else if (item.getItemId()== R.id.studentActivity){
+		} else if (item.getItemId() == R.id.studentActivity) {
 			launchStudentActivity();
 			return true;
+		} else if (item.getItemId() == android.R.id.home) {
+			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ECMLActivity.this);
+			final AlertDialog alert = alertBuilder.create();
+			alert.setMessage("Are you sure you want to close ECML ?");
+			alert.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialogInterface, int i) {
+					finishAffinity();
+				}
+			});
+			alert.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialogInterface, int i) {
+					alert.cancel();
+				}
+			});
+			alert.show();
 		}
-		
 		return true;
 	}
 
@@ -343,17 +347,20 @@ public class ECMLActivity extends Activity {
 			readingOfNotesImage = BitmapFactory.decodeResource(res, R.drawable.reading_of_notes);
 			leftImage = BitmapFactory.decodeResource(res, R.drawable.triangle_left);
 			rightImage = BitmapFactory.decodeResource(res, R.drawable.triangle_right);
+			checkWithTeacherImage = BitmapFactory.decodeResource(res, R.drawable.check_teacher);
 		}
 	}
 
 
 	/** Display the sequence of activities accordingly to the received list */
 	private void sequenceOfActivities() {
-		if (!list.isEmpty()) {
+		sequenceOfActivities.removeAllViews();
+		ArrayList<ActivityParameters> listActivities = ReadWriteXMLFile.read(getApplicationContext());
+		if (!listActivities.isEmpty()) {
 			sequenceOfActivities.setPadding(leftMargin / 3, (stripeHeight - iconHeight) / 2, leftMargin / 3, 0);
 			setTriangle(leftImage);
-			for (int i = 0; i < list.size(); i++) {
-				addButton(list.get(i));
+			for (int i = 0; i < listActivities.size(); i++) {
+				addButton(listActivities.get(i));
 			}
 			setTriangle(rightImage);
 		}
@@ -361,22 +368,26 @@ public class ECMLActivity extends Activity {
 
 
 	/** Add the view of the given activity in the sequence of activities */
-	private void addButton(String task) {
-		if (task == PRACTICE_ALONE) {
-			setButton(playAloneImage, CHOOSE_SONG);
-		} else if (task == PRACTICE_WITH_ACCOMPANIMENT) {
-			setButton(playAccompaniedImage, CHOOSE_SONG);
-		} else if (task == CHECK_WITH_YOUR_TEACHER) {
-			// TODO
-		} else if (task == READING_OF_NOTES) {
-			setButton(readingOfNotesImage, READING_OF_NOTES_BEGINNER);
-		} else if (task == SPEED_GAME) {
+	private void addButton(ActivityParameters parameters) {
+		if (parameters.getActivityType().equals(PRACTICE_ALONE)) {
+			setButton(playAloneImage, CHOOSE_SONG, parameters);
+		}
+		else if (parameters.getActivityType().equals(PRACTICE_WITH_ACCOMPANIMENT)) {
+			setButton(playAccompaniedImage, CHOOSE_SONG, parameters);
+		}
+		else if (parameters.getActivityType().equals(CHECK_WITH_YOUR_TEACHER)) {
+			setButton(checkWithTeacherImage, null, parameters);
+		}
+		else if (parameters.getActivityType().equals(READING_OF_NOTES)) {
+			setButton(readingOfNotesImage, READING_OF_NOTES_BEGINNER, parameters);
+		}
+		else if (parameters.getActivityType().equals(SPEED_GAME)) {
 			// TODO
 		}
 	}
 
 	/** Set the button according to the given activity */
-	private void setButton(Bitmap image, final String toDo) {
+	private void setButton(Bitmap image, final String toDo, final ActivityParameters parameters) {
 		ImageButton nextButton = new ImageButton(this);
 		nextButton.setImageBitmap(image);
 		iconWidth = iconHeight * image.getWidth() / image.getHeight();
@@ -384,12 +395,48 @@ public class ECMLActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-				ECML.intent.putExtra(ChooseSongActivity.mode, toDo);
-//				ECML.intent.putExtra(ChooseSongActivity.level, 1)
-				// TODO Tempo ? Speed ? Which track to display and mute ? Need
-				// to record ?
-				startActivity(ECML.intent);
+
+				if (parameters.isActive()) {
+					ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+					ECML.intent.putExtra(ChooseSongActivity.mode, toDo);
+					//				ECML.intent.putExtra(ChooseSongActivity.level, 1)
+					// TODO Tempo ? Speed ? Which track to display and mute ? Need to record ?
+					ECML.intent.putExtra(ChooseSongActivity.number, parameters.getNumber());
+					startActivity(ECML.intent);
+				}
+				else if (!parameters.isActive() & parameters.isFinished()) {
+					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ECMLActivity.this);
+					final AlertDialog alert = alertBuilder.create();
+					alert.setTitle("Warning");
+					alert.setMessage("This activity is already done");
+					alert.setButton(DialogInterface.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+							alert.cancel();
+						}
+					});
+					alert.show();
+				}
+
+				else {
+					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ECMLActivity.this);
+					final AlertDialog alert = alertBuilder.create();
+					alert.setTitle("Warning");
+					alert.setMessage("Please validate your current activity before doing another one");
+					alert.setButton(DialogInterface.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+							alert.cancel();
+						}
+					});
+					alert.setButton(DialogInterface.BUTTON_POSITIVE, "Unlock", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+							parameters.setActive(true);
+						}
+					});
+					alert.show();
+				}
 			}
 
 		});
@@ -410,7 +457,7 @@ public class ECMLActivity extends Activity {
 	private void setTriangle(Bitmap image) {
 		// If there are more than 4 elements to display, then we need the
 		// triangles
-		if (list.size() > 4) {
+		if (nbActivities > 4) {
 			ImageView triangle = new ImageView(this);
 			triangle.setImageBitmap(image);
 			iconWidth = iconHeight * image.getWidth() / image.getHeight();
@@ -428,5 +475,19 @@ public class ECMLActivity extends Activity {
 			triangle.setLayoutParams(params);
 		}
 	}
+
+	protected void onResume() {
+		super.onResume();
+		sequenceOfActivities();
+	}
+
+	/*public static ActivityParameters getActivityByNumber(int num) {
+		for (ActivityParameters a : listActivities) {
+			if (a.getNumber() == num) {
+				return a;
+			}
+		}
+		return null;
+	}*/
 
 }

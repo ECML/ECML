@@ -1,8 +1,8 @@
 package com.game;
 
-import java.util.Arrays;
-
 import android.os.Build;
+
+import java.util.Arrays;
 
 public final class DyWaPitchTrack {
     // Emulator can only do 8kHz. Device 44.1k.
@@ -18,7 +18,7 @@ public final class DyWaPitchTrack {
         while (minSamplesPower2 < minSamples) {
             minSamplesPower2 <<= 1;
         }
-        return minSamplesPower2;
+        return minSamplesPower2;    // 16384
     }
 
     public DyWaPitchTrack(int samplecount) {
@@ -145,7 +145,7 @@ public final class DyWaPitchTrack {
             for (int i = 0 ; i < nbMins ; i++) {
                 for (int j = 1; j < differenceLevelsN; j++) {
                     if (i+j < nbMins) {
-                        d = Math.abs(mins[i] - mins[i+j]);
+                        d = Math.abs(mins[i] - mins[i + j]);
                         distances[d] = distances[d] + 1;
                     }
                 }
@@ -153,7 +153,7 @@ public final class DyWaPitchTrack {
             for (int i = 0 ; i < nbMaxs ; i++) {
                 for (int j = 1; j < differenceLevelsN; j++) {
                     if (i+j < nbMaxs) {
-                        d = Math.abs(maxs[i] - maxs[i+j]);
+                        d = Math.abs(maxs[i] - maxs[i + j]);
                         distances[d] = distances[d] + 1;
                     }
                 }
@@ -195,7 +195,7 @@ public final class DyWaPitchTrack {
 		
             // continue the levels ?
             if (curModeDistance > -1.) {
-                final double similarity = Math.abs(distAvg*2 - curModeDistance);
+                final double similarity = Math.abs(distAvg * 2 - curModeDistance);
                 if (similarity <= 2*delta) {
                     result = kSampleRateHz /(power2(curLevel-1)*curModeDistance);
                     break;
@@ -258,14 +258,14 @@ public final class DyWaPitchTrack {
                 pitchConfidence = Math.min(maxConfidence, pitchConfidence + 1);
 
             } else if ((pitchConfidence >= maxConfidence-2)
-                    && (Math.abs(prevPitch - 2.*pitch)/(2.*pitch)
+                    && (Math.abs(prevPitch - 2. * pitch)/(2.*pitch)
                     < acceptedError)) {
                 // close to half the last pitch, which is trusted
                 estimatedPitch = 2.*pitch;
                 prevPitch = estimatedPitch;
 
             } else if ((pitchConfidence >= maxConfidence-2)
-                    && Math.abs(prevPitch - 0.5*pitch)/(0.5*pitch) < acceptedError) {
+                    && Math.abs(prevPitch - 0.5 * pitch)/(0.5*pitch) < acceptedError) {
                 // close to twice the last pitch, which is trusted
                 estimatedPitch = 0.5*pitch;
                 prevPitch = estimatedPitch;

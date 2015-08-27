@@ -12,17 +12,17 @@
 
 package com.ecml;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Comparator;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.res.AssetManager;
 import android.net.Uri;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Comparator;
 
 /** @class FileUri
  * <br>

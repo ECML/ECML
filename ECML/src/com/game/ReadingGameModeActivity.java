@@ -10,13 +10,14 @@ import android.widget.Button;
 
 import com.ecml.ChooseSongActivity;
 import com.ecml.ECML;
+import com.ecml.ECMLActivity;
 import com.ecml.R;
 import com.sideActivities.BaseActivity;
 
 /**
  * @class ReadingGameModeActivity : To choose between the beginner mode and the normal mode
  *        
- * @author Anaïs
+ * @author Anas
  */
 
 public class ReadingGameModeActivity extends BaseActivity {
@@ -62,7 +63,7 @@ public class ReadingGameModeActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+				Intent intent = new Intent(getApplicationContext(), ECMLActivity.class);
 				startActivity(intent);
 				finish();
 			}

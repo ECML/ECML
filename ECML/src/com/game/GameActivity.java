@@ -37,7 +37,6 @@ public class GameActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), SpeedGameModeActivity.class);
 				startActivity(intent);
-				finish();
 			}
 			
 		});
@@ -50,7 +49,6 @@ public class GameActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), MusicalEarGameModeActivity.class);
 				startActivity(intent);
-				finish();
 			}
 			
 		});
@@ -63,7 +61,6 @@ public class GameActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), ReadingGameModeActivity.class);
 				startActivity(intent);
-				finish();
 			}
 			
 		});
@@ -76,7 +73,6 @@ public class GameActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), TechniqueActivity.class);
 				startActivity(intent);
-				finish();
 			}
 			
 		});
