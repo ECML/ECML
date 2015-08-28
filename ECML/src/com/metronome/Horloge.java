@@ -1,12 +1,12 @@
 package com.metronome;
 
-import android.content.Context;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
-
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import android.content.Context;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 
 /** @class Horloge
  * 
@@ -15,7 +15,6 @@ import java.util.TimerTask;
  * The Horloge is called by a Metronome and will play sounds at the correct time for it,
  * by using a timer.
  */
-
 public class Horloge {
 
 	private Timer timer;				/* The timer */
@@ -36,9 +35,9 @@ public class Horloge {
 
 		audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		// Get the current volume
-		volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		volume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
 		// Get the maximum volume of the device
-		volumeMax = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		volumeMax = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
 		// Set the beep according to the current volume (need to be in %)
 		beep = new ToneGenerator(AudioManager.FLAG_PLAY_SOUND, volume * 100 / volumeMax);
 		timer = new Timer();
@@ -50,8 +49,8 @@ public class Horloge {
 			public void run() {
 				try {
 					// If the volume has changed, then update the beep
-					if (volume != audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)) {
-						volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+					if (volume != audioManager.getStreamVolume(AudioManager.STREAM_RING)) {
+						volume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
 						beep.release();
 						beep = new ToneGenerator(AudioManager.FLAG_PLAY_SOUND, volume * 100 / volumeMax);
 					}
