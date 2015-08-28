@@ -66,7 +66,7 @@ public class SocketOperator implements ISocketOperator
 				 }		
 				
 			} catch (IOException e) {
-				Log.e("ReceiveConnection.run: when receiving connection ", "");
+				Log.e("ReceiveConnection.run: ", "");
 			}			
 		}	
 	}

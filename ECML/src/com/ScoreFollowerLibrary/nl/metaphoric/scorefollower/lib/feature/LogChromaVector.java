@@ -74,24 +74,45 @@ public class LogChromaVector extends LinearChromaVector {
 		// Include the mean in the calculation for clarity. These vectors are normalized
 		// to zero mean though, so it could be left out altogether.
 		double mean = 0;
-        double vmean=0;
+        double vMean=0;
         double max=0;
-        double vmax=0;
+        double vMax=0;
+        double[] s = new double[12];
         for (int i = 0; i < 12; i++) {
             mean+=chroma[i];
-            vmean+= vChroma[i];
+            vMean+= vChroma[i];
             if (chroma[i] > max) {
                 max = chroma[i];
             }
-            if (vChroma[i] > vmax) {
-                vmax = vChroma[i];
+            if (vChroma[i] > vMax) {
+                vMax = vChroma[i];
             }
         }
         for (int i = 0; i < 12; i++) {
 			//r += ((chroma[i] - mean) / std) * ((vChroma[i] - mean) / v.std);
-            r += ((chroma[i] - mean/12) / max) * ((vChroma[i] - vmean/12) / vmax);
+            r += ((chroma[i] - mean/12) / max) * ((vChroma[i] - vMean/12) / vMax);
+
+            // Test the difference between shifted and unshifted vector
+            s[i]=0;
+            for (int j = i; j<12; j++) {
+                s[i] += Math.max(0, chroma[j-i]) * Math.max(0, vChroma[j%12]);
+            }
 		}
 
-		return r; //((r / 12.0) + 1) * 0.5;
+        // Get the indice of the s max
+        double maxCirc = s[0];
+        int maxIndice = 0;
+        for (int i = 0; i<12; i++) {
+            if (s[i] > maxCirc) {
+                maxIndice = i;
+            }
+        }
+
+        // Accept only if the max is at the unshifted chroma
+        if (maxIndice != 0) {
+            return 0;
+        } else {
+            return r;
+        }
 	}
 }
