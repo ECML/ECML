@@ -10,7 +10,7 @@ import android.widget.TimePicker;
 /**
  * @class CalendarRehearsalProgramActivity : Create a preference with a TimePicker (for the calendar settings). 
  *        
- * @author Anas
+ * @author Anaïs
  */
 
 public class TimePreference extends DialogPreference {
