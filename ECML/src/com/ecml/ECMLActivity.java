@@ -12,6 +12,7 @@
 
 package com.ecml;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -20,6 +21,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -299,7 +301,8 @@ public class ECMLActivity extends Activity {
 			final AlertDialog alert = alertBuilder.create();
 			alert.setMessage("Are you sure you want to close ECML ?");
 			alert.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
-				@Override
+				@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                @Override
 				public void onClick(DialogInterface dialogInterface, int i) {
 					finishAffinity();
 				}
