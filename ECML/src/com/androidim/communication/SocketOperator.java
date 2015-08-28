@@ -1,10 +1,5 @@
 package com.androidim.communication;
 
-import android.util.Log;
-
-import com.androidim.interfaces.IAppManager;
-import com.androidim.interfaces.ISocketOperator;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +12,11 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
+
+import android.util.Log;
+
+import com.androidim.interfaces.IAppManager;
+import com.androidim.interfaces.ISocketOperator;
 
 
 public class SocketOperator implements ISocketOperator
@@ -66,7 +66,7 @@ public class SocketOperator implements ISocketOperator
 				 }		
 				
 			} catch (IOException e) {
-				Log.e("ReceiveConnection.run: ", "");
+				Log.e("ReceiveConnection.run: when receiving connection ","");
 			}			
 		}	
 	}

@@ -16,7 +16,21 @@
 
 package com.androidim.services;
 
-import android.app.Notification;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.sql.Date;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -24,6 +38,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Binder;
 import android.os.IBinder;
+import android.app.Notification;
 import android.util.Log;
 
 import com.androidim.Login;
@@ -39,21 +54,6 @@ import com.androidim.tools.XMLHandler;
 import com.androidim.types.FriendInfo;
 import com.androidim.types.MessageInfo;
 import com.ecml.R;
-
-import org.xml.sax.SAXException;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.sql.Date;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 
 /**
@@ -207,20 +207,20 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	}
 
 	
-	public String sendMessage(String username, String tousername, String message) throws UnsupportedEncodingException
+	public String sendMessage(String  username, String  tousername, String message) throws UnsupportedEncodingException 
 	{			
-		String params = "username="+ URLEncoder.encode(this.username, "UTF-8") +
-						"&password="+ URLEncoder.encode(this.password, "UTF-8") +
-						"&to=" + URLEncoder.encode(tousername, "UTF-8") +
-						"&message="+ URLEncoder.encode(message, "UTF-8") +
-						"&action="  + URLEncoder.encode("sendMessage", "UTF-8")+
+		String params = "username="+ URLEncoder.encode(this.username,"UTF-8") +
+						"&password="+ URLEncoder.encode(this.password,"UTF-8") +
+						"&to=" + URLEncoder.encode(tousername,"UTF-8") +
+						"&message="+ URLEncoder.encode(message,"UTF-8") +
+						"&action="  + URLEncoder.encode("sendMessage","UTF-8")+
 						"&";		
 		Log.i("PARAMS", params);
 		return socketOperator.sendHttpRequest(params);		
 	}
 
 	
-	private String getFriendList() throws UnsupportedEncodingException {
+	private String getFriendList() throws UnsupportedEncodingException 	{		
 		// after authentication, server replies with friendList xml
 		
 		 rawFriendList = socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
@@ -230,7 +230,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		 return rawFriendList;
 	}
 	
-	private String getMessageList() throws UnsupportedEncodingException {
+	private String getMessageList() throws UnsupportedEncodingException 	{		
 		// after authentication, server replies with friendList xml
 		
 		 rawMessageList = socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
@@ -328,10 +328,10 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	
 	private String getAuthenticateUserParams(String usernameText, String passwordText) throws UnsupportedEncodingException 
 	{			
-		String params = "username=" + URLEncoder.encode(usernameText, "UTF-8") +
-						"&password="+ URLEncoder.encode(passwordText, "UTF-8") +
-						"&action="  + URLEncoder.encode("authenticateUser", "UTF-8")+
-						"&port="    + URLEncoder.encode(Integer.toString(socketOperator.getListeningPort()), "UTF-8") +
+		String params = "username=" + URLEncoder.encode(usernameText,"UTF-8") +
+						"&password="+ URLEncoder.encode(passwordText,"UTF-8") +
+						"&action="  + URLEncoder.encode("authenticateUser","UTF-8")+
+						"&port="    + URLEncoder.encode(Integer.toString(socketOperator.getListeningPort()),"UTF-8") +
 						"&";		
 		
 		return params;		

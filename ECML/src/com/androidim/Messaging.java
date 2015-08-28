@@ -1,6 +1,8 @@
 package com.androidim;
 
 
+import java.io.UnsupportedEncodingException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -31,8 +33,6 @@ import com.androidim.tools.LocalStorageHandler;
 import com.androidim.types.FriendInfo;
 import com.androidim.types.MessageInfo;
 import com.ecml.R;
-
-import java.io.UnsupportedEncodingException;
 
 
 public class Messaging extends Activity {
@@ -138,7 +138,7 @@ public class Messaging extends Activity {
 
 										public void run() {
 											
-									        Toast.makeText(getApplicationContext(), R.string.message_cannot_be_sent, Toast.LENGTH_LONG).show();
+									        Toast.makeText(getApplicationContext(),R.string.message_cannot_be_sent, Toast.LENGTH_LONG).show();
 
 											
 											//showDialog(MESSAGE_CANNOT_BE_SENT);										
@@ -147,7 +147,7 @@ public class Messaging extends Activity {
 									});
 								}
 							} catch (UnsupportedEncodingException e) {
-								Toast.makeText(getApplicationContext(), R.string.message_cannot_be_sent, Toast.LENGTH_LONG).show();
+								Toast.makeText(getApplicationContext(),R.string.message_cannot_be_sent, Toast.LENGTH_LONG).show();
 
 								e.printStackTrace();
 							}
@@ -248,9 +248,9 @@ public class Messaging extends Activity {
 					if (message.length() > 15) {
 						message = message.substring(0, 15);
 					}
-					Toast.makeText(Messaging.this, username + " says '" +
-                                    message + "'",
-                            Toast.LENGTH_SHORT).show();
+					Toast.makeText(Messaging.this,  username + " says '"+
+													message + "'",
+													Toast.LENGTH_SHORT).show();		
 				}
 			}			
 		}

@@ -10,7 +10,7 @@ public class FriendInfo{
 		public static final String MESSAGE = "message";  // this should not be in here
 		public static final String STATUS = "status";
 	
-		public com.androidim.types.STATUS status;
+		public STATUS status;
 		public String userName;
 		public String ip;
 		public String port;
