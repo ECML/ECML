@@ -68,7 +68,7 @@ public class SpeedGamelvl1 extends SpeedGamelvl implements AnalyzeListener {
                 // Start the position matcher
                 scoreFollower.restartMatcher();
 
-                Log.e("SpeedGameLvl1", "Demarrage du microphone reader");
+                Log.e("SpeedGameLvl1", "Start of the microphone reader");
 
                 scoreFollower.startRecord();
 
