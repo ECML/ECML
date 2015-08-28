@@ -4,7 +4,7 @@ import android.app.Activity;
 
 /** @class Metronome
  * 
- * @author Nicolas and Anaïs
+ * @author Nicolas and Anas
  * <br>
  * The Metronome is set to 60 bpm (beats per minute) by defaut without any time signature.
  * Its sound depends on ring volume and not music volume so that music volume and metronome volume
