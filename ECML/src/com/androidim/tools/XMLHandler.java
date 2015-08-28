@@ -1,17 +1,17 @@
 package com.androidim.tools;
 
+import java.util.Vector;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import android.util.Log;
 
 import com.androidim.interfaces.IUpdateData;
 import com.androidim.types.FriendInfo;
 import com.androidim.types.MessageInfo;
 import com.androidim.types.STATUS;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
-import java.util.Vector;
 
 /*
  * Parses the xml data to FriendInfo array
@@ -45,7 +45,7 @@ public class XMLHandler extends DefaultHandler
 		private Vector<MessageInfo> mUnreadMessages = new Vector<MessageInfo>();
 
 		
-		public void endDocument() throws SAXException
+		public void endDocument() throws SAXException 
 		{
 			FriendInfo[] friends = new FriendInfo[mFriends.size() + mOnlineFriends.size()];
 			MessageInfo[] messages = new MessageInfo[mUnreadMessages.size()];
@@ -75,7 +75,7 @@ public class XMLHandler extends DefaultHandler
 			for (int i = 0; i < unreadMessagecount; i++) 
 			{
 				messages[i] = mUnreadMessages.get(i);
-				Log.i("MessageLOG", "i=" + i);
+				Log.i("MessageLOG", "i="+i );
 			}
 			
 			this.updater.updateData(messages, friends, unApprovedFriends, userKey);
@@ -83,7 +83,7 @@ public class XMLHandler extends DefaultHandler
 		}		
 		
 		public void startElement(String uri, String localName, String name,
-				Attributes attributes) throws SAXException
+				Attributes attributes) throws SAXException 
 		{				
 			if (localName == "friend")
 			{
@@ -126,7 +126,7 @@ public class XMLHandler extends DefaultHandler
 		}
 
 		@Override
-		public void startDocument() throws SAXException {
+		public void startDocument() throws SAXException {			
 			this.mFriends.clear();
 			this.mOnlineFriends.clear();
 			this.mUnreadMessages.clear();

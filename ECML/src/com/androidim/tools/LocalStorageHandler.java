@@ -29,7 +29,7 @@ public class LocalStorageHandler extends SQLiteOpenHelper {
 	+ MESSAGE_SENDER + " VARCHAR(25), "
 	+MESSAGE_MESSAGE + " VARCHAR(255));";
 	
-	private static final String TABLE_MESSAGE_DROP =
+	private static final String TABLE_MESSAGE_DROP = 
 			"DROP TABLE IF EXISTS "
 			+ TABLE_NAME_MESSAGES;
 	
@@ -46,7 +46,7 @@ public class LocalStorageHandler extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.w(TAG, "Upgrade der DB von V: " + oldVersion + " zu V:" + newVersion + "; Alle Daten werden gel?scht!");
+		Log.w(TAG, "Upgrade der DB von V: "+ oldVersion + " zu V:" + newVersion + "; Alle Daten werden gelöscht!");
 		db.execSQL(TABLE_MESSAGE_DROP);
 		onCreate(db);
 		

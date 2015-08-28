@@ -1,7 +1,6 @@
 package com.androidim;
 
 import android.app.ListActivity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -14,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.app.Notification;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,7 +36,7 @@ import com.androidim.types.STATUS;
 import com.ecml.R;
 
 
-public class FriendList extends ListActivity implements OnClickListener
+public class FriendList extends ListActivity implements OnClickListener 
 {
 	private static final int ADD_NEW_FRIEND_ID = Menu.FIRST;
 	private static final int EXIT_APP_ID = Menu.FIRST + 1;
@@ -45,7 +45,7 @@ public class FriendList extends ListActivity implements OnClickListener
 	
 	public String ownusername = new String();
 
-	private class FriendListAdapter extends BaseAdapter
+	private class FriendListAdapter extends BaseAdapter 
 	{		
 		class ViewHolder {
 			TextView text;
@@ -55,7 +55,7 @@ public class FriendList extends ListActivity implements OnClickListener
 
 		private LayoutInflater mInflater;
 		private Bitmap mOnlineIcon;
-		private Bitmap mOfflineIcon;
+		private Bitmap mOfflineIcon;		
 
 		private FriendInfo[] friends = null;
 
@@ -108,7 +108,7 @@ public class FriendList extends ListActivity implements OnClickListener
 				// we want to bind data to.
 				holder = new ViewHolder();
 				holder.text = (TextView) convertView.findViewById(R.id.text);
-				holder.icon = (ImageView) convertView.findViewById(R.id.icon);
+				holder.icon = (ImageView) convertView.findViewById(R.id.icon);                                       
 
 				convertView.setTag(holder);
 			}   
@@ -127,7 +127,7 @@ public class FriendList extends ListActivity implements OnClickListener
 
 	}
 
-	public class MessageReceiver extends BroadcastReceiver {
+	public class MessageReceiver extends  BroadcastReceiver  {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -142,7 +142,7 @@ public class FriendList extends ListActivity implements OnClickListener
 					// taking friend List from broadcast
 					//String rawFriendList = extra.getString(FriendInfo.FRIEND_LIST);
 					//FriendList.this.parseFriendInfo(rawFriendList);
-					FriendList.this.updateData(FriendController.getFriendsInfo(),
+					FriendList.this.updateData(FriendController.getFriendsInfo(), 
 												FriendController.getUnapprovedFriendsInfo());
 					
 				}
@@ -153,8 +153,8 @@ public class FriendList extends ListActivity implements OnClickListener
 	public MessageReceiver messageReceiver = new MessageReceiver();
 
 	private ServiceConnection mConnection = new ServiceConnection() {
-		public void onServiceConnected(ComponentName className, IBinder service) {
-			imService = ((IMService.IMBinder)service).getService();
+		public void onServiceConnected(ComponentName className, IBinder service) {          
+			imService = ((IMService.IMBinder)service).getService();      
 			
 			FriendInfo[] friends = FriendController.getFriendsInfo(); //imService.getLastRawFriendList();
 			if (friends != null) {    			
@@ -164,16 +164,16 @@ public class FriendList extends ListActivity implements OnClickListener
 			setTitle(imService.getUsername() ); /*'s friend list*/
 			ownusername = imService.getUsername();
 		}
-		public void onServiceDisconnected(ComponentName className) {
+		public void onServiceDisconnected(ComponentName className) {          
 			imService = null;
 			Toast.makeText(FriendList.this, R.string.local_service_stopped,
-                    Toast.LENGTH_SHORT).show();
+					Toast.LENGTH_SHORT).show();
 		}
 	};
 	
 
 
-	protected void onCreate(Bundle savedInstanceState)
+	protected void onCreate(Bundle savedInstanceState) 
 	{		
 		super.onCreate(savedInstanceState);
 
@@ -226,7 +226,7 @@ public class FriendList extends ListActivity implements OnClickListener
 				i.putExtra(FriendInfo.FRIEND_LIST, tmp);				
 
 				PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                        i, 0);
+						i, 0);
                 
 				mBuilder.setContentText("You have new friend request(s)");
 				/*notification.setLatestEventInfo(this, getText(R.string.new_friend_request_exist),
@@ -236,12 +236,12 @@ public class FriendList extends ListActivity implements OnClickListener
 				mBuilder.setContentIntent(contentIntent);
 
 				
-				NM.notify(R.string.new_friend_request_exist, mBuilder.build());
+				NM.notify(R.string.new_friend_request_exist, mBuilder.build());			
 			}
 			else
 			{
 				// if any request exists, then cancel it
-				NM.cancel(R.string.new_friend_request_exist);
+				NM.cancel(R.string.new_friend_request_exist);			
 			}
 		}
 
@@ -288,18 +288,18 @@ public class FriendList extends ListActivity implements OnClickListener
 
 	}
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) {		
 		boolean result = super.onCreateOptionsMenu(menu);		
 
 		menu.add(0, ADD_NEW_FRIEND_ID, 0, R.string.add_new_friend);
 		
-		menu.add(0, EXIT_APP_ID, 0, R.string.exit_application);
+		menu.add(0, EXIT_APP_ID, 0, R.string.exit_application);		
 		
 		return result;
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item)
+	public boolean onMenuItemSelected(int featureId, MenuItem item) 
 	{		
 
 		switch(item.getItemId()) 

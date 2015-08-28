@@ -47,24 +47,24 @@ public class UnApprovedFriendList extends ListActivity {
 		setListAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_multiple_choice, friendUsernames));			
 		
-		getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);	
 		
 		// canceling friend request notification
 		NotificationManager NM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		NM.cancel(R.string.new_friend_request_exist);
+		NM.cancel(R.string.new_friend_request_exist);					
 	}
 	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) {		
 		boolean result = super.onCreateOptionsMenu(menu);		
 
-		menu.add(0, APPROVE_SELECTED_FRIENDS_ID, 0, R.string.approve_selected_friends);
+		menu.add(0, APPROVE_SELECTED_FRIENDS_ID, 0, R.string.approve_selected_friends);				
 		
 		return result;
 	}
 	
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item)
+	public boolean onMenuItemSelected(int featureId, MenuItem item) 
 	{		
 
 		switch(item.getItemId()) 
@@ -123,15 +123,15 @@ public class UnApprovedFriendList extends ListActivity {
 	
 	private ServiceConnection mConnection = new ServiceConnection() {
 		
-		public void onServiceConnected(ComponentName className, IBinder service) {
-			imService = ((IMService.IMBinder)service).getService();
+		public void onServiceConnected(ComponentName className, IBinder service) {          
+			imService = ((IMService.IMBinder)service).getService();      
 
 			
 		}
-		public void onServiceDisconnected(ComponentName className) {
+		public void onServiceDisconnected(ComponentName className) {          
 			imService = null;
 			Toast.makeText(UnApprovedFriendList.this, R.string.local_service_stopped,
-                    Toast.LENGTH_SHORT).show();
+					Toast.LENGTH_SHORT).show();
 		}
 	};
 	
