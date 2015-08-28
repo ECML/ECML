@@ -57,6 +57,8 @@
     <string name="youtube">Youtube</string>
     <string name="metronome">Metronome</string>
     <string name="tuning">Tuning fork</string>
+    <string name="utilities">Utilities</string>
+    <string name="results">Results</string>
     <string name="action_settings">Settings</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
@@ -196,5 +198,9 @@
    <string name="finish"> FINISH!</string>
    <string name="emailNotValid">Email address is not valid </string>
    <string name="ProfilCompleted"> Profil completed successfully</string>
+    <string name="title_activity_results">ResultsActivity</string>
+    <string name="title_activity_myresults">MyresultsActivity</string>
+    <string name="title_activity_utilities">Utilities</string>
+    <string name="title_activity_results2">Results2</string>
 
 </resources>
