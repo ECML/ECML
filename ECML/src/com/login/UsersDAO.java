@@ -39,7 +39,7 @@ public class UsersDAO extends DAOBase {
  
  /**delete a user giving his Id
   * 
-  * @param login
+  * @param id
   */
  public void delete(String login) {
 	  mDb.delete(USERS_TABLE_NAME, USER_LOGIN + " = ?", new String[] {String.valueOf(login)});

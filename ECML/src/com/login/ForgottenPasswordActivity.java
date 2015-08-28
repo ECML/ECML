@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.ecml.R;
 
 
+
+
 public class ForgottenPasswordActivity extends Login {
 
 	private EditText usernameText;
@@ -31,7 +33,7 @@ public class ForgottenPasswordActivity extends Login {
          spinner = (Spinner) findViewById(R.id.question_spinner);
         // Create an ArrayAdapter using the string array and a default spinner LAYOUT
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.questions_array, android.R.layout.simple_spinner_item);
+        R.array.questions_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when THE LIST of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // APPLY the adapter to the spinner
@@ -49,11 +51,10 @@ public class ForgottenPasswordActivity extends Login {
 					  System.out.println("your password is " + usersdb.getPassword(usernameText.getText().toString()));
 				  }
 				  else{ // the answer is wrong
-					  Toast.makeText(getApplicationContext(), R.string.wrong_answer, Toast.LENGTH_LONG).show();
+					  Toast.makeText(getApplicationContext(),R.string.wrong_answer, Toast.LENGTH_LONG).show();
 				  } 
 			  }
-			  else{
-                  Toast.makeText(getApplicationContext(), R.string.wrong_answer, Toast.LENGTH_LONG).show();}
+			  else{Toast.makeText(getApplicationContext(),R.string.wrong_answer, Toast.LENGTH_LONG).show();}
 			}
 		});
       
