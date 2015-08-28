@@ -18,7 +18,7 @@ import com.ecml.R;
 /**
  * @class CalendarAddEventsActivity : Add event to the user's calendar. 
  *        
- * @author Anaïs
+ * @author Anais
  */
 
 public class CalendarAddEventsActivity extends Activity {

@@ -13,7 +13,7 @@ import com.ecml.R;
  * @class CalendarRehearsalProgramActivity : Not finished yet, it should 
  * be possible to choose a rehearsal program and add it to our own calendar. 
  *        
- * @author Anaïs
+ * @author Anais
  */
 
 /* 

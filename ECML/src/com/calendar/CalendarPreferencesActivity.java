@@ -19,7 +19,7 @@ import android.text.format.Time;
  *        Which alarm method they choose - Number of minutes prior to the event
  *        that the reminder should fire - Default location
  *        
- * @author Anaïs
+ * @author Anais
  */
 
 public class CalendarPreferencesActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
