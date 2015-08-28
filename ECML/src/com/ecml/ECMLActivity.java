@@ -34,11 +34,11 @@ import android.widget.LinearLayout;
 import com.calendar.CalendarActivity;
 import com.game.GameActivity;
 import com.login.Login;
-import com.metronome.MetronomeActivity;
 import com.sideActivities.AudioRecordingActivity;
-import com.sideActivities.TuningForkActivity;
+import com.sideActivities.Results2;
 import com.sideActivities.VideoRecordingActivity;
 import com.sideActivities.YoutubeActivity;
+import com.sideActivities.Utilities;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class ECMLActivity extends Activity {
 	private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";	/* Video Records folder name */
 	private static final String MUSIC_SHEET_FOLDER = "MusicSheets"; /* Music Sheet folder name */
 
-	//static ArrayList<ActivityParameters> listActivities = new ArrayList<ActivityParameters>();
+	static ArrayList<ActivityParameters> listActivities = new ArrayList<ActivityParameters>();
 	static Integer nbActivities = 0;
 
 	public static final String PRACTICE_ALONE = "PI";
@@ -209,9 +209,27 @@ public class ECMLActivity extends Activity {
 				startActivity(goToYoutube);
 			}
 		});
-		
+
+		// Utilities button
+		ImageView utilities = (ImageView) findViewById(R.id.utilities);
+		utilities.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToUtilities = new Intent(getApplicationContext(), Utilities.class);
+				startActivity(goToUtilities);
+			}
+		});
+
+		// Results button
+		ImageView results = (ImageView) findViewById(R.id.results);
+		results.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent goToResults = new Intent(getApplicationContext(), Results2.class);
+				startActivity(goToResults);
+			}
+		});
+
 		// Metronome button
-		ImageView metronome = (ImageView) findViewById(R.id.metronome);
+		/*ImageView metronome = (ImageView) findViewById(R.id.metronome);
 		metronome.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToMetronome = new Intent(getApplicationContext(), MetronomeActivity.class);
@@ -226,7 +244,7 @@ public class ECMLActivity extends Activity {
 				Intent tuningFork = new Intent(getApplicationContext(), TuningForkActivity.class);
 				startActivity(tuningFork);
 			}
-		});
+		});*/
 
 		// Communication button
 		ImageView communication = (ImageView) findViewById(R.id.communication);
@@ -301,7 +319,7 @@ public class ECMLActivity extends Activity {
 			alert.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialogInterface, int i) {
-					finishAffinity();
+					finish();
 				}
 			});
 			alert.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
@@ -347,7 +365,7 @@ public class ECMLActivity extends Activity {
 			readingOfNotesImage = BitmapFactory.decodeResource(res, R.drawable.reading_of_notes);
 			leftImage = BitmapFactory.decodeResource(res, R.drawable.triangle_left);
 			rightImage = BitmapFactory.decodeResource(res, R.drawable.triangle_right);
-			checkWithTeacherImage = BitmapFactory.decodeResource(res, R.drawable.check_teacher);
+			checkWithTeacherImage = BitmapFactory.decodeResource(res,R.drawable.check_teacher);
 		}
 	}
 
@@ -355,7 +373,6 @@ public class ECMLActivity extends Activity {
 	/** Display the sequence of activities accordingly to the received list */
 	private void sequenceOfActivities() {
 		sequenceOfActivities.removeAllViews();
-		ArrayList<ActivityParameters> listActivities = ReadWriteXMLFile.read(getApplicationContext());
 		if (!listActivities.isEmpty()) {
 			sequenceOfActivities.setPadding(leftMargin / 3, (stripeHeight - iconHeight) / 2, leftMargin / 3, 0);
 			setTriangle(leftImage);
@@ -408,7 +425,7 @@ public class ECMLActivity extends Activity {
 					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ECMLActivity.this);
 					final AlertDialog alert = alertBuilder.create();
 					alert.setTitle("Warning");
-					alert.setMessage("This activity is already done");
+					alert.setMessage("This activty is already done");
 					alert.setButton(DialogInterface.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialogInterface, int i) {
@@ -457,7 +474,7 @@ public class ECMLActivity extends Activity {
 	private void setTriangle(Bitmap image) {
 		// If there are more than 4 elements to display, then we need the
 		// triangles
-		if (nbActivities > 4) {
+		if (listActivities.size() > 4) {
 			ImageView triangle = new ImageView(this);
 			triangle.setImageBitmap(image);
 			iconWidth = iconHeight * image.getWidth() / image.getHeight();
@@ -481,13 +498,13 @@ public class ECMLActivity extends Activity {
 		sequenceOfActivities();
 	}
 
-	/*public static ActivityParameters getActivityByNumber(int num) {
+	public static ActivityParameters getActivityByNumber(int num) {
 		for (ActivityParameters a : listActivities) {
 			if (a.getNumber() == num) {
 				return a;
 			}
 		}
 		return null;
-	}*/
+	}
 
 }

@@ -14,8 +14,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sa mere"
-        android:id="@+id/button_samere"
+        android:text="Resultats"
+        android:id="@+id/button_result"
         android:layout_marginTop="117dp" />
 
 </RelativeLayout>

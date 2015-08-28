@@ -23,7 +23,8 @@
             android:layout_height="fill_parent"
             android:fadeScrollbars="true"
             android:scrollbarAlwaysDrawHorizontalTrack="false"
-            android:scrollbars="none" >
+            android:scrollbars="none"
+            android:fillViewport="false">
 
             <LinearLayout
                 android:id="@+id/seqOfActivities"
@@ -173,19 +174,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:weightSum="1">
 
                 <ImageView
-                    android:id="@+id/metronome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/metronomebtn" />
+                    android:id="@+id/utilities"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/utilities" />
 
                 <TextView
-                    android:id="@+id/metronome_txt"
+                    android:id="@+id/utilities_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/metronome" />
+                    android:text="@string/utilities"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -222,19 +224,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:weightSum="1">
 
                 <ImageView
-                    android:id="@+id/tuning"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/tuningbtn" />
+                    android:id="@+id/results"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/results" />
 
                 <TextView
-                    android:id="@+id/tuning_txt"
+                    android:id="@+id/results_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tuning" />
+                    android:text="@string/results" />
             </LinearLayout>
         </LinearLayout>
 
@@ -265,7 +268,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/game_str" />
             </LinearLayout>
-             
+
             <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
