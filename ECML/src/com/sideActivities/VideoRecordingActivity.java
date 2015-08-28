@@ -1,5 +1,8 @@
 package com.sideActivities;
 
+import java.io.File;
+import java.io.IOException;
+
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
@@ -16,12 +19,9 @@ import android.widget.Toast;
 
 import com.ecml.R;
 
-import java.io.File;
-import java.io.IOException;
-
 /** @class VideoRecordingActivity
  * 
- * @author Nicolas and Anas
+ * @author Nicolas and Anais
  * <br>
  * This Activity uses a Media Recorder that handles Recording<br>
  * When replaying, this activity finishes (this needs to be fixed)<br>
@@ -313,9 +313,9 @@ public class VideoRecordingActivity extends BaseActivity implements SurfaceHolde
 			else {
 				cameraSide = BACK_SIDE;
 			}
-			Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Camera Switched: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
 		} else {
-			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Cannot Switch Camera: Now using " + cameraSide + " Camera" , Toast.LENGTH_SHORT).show();
 		}
 	}
 

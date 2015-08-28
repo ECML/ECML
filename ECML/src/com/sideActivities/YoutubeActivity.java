@@ -22,7 +22,7 @@ public class YoutubeActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+				Intent myWebLink = new Intent(Intent.ACTION_VIEW);
 				myWebLink.setData(Uri.parse("http://www.youtube.com"));
 				startActivity(myWebLink);
 			}
@@ -36,7 +36,7 @@ public class YoutubeActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+				Intent myWebLink = new Intent(Intent.ACTION_VIEW);
 				myWebLink.setData(Uri.parse("http://www.youtube.com/upload"));
 				startActivity(myWebLink);
 			}
