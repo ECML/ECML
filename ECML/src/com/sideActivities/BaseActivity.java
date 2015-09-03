@@ -15,7 +15,6 @@ import com.ecml.ChooseSongActivity;
 import com.ecml.ECMLActivity;
 import com.ecml.FacebookActivity;
 import com.ecml.R;
-import com.game.GameActivity;
 import com.metronome.MetronomeActivity;
 
 /** @class BaseActivity
@@ -76,11 +75,11 @@ public class BaseActivity extends Activity implements KeyListener {
 				startActivity(videoActivity);
 				finish();
 				return true;
-			case R.id.gameActivity:
+			/*case R.id.gameActivity:
 				Intent gameActivity = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(gameActivity);
 				finish();
-				return true;
+				return true;*/
 			case R.id.messengerActivity:
 				Intent messengerActivity = new Intent(getApplicationContext(), com.androidim.Login.class);
 				startActivity(messengerActivity);

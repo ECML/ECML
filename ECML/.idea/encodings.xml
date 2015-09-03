@@ -1,13 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/res/drawable-hdpi/icon.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/drawable-ldpi/icon.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/drawable-mdpi/icon.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/drawable-xhdpi/icon.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/drawable-xxhdpi/icon.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/drawable-xxxhdpi/icon.png" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/res/drawable/check_teacher_done.png" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/res/drawable/icon.png" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/res/drawable/play_alone_done.png" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/res/drawable/play_with_accompaniment_done.png" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/res/drawable/reading_of_notes_done.png" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/res/layout/game_classcal_culture.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/layout/game_feelings.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/layout/game_memorize_sequence.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/layout/game_memory.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/layout/game_musical_instruments.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/layout/game_note_memory.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/layout/game_play_the_note.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/layout/game_quiz.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/res/layout/main.xml" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/com/androidim" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/com/calendar" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/com/ecml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/Accid.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/AccidSymbol.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ActivityParameters.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/AllSongsActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/BarSymbol.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/BlankSymbol.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ChooseSongActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ChordSymbol.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/Clef.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ClefMeasures.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ClefSymbol.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ColorPreference.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ColorView.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/Countdown.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/DictInt.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ECML.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ECMLActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/FacebookActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/FileBrowserActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/FileUri.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/HelpActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/IconArrayAdapter.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/KeySignature.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ListInt.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/LyricSymbol.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/MidiEvent.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/MidiFile.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/MidiFileException.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/MidiFileReader.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/MidiNote.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/MidiOptions.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/MidiPlayer.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/MidiTrack.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/MusicSymbol.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/MyresultsActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/NoteData.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/NoteDuration.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/NoteScale.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/Piano.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ReadWriteXMLFile.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/RecentSongsActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/RestSymbol.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ResultsActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ScrollAnimation.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/ScrollAnimationListener.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/SettingsActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/SheetMusic.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/SheetMusicActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/Staff.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/Stem.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/StudentActivities.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/SymbolWidths.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/TimeSigSymbol.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/TimeSignature.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/VolumeListener.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/ecml/WhiteNote.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/CenterOffsetView.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/Classical_culture.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/DyWaPitchTrack.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/Feelings_game.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/GameActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/Memorize_sequence.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/Memory_game.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/MicrophonePitchPoster.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/MusicalEarGameModeActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/Musical_instruments.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/NoteMemory.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/PlayTheNote.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/Quiz_game.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/ReadingGame.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/ReadingGameBeginner.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/ReadingGameModeActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/ReadingGameNormal.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/SpeedGameModeActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/SpeedGamelvl.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/SpeedGamelvl1.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/SpeedGamelvln.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/StaffView.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/game/TechniqueActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/login" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/com/metronome" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/com/sideActivities/AudioRecordingActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/sideActivities/BaseActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/sideActivities/BaseTabActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/sideActivities/Results2.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/sideActivities/TuningForkActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/sideActivities/Utilities.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/sideActivities/VideoRecordingActivity.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/sideActivities/YoutubeActivity.java" charset="windows-1251" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -63,7 +63,7 @@ public class Staff {
      * with the staffs above and below. The MidiOptions are used
      * to check whether to display measure numbers or not.
      */
-    public Staff(ArrayList<MusicSymbol> symbols, KeySignature key, 
+    public Staff(ArrayList<MusicSymbol> symbols, KeySignature key,
                  MidiOptions options, int tracknum, int totaltracks)  {
 
         keysigWidth = SheetMusic.KeySignatureWidth(key);

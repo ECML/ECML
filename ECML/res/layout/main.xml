@@ -6,15 +6,14 @@
     android:background="@color/blue"
     android:gravity="center"
     android:orientation="vertical"
-    android:theme="@android:style/Theme.Holo.Light"
-    android:weightSum="3" >
+    android:theme="@android:style/Theme.Holo.Light">
 
-    <LinearLayout
+     <LinearLayout
         android:id="@+id/sequenceOfActivities"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="2"
-        android:background="@color/orange"
+        android:background="@color/baillet"
         android:orientation="horizontal" >
 
         <HorizontalScrollView
@@ -31,6 +30,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sequence of Activity"/>
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
@@ -40,25 +44,147 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal"
         android:weightSum="5" >
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:weightSum="2" >
+            android:weightSum="2"
+            android:background="@color/bordeau"
+            android:layout_weight="1.89" >
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <ScrollView
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
+                android:id="@+id/scrollView"
+                android:clickable="true" >
 
-                <ImageView
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:id="@+id/speed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:text="Speed Game"
+                        android:textSize="40sp"
+                        android:textColor="#ffffff"
+                        />
+
+                    <TextView
+                        android:id="@+id/reading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:text="Reading game"
+                        android:textSize="40sp"
+                        android:textColor="#ffffff"
+                        />
+
+                    <TextView
+                        android:id="@+id/musicalEar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:text="Musical Ear"
+                        android:textSize="40sp"
+                        android:textColor="#ffffff"
+                        />
+
+                    <TextView
+                        android:id="@+id/noteMemory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:text="Note Memory"
+                        android:textSize="40sp"
+                        android:textColor="#ffffff"
+                        />
+
+                    <TextView
+                        android:id="@+id/instruments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:text="Musical Instruments"
+                        android:textSize="40sp"
+                        android:textColor="#ffffff"
+                        />
+
+                    <TextView
+                        android:id="@+id/cultural"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:text="Cultural Game"
+                        android:textSize="40sp"
+                        android:textColor="#ffffff"
+                        />
+
+                    <TextView
+                        android:id="@+id/quizz"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:text="Quizz"
+                        android:textSize="40sp"
+                        android:textColor="#ffffff"
+                        />
+
+                    <TextView
+                        android:id="@+id/memory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:text="Memory Game"
+                        android:textSize="40sp"
+                        android:textColor="#ffffff"
+                        />
+
+                    <TextView
+                        android:id="@+id/play"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:text="Play the Note"
+                        android:textSize="40sp"
+                        android:textColor="#ffffff"
+                        />
+
+                    <TextView
+                        android:id="@+id/emotionnal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:text="Feelings Game"
+                        android:textSize="40sp"
+                        android:textColor="#ffffff"
+                        />
+
+
+
+                    <ImageView
+                        android:id="@+id/choose_song"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/scorebtn" />
+
+                    <TextView
+                        android:id="@+id/choose_song_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/choose_song" />
+
+                </LinearLayout>
+            </ScrollView>
+
+                <!--<ImageView
                     android:id="@+id/choose_song"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -69,14 +195,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/choose_song" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
 
                 <ImageView
                     android:id="@+id/messenger"
@@ -89,25 +207,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/messenger" />
-            </LinearLayout>
+
+            </ScrollView>-->
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:weightSum="2" >
+            android:weightSum="2"
+            android:layout_weight="2.12">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="138dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="@color/brunClair"
+                android:layout_weight="2.11">
+
+
+            <ScrollView
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
+                android:id="@+id/scrollView3"
+                android:clickable="true">
 
-                <ImageView
+                <LinearLayout
+                    android:id="@+id/scrollViewbite"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Register your friends and teachers here !"/>
+                </LinearLayout>
+
+                <!--<ImageView
                     android:id="@+id/calendar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -117,17 +258,47 @@
                     android:id="@+id/calendar_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/calendar_str" />
+                    android:text="@string/calendar_str" />-->
+            </ScrollView>
+
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:background="@color/blondVen">
 
-                <ImageView
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollView4"
+                android:clickable="true">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+
+                    <ImageView
+                        android:id="@+id/messenger"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/messengerbtn" />
+
+                    <TextView
+                        android:id="@+id/messenger_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/messenger" />
+
+                    </LinearLayout>
+
+                <!--<ImageView
                     android:id="@+id/youtube"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -137,11 +308,38 @@
                     android:id="@+id/youtube_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/youtube" />
+                    android:text="@string/youtube" />-->
+            </ScrollView>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="91dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_weight="1.06"
+            android:background="@color/brique">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollView2"
+                android:clickable="true"
+                android:layout_weight="1"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    </LinearLayout>
+
+        </LinearLayout>
+
+        <!--<ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -167,15 +365,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/audio" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:weightSum="1">
 
                 <ImageView
                     android:id="@+id/utilities"
@@ -188,23 +377,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/utilities"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:weightSum="2" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
 
                 <ImageView
                     android:id="@+id/videorecording"
@@ -217,15 +389,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/video" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:weightSum="1">
 
                 <ImageView
                     android:id="@+id/results"
@@ -238,23 +401,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/results" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:weightSum="2" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
 
                 <ImageView
                     android:id="@+id/game"
@@ -267,22 +413,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/game_str" />
-            </LinearLayout>
-
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:weightSum="2" >
-                
-                <LinearLayout
-	                android:layout_width="wrap_content"
-	                android:layout_height="match_parent"
-	                android:layout_weight="1"
-	                android:gravity="center"
-	                android:orientation="vertical" >
 
                 <ImageView
                     android:id="@+id/communication"
@@ -295,11 +425,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/communication" />
-                </LinearLayout>
 
+            </LinearLayout>
 
-        </LinearLayout>
-    </LinearLayout>
+        </ScrollView>-->
 
   </LinearLayout>
+
 </LinearLayout>

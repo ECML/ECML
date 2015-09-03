@@ -49,7 +49,7 @@ public class MidiNote implements Comparator<MidiNote> {
     private final static HashMap<String, FrameVector> noteChroma = new HashMap<String, FrameVector>();
 
     // FRAMEVECTOR for each note (constance)
-    
+
 
     /** Create a new MidiNote.  This is called when a NoteOn event is
      * encountered in the MidiFile.

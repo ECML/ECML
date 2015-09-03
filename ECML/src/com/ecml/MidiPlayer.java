@@ -13,6 +13,7 @@ package com.ecml;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -75,6 +76,7 @@ import java.util.Locale;
  * and determines which notes to shade.
  */
 public class MidiPlayer extends LinearLayout {
+    private static final Object TAG = "tag";
     static Bitmap rewindImage;       /* The rewind image */
     static Bitmap playImage;         /* The play image */
     static Bitmap stopImage;         /* The stop image */
@@ -342,15 +344,17 @@ public class MidiPlayer extends LinearLayout {
         speedBar = new SeekBar(activity);
 
         speedBar.setProgress(0); //added later
-        speedBar.setMax(100-5); //added later
-        speedBar.setProgress(100-5); //added later c'?tait ? 50 avant
+        speedBar.setMax(100 - 5); //added later
+        speedBar.setProgress(100 - 5); //added later c'?tait ? 50 avant
         speedBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             public void onProgressChanged(SeekBar bar, int progress, boolean fromUser) {
                 // we add 30 to avoid reaching values under 30
                 speedText.setText("  Speed: " + String.format(Locale.US, "%03d", progress + 5 /* removed earlier */) + "% ");
             }
+
             public void onStartTrackingTouch(SeekBar bar) {
             }
+
             public void onStopTrackingTouch(SeekBar bar) {
             }
         });
@@ -735,6 +739,12 @@ public class MidiPlayer extends LinearLayout {
         currentPulseTime = 0;
         prevPulseTime = 0;
         StopSound();
+        //Cree PoPUp
+        Log.v((String) TAG, "Idriss");
+        Intent intent = new Intent(activity.getApplicationContext(), ResultsActivity.class);
+        activity.startActivity(intent);
+        activity.finish();
+
     }
     /** Rewind the midi music back one measure.
      *  The music must be in the paused state.

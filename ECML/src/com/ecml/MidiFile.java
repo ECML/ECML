@@ -466,13 +466,13 @@ public class MidiFile {
         if (!id.equals("MThd")) {
             throw new MidiFileException("Doesn't start with MThd", 0);
         }
-        len = file.ReadInt(); // Specification of file (6 bytes)
+        len = file.ReadInt(); 
         if (len !=  6) {
             throw new MidiFileException("Bad MThd header", 4);
         }
-        trackmode = (short) file.ReadShort(); // 2 bytes for each kind of trackmode (1:one ; 2:more, in the same time ; 3:more, one by one)
-        int num_tracks = file.ReadShort(); // 2 bytes : number of track
-        quarternote = file.ReadShort(); // number division of the black note 2 bytes
+        trackmode = (short) file.ReadShort();
+        int num_tracks = file.ReadShort();
+        quarternote = file.ReadShort(); 
 
         allevents = new ArrayList<ArrayList<MidiEvent>>();
         for (int tracknum = 0; tracknum < num_tracks; tracknum++) {

@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 
 public class ResultsActivity extends Activity {
@@ -35,7 +34,7 @@ public class ResultsActivity extends Activity {
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myWebLink = new Intent(Intent.ACTION_VIEW);
+                Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
                 myWebLink.setData(Uri.parse("http://www.youtube.com"));
                 startActivity(myWebLink);
             }

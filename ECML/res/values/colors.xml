@@ -16,5 +16,11 @@
        <color name="PowderBlue">#B0E0E6</color>
        <color name="LightSteelBlue">#B0C4DE</color>
        <color name="LightSkyBlue">#87CEFA</color>     
-       <item name="LightBlue" type="color">#2060FF</item>     
+       <item name="LightBlue" type="color">#2060FF</item>
+
+        <item name="blondVen" type="color">#E7A854</item>
+        <item name="bordeau" type="color">#6D071A</item>
+        <item name="brique" type="color">#842E1B</item>
+        <item name="brunClair" type="color">#CD853F</item>
+        <item name="baillet" type="color">#AE642D</item>
 </resources>

@@ -85,7 +85,7 @@ public class MidiTrack {
 
     public int trackNumber() { return tracknum; }
 
-    public ArrayList<MidiNote> getNotes() { 
+    public ArrayList<MidiNote> getNotes() {
     	 	return notes; }
 
     /**
@@ -95,9 +95,9 @@ public class MidiTrack {
     public Vector<FrameVector> getChromaVectors() {
         return this.chromaVectors;
     }
-    
+
     /** Give an ArrayList of the notes included between the note nstart and the note nstop */
-    public ArrayList<MidiNote> getNotesBetween(int start, int stop) { 
+    public ArrayList<MidiNote> getNotesBetween(int start, int stop) {
     	ArrayList<MidiNote> notesCut = new ArrayList<MidiNote>(stop-start+1);
     	for (int i = start; i <= stop; i++){
     		notesCut.add(notes.get(i));

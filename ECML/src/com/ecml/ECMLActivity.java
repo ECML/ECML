@@ -12,7 +12,6 @@
 
 package com.ecml;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,15 +29,26 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.calendar.CalendarActivity;
-import com.game.GameActivity;
+import com.game.Classical_culture;
+import com.game.Feelings_game;
+import com.game.Memorize_sequence;
+import com.game.Memory_game;
+import com.game.MusicalEarGameModeActivity;
+import com.game.Musical_instruments;
+import com.game.PlayTheNote;
+import com.game.Quiz_game;
+import com.game.ReadingGameModeActivity;
+import com.game.SpeedGameModeActivity;
 import com.login.Login;
+import com.metronome.MetronomeActivity;
 import com.sideActivities.AudioRecordingActivity;
-import com.sideActivities.Results2;
+import com.sideActivities.BaseActivity;
+import com.sideActivities.TuningForkActivity;
 import com.sideActivities.VideoRecordingActivity;
 import com.sideActivities.YoutubeActivity;
-import com.sideActivities.Utilities;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -64,7 +74,7 @@ import java.util.ArrayList;
  *	It can also display a sequence screen of activities that are suggested
  *  to the user or set by the teacher.
  */
-public class ECMLActivity extends Activity {
+public class ECMLActivity extends BaseActivity {
 
 	final Context context = this;
 	
@@ -74,7 +84,7 @@ public class ECMLActivity extends Activity {
 	private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";	/* Video Records folder name */
 	private static final String MUSIC_SHEET_FOLDER = "MusicSheets"; /* Music Sheet folder name */
 
-	//static ArrayList<ActivityParameters> listActivities = new ArrayList<ActivityParameters>();
+	static ArrayList<ActivityParameters> listActivities = new ArrayList<ActivityParameters>();
 	static Integer nbActivities = 0;
 
 	public static final String PRACTICE_ALONE = "PI";
@@ -89,13 +99,13 @@ public class ECMLActivity extends Activity {
 	private static Bitmap playAccompaniedImage;		/* The Play with Accompaniment image */
 	private static Bitmap readingOfNotesImage;		/* The Reading of Notes image */
 	private static Bitmap checkWithTeacherImage;	/* The Check with your Teacher image */
-	private static Bitmap playAloneDoneImage;			/* The Play Alone image */
-	private static Bitmap playAccompaniedDoneImage;		/* The Play with Accompaniment image */
-	private static Bitmap readingOfNotesDoneImage;		/* The Reading of Notes image */
-	private static Bitmap checkWithTeacherDoneImage;	/* The Check with your Teacher image */
 	private static Bitmap leftImage;				/* The left triangle for scrolling image */
 	private static Bitmap rightImage;				/* The right triangle for scrolling image */
-	
+    private static Bitmap playAloneDoneImage;			/* The Play Alone image */
+    private static Bitmap playAccompaniedDoneImage;		/* The Play with Accompaniment image */
+    private static Bitmap readingOfNotesDoneImage;		/* The Reading of Notes image */
+    private static Bitmap checkWithTeacherDoneImage;	/* The Check with your Teacher image */
+
 	private boolean displayed;						/* Whether the sequence of activities has already been displayed or not */
 	private LinearLayout sequenceOfActivities;		/* The Linear Layout used for the dynamic Sequence of Activies */
 	private int stripeHeight;		/* The Stripe Height used to resize the icons */
@@ -150,6 +160,133 @@ public class ECMLActivity extends Activity {
 		setContentView(R.layout.main);
 		loadImages(this);
 
+		// Go Speed Game
+		TextView speed = (TextView) findViewById(R.id.speed);
+		speed.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent speed = new Intent(getApplicationContext(), SpeedGameModeActivity.class);
+				startActivity(speed);
+			}
+
+		});
+
+		// Go Reading Game
+
+		TextView read = (TextView) findViewById(R.id.reading);
+		read.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent read = new Intent(getApplicationContext(), ReadingGameModeActivity.class);
+				startActivity(read);
+			}
+
+		});
+
+		// Go Musical Ear Game
+		TextView ear = (TextView) findViewById(R.id.musicalEar);
+		ear.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent ear = new Intent(getApplicationContext(), MusicalEarGameModeActivity.class);
+				startActivity(ear);
+			}
+
+		});
+
+		// Go Note Memory Game
+		TextView noteMem = (TextView) findViewById(R.id.noteMemory);
+		noteMem.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent noteMem = new Intent(getApplicationContext(), Memorize_sequence.class);
+				startActivity(noteMem);
+			}
+
+		});
+
+		// Go Instrumental Game
+		TextView inst = (TextView) findViewById(R.id.instruments);
+		inst.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent inst = new Intent(getApplicationContext(), Musical_instruments.class);
+				startActivity(inst);
+			}
+
+		});
+
+
+		// Go Cultural Game
+		TextView culture = (TextView) findViewById(R.id.cultural);
+		culture.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent culture = new Intent(getApplicationContext(), Classical_culture.class);
+				startActivity(culture);
+			}
+
+		});
+
+		// Go Quizz Game
+		TextView quizz = (TextView) findViewById(R.id.quizz);
+		quizz.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent quizz = new Intent(getApplicationContext(), Quiz_game.class);
+				startActivity(quizz);
+			}
+
+		});
+
+		// Go Memory Game
+		TextView mem = (TextView) findViewById(R.id.memory);
+		mem.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent mem = new Intent(getApplicationContext(), Memory_game.class);
+				startActivity(mem);
+			}
+
+		});
+
+		// Go Play the nOte
+		TextView play = (TextView) findViewById(R.id.play);
+		play.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent play = new Intent(getApplicationContext(), PlayTheNote.class);
+				startActivity(play);
+			}
+
+		});
+
+		// Go to Feelings Game
+		TextView feel = (TextView) findViewById(R.id.emotionnal);
+		feel.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent feel = new Intent(getApplicationContext(), Feelings_game.class);
+				startActivity(feel);
+			}
+
+		});
+
+
+
+
+
+
 		// Choose song button
 		chooseSong = (ImageView) findViewById(R.id.choose_song);
 		chooseSong.setOnClickListener(new View.OnClickListener() {
@@ -159,42 +296,42 @@ public class ECMLActivity extends Activity {
 				startActivity(ECML.intent);
 			}
 		});
-		
-		// Calendar button
+
+		/*// Calendar button
 		ImageView calendar = (ImageView) findViewById(R.id.calendar);
 		calendar.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToCalendar = new Intent(getApplicationContext(), CalendarActivity.class);
 				startActivity(goToCalendar);
 			}
-		});
+		});*/
 
-		// Audio Recording button
+		/*// Audio Recording button
 		ImageView audioRecording = (ImageView) findViewById(R.id.audiorecording);
 		audioRecording.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToAudio = new Intent(getApplicationContext(), AudioRecordingActivity.class);
 				startActivity(goToAudio);
 			}
-		});
+		});*/
 
-		// Video Recording button
+		/*// Video Recording button
 		ImageView videoRecording = (ImageView) findViewById(R.id.videorecording);
 		videoRecording.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToVideo = new Intent(getApplicationContext(), VideoRecordingActivity.class);
 				startActivity(goToVideo);
 			}
-		});
+		});*/
 
-		// Game button
+		/*// Game button
 		ImageView game = (ImageView) findViewById(R.id.game);
 		game.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToGame = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(goToGame);
 			}
-		});
+		});*/
 		
 		// Messenger service button
 		ImageView messenger = (ImageView) findViewById(R.id.messenger);
@@ -205,32 +342,32 @@ public class ECMLActivity extends Activity {
 			}
 		});
 
-		// Youtube button
+		/*// Youtube button
 		ImageView youtube = (ImageView) findViewById(R.id.youtube);
 		youtube.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToYoutube = new Intent(getApplicationContext(), YoutubeActivity.class);
 				startActivity(goToYoutube);
 			}
-		});
+		});*/
 
-		// Utilities button
+		/*// Utilities button
 		ImageView utilities = (ImageView) findViewById(R.id.utilities);
 		utilities.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToUtilities = new Intent(getApplicationContext(), Utilities.class);
 				startActivity(goToUtilities);
 			}
-		});
+		});*/
 
-		// Results button
+		/*// Results button
 		ImageView results = (ImageView) findViewById(R.id.results);
 		results.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToResults = new Intent(getApplicationContext(), Results2.class);
 				startActivity(goToResults);
 			}
-		});
+		});*/
 
 		// Metronome button
 		/*ImageView metronome = (ImageView) findViewById(R.id.metronome);
@@ -250,14 +387,14 @@ public class ECMLActivity extends Activity {
 			}
 		});*/
 
-		// Communication button
+		/*// Communication button
 		ImageView communication = (ImageView) findViewById(R.id.communication);
 		communication.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent goToFacebook = new Intent(getApplicationContext(), FacebookActivity.class);
 				startActivity(goToFacebook);
 			}
-		});
+		});*/
 
 		// Get the Linear Layout used for the sequence of activities
 		sequenceOfActivities = (LinearLayout) findViewById(R.id.seqOfActivities);
@@ -302,6 +439,8 @@ public class ECMLActivity extends Activity {
 		// Create a back button in the top left corner
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
+		//getActionBar().getDisplayOptions();
+
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.loginactionbar, menu);
@@ -316,6 +455,25 @@ public class ECMLActivity extends Activity {
 		} else if (item.getItemId() == R.id.studentActivity) {
 			launchStudentActivity();
 			return true;
+		} else if (item.getItemId() == R.id.chooseSongActivity){
+			launchChooseSong();
+		} else if (item.getItemId() == R.id.action_settings){
+			launchLogin();
+		} else if (item.getItemId() == R.id.calendarActivity){
+			launchCalendar();
+		} else if (item.getItemId() == R.id.audioActivity){
+			launchAudioRecording();
+		} else if (item.getItemId() == R.id.videoActivity){
+			launchVideoRecording();
+		} else if (item.getItemId() == R.id.youtubeActivity){
+			launchYoutube();
+		} else if (item.getItemId() == R.id.metronomeActivity){
+			launchMetronome();
+		} else if (item.getItemId() == R.id.tuningForkActivity){
+			launchTuning();
+		} else if (item.getItemId() == R.id.communicationActivity){
+			launchCommunication();
+
 		} else if (item.getItemId() == android.R.id.home) {
 			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ECMLActivity.this);
 			final AlertDialog alert = alertBuilder.create();
@@ -341,12 +499,59 @@ public class ECMLActivity extends Activity {
 	private void launchStudentActivity() {
 		Intent i = new Intent(ECMLActivity.this, StudentActivities.class);
 		startActivity(i);
-		
 	}
 
 	/** Launch the Login Activity */ 
 	private void launchLogin() {
 		Intent i = new Intent(ECMLActivity.this, Login.class);
+		startActivity(i);
+	}
+
+	/** Launch the ChooseSong Activity */
+	private void launchChooseSong() {
+		Intent i = new Intent(ECMLActivity.this, ChooseSongActivity.class);
+		startActivity(i);
+	}
+
+	/** Launch the Calendar Activity */
+	private void launchCalendar() {
+		Intent i = new Intent(ECMLActivity.this, CalendarActivity.class);
+		startActivity(i);
+	}
+
+	/** Launch the Audiorecording Activity */
+	private void launchAudioRecording() {
+		Intent i = new Intent(ECMLActivity.this, AudioRecordingActivity.class);
+		startActivity(i);
+	}
+
+	/** Launch the Videorecording Activity */
+	private void launchVideoRecording() {
+		Intent i = new Intent(ECMLActivity.this, VideoRecordingActivity.class);
+		startActivity(i);
+	}
+
+	/** Launch the Youtube Activity */
+	private void launchYoutube() {
+		Intent i = new Intent(ECMLActivity.this, YoutubeActivity.class);
+		startActivity(i);
+	}
+
+	/** Launch the Metronome Activity */
+	private void launchMetronome() {
+		Intent i = new Intent(ECMLActivity.this, MetronomeActivity.class);
+		startActivity(i);
+	}
+
+	/** Launch the Videorecording Activity */
+	private void launchTuning() {
+		Intent i = new Intent(ECMLActivity.this, TuningForkActivity.class);
+		startActivity(i);
+	}
+
+	/** Launch the Videorecording Activity */
+	private void launchCommunication() {
+		Intent i = new Intent(ECMLActivity.this, FacebookActivity.class);
 		startActivity(i);
 	}
 	
@@ -364,72 +569,73 @@ public class ECMLActivity extends Activity {
 		// If it hasn't been done yet, then playAloneImage should be null
 		if (playAloneImage == null) {
 			Resources res = context.getResources();
-			playAloneImage = BitmapFactory.decodeResource(res, R.drawable.play_alone);
-			playAloneDoneImage = BitmapFactory.decodeResource(res, R.drawable.play_alone_done);
-			playAccompaniedImage = BitmapFactory.decodeResource(res, R.drawable.play_with_accompaniment);
-			playAccompaniedDoneImage = BitmapFactory.decodeResource(res, R.drawable.play_with_accompaniment_done);
-			readingOfNotesImage = BitmapFactory.decodeResource(res, R.drawable.reading_of_notes);
-			readingOfNotesDoneImage = BitmapFactory.decodeResource(res, R.drawable.reading_of_notes_done);
-			leftImage = BitmapFactory.decodeResource(res, R.drawable.triangle_left);
-			rightImage = BitmapFactory.decodeResource(res, R.drawable.triangle_right);
-			checkWithTeacherImage = BitmapFactory.decodeResource(res,R.drawable.check_teacher);
-			checkWithTeacherDoneImage = BitmapFactory.decodeResource(res,R.drawable.check_teacher_done);
-		}
+            playAloneImage = BitmapFactory.decodeResource(res, R.drawable.play_alone);
+            playAloneDoneImage = BitmapFactory.decodeResource(res, R.drawable.play_alone_done);
+            playAccompaniedImage = BitmapFactory.decodeResource(res, R.drawable.play_with_accompaniment);
+            playAccompaniedDoneImage = BitmapFactory.decodeResource(res, R.drawable.play_with_accompaniment_done);
+            readingOfNotesImage = BitmapFactory.decodeResource(res, R.drawable.reading_of_notes);
+            readingOfNotesDoneImage = BitmapFactory.decodeResource(res, R.drawable.reading_of_notes_done);
+            leftImage = BitmapFactory.decodeResource(res, R.drawable.triangle_left);
+            rightImage = BitmapFactory.decodeResource(res, R.drawable.triangle_right);
+            checkWithTeacherImage = BitmapFactory.decodeResource(res,R.drawable.check_teacher);
+            checkWithTeacherDoneImage = BitmapFactory.decodeResource(res,R.drawable.check_teacher_done);
+
+        }
 	}
 
 
 	/** Display the sequence of activities accordingly to the received list */
 	private void sequenceOfActivities() {
-		sequenceOfActivities.removeAllViews();
-		ArrayList<ActivityParameters> listActivities = ReadWriteXMLFile.read(getApplicationContext());
-		if (!listActivities.isEmpty()) {
-			sequenceOfActivities.setPadding(leftMargin / 3, (stripeHeight - iconHeight) / 2, leftMargin / 3, 0);
-			setTriangle(leftImage);
-			for (int i = 0; i < listActivities.size(); i++) {
-				addButton(listActivities.get(i));
-			}
-			setTriangle(rightImage);
-		}
+        sequenceOfActivities.removeAllViews();
+        ArrayList<ActivityParameters> listActivities = ReadWriteXMLFile.read(getApplicationContext());
+        if (!listActivities.isEmpty()) {
+            sequenceOfActivities.setPadding(leftMargin / 3, (stripeHeight - iconHeight) / 2, leftMargin / 3, 0);
+            setTriangle(leftImage);
+            for (int i = 0; i < listActivities.size(); i++) {
+                addButton(listActivities.get(i));
+            }
+            setTriangle(rightImage);
+        }
 	}
 
 
 	/** Add the view of the given activity in the sequence of activities */
 	private void addButton(ActivityParameters parameters) {
 		if (parameters.getActivityType().equals(PRACTICE_ALONE)) {
-			if (parameters.isFinished()) {
-				setButton(playAloneDoneImage, CHOOSE_SONG, parameters);
-			}
-			else {
-				setButton(playAloneImage, CHOOSE_SONG, parameters);
-			}
-		}
-		else if (parameters.getActivityType().equals(PRACTICE_WITH_ACCOMPANIMENT)) {
-			if (parameters.isFinished()) {
-				setButton(playAccompaniedDoneImage, CHOOSE_SONG, parameters);
-			}
-			else {
-				setButton(playAccompaniedImage, CHOOSE_SONG, parameters);
-			}
-		}
-		else if (parameters.getActivityType().equals(CHECK_WITH_YOUR_TEACHER)) {
-			if (parameters.isFinished()) {
-				setButton(checkWithTeacherDoneImage, null, parameters);
-			}
-			else {
-				setButton(checkWithTeacherImage, null, parameters);
-			}
-		}
-		else if (parameters.getActivityType().equals(READING_OF_NOTES)) {
-			if (parameters.isFinished()) {
-				setButton(readingOfNotesDoneImage, READING_OF_NOTES_BEGINNER, parameters);
-			}
-			else {
-				setButton(readingOfNotesImage, READING_OF_NOTES_BEGINNER, parameters);
-			}
-		}
-		else if (parameters.getActivityType().equals(SPEED_GAME)) {
-			// TODO
-		}
+            if (parameters.isFinished()) {
+                setButton(playAloneDoneImage, CHOOSE_SONG, parameters);
+            }
+            else {
+                setButton(playAloneImage, CHOOSE_SONG, parameters);
+            }
+        }
+        else if (parameters.getActivityType().equals(PRACTICE_WITH_ACCOMPANIMENT)) {
+            if (parameters.isFinished()) {
+                setButton(playAccompaniedDoneImage, CHOOSE_SONG, parameters);
+            }
+            else {
+                setButton(playAccompaniedImage, CHOOSE_SONG, parameters);
+            }
+        }
+        else if (parameters.getActivityType().equals(CHECK_WITH_YOUR_TEACHER)) {
+            if (parameters.isFinished()) {
+                setButton(checkWithTeacherDoneImage, null, parameters);
+            }
+            else {
+                setButton(checkWithTeacherImage, null, parameters);
+            }
+        }
+        else if (parameters.getActivityType().equals(READING_OF_NOTES)) {
+            if (parameters.isFinished()) {
+                setButton(readingOfNotesDoneImage, READING_OF_NOTES_BEGINNER, parameters);
+            }
+            else {
+                setButton(readingOfNotesImage, READING_OF_NOTES_BEGINNER, parameters);
+            }
+        }
+        else if (parameters.getActivityType().equals(SPEED_GAME)) {
+            // TODO
+        }
 	}
 
 	/** Set the button according to the given activity */
@@ -451,25 +657,25 @@ public class ECMLActivity extends Activity {
 					startActivity(ECML.intent);
 				}
 				else if (!parameters.isActive() & parameters.isFinished()) {
-					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ECMLActivity.this);
-					final AlertDialog alert = alertBuilder.create();
-					alert.setTitle("Warning");
-					alert.setMessage("This activity is already done. Do you want to do it again?");
-					alert.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialogInterface, int i) {
-							alert.cancel();
-						}
-					});
-					alert.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialogInterface, int i) {
-							ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
-							ECML.intent.putExtra(ChooseSongActivity.mode, toDo);
-							startActivity(ECML.intent);
-							alert.cancel();
-						}
-					});
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ECMLActivity.this);
+                    final AlertDialog alert = alertBuilder.create();
+                    alert.setTitle("Warning");
+                    alert.setMessage("This activity is already done. Do you want to do it again?");
+                    alert.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alert.cancel();
+                        }
+                    });
+                    alert.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+                            ECML.intent.putExtra(ChooseSongActivity.mode, toDo);
+                            startActivity(ECML.intent);
+                            alert.cancel();
+                        }
+                    });
 					alert.show();
 				}
 
@@ -512,7 +718,7 @@ public class ECMLActivity extends Activity {
 	private void setTriangle(Bitmap image) {
 		// If there are more than 4 elements to display, then we need the
 		// triangles
-		if (nbActivities > 4) {
+        if (nbActivities > 4) {
 			ImageView triangle = new ImageView(this);
 			triangle.setImageBitmap(image);
 			iconWidth = iconHeight * image.getWidth() / image.getHeight();
@@ -535,14 +741,4 @@ public class ECMLActivity extends Activity {
 		super.onResume();
 		sequenceOfActivities();
 	}
-
-	/*public static ActivityParameters getActivityByNumber(int num) {
-		for (ActivityParameters a : listActivities) {
-			if (a.getNumber() == num) {
-				return a;
-			}
-		}
-		return null;
-	}*/
-
 }

@@ -60,10 +60,10 @@ public abstract class SpeedGamelvl extends BaseActivity {
 	protected boolean point = true;		/* The boolean telling whether a point has been given yet or not */
 	protected int counter;				/* The counter telling where we are on the track */
 	protected int score;				/* The score of the user */
-	public TextView scoreDisplay;	/* The score of the user display */
-	public TextView playNoteDisplay;	/* The text displaying which note to play */
-	public TextView percentage;		/* The view to display the percentage of right notes */
-	public TextView appreciation;	/* The view to display the appreciation */
+	protected TextView scoreDisplay;	/* The score of the user display */
+	protected TextView playNoteDisplay;	/* The text displaying which note to play */
+	protected TextView percentage;		/* The view to display the percentage of right notes */
+	protected TextView appreciation;	/* The view to display the appreciation */
 	protected ImageView star;			/* The star image */
 
 	/*** MidiSheet variables ***/

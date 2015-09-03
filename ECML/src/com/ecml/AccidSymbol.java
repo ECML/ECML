@@ -51,7 +51,7 @@ public class AccidSymbol implements MusicSymbol {
     public int getStartTime() { return -1; }  
 
     /** Get the minimum width (in pixels) needed to draw this symbol */
-    public int getMinWidth() { return 3*SheetMusic.NoteHeight/2; }
+    public int getMinWidth() { return 3* SheetMusic.NoteHeight/2; }
 
     /** Get/Set the width (in pixels) of this symbol. The width is set
      * in SheetMusic.AlignSymbols() to vertically align symbols.
@@ -68,7 +68,7 @@ public class AccidSymbol implements MusicSymbol {
         if (accid == Accid.Sharp || accid == Accid.Natural)
             dist -= SheetMusic.NoteHeight;
         else if (accid == Accid.Flat)
-            dist -= 3*SheetMusic.NoteHeight/2;
+            dist -= 3* SheetMusic.NoteHeight/2;
 
         if (dist < 0)
             return -dist;
@@ -81,7 +81,7 @@ public class AccidSymbol implements MusicSymbol {
      */
     public int getBelowStaff() {
         int dist = WhiteNote.Bottom(clef).Dist(whitenote) * 
-                   SheetMusic.NoteHeight/2 + 
+                   SheetMusic.NoteHeight/2 +
                    SheetMusic.NoteHeight;
         if (accid == Accid.Sharp || accid == Accid.Natural) 
             dist += SheetMusic.NoteHeight;
@@ -120,7 +120,7 @@ public class AccidSymbol implements MusicSymbol {
 
         /* Draw the two vertical lines */
         int ystart = ynote - SheetMusic.NoteHeight;
-        int yend = ynote + 2*SheetMusic.NoteHeight;
+        int yend = ynote + 2* SheetMusic.NoteHeight;
         int x = SheetMusic.NoteHeight/2;
         paint.setStrokeWidth(1);
         canvas.drawLine(x, ystart + 2, x, yend, paint);
@@ -148,7 +148,7 @@ public class AccidSymbol implements MusicSymbol {
 
         /* Draw the vertical line */
         paint.setStrokeWidth(1);
-        canvas.drawLine(x, ynote - SheetMusic.NoteHeight - SheetMusic.NoteHeight/2, 
+        canvas.drawLine(x, ynote - SheetMusic.NoteHeight - SheetMusic.NoteHeight/2,
                         x, ynote + SheetMusic.NoteHeight, paint);
 
         /* Draw 3 bezier curves.
@@ -159,24 +159,24 @@ public class AccidSymbol implements MusicSymbol {
          */
         Path bezierPath = new Path();
         bezierPath.moveTo(x, ynote + SheetMusic.LineSpace/4);
-        bezierPath.cubicTo(x + SheetMusic.LineSpace/2, ynote - SheetMusic.LineSpace/2, 
-                           x + SheetMusic.LineSpace, ynote + SheetMusic.LineSpace/3, 
+        bezierPath.cubicTo(x + SheetMusic.LineSpace/2, ynote - SheetMusic.LineSpace/2,
+                           x + SheetMusic.LineSpace, ynote + SheetMusic.LineSpace/3,
                            x, ynote + SheetMusic.LineSpace + SheetMusic.LineWidth + 1);
         canvas.drawPath(bezierPath, paint);
 
         bezierPath = new Path();
         bezierPath.moveTo(x, ynote + SheetMusic.LineSpace/4);
-        bezierPath.cubicTo(x + SheetMusic.LineSpace/2, ynote - SheetMusic.LineSpace/2, 
-                           x + SheetMusic.LineSpace + SheetMusic.LineSpace/4, 
-                           ynote + SheetMusic.LineSpace/3 - SheetMusic.LineSpace/4, 
+        bezierPath.cubicTo(x + SheetMusic.LineSpace/2, ynote - SheetMusic.LineSpace/2,
+                           x + SheetMusic.LineSpace + SheetMusic.LineSpace/4,
+                           ynote + SheetMusic.LineSpace/3 - SheetMusic.LineSpace/4,
                            x, ynote + SheetMusic.LineSpace + SheetMusic.LineWidth + 1);
         canvas.drawPath(bezierPath, paint);
 
         bezierPath = new Path();
         bezierPath.moveTo(x, ynote + SheetMusic.LineSpace/4);
-        bezierPath.cubicTo(x + SheetMusic.LineSpace/2, ynote - SheetMusic.LineSpace/2, 
-                           x + SheetMusic.LineSpace + SheetMusic.LineSpace/2, 
-                           ynote + SheetMusic.LineSpace/3 - SheetMusic.LineSpace/2, 
+        bezierPath.cubicTo(x + SheetMusic.LineSpace/2, ynote - SheetMusic.LineSpace/2,
+                           x + SheetMusic.LineSpace + SheetMusic.LineSpace/2,
+                           ynote + SheetMusic.LineSpace/3 - SheetMusic.LineSpace/2,
                            x, ynote + SheetMusic.LineSpace + SheetMusic.LineWidth + 1);
         canvas.drawPath(bezierPath, paint);
 
@@ -195,7 +195,7 @@ public class AccidSymbol implements MusicSymbol {
         canvas.drawLine(x, ystart, x, yend, paint);
         x += SheetMusic.LineSpace - SheetMusic.LineSpace/4;
         ystart = ynote - SheetMusic.LineSpace/4;
-        yend = ynote + 2*SheetMusic.LineSpace + SheetMusic.LineWidth - 
+        yend = ynote + 2* SheetMusic.LineSpace + SheetMusic.LineWidth -
                  SheetMusic.LineSpace/4;
         canvas.drawLine(x, ystart, x, yend, paint);
 
