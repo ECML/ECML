@@ -165,7 +165,7 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
      *  and StartTime (in pulses), so we know which notes to shade given the
      *  current pulse time.
      */
-    public void SetMidiFile(MidiFile midifile, MidiOptions options, 
+    public void SetMidiFile(MidiFile midifile, MidiOptions options,
                             MidiPlayer player) {
         if (midifile == null) {
             notes = null;
@@ -276,7 +276,7 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
  
     /** Draw the Black keys */
     private void DrawBlackKeys(Canvas canvas) {
-        paint.setStyle(Paint.Style.FILL); 
+        paint.setStyle(Paint.Style.FILL);
         for (int octave = 0; octave < MaxOctave; octave++) {
             canvas.translate(octave * WhiteKeyWidth * KeysPerOctave, 0);
             for (int i = 0; i < 10; i += 2) {
@@ -292,7 +292,7 @@ public class Piano extends SurfaceView implements SurfaceHolder.Callback {
             }
             canvas.translate(-(octave * WhiteKeyWidth * KeysPerOctave), 0);
         }
-        paint.setStyle(Paint.Style.STROKE); 
+        paint.setStyle(Paint.Style.STROKE);
     }
 
     /** Draw the black border area surrounding the piano keys.

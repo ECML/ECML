@@ -62,7 +62,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.calendar.CalendarActivity;
-import com.game.GameActivity;
 import com.metronome.Metronome;
 import com.metronome.MetronomeActivity;
 import com.sideActivities.AudioRecordingActivity;
@@ -559,11 +558,11 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 				startActivity(videoActivity);
 				finish();
 				return true;
-			case R.id.gameActivity:
+			/*case R.id.gameActivity:
 				Intent gameActivity = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(gameActivity);
 				finish();
-				return true;
+				return true;*/
 			case R.id.messengerActivity:
 				Intent messengerActivity = new Intent(getApplicationContext(), com.androidim.Login.class);
 				startActivity(messengerActivity);
@@ -605,7 +604,7 @@ public class SheetMusicActivity extends Activity implements SurfaceHolder.Callba
 		Intent intent = new Intent(this, SettingsActivity.class);
 		intent.putExtra(SettingsActivity.settingsID, options);
 		intent.putExtra(SettingsActivity.defaultSettingsID, defaultOptions);
-		startActivityForResult(intent, settingsRequestCode);
+        startActivityForResult(intent, settingsRequestCode);
 	}
 
 	/** Show the "Save As Images" dialog */

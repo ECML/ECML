@@ -50,7 +50,7 @@ public class Stem {
     private boolean notesoverlap;  /* Do the chord notes overlap */
     private int side;              /* Left side or right side of note */
 
-    private Stem pair;              /* If pair != null, this is a horizontal 
+    private Stem pair;              /* If pair != null, this is a horizontal
                                      * beam stem to another chord */
     private int width_to_pair;      /* The width (in pixels) to the chord pair */
     private boolean receiver_in_pair;  /* This stem is the receiver of a horizontal
@@ -177,8 +177,8 @@ public class Stem {
             return;
 
         DrawVerticalLine(canvas, paint, ytop, topstaff);
-        if (duration == NoteDuration.Quarter || 
-            duration == NoteDuration.DottedQuarter || 
+        if (duration == NoteDuration.Quarter ||
+            duration == NoteDuration.DottedQuarter ||
             duration == NoteDuration.Half ||
             duration == NoteDuration.DottedHalf ||
             receiver_in_pair) {
@@ -206,7 +206,7 @@ public class Stem {
             xstart = SheetMusic.LineSpace/4 + SheetMusic.NoteWidth;
 
         if (direction == Up) {
-            int y1 = ytop + topstaff.Dist(bottom) * SheetMusic.NoteHeight/2 
+            int y1 = ytop + topstaff.Dist(bottom) * SheetMusic.NoteHeight/2
                        + SheetMusic.NoteHeight/4;
 
             int ystem = ytop + topstaff.Dist(end) * SheetMusic.NoteHeight/2;
@@ -214,7 +214,7 @@ public class Stem {
             canvas.drawLine(xstart, y1, xstart, ystem, paint);
         }
         else if (direction == Down) {
-            int y1 = ytop + topstaff.Dist(top) * SheetMusic.NoteHeight/2 
+            int y1 = ytop + topstaff.Dist(top) * SheetMusic.NoteHeight/2
                        + SheetMusic.NoteHeight;
 
             if (side == LeftSide)
@@ -222,7 +222,7 @@ public class Stem {
             else
                 y1 = y1 - SheetMusic.NoteHeight/2;
 
-            int ystem = ytop + topstaff.Dist(end) * SheetMusic.NoteHeight/2 
+            int ystem = ytop + topstaff.Dist(end) * SheetMusic.NoteHeight/2
                           + SheetMusic.NoteHeight;
 
             canvas.drawLine(xstart, y1, xstart, ystem, paint);
@@ -256,8 +256,8 @@ public class Stem {
 
                 bezierPath = new Path();
                 bezierPath.moveTo(xstart, ystem);
-                bezierPath.cubicTo(xstart, ystem + 3*SheetMusic.LineSpace/2, 
-                                   xstart + SheetMusic.LineSpace*2, ystem + SheetMusic.NoteHeight*2, 
+                bezierPath.cubicTo(xstart, ystem + 3* SheetMusic.LineSpace/2,
+                                   xstart + SheetMusic.LineSpace*2, ystem + SheetMusic.NoteHeight*2,
                                    xstart + SheetMusic.LineSpace/2, ystem + SheetMusic.NoteHeight*3);
                 canvas.drawPath(bezierPath, paint);
 
@@ -269,8 +269,8 @@ public class Stem {
 
                 bezierPath = new Path();
                 bezierPath.moveTo(xstart, ystem);
-                bezierPath.cubicTo(xstart, ystem + 3*SheetMusic.LineSpace/2, 
-                                   xstart + SheetMusic.LineSpace*2, ystem + SheetMusic.NoteHeight*2, 
+                bezierPath.cubicTo(xstart, ystem + 3* SheetMusic.LineSpace/2,
+                                   xstart + SheetMusic.LineSpace*2, ystem + SheetMusic.NoteHeight*2,
                                    xstart + SheetMusic.LineSpace/2, ystem + SheetMusic.NoteHeight*3);
                 canvas.drawPath(bezierPath, paint);
 
@@ -280,8 +280,8 @@ public class Stem {
             if (duration == NoteDuration.ThirtySecond) {
                 bezierPath = new Path();
                 bezierPath.moveTo(xstart, ystem);
-                bezierPath.cubicTo(xstart, ystem + 3*SheetMusic.LineSpace/2, 
-                                   xstart + SheetMusic.LineSpace*2, ystem + SheetMusic.NoteHeight*2, 
+                bezierPath.cubicTo(xstart, ystem + 3* SheetMusic.LineSpace/2,
+                                   xstart + SheetMusic.LineSpace*2, ystem + SheetMusic.NoteHeight*2,
                                    xstart + SheetMusic.LineSpace/2, ystem + SheetMusic.NoteHeight*3);
                 canvas.drawPath(bezierPath, paint);
 
@@ -290,7 +290,7 @@ public class Stem {
         }
 
         else if (direction == Down) {
-            int ystem = ytop + topstaff.Dist(end)*SheetMusic.NoteHeight/2 +
+            int ystem = ytop + topstaff.Dist(end)* SheetMusic.NoteHeight/2 +
                         SheetMusic.NoteHeight;
 
             if (duration == NoteDuration.Eighth ||
@@ -301,8 +301,8 @@ public class Stem {
 
                 bezierPath = new Path();
                 bezierPath.moveTo(xstart, ystem);
-                bezierPath.cubicTo(xstart, ystem - SheetMusic.LineSpace, 
-                                   xstart + SheetMusic.LineSpace*2, ystem - SheetMusic.NoteHeight*2, 
+                bezierPath.cubicTo(xstart, ystem - SheetMusic.LineSpace,
+                                   xstart + SheetMusic.LineSpace*2, ystem - SheetMusic.NoteHeight*2,
                                    xstart + SheetMusic.LineSpace, ystem - SheetMusic.NoteHeight*2 - SheetMusic.LineSpace/2);
                 canvas.drawPath(bezierPath, paint);
 
@@ -314,8 +314,8 @@ public class Stem {
 
                 bezierPath = new Path();
                 bezierPath.moveTo(xstart, ystem);
-                bezierPath.cubicTo(xstart, ystem - SheetMusic.LineSpace, 
-                                   xstart + SheetMusic.LineSpace*2, ystem - SheetMusic.NoteHeight*2, 
+                bezierPath.cubicTo(xstart, ystem - SheetMusic.LineSpace,
+                                   xstart + SheetMusic.LineSpace*2, ystem - SheetMusic.NoteHeight*2,
                                    xstart + SheetMusic.LineSpace, ystem - SheetMusic.NoteHeight*2 - SheetMusic.LineSpace/2);
                 canvas.drawPath(bezierPath, paint);
 
@@ -325,8 +325,8 @@ public class Stem {
             if (duration == NoteDuration.ThirtySecond) {
                 bezierPath = new Path();
                 bezierPath.moveTo(xstart, ystem);
-                bezierPath.cubicTo(xstart, ystem - SheetMusic.LineSpace, 
-                                   xstart + SheetMusic.LineSpace*2, ystem - SheetMusic.NoteHeight*2, 
+                bezierPath.cubicTo(xstart, ystem - SheetMusic.LineSpace,
+                                   xstart + SheetMusic.LineSpace*2, ystem - SheetMusic.NoteHeight*2,
                                    xstart + SheetMusic.LineSpace, ystem - SheetMusic.NoteHeight*2 - SheetMusic.LineSpace/2);
                 canvas.drawPath(bezierPath, paint);
 
@@ -366,8 +366,8 @@ public class Stem {
             int yend = ytop + topstaff.Dist(pair.end) * SheetMusic.NoteHeight/2;
 
             if (duration == NoteDuration.Eighth ||
-                duration == NoteDuration.DottedEighth || 
-                duration == NoteDuration.Triplet || 
+                duration == NoteDuration.DottedEighth ||
+                duration == NoteDuration.Triplet ||
                 duration == NoteDuration.Sixteenth ||
                 duration == NoteDuration.ThirtySecond) {
 
@@ -400,9 +400,9 @@ public class Stem {
 
         else {
             int xend = width_to_pair + xstart2;
-            int ystart = ytop + topstaff.Dist(end) * SheetMusic.NoteHeight/2 + 
+            int ystart = ytop + topstaff.Dist(end) * SheetMusic.NoteHeight/2 +
                          SheetMusic.NoteHeight;
-            int yend = ytop + topstaff.Dist(pair.end) * SheetMusic.NoteHeight/2 
+            int yend = ytop + topstaff.Dist(pair.end) * SheetMusic.NoteHeight/2
                          + SheetMusic.NoteHeight;
 
             if (duration == NoteDuration.Eighth ||

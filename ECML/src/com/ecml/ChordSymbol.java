@@ -47,7 +47,7 @@ public class ChordSymbol implements MusicSymbol {
      * each note.  Use the time signature to calculate the duration
      * of the notes. Use the clef when drawing the chord.
      */
-    public ChordSymbol(ArrayList<MidiNote> midinotes, KeySignature key, 
+    public ChordSymbol(ArrayList<MidiNote> midinotes, KeySignature key,
                        TimeSignature time, Clef c, SheetMusic sheet) {
 
         int len = midinotes.size();
@@ -94,14 +94,14 @@ public class ChordSymbol implements MusicSymbol {
              * different duration up to the top note.
              */
             hastwostems = true;
-            stem1 = new Stem(notedata[0].whitenote, 
+            stem1 = new Stem(notedata[0].whitenote,
                              notedata[change-1].whitenote,
                              dur1, 
                              Stem.Down,
                              NotesOverlap(notedata, 0, change)
                             );
 
-            stem2 = new Stem(notedata[change].whitenote, 
+            stem2 = new Stem(notedata[change].whitenote,
                              notedata[notedata.length-1].whitenote,
                              dur2, 
                              Stem.Up,
@@ -147,7 +147,7 @@ public class ChordSymbol implements MusicSymbol {
      * The TimeSignature is used to determine the duration.
      */
  
-    private static NoteData[] 
+    private static NoteData[]
     CreateNoteData(ArrayList<MidiNote> midinotes, KeySignature key,
                    TimeSignature time) {
 
@@ -184,7 +184,7 @@ public class ChordSymbol implements MusicSymbol {
     /** Given the note data (the white keys and accidentals), create 
      * the Accidental Symbols and return them.
      */
-    private static AccidSymbol[] 
+    private static AccidSymbol[]
     CreateAccidSymbols(NoteData[] notedata, Clef clef) {
         int count = 0;
         for (NoteData n : notedata) {
@@ -260,7 +260,7 @@ public class ChordSymbol implements MusicSymbol {
      * the one with a smaller duration, because it has a better 
      * chance of making a pair.
      */
-    public Stem getStem() { 
+    public Stem getStem() {
             if (stem1 == null) { return stem2; }
             else if (stem2 == null) { return stem1; }
             else if (stem1.getDuration().ordinal() < stem2.getDuration().ordinal()) { return stem1; }
@@ -537,7 +537,7 @@ public class ChordSymbol implements MusicSymbol {
             /* Draw rotated ellipse.  You must first translate (0,0)
              * to the center of the ellipse.
              */
-            canvas.translate(xnote + SheetMusic.NoteWidth/2 + 1, 
+            canvas.translate(xnote + SheetMusic.NoteWidth/2 + 1,
                              ynote - SheetMusic.LineWidth + SheetMusic.NoteHeight/2);
             canvas.rotate(-45);
 
@@ -548,20 +548,20 @@ public class ChordSymbol implements MusicSymbol {
                 paint.setColor(Color.BLACK);
             }
 
-            if (note.duration == NoteDuration.Whole || 
+            if (note.duration == NoteDuration.Whole ||
                 note.duration == NoteDuration.Half ||
                 note.duration == NoteDuration.DottedHalf) {
 
                 RectF rect = new RectF(-SheetMusic.NoteWidth/2, -SheetMusic.NoteHeight/2,
-                                       -SheetMusic.NoteWidth/2 + SheetMusic.NoteWidth, 
+                                       -SheetMusic.NoteWidth/2 + SheetMusic.NoteWidth,
                                        -SheetMusic.NoteHeight/2 + SheetMusic.NoteHeight-1);
                 canvas.drawOval(rect, paint);
                 rect = new RectF(-SheetMusic.NoteWidth/2, -SheetMusic.NoteHeight/2 + 1,
-                                 -SheetMusic.NoteWidth/2 +  SheetMusic.NoteWidth, 
+                                 -SheetMusic.NoteWidth/2 +  SheetMusic.NoteWidth,
                                  -SheetMusic.NoteHeight/2 + 1 + SheetMusic.NoteHeight-2);
                 canvas.drawOval(rect, paint);
                 rect = new RectF(-SheetMusic.NoteWidth/2, -SheetMusic.NoteHeight/2 + 1,
-                                 -SheetMusic.NoteWidth/2 + SheetMusic.NoteWidth, 
+                                 -SheetMusic.NoteWidth/2 + SheetMusic.NoteWidth,
                                  -SheetMusic.NoteHeight/2 + 1 + SheetMusic.NoteHeight-3);
                 canvas.drawOval(rect, paint);
                 
@@ -569,7 +569,7 @@ public class ChordSymbol implements MusicSymbol {
             else {
                 paint.setStyle(Paint.Style.FILL);
                 RectF rect = new RectF(-SheetMusic.NoteWidth/2, -SheetMusic.NoteHeight/2,
-                                       -SheetMusic.NoteWidth/2 + SheetMusic.NoteWidth, 
+                                       -SheetMusic.NoteWidth/2 + SheetMusic.NoteWidth,
                                        -SheetMusic.NoteHeight/2 + SheetMusic.NoteHeight-1);
                 canvas.drawOval(rect, paint);
                 paint.setStyle(Paint.Style.STROKE);
@@ -578,7 +578,7 @@ public class ChordSymbol implements MusicSymbol {
             paint.setColor(Color.BLACK);
 
             canvas.rotate(45);
-            canvas.translate(- (xnote + SheetMusic.NoteWidth/2 + 1), 
+            canvas.translate(- (xnote + SheetMusic.NoteWidth/2 + 1),
                              - (ynote - SheetMusic.LineWidth + SheetMusic.NoteHeight/2));
 
             /* Draw a dot if this is a dotted duration. */
@@ -586,9 +586,9 @@ public class ChordSymbol implements MusicSymbol {
                 note.duration == NoteDuration.DottedQuarter ||
                 note.duration == NoteDuration.DottedEighth) {
 
-                RectF rect = new RectF(xnote + SheetMusic.NoteWidth + SheetMusic.LineSpace/3, 
-                                       ynote + SheetMusic.LineSpace/3, 
-                                       xnote + SheetMusic.NoteWidth + SheetMusic.LineSpace/3 + 4, 
+                RectF rect = new RectF(xnote + SheetMusic.NoteWidth + SheetMusic.LineSpace/3,
+                                       ynote + SheetMusic.LineSpace/3,
+                                       xnote + SheetMusic.NoteWidth + SheetMusic.LineSpace/3 + 4,
                                        ynote + SheetMusic.LineSpace/3 + 4);
                 paint.setStyle(Paint.Style.FILL);
                 canvas.drawOval(rect, paint);
@@ -603,8 +603,8 @@ public class ChordSymbol implements MusicSymbol {
             if (dist >= 2) {
                 for (int i = 2; i <= dist; i += 2) {
                     y -= SheetMusic.NoteHeight;
-                    canvas.drawLine(xnote - SheetMusic.LineSpace/4, y, 
-                                    xnote + SheetMusic.NoteWidth + SheetMusic.LineSpace/4, 
+                    canvas.drawLine(xnote - SheetMusic.LineSpace/4, y,
+                                    xnote + SheetMusic.NoteWidth + SheetMusic.LineSpace/4,
                                     y, paint);
                 }
             }
@@ -615,7 +615,7 @@ public class ChordSymbol implements MusicSymbol {
             if (dist >= 2) {
                 for (int i = 2; i <= dist; i+= 2) {
                     y += SheetMusic.NoteHeight;
-                    canvas.drawLine(xnote - SheetMusic.LineSpace/4, y, 
+                    canvas.drawLine(xnote - SheetMusic.LineSpace/4, y,
                                     xnote + SheetMusic.NoteWidth + SheetMusic.LineSpace/4,
                                     y, paint);
                 }

@@ -267,7 +267,7 @@ public class MidiOptions implements Serializable {
             }
         }
         if (saved.time != null) {
-            time = new TimeSignature(saved.time.getNumerator(), saved.time.getDenominator(), 
+            time = new TimeSignature(saved.time.getNumerator(), saved.time.getDenominator(),
                     saved.time.getQuarter(), saved.time.getTempo());
         }
 

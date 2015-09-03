@@ -108,7 +108,7 @@ public class FileUri implements Comparator<FileUri> {
                 file = asset.open(filepath);
             }
             else if (uriString.startsWith("content://")) {
-                ContentResolver resolver = activity.getContentResolver(); 
+                ContentResolver resolver = activity.getContentResolver();
                 file = resolver.openInputStream(uri);
             }
             else {
@@ -132,7 +132,7 @@ public class FileUri implements Comparator<FileUri> {
                 file = asset.open(filepath);
             }
             else if (uriString.startsWith("content://")) {
-                ContentResolver resolver = activity.getContentResolver(); 
+                ContentResolver resolver = activity.getContentResolver();
                 file = resolver.openInputStream(uri);
             }
             else {
