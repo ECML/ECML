@@ -74,7 +74,7 @@ public class ECMLActivity extends Activity {
 	private static final String VIDEO_RECORDER_FOLDER = "VideoRecords";	/* Video Records folder name */
 	private static final String MUSIC_SHEET_FOLDER = "MusicSheets"; /* Music Sheet folder name */
 
-	static ArrayList<ActivityParameters> listActivities = new ArrayList<ActivityParameters>();
+	//static ArrayList<ActivityParameters> listActivities = new ArrayList<ActivityParameters>();
 	static Integer nbActivities = 0;
 
 	public static final String PRACTICE_ALONE = "PI";
@@ -89,6 +89,10 @@ public class ECMLActivity extends Activity {
 	private static Bitmap playAccompaniedImage;		/* The Play with Accompaniment image */
 	private static Bitmap readingOfNotesImage;		/* The Reading of Notes image */
 	private static Bitmap checkWithTeacherImage;	/* The Check with your Teacher image */
+	private static Bitmap playAloneDoneImage;			/* The Play Alone image */
+	private static Bitmap playAccompaniedDoneImage;		/* The Play with Accompaniment image */
+	private static Bitmap readingOfNotesDoneImage;		/* The Reading of Notes image */
+	private static Bitmap checkWithTeacherDoneImage;	/* The Check with your Teacher image */
 	private static Bitmap leftImage;				/* The left triangle for scrolling image */
 	private static Bitmap rightImage;				/* The right triangle for scrolling image */
 	
@@ -361,11 +365,15 @@ public class ECMLActivity extends Activity {
 		if (playAloneImage == null) {
 			Resources res = context.getResources();
 			playAloneImage = BitmapFactory.decodeResource(res, R.drawable.play_alone);
+			playAloneDoneImage = BitmapFactory.decodeResource(res, R.drawable.play_alone_done);
 			playAccompaniedImage = BitmapFactory.decodeResource(res, R.drawable.play_with_accompaniment);
+			playAccompaniedDoneImage = BitmapFactory.decodeResource(res, R.drawable.play_with_accompaniment_done);
 			readingOfNotesImage = BitmapFactory.decodeResource(res, R.drawable.reading_of_notes);
+			readingOfNotesDoneImage = BitmapFactory.decodeResource(res, R.drawable.reading_of_notes_done);
 			leftImage = BitmapFactory.decodeResource(res, R.drawable.triangle_left);
 			rightImage = BitmapFactory.decodeResource(res, R.drawable.triangle_right);
 			checkWithTeacherImage = BitmapFactory.decodeResource(res,R.drawable.check_teacher);
+			checkWithTeacherDoneImage = BitmapFactory.decodeResource(res,R.drawable.check_teacher_done);
 		}
 	}
 
@@ -373,6 +381,7 @@ public class ECMLActivity extends Activity {
 	/** Display the sequence of activities accordingly to the received list */
 	private void sequenceOfActivities() {
 		sequenceOfActivities.removeAllViews();
+		ArrayList<ActivityParameters> listActivities = ReadWriteXMLFile.read(getApplicationContext());
 		if (!listActivities.isEmpty()) {
 			sequenceOfActivities.setPadding(leftMargin / 3, (stripeHeight - iconHeight) / 2, leftMargin / 3, 0);
 			setTriangle(leftImage);
@@ -387,16 +396,36 @@ public class ECMLActivity extends Activity {
 	/** Add the view of the given activity in the sequence of activities */
 	private void addButton(ActivityParameters parameters) {
 		if (parameters.getActivityType().equals(PRACTICE_ALONE)) {
-			setButton(playAloneImage, CHOOSE_SONG, parameters);
+			if (parameters.isFinished()) {
+				setButton(playAloneDoneImage, CHOOSE_SONG, parameters);
+			}
+			else {
+				setButton(playAloneImage, CHOOSE_SONG, parameters);
+			}
 		}
 		else if (parameters.getActivityType().equals(PRACTICE_WITH_ACCOMPANIMENT)) {
-			setButton(playAccompaniedImage, CHOOSE_SONG, parameters);
+			if (parameters.isFinished()) {
+				setButton(playAccompaniedDoneImage, CHOOSE_SONG, parameters);
+			}
+			else {
+				setButton(playAccompaniedImage, CHOOSE_SONG, parameters);
+			}
 		}
 		else if (parameters.getActivityType().equals(CHECK_WITH_YOUR_TEACHER)) {
-			setButton(checkWithTeacherImage, null, parameters);
+			if (parameters.isFinished()) {
+				setButton(checkWithTeacherDoneImage, null, parameters);
+			}
+			else {
+				setButton(checkWithTeacherImage, null, parameters);
+			}
 		}
 		else if (parameters.getActivityType().equals(READING_OF_NOTES)) {
-			setButton(readingOfNotesImage, READING_OF_NOTES_BEGINNER, parameters);
+			if (parameters.isFinished()) {
+				setButton(readingOfNotesDoneImage, READING_OF_NOTES_BEGINNER, parameters);
+			}
+			else {
+				setButton(readingOfNotesImage, READING_OF_NOTES_BEGINNER, parameters);
+			}
 		}
 		else if (parameters.getActivityType().equals(SPEED_GAME)) {
 			// TODO
@@ -425,10 +454,19 @@ public class ECMLActivity extends Activity {
 					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ECMLActivity.this);
 					final AlertDialog alert = alertBuilder.create();
 					alert.setTitle("Warning");
-					alert.setMessage("This activty is already done");
-					alert.setButton(DialogInterface.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+					alert.setMessage("This activity is already done. Do you want to do it again?");
+					alert.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialogInterface, int i) {
+							alert.cancel();
+						}
+					});
+					alert.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+							ECML.intent = new Intent(getApplicationContext(), ChooseSongActivity.class);
+							ECML.intent.putExtra(ChooseSongActivity.mode, toDo);
+							startActivity(ECML.intent);
 							alert.cancel();
 						}
 					});
@@ -474,7 +512,7 @@ public class ECMLActivity extends Activity {
 	private void setTriangle(Bitmap image) {
 		// If there are more than 4 elements to display, then we need the
 		// triangles
-		if (listActivities.size() > 4) {
+		if (nbActivities > 4) {
 			ImageView triangle = new ImageView(this);
 			triangle.setImageBitmap(image);
 			iconWidth = iconHeight * image.getWidth() / image.getHeight();
@@ -498,13 +536,13 @@ public class ECMLActivity extends Activity {
 		sequenceOfActivities();
 	}
 
-	public static ActivityParameters getActivityByNumber(int num) {
+	/*public static ActivityParameters getActivityByNumber(int num) {
 		for (ActivityParameters a : listActivities) {
 			if (a.getNumber() == num) {
 				return a;
 			}
 		}
 		return null;
-	}
+	}*/
 
 }
