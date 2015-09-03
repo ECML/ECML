@@ -17,7 +17,7 @@ import com.sideActivities.BaseActivity;
 
 /** @class MetronomeActivity
  * 
- * @author Nicolas and Anas
+ * @author Nicolas and Anais
  * <br>
  * This activity includes a Metronome featuring a time signature which can vary from 0 to 9.<br>
  * <p>You can control it by sliding the seek bar and by adding or removing 1 bpm to the tempo.<br>
@@ -55,7 +55,7 @@ public class MetronomeActivity extends BaseActivity {
 		/* End of Buttons */
 		
 		/* Buttons' Listeners */
-		startMetronome.setOnClickListener(new View.OnClickListener() {
+		startMetronome.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -63,7 +63,7 @@ public class MetronomeActivity extends BaseActivity {
 			}
 		});
 
-		stopMetronome.setOnClickListener(new View.OnClickListener() {
+		stopMetronome.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -71,7 +71,7 @@ public class MetronomeActivity extends BaseActivity {
 			}
 		});
 
-		minus.setOnClickListener(new View.OnClickListener() {
+		minus.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -79,7 +79,7 @@ public class MetronomeActivity extends BaseActivity {
 			}
 		});
 
-		plus.setOnClickListener(new View.OnClickListener() {
+		plus.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
