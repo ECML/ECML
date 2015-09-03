@@ -1,8 +1,5 @@
 package com.sideActivities;
 
-import java.io.File;
-import java.io.IOException;
-
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -13,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ecml.R;
+
+import java.io.File;
+import java.io.IOException;
 
 /** @class AudioRecordingActivity
  * 
