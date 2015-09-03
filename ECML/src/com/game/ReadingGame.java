@@ -204,7 +204,7 @@ public abstract class ReadingGame extends BaseActivity {
 			public void onClick(View v) {
 				showHelpDialog();
 			}
-
+			
 		});
 
 		// Change game button
@@ -231,7 +231,7 @@ public abstract class ReadingGame extends BaseActivity {
 		layout.addView(result);
 		result.setVisibility(View.GONE);
 		setContentView(layout);
-
+		
 		//Create the sheet music
 		createSheetMusic(options);
 

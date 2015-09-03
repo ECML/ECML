@@ -18,7 +18,7 @@ public final class DyWaPitchTrack {
         while (minSamplesPower2 < minSamples) {
             minSamplesPower2 <<= 1;
         }
-        return minSamplesPower2;    // 16384
+        return minSamplesPower2;
     }
 
     public DyWaPitchTrack(int samplecount) {
